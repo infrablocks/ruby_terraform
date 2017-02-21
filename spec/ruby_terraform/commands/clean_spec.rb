@@ -1,16 +1,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Clean do
-  before(:each) do
-    RubyTerraform.configure do |config|
-      config.binary = 'path/to/binary'
-    end
-  end
-
-  after(:each) do
-    RubyTerraform.reset!
-  end
-
   it 'deletes the .terraform directory in the current directory' do
     command = RubyTerraform::Commands::Clean.new
 

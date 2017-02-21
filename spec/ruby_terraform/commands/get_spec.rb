@@ -1,5 +1,4 @@
 require 'spec_helper'
-require 'open4'
 
 describe RubyTerraform::Commands::Get do
   before(:each) do
@@ -44,7 +43,7 @@ describe RubyTerraform::Commands::Get do
         update: true)
   end
 
-  it 'includes the no-color flag when the color option is false' do
+  it 'includes the no-color flag when the no_color option is true' do
     command = RubyTerraform::Commands::Get.new
 
     expect(Open4).to(

@@ -1,7 +1,5 @@
 require "bundler/setup"
 
-require 'open4'
-
 require "ruby_terraform"
 
 RSpec.configure do |config|
