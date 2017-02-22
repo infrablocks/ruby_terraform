@@ -10,6 +10,12 @@ module RubyTerraform
       yield(@configuration)
     end
 
+    def reset!
+      @configuration = nil
+    end
+  end
+
+  module ClassMethods
     def clean(opts = {})
       Commands::Clean.new.execute(opts)
     end
@@ -33,10 +39,11 @@ module RubyTerraform
     def output(opts = {})
       Commands::Output.new.execute(opts)
     end
+  end
+  extend ClassMethods
 
-    def reset!
-      @configuration = nil
-    end
+  def self.included( other )
+    other.extend( ClassMethods )
   end
 
   class Configuration
