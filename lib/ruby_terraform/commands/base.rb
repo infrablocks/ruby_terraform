@@ -9,7 +9,7 @@ module RubyTerraform
         @binary = binary || RubyTerraform.configuration.binary
       end
 
-      def execute(opts)
+      def execute(opts = {})
         builder = Lino::CommandLineBuilder
             .for_command(binary)
             .with_option_separator('=')
