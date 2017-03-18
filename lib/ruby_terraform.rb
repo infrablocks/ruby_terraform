@@ -24,6 +24,10 @@ module RubyTerraform
       Commands::Get.new.execute(opts)
     end
 
+    def plan(opts = {})
+      Commands::Plan.new.execute(opts)
+    end
+
     def apply(opts = {})
       Commands::Apply.new.execute(opts)
     end
