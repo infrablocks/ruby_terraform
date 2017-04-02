@@ -55,8 +55,8 @@ module RubyTerraform
   end
   extend ClassMethods
 
-  def self.included( other )
-    other.extend( ClassMethods )
+  def self.included(other)
+    other.extend(ClassMethods)
   end
 
   class Configuration
