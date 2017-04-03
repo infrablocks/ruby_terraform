@@ -3,11 +3,14 @@ require 'ruby_terraform/commands'
 
 module RubyTerraform
   class << self
-    attr_accessor :configuration
+    attr_writer :configuration
+
+    def configuration
+      @configuration ||= Configuration.new
+    end
 
     def configure
-      @configuration ||= Configuration.new
-      yield(@configuration)
+      yield(configuration)
     end
 
     def reset!
