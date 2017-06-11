@@ -39,6 +39,7 @@ global configuration value.
 Currently, there is partial support for the following commands:
 * `RubyTerraform::Commands::Clean`: clean up all locally held terraform state
   and modules.
+* `RubyTerraform::Commands::Init`: executes `terraform init`
 * `RubyTerraform::Commands::Get`: executes `terraform get`
 * `RubyTerraform::Commands::Apply`: executes `terraform apply`
 * `RubyTerraform::Commands::Destroy`: executes `terraform destroy`
@@ -62,6 +63,31 @@ removes the specified directory. If the base directory is specified, it
 removes the .terraform directory from within the base directory.
 
 
+### RubyTerraform::Commands::Init
+
+The init command will initialise a terraform environment. It can be called in 
+the following ways:
+
+```ruby
+RubyTerraform.init
+RubyTerraform.init(source: 'some/module/path', path: 'infra/module')
+RubyTerraform::Commands::Init.new.execute
+RubyTerraform::Commands::Init.new.execute(
+    source: 'some/module/path', 
+    path: 'infra/module')
+```
+
+The init command supports the following options passed as keyword arguments:
+* `source`: the source module to use to initialise; required if `path` is 
+  specified
+* `path`: the path to initialise.
+* `backend`: `true`/`false`, whether or not to configure the backend.
+* `get`: `true`/`false`, whether or not to get dependency modules.
+* `backend_config`: a map of backend specific configuration parameters.
+* `no_color`: whether or not the output from the command should be in color;
+  defaults to `false`.
+
+
 ### RubyTerraform::Commands::Get
 
 The get command will fetch any modules referenced in the provided terraform
@@ -69,7 +95,7 @@ configuration directory. It can be called in the following ways:
 
 ```ruby
 RubyTerraform.get(directory: 'infra/networking')
-RubyTerraforn::Commands::Get.new.execute(directory: 'infra/networking')
+RubyTerraform::Commands::Get.new.execute(directory: 'infra/networking')
 ```
 
 The get command supports the following options passed as keyword arguments:

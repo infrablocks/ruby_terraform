@@ -23,6 +23,10 @@ module RubyTerraform
       Commands::Clean.new.execute(opts)
     end
 
+    def init(opts = {})
+      Commands::Init.new.execute(opts)
+    end
+
     def get(opts = {})
       Commands::Get.new.execute(opts)
     end

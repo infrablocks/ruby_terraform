@@ -1,4 +1,5 @@
 require_relative 'commands/clean'
+require_relative 'commands/init'
 require_relative 'commands/get'
 require_relative 'commands/plan'
 require_relative 'commands/apply'
