@@ -3,8 +3,8 @@ require 'fileutils'
 module RubyTerraform
   module Commands
     class Clean
-      def initialize(base_directory: nil)
-        @directory = base_directory ? File.join(base_directory, '.terraform') : '.terraform'
+      def initialize(directory: nil)
+        @directory = directory ? directory : '.terraform'
       end
 
       def execute(opts = {})

@@ -53,14 +53,13 @@ The clean command can be called in the following ways:
 ```ruby
 RubyTerraform.clean
 RubyTerraform.clean(directory: 'infra/.terraform')
-RubyTerraform::Commands::Clean.new(base_directory: 'infra').execute
+RubyTerraform::Commands::Clean.new(directory: 'infra/.terraform').execute
 RubyTerraform::Commands::Clean.new.execute(directory: 'infra/.terraform')
 ```
 
 When called, it removes the contents of the .terraform directory in the
 working directory by default. If another directory is specified, it instead
-removes the specified directory. If the base directory is specified, it
-removes the .terraform directory from within the base directory.
+removes the specified directory.
 
 
 ### RubyTerraform::Commands::Init
