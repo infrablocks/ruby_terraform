@@ -106,4 +106,16 @@ describe RubyTerraform::Commands::Destroy do
         directory: 'some/path/to/terraform/configuration',
         force: true)
   end
+
+  it 'adds a var-file option if a var file is provided' do
+    command = RubyTerraform::Commands::Destroy.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform destroy -var-file=some/vars.tfvars some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        var_file: 'some/vars.tfvars')
+  end
 end
