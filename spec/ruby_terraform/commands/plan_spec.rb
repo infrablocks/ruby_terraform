@@ -93,4 +93,16 @@ describe RubyTerraform::Commands::Plan do
         directory: 'some/path/to/terraform/configuration',
         destroy: true)
   end
+
+  it 'adds a var-file option if a var file is provided' do
+    command = RubyTerraform::Commands::Plan.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform plan -var-file=some/vars.tfvars some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        var_file: 'some/vars.tfvars')
+  end
 end
