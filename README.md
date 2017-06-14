@@ -126,6 +126,7 @@ RubyTerraform::Commands::Apply.new.execute(
 The apply command supports the following options passed as keyword arguments:
 * `directory`: the directory containing terraform configuration; required.
 * `vars`: a map of vars to be passed in to the terraform configuration.
+* `var_file`: a file holding list of variables with their values (in terraform format) to be passed to terraform
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `backup`: the path to the backup file in which to store the state backup.
@@ -156,6 +157,7 @@ RubyTerraform::Commands::Destroy.new.execute(
 The destroy command supports the following options passed as keyword arguments:
 * `directory`: the directory containing terraform configuration; required.
 * `vars`: a map of vars to be passed in to the terraform configuration.
+* `var_file`: a file holding list of variables with their values (in terraform format) to be passed to terraform
 * `state`: the path to the state file containing the current state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `force`: if `true`, the command destroys without prompting the user to confirm
