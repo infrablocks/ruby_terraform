@@ -8,7 +8,7 @@ a Ruby program or Rakefile.
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'ruby_terraform'
+gem 'ruby-terraform'
 ```
 
 And then execute:
@@ -17,7 +17,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install ruby_terraform
+    $ gem install ruby-terraform
 
 
 ## Usage
