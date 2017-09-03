@@ -56,15 +56,15 @@ describe RubyTerraform::Commands::Init do
         })
   end
 
-  it 'adds the supplied source when provided' do
+  it 'uses the supplied module source when provided' do
     command = RubyTerraform::Commands::Init.new(binary: 'terraform')
 
     expect(Open4).to(
         receive(:spawn)
-            .with('terraform init some/module/source', any_args))
+            .with('terraform init -from-module=some/module/source', any_args))
 
     command.execute(
-        source: 'some/module/source')
+        from_module: 'some/module/source')
   end
 
   it 'adds the supplied path when provided' do
@@ -73,11 +73,11 @@ describe RubyTerraform::Commands::Init do
     expect(Open4).to(
         receive(:spawn)
             .with(
-                'terraform init some/module/source some/output/path',
+                'terraform init -from-module=some/module/source some/output/path',
                 any_args))
 
     command.execute(
-        source: 'some/module/source',
+        from_module: 'some/module/source',
         path: 'some/output/path')
   end
 
