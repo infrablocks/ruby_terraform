@@ -106,4 +106,28 @@ describe RubyTerraform::Commands::Apply do
         directory: 'some/configuration',
         var_file: 'some/vars.tfvars')
   end
+
+  it 'passes auto-approve of true when the auto_approve option is true' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('terraform apply -auto-approve=true some/path/to/terraform/configuration', any_args))
+
+    command.execute(
+        directory: 'some/path/to/terraform/configuration',
+        auto_approve: true)
+  end
+
+  it 'passes auto-approve of false when the auto_approve option is false' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('terraform apply -auto-approve=false some/path/to/terraform/configuration', any_args))
+
+    command.execute(
+        directory: 'some/path/to/terraform/configuration',
+        auto_approve: false)
+  end
 end

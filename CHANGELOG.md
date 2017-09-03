@@ -8,3 +8,5 @@ BACKWARDS INCOMPATIBILITIES / NOTES:
 IMPROVEMENTS:
 
 * The init command now uses -from-module to specify the source module
+* The apply command now supports -auto-approve in preparation for an upcoming
+  terraform release that will set this flag to false by default.
