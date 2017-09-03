@@ -1,4 +1,4 @@
-## 0.9.0
+## 0.9.0 (September 3rd, 2017)
 
 BACKWARDS INCOMPATIBILITIES / NOTES:
 
