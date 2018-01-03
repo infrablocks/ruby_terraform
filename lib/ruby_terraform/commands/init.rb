@@ -11,6 +11,7 @@ module RubyTerraform
         backend_config = opts[:backend_config] || {}
         source = opts[:from_module]
         path = opts[:path]
+        plugin_dir = opts[:plugin_dir]
 
         builder = builder
             .with_subcommand('init') do |sub|
@@ -18,6 +19,7 @@ module RubyTerraform
               sub = sub.with_option('-get', get) unless get.nil?
               sub = sub.with_option('-from-module', source) if source
               sub = sub.with_flag('-no-color') if no_color
+              sub = sub.with_option('-plugin-dir', plugin_dir) unless plugin_dir.nil?
               backend_config.each do |key, value|
                 sub = sub.with_option(
                     '-backend-config',
