@@ -67,6 +67,17 @@ describe RubyTerraform::Commands::Init do
         from_module: 'some/module/source')
   end
 
+  it 'uses the supplied plugin directory when provided' do
+    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
+
+    expect(Open4).to(
+      receive(:spawn)
+          .with('terraform init -plugin-dir=some/plugin/directory', any_args))
+
+    command.execute(
+      plugin_dir: 'some/plugin/directory')
+  end
+
   it 'adds the supplied path when provided' do
     command = RubyTerraform::Commands::Init.new(binary: 'terraform')
 
