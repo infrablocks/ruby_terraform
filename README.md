@@ -85,6 +85,8 @@ The init command supports the following options passed as keyword arguments:
 * `backend_config`: a map of backend specific configuration parameters.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
+* `plugin_dir`: directory containing plugin binaries. Overrides all default;
+  search paths for plugins and prevents the automatic installation of plugins.
 
 
 ### RubyTerraform::Commands::Get
