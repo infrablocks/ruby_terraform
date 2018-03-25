@@ -9,6 +9,7 @@ module RubyTerraform
         vars = opts[:vars] || {}
         var_file = opts[:var_file]
         state = opts[:state]
+        input = opts[:input]
         auto_approve = opts[:auto_approve]
         no_backup = opts[:no_backup]
         backup = no_backup ? '-' : opts[:backup]
@@ -21,6 +22,7 @@ module RubyTerraform
               end
               sub = sub.with_option('-var-file', var_file) if var_file
               sub = sub.with_option('-state', state) if state
+              sub = sub.with_option('-input', input) if input
               sub = sub.with_option('-auto-approve', auto_approve) unless auto_approve.nil?
               sub = sub.with_option('-backup', backup) if backup
               sub = sub.with_flag('-no-color') if no_color

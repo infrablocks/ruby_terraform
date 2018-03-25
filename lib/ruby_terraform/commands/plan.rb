@@ -10,6 +10,7 @@ module RubyTerraform
         var_file = opts[:var_file]
         state = opts[:state]
         plan = opts[:plan]
+        input = opts[:input]
         destroy = opts[:destroy]
         no_color = opts[:no_color]
 
@@ -21,6 +22,7 @@ module RubyTerraform
               sub = sub.with_option('-var-file', var_file) if var_file
               sub = sub.with_option('-state', state) if state
               sub = sub.with_option('-out', plan) if plan
+              sub = sub.with_option('-input', input) if input
               sub = sub.with_flag('-destroy') if destroy
               sub = sub.with_flag('-no-color') if no_color
               sub

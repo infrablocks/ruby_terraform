@@ -106,7 +106,38 @@ The get command supports the following options passed as keyword arguments:
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
   
+  
+### RubyTerraform::Commands::Plan
 
+The plan command will generate the execution plan in the provided
+configuration directory. It can be called in the following ways:
+
+```ruby
+RubyTerraform.plan(
+  directory: 'infra/networking', 
+  vars: {
+    region: 'eu-central'
+  })
+RubyTerraform::Commands::Plan.new.execute(
+  directory: 'infra/networking',
+  vars: {
+    region: 'eu-central'
+  })
+```
+
+The plan command supports the following options passed as keyword arguments:
+* `directory`: the directory containing terraform configuration; required.
+* `vars`: a map of vars to be passed in to the terraform configuration.
+* `var_file`: a file holding list of variables with their values (in terraform format) to be passed to terraform.
+* `state`: the path to the state file in which to store state; defaults to
+  terraform.tfstate in the working directory or the remote state if configured.
+* `plan`: the name of the in which to save the generated plan.
+* `input`: when `false`, will not ask for input for variables not directly set; defaults to `true`.
+* `destroy`: when `true`, no backup file will be written; defaults to `false`.
+* `no_color`: whether or not the output from the command should be in color;
+  defaults to `false`.
+  
+  
 ### RubyTerraform::Commands::Apply
 
 The apply command applies terraform configuration in the provided terraform
@@ -132,6 +163,7 @@ The apply command supports the following options passed as keyword arguments:
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `backup`: the path to the backup file in which to store the state backup.
+* `input`: when `false`, will not ask for input for variables not directly set; defaults to `true`.
 * `no_backup`: when `true`, no backup file will be written; defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.

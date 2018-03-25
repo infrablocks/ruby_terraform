@@ -130,4 +130,15 @@ describe RubyTerraform::Commands::Apply do
         directory: 'some/path/to/terraform/configuration',
         auto_approve: false)
   end
+  it 'adds a input option if a input value is provided' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform apply -input=false some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        input: 'false')
+  end
 end
