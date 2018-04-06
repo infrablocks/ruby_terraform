@@ -167,6 +167,8 @@ The apply command supports the following options passed as keyword arguments:
 * `no_backup`: when `true`, no backup file will be written; defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
+* `auto_approve`: if `true`, the command applys without prompting the user to confirm
+  the changes; defaults to `false`.
 
 
 ### RubyTerraform::Commands::Destroy
