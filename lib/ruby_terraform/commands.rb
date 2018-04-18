@@ -5,6 +5,7 @@ require_relative 'commands/plan'
 require_relative 'commands/apply'
 require_relative 'commands/destroy'
 require_relative 'commands/output'
+require_relative 'commands/refresh'
 require_relative 'commands/remote_config'
 
 module RubyTerraform

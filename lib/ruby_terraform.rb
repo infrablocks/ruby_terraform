@@ -47,6 +47,10 @@ module RubyTerraform
       Commands::RemoteConfig.new.execute(opts)
     end
 
+    def refresh(opts = {})
+      Commands::Refresh.new.execute(opts)
+    end
+
     def output(opts = {})
       Commands::Output.new.execute(opts)
     end
