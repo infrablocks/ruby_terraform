@@ -31,6 +31,10 @@ module RubyTerraform
       Commands::Get.new.execute(opts)
     end
 
+    def validate(opts = {})
+      Commands::Validate.new.execute(opts)
+    end
+
     def plan(opts = {})
       Commands::Plan.new.execute(opts)
     end
