@@ -1,3 +1,10 @@
+## 0.11.2 (May 1st, 2018)
+
+IMPROVEMENTS:
+
+* Add refresh command
+* Add validate command
+
 ## 0.9.0 (September 3rd, 2017)
 
 BACKWARDS INCOMPATIBILITIES / NOTES:
