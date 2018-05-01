@@ -31,6 +31,10 @@ module RubyTerraform
       Commands::Get.new.execute(opts)
     end
 
+    def validate(opts = {})
+      Commands::Validate.new.execute(opts)
+    end
+
     def plan(opts = {})
       Commands::Plan.new.execute(opts)
     end
@@ -45,6 +49,10 @@ module RubyTerraform
 
     def remote_config(opts = {})
       Commands::RemoteConfig.new.execute(opts)
+    end
+
+    def refresh(opts = {})
+      Commands::Refresh.new.execute(opts)
     end
 
     def output(opts = {})
