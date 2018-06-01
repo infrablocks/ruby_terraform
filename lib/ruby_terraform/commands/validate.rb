@@ -9,6 +9,7 @@ module RubyTerraform
         vars = opts[:vars] || {}
         var_file = opts[:var_file]
         state = opts[:state]
+        check_variables = opts[:check_variables]
         no_color = opts[:no_color]
 
         builder
@@ -18,6 +19,7 @@ module RubyTerraform
               end
               sub = sub.with_option('-var-file', var_file) if var_file
               sub = sub.with_option('-state', state) if state
+              sub = sub.with_option('-check-variables', check_variables) unless check_variables.nil?
               sub = sub.with_flag('-no-color') if no_color
               sub
             end
