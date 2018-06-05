@@ -1,3 +1,13 @@
+## 0.12.0 (June 5th, 2018)
+
+IMPROVEMENTS:
+
+* Allow `check_variables` option to be passed to `validate` command
+
+BUG FIXES:
+
+* Add missing `StringIO` dependency in `output` command 
+
 ## 0.11.2 (May 1st, 2018)
 
 IMPROVEMENTS:
