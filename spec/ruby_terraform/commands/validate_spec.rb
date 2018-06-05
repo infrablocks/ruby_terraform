@@ -70,6 +70,18 @@ describe RubyTerraform::Commands::Validate do
         no_color: true)
   end
 
+  it 'passes check-variables as false when specified' do
+    command = RubyTerraform::Commands::Validate.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('terraform validate -check-variables=false some/path/to/terraform/configuration', any_args))
+
+    command.execute(
+        directory: 'some/path/to/terraform/configuration',
+        check_variables: false)
+  end
+
   it 'adds a var-file option if a var file is provided' do
     command = RubyTerraform::Commands::Validate.new(binary: 'terraform')
 
