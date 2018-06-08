@@ -14,11 +14,11 @@ module RubyTerraform
       end
 
       def stdout
-        STDOUT
+        $stdout
       end
 
       def stderr
-        STDERR
+        $stderr
       end
 
       def execute(opts = {})
