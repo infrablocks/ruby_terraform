@@ -93,4 +93,19 @@ describe RubyTerraform::Commands::Validate do
         directory: 'some/configuration',
         var_file: 'some/vars.tfvars')
   end
+
+  it 'adds a var-file option for each supplied var-file' do
+    command = RubyTerraform::Commands::Validate.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform validate -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        var_file: [ 
+            'some/vars1.tfvars',
+            'some/vars2.tfvars'
+        ])
+  end
 end
