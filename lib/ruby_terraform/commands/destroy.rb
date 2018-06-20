@@ -7,7 +7,8 @@ module RubyTerraform
       def configure_command(builder, opts)
         directory = opts[:directory]
         vars = opts[:vars] || {}
-        var_file = opts[:var_file].kind_of?(String) ? opts[:var_file].lines : opts[:var_file] || []
+        var_file = opts[:var_file]
+        var_files = opts[:var_files] || []
         state = opts[:state]
         force = opts[:force]
         no_backup = opts[:no_backup]
@@ -19,7 +20,8 @@ module RubyTerraform
               vars.each do |key, value|
                 sub = sub.with_option('-var', "'#{key}=#{value}'", separator: ' ')
               end
-              var_file.each do |file|
+              sub = sub.with_option('-var-file', var_file) if var_file
+              var_files.each do |file|
                 sub = sub.with_option('-var-file', file)
               end
               sub = sub.with_option('-state', state) if state
