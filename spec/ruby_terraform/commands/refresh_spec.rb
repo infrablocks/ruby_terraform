@@ -70,15 +70,34 @@ describe RubyTerraform::Commands::Refresh do
         no_color: true)
   end
 
-  it 'adds a var-file option if a var file is provided' do
+  it 'adds a var-file option for each element of var-files array' do
     command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
 
     expect(Open4).to(
         receive(:spawn)
-            .with("terraform refresh -var-file=some/vars.tfvars some/configuration", any_args))
+            .with("terraform refresh -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars some/configuration", any_args))
 
     command.execute(
         directory: 'some/configuration',
-        var_file: 'some/vars.tfvars')
+        var_files: [ 
+            'some/vars1.tfvars',
+            'some/vars2.tfvars'
+        ])
+  end
+
+  it 'ensures that var_file and var_files options work together' do
+    command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform refresh -var-file=some/vars.tfvars -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        var_file: 'some/vars.tfvars',
+        var_files: [ 
+            'some/vars1.tfvars',
+            'some/vars2.tfvars'
+        ])
   end
 end

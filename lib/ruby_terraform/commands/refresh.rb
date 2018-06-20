@@ -8,6 +8,7 @@ module RubyTerraform
         directory = opts[:directory]
         vars = opts[:vars] || {}
         var_file = opts[:var_file]
+        var_files = opts[:var_files] || []
         state = opts[:state]
         refresh = opts[:refresh]
         input = opts[:input]
@@ -21,6 +22,9 @@ module RubyTerraform
                 sub = sub.with_option('-var', "'#{key}=#{value}'", separator: ' ')
               end
               sub = sub.with_option('-var-file', var_file) if var_file
+              var_files.each do |file|
+                sub = sub.with_option('-var-file', file)
+              end
               sub = sub.with_option('-state', state) if state
               sub = sub.with_option('-input', input) if input
               sub = sub.with_option('-target', target) if target
