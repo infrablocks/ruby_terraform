@@ -9,6 +9,8 @@ module RubyTerraform
         vars = opts[:vars] || {}
         var_file = opts[:var_file]
         var_files = opts[:var_files] || []
+        target = opts[:target]
+        targets = opts[:targets] || []
         state = opts[:state]
         force = opts[:force]
         no_backup = opts[:no_backup]
@@ -23,6 +25,10 @@ module RubyTerraform
               sub = sub.with_option('-var-file', var_file) if var_file
               var_files.each do |file|
                 sub = sub.with_option('-var-file', file)
+              end
+              sub = sub.with_option('-target', target) if target
+              targets.each do |target_name|
+                sub = sub.with_option('-target', target_name)
               end
               sub = sub.with_option('-state', state) if state
               sub = sub.with_option('-backup', backup) if backup
