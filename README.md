@@ -134,9 +134,9 @@ The plan command supports the following options passed as keyword arguments:
   `var_files` are provided, all var files will be passed to terraform.
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
-* `plan`: the name of the in which to save the generated plan.
+* `plan`: the name of the file in which to save the generated plan.
 * `input`: when `false`, will not ask for input for variables not directly set; defaults to `true`.
-* `destroy`: when 'true', a plan will be generated to destroy all resources
+* `destroy`: when `true`, a plan will be generated to destroy all resources
   managed by the given configuration and state; defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
