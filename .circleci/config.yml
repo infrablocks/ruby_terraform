@@ -7,3 +7,17 @@ jobs:
       steps:
       - checkout
       - run: ./scripts/ci/steps/test.sh
+  prerelease:
+    working_directory: ~/ruby-terraform
+      docker:
+      - image: ruby:2.3.7
+      steps:
+      - checkout
+      - run: ./scripts/ci/steps/prerelease.sh
+
+workflows:
+  version: 2
+    pipeline:
+      jobs:
+      - test
+      - prerelease
