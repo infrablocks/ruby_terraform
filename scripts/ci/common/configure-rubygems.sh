@@ -9,8 +9,8 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-./go version:bump[pre]
-./go release
+git crypt unlock
 
-git status
-git push
+mkdir -p ~/.gem
+cp config/secrets/rubygems/credentials ~/.gem/credentials
+chmod 0600 ~/.gem/credentials

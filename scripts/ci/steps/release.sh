@@ -9,21 +9,6 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-set +e
-openssl aes-256-cbc \
-    -d \
-    -in ./.circleci/gpg.private.enc -k "${ENCRYPTION_PASSPHRASE}" | gpg --import -
-set -e
-
-git crypt unlock
-
-git config --global user.email "circleci@infrablocks.io"
-git config --global user.name "Circle CI"
-
-mkdir -p ~/.gem
-cp config/secrets/rubygems/credentials ~/.gem/credentials
-chmod 0600 ~/.gem/credentials
-
 git pull
 
 ./go version:bump[minor]
