@@ -26,4 +26,5 @@ chmod 0600 ~/.gem/credentials
 
 ./go publish:release
 
+git pull --rebase
 git push
