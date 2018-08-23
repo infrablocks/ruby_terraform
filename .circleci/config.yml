@@ -16,6 +16,7 @@ jobs:
     - run: ./scripts/ci/common/install-git-crypt.sh
     - run: ./scripts/ci/common/install-gpg-key.sh
     - run: ./scripts/ci/common/configure-git.sh
+    - run: ./scripts/ci/common/configure-rubygems.sh
     - run: ./scripts/ci/steps/prerelease.sh
   release:
     working_directory: ~/ruby-terraform
@@ -26,6 +27,7 @@ jobs:
     - run: ./scripts/ci/common/install-git-crypt.sh
     - run: ./scripts/ci/common/install-gpg-key.sh
     - run: ./scripts/ci/common/configure-git.sh
+    - run: ./scripts/ci/common/configure-rubygems.sh
     - run: ./scripts/ci/steps/release.sh
 
 workflows:
