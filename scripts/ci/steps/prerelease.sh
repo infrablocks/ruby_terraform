@@ -9,7 +9,10 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-echo $(openssl version)
+if [[ $(git log -1 --pretty=%B) == *Bump to* ]]; then
+  echo "Last commit was a release commit, ignoring."
+  exit
+fi
 
 set +e
 openssl aes-256-cbc \
