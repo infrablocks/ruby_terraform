@@ -9,7 +9,7 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-echo $(openssl --version)
+echo $(openssl version)
 
 set +e
 openssl aes-256-cbc \
