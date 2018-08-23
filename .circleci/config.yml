@@ -1,0 +1,9 @@
+version: 2
+jobs:
+  test:
+    working_directory: ~/ruby-terraform
+      docker:
+      - image: ruby:2.3.7
+      steps:
+      - checkout
+      - run: ./scripts/ci/steps/test.sh
