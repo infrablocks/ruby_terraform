@@ -15,6 +15,14 @@ jobs:
     - checkout
     - run: ./scripts/ci/common/install-git-crypt.sh
     - run: ./scripts/ci/steps/prerelease.sh
+  release:
+    working_directory: ~/ruby-terraform
+    docker:
+    - image: ruby:2.3.7
+    steps:
+    - checkout
+    - run: ./scripts/ci/common/install-git-crypt.sh
+    - run: ./scripts/ci/steps/release.sh
 
 workflows:
   version: 2
@@ -24,6 +32,19 @@ workflows:
     - prerelease:
         requires:
         - test
+        filters:
+          branches:
+            only: master
+    - hold:
+        type: approval
+        requires:
+        - prerelease
+        filters:
+          branches:
+            only: master
+    - release:
+        requires:
+        - hold
         filters:
           branches:
             only: master
