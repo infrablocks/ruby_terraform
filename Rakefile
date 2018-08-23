@@ -9,16 +9,12 @@ namespace :version do
   namespace :bump do
     desc "Bump version for prerelease"
     task :prerelease do
-      sh "gem bump --version pre " +
-             "&& bundle install " +
-             "&& git commit -a --amend --no-edit"
+      bump_version_for('pre')
     end
 
     desc "Bump version for release"
     task :release do
-      sh "gem bump --version pre " +
-             "&& bundle install " +
-             "&& git commit -a --amend --no-edit"
+      bump_version_for('minor')
     end
   end
 end
@@ -35,4 +31,10 @@ namespace :publish do
     Rake::Task['version:bump:release'].invoke
     Rake::Task['release'].invoke
   end
+end
+
+def bump_version_for(version_type)
+  sh "gem bump --version #{version_type} " +
+         "&& bundle install " +
+         "&& git commit -a --amend --no-edit"
 end
