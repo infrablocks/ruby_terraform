@@ -17,7 +17,7 @@ jobs:
 
 workflows:
   version: 2
-    pipeline:
-      jobs:
-      - test
-      - prerelease
+  pipeline:
+    jobs:
+    - test
+    - prerelease
