@@ -12,20 +12,6 @@ namespace :version do
   end
 end
 
-namespace :publish do
-  desc "Publish prerelease version"
-  task :prerelease do
-    Rake::Task['version:bump'].invoke('pre')
-    Rake::Task['release'].invoke
-  end
-
-  desc "Publish release version"
-  task :release do
-    Rake::Task['version:bump'].invoke('minor')
-    Rake::Task['release'].invoke
-  end
-end
-
 def bump_version_for(version_type)
   sh "gem bump --version #{version_type} " +
          "&& bundle install " +

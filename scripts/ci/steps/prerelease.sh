@@ -24,6 +24,8 @@ mkdir -p ~/.gem
 cp config/secrets/rubygems/credentials ~/.gem/credentials
 chmod 0600 ~/.gem/credentials
 
-./go publish:prerelease
+./go version:bump[pre]
+./go release
 
+git status
 git push
