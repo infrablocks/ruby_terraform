@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors = ['Toby Clemson']
   spec.email = ['tobyclemson@gmail.com']
 
-  spec.date = '2017-02-20'
+  spec.date = Date.today.to_s
   spec.summary = 'A simple Ruby wrapper for invoking Terraform commands.'
   spec.description = 'Wraps the Terraform CLI so that Terraform can be invoked from a Ruby script or Rakefile.'
   spec.homepage = 'https://github.com/tobyclemson/ruby_terraform'
@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
     f.match(%r{^(test|spec|features)/})
   end
   spec.bindir = 'exe'
-  spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
+  spec.executables = spec.files.grep(%r{^exe/}) {|f| File.basename(f)}
   spec.require_paths = ['lib']
 
   spec.add_dependency 'lino', '~> 1.1'
