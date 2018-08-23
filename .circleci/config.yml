@@ -23,3 +23,6 @@ workflows:
     - prerelease:
         requires:
         - test
+        filters:
+          branches:
+            only: master
