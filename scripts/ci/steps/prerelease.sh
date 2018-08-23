@@ -9,4 +9,7 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
+git config --global user.email "circleci@infrablocks.io"
+git config --global user.name "Circle CI"
+
 ./go publish:prerelease
