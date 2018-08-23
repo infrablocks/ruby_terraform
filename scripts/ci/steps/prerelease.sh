@@ -13,3 +13,5 @@ git config --global user.email "circleci@infrablocks.io"
 git config --global user.name "Circle CI"
 
 ./go publish:prerelease
+
+git push
