@@ -20,4 +20,6 @@ workflows:
   pipeline:
     jobs:
     - test
-    - prerelease
+    - prerelease:
+        requires:
+        - test
