@@ -9,8 +9,6 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-env
-
 set +e
 openssl aes-256-cbc \
     -d \
