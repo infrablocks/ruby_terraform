@@ -13,6 +13,7 @@ jobs:
     - image: ruby:2.3.7
     steps:
     - checkout
+    - run: ./scripts/ci/common/install-git-crypt.sh
     - run: ./scripts/ci/steps/prerelease.sh
 
 workflows:
