@@ -29,6 +29,6 @@ end
 def bump_version_for(version_type)
   sh "gem bump --version #{version_type} " +
          "&& bundle install " +
-         "&& export LAST_MESSAGE=$(git log -1 --pretty=%B) " +
+         "&& export LAST_MESSAGE=\"$(git log -1 --pretty=%B)\" " +
          "&& git commit -a --amend -m \"${LAST_MESSAGE} [ci skip]\""
 end
