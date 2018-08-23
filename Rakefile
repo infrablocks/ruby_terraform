@@ -6,29 +6,22 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 namespace :version do
-  namespace :bump do
-    desc "Bump version for prerelease"
-    task :prerelease do
-      bump_version_for('pre')
-    end
-
-    desc "Bump version for release"
-    task :release do
-      bump_version_for('minor')
-    end
+  desc "Bump version for specified type (pre, major, minor patch)"
+  task :bump, [:type] do |_, args|
+    bump_version_for(args.type)
   end
 end
 
 namespace :publish do
   desc "Publish prerelease version"
   task :prerelease do
-    Rake::Task['version:bump:prerelease'].invoke
+    Rake::Task['version:bump'].invoke('pre')
     Rake::Task['release'].invoke
   end
 
   desc "Publish release version"
   task :release do
-    Rake::Task['version:bump:release'].invoke
+    Rake::Task['version:bump'].invoke('minor')
     Rake::Task['release'].invoke
   end
 end
