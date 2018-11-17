@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-terraform (0.15.1.pre1)
+    ruby-terraform (0.15.1.pre2)
       lino (~> 1.1)
 
 GEM
@@ -42,4 +42,4 @@ DEPENDENCIES
   ruby-terraform!
 
 BUNDLED WITH
-   1.16.6
+   1.17.1
