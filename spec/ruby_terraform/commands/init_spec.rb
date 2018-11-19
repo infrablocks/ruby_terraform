@@ -41,6 +41,16 @@ describe RubyTerraform::Commands::Init do
     command.execute(no_color: true)
   end
 
+  it 'includes the force-copy flag when the force_copy option is true' do
+    command = RubyTerraform::Commands::Init.new
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('path/to/binary init -force-copy=true', any_args))
+
+    command.execute(force_copy: true)
+  end
+
   it 'adds a backend-config option for each supplied backend config' do
     command = RubyTerraform::Commands::Init.new(binary: 'terraform')
 
