@@ -1,4 +1,3 @@
-require "bundler/gem_tasks"
 require "rspec/core/rake_task"
 
 RSpec::Core::RakeTask.new(:spec)
@@ -12,9 +11,14 @@ namespace :version do
   end
 end
 
+desc "Release gem"
+task :release do
+  sh "gem release --tag --push"
+end
+
 def bump_version_for(version_type)
-  sh "gem bump --version #{version_type} --tag " +
-         "&& bundle install " +
-         "&& export LAST_MESSAGE=\"$(git log -1 --pretty=%B)\" " +
-         "&& git commit -a --amend -m \"${LAST_MESSAGE} [ci skip]\""
+  sh "gem bump --version #{version_type} " +
+      "&& bundle install " +
+      "&& export LAST_MESSAGE=\"$(git log -1 --pretty=%B)\" " +
+      "&& git commit -a --amend -m \"${LAST_MESSAGE} [ci skip]\""
 end
