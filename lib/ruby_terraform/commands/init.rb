@@ -12,10 +12,12 @@ module RubyTerraform
         source = opts[:from_module]
         path = opts[:path]
         plugin_dir = opts[:plugin_dir]
+        force_copy = opts[:force_copy]
 
         builder = builder
             .with_subcommand('init') do |sub|
               sub = sub.with_option('-backend', backend) unless backend.nil?
+              sub = sub.with_option('-force-copy', force_copy) unless force_copy.nil?
               sub = sub.with_option('-get', get) unless get.nil?
               sub = sub.with_option('-from-module', source) if source
               sub = sub.with_flag('-no-color') if no_color
