@@ -13,11 +13,13 @@ module RubyTerraform
         name = opts[:name]
         state = opts[:state]
         no_color = opts[:no_color]
+        mod = opts[:module]
 
         builder = builder
             .with_subcommand('output') do |sub|
               sub = sub.with_flag('-no-color') if no_color
               sub = sub.with_option('-state', state) if state
+              sub = sub.with_option('-module', mod) if mod
               sub
             end
         builder = builder.with_argument(name) if name
