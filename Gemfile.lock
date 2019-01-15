@@ -35,11 +35,11 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  bundler (~> 1.17)
+  bundler (~> 1.16)
   gem-release (~> 2.0)
   rake (~> 12.3)
   rspec (~> 3.8)
   ruby-terraform!
 
 BUNDLED WITH
-   1.17.1
+   1.17.2
