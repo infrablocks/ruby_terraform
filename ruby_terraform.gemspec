@@ -13,7 +13,7 @@ Gem::Specification.new do |spec|
   spec.date = Date.today.to_s
   spec.summary = 'A simple Ruby wrapper for invoking Terraform commands.'
   spec.description = 'Wraps the Terraform CLI so that Terraform can be invoked from a Ruby script or Rakefile.'
-  spec.homepage = 'https://github.com/tobyclemson/ruby_terraform'
+  spec.homepage = 'https://github.com/infrablocks/ruby_terraform'
   spec.license = "MIT"
 
   spec.files = `git ls-files -z`.split("\x0").reject do |f|
