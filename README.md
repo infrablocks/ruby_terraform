@@ -230,6 +230,7 @@ The output command supports the following options passed as keyword arguments:
   terraform.tfstate in the working directory or the remote state if configured.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
+* `module`: the name of a module to retrieve output from.
 
 
 ### RubyTerraform::Commands::RemoteConfig

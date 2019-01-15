@@ -51,6 +51,16 @@ describe RubyTerraform::Commands::Output do
     command.execute(name: 'important_output')
   end
 
+  it 'passes the provided module name if supplied' do
+    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
+
+    expect(Open4).to(
+      receive(:spawn)
+          .with("terraform output -module=some_module", any_args))
+
+    command.execute(module: 'some_module')
+  end
+
   it 'captures and returns the output of the command directly when no name is supplied' do
     command = RubyTerraform::Commands::Output.new(binary: 'terraform')
 
