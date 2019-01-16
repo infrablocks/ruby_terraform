@@ -41,6 +41,7 @@ Currently, there is partial support for the following commands:
   and modules.
 * `RubyTerraform::Commands::Init`: executes `terraform init`
 * `RubyTerraform::Commands::Get`: executes `terraform get`
+* `RubyTerraform::Commands::Plan`: executes `terraform plan`
 * `RubyTerraform::Commands::Apply`: executes `terraform apply`
 * `RubyTerraform::Commands::Destroy`: executes `terraform destroy`
 * `RubyTerraform::Commands::Output`: executes `terraform output`
@@ -279,7 +280,7 @@ git commits and tags, and push the `.gem` file to
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at 
-https://github.com/tobyclemson/ruby_terraform. This project is intended to be a
+https://github.com/infrablocks/ruby_terraform. This project is intended to be a
 safe, welcoming space for collaboration, and contributors are expected to adhere
 to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
