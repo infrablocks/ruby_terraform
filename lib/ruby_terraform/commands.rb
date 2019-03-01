@@ -8,6 +8,7 @@ require_relative 'commands/destroy'
 require_relative 'commands/output'
 require_relative 'commands/refresh'
 require_relative 'commands/remote_config'
+require_relative 'commands/show'
 
 module RubyTerraform
   module Commands
