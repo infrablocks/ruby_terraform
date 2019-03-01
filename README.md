@@ -74,15 +74,15 @@ the following ways:
 
 ```ruby
 RubyTerraform.init
-RubyTerraform.init(source: 'some/module/path', path: 'infra/module')
+RubyTerraform.init(from_module: 'some/module/path', path: 'infra/module')
 RubyTerraform::Commands::Init.new.execute
 RubyTerraform::Commands::Init.new.execute(
-    source: 'some/module/path',
+    from_module: 'some/module/path', 
     path: 'infra/module')
 ```
 
 The init command supports the following options passed as keyword arguments:
-* `source`: the source module to use to initialise; required if `path` is
+* `from_module`: the source module to use to initialise; required if `path` is 
   specified
 * `path`: the path to initialise.
 * `backend`: `true`/`false`, whether or not to configure the backend.
