@@ -161,6 +161,7 @@ describe RubyTerraform::Commands::Apply do
         directory: 'some/path/to/terraform/configuration',
         auto_approve: false)
   end
+
   it 'adds a input option if a input value is provided' do
     command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
 
@@ -171,5 +172,57 @@ describe RubyTerraform::Commands::Apply do
     command.execute(
         directory: 'some/configuration',
         input: 'false')
+  end
+
+  context 'apply output' do
+    it 'captures with CRLF format' do
+      command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+      mock_stringIO_output("\r\nOutputs:\r\n\r\nsome output")
+
+      expect(command.execute(directory: 'some/dir')).to eq('some output')
+    end
+
+    it 'captures with LF format' do
+      command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+      mock_stringIO_output("\nOutputs:\n\nsome output")
+
+      expect(command.execute(directory: 'some/dir')).to eq('some output')
+    end
+
+    it 'captures with CR format' do
+      command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+      mock_stringIO_output("\rOutputs:\r\rsome output")
+
+      expect(command.execute(directory: 'some/dir')).to eq('some output')
+    end
+
+    it 'captures with bash colour suffix' do
+      command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+      mock_stringIO_output("\rOutputs:\r\rsome output\e[0m")
+
+      expect(command.execute(directory: 'some/dir')).to eq('some output')
+    end
+
+    it 'silently ignores apply without output' do
+      command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+      mock_stringIO_output("Apply complete! Resources: 2 added, 0 changed, 0 destroyed.")
+
+      expect(command.execute(directory: 'some/dir')).to eq('')
+    end
+  end
+
+  def mock_stringIO_output(apply_no_output)
+    string_io = double('string IO')
+    allow(StringIO).to(receive(:new).and_return(string_io))
+    allow(string_io).to(receive(:string).and_return(apply_no_output))
+
+    expect(Open4)
+        .to(receive(:spawn)
+                .with(instance_of(String), hash_including(stdout: string_io)))
   end
 end

@@ -1,9 +1,14 @@
 require 'lino'
+require 'stringio'
 require_relative 'base'
 
 module RubyTerraform
   module Commands
     class Apply < Base
+      def stdout
+        @stdout ||= StringIO.new
+      end
+
       def configure_command(builder, opts)
         directory = opts[:directory]
         vars = opts[:vars] || {}
@@ -33,6 +38,24 @@ module RubyTerraform
               sub
             end
             .with_argument(directory)
+      end
+
+      def do_after(opts)
+        parse_apply_output(stdout.string)
+      end
+
+      private
+      def parse_apply_output(apply_output)
+        output_header = "Outputs:"
+        bash_colour_indicator = "\e"
+
+        return '' unless apply_output.include? output_header
+
+        apply_output.split(output_header)
+            .last
+            .split(bash_colour_indicator)
+            .first
+            .strip
       end
     end
   end
