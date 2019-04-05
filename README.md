@@ -46,6 +46,7 @@ Currently, there is partial support for the following commands:
 * `RubyTerraform::Commands::Destroy`: executes `terraform destroy`
 * `RubyTerraform::Commands::Output`: executes `terraform output`
 * `RubyTerraform::Commands::RemoteConfig`: executes `terraform remote config`
+* `RubyTerraform::Commands::Workspace`: executes `terraform workspace`
 
 ### RubyTerraform::Commands::Clean
 
@@ -264,6 +265,23 @@ arguments:
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
 
+### RubyTerraform::Commands::Workspace
+
+The `workspace` command configures [Terraform Workspaces](https://www.terraform.io/docs/state/workspaces.html#using-workspaces). It can be used as follows:
+
+```ruby
+RubyTerraform.workspace(operation: 'list') # terraform workspace list
+RubyTerraform.workspace(operation: 'new', workspace: 'staging') # terraform workspace new staging
+RubyTerraform.workspace(operation: 'select', workspace: 'staging') # terraform workspace select staging
+RubyTerraform.workspace(operation: 'list') # terraform workspace list
+RubyTerraform.workspace(operation: 'select', workspace: 'default') # terraform workspace select default
+RubyTerraform.workspace(operation: 'delete', workspace: 'staging') # terraform workspace delete staging
+```
+
+The workspace command supports the following options passed as keyword arguments:
+* `directory`: the directory containing terraform configuration, the default is the current path.
+* `operation`: `list`, `select`, `new` or `delete`. default `list`.
+* `workspace`: Workspace name.
 
 ## Development
 
