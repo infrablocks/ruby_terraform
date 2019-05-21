@@ -59,6 +59,10 @@ module RubyTerraform
       Commands::Output.new.execute(opts)
     end
 
+    def workspace(opts = {})
+      Commands::Workspace.new.execute(opts)
+    end
+
     def output_from_remote(opts)
       output_name = opts[:name]
       remote_opts = opts[:remote]
