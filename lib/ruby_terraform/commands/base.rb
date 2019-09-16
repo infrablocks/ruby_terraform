@@ -5,8 +5,9 @@ module RubyTerraform
     class Base
       attr_reader :binary
 
-      def initialize(binary: nil)
+      def initialize(binary: nil, logger: nil)
         @binary = binary || RubyTerraform.configuration.binary
+        @logger = logger || RubyTerraform.configuration.logger
       end
 
       def stdin
@@ -25,12 +26,15 @@ module RubyTerraform
         builder = instantiate_builder
 
         do_before(opts)
-        configure_command(builder, opts)
-          .build
-          .execute(
-              stdin: stdin,
-              stdout: stdout,
-              stderr: stderr)
+        command = configure_command(builder, opts)
+                    .build
+        @logger.debug "Running #{command.to_s}"
+
+        command.execute(
+          stdin: stdin,
+          stdout: stdout,
+          stderr: stderr
+        )
         do_after(opts)
       end
 

@@ -4,6 +4,7 @@ describe RubyTerraform::Commands::Plan do
   before(:each) do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
+      @logger_mock = config.logger
     end
   end
 
@@ -18,6 +19,11 @@ describe RubyTerraform::Commands::Plan do
         receive(:spawn)
             .with('terraform plan some/path/to/terraform/configuration', any_args))
 
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with('Running terraform plan some/path/to/terraform/configuration')
+    )
+
     command.execute(directory: 'some/path/to/terraform/configuration')
   end
 
@@ -28,6 +34,11 @@ describe RubyTerraform::Commands::Plan do
         receive(:spawn)
             .with('path/to/binary plan some/path/to/terraform/configuration', any_args))
 
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with('Running path/to/binary plan some/path/to/terraform/configuration')
+    )
+
     command.execute(directory: 'some/path/to/terraform/configuration')
   end
 
@@ -37,6 +48,11 @@ describe RubyTerraform::Commands::Plan do
     expect(Open4).to(
         receive(:spawn)
             .with("terraform plan -var 'first=1' -var 'second=two' some/configuration", any_args))
+
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -var 'first=1' -var 'second=two' some/configuration")
+    )
 
     command.execute(
         directory: 'some/configuration',
@@ -53,6 +69,11 @@ describe RubyTerraform::Commands::Plan do
         receive(:spawn)
             .with("terraform plan -state=some/state.tfstate some/configuration", any_args))
 
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -state=some/state.tfstate some/configuration")
+    )
+
     command.execute(
         directory: 'some/configuration',
         state: 'some/state.tfstate')
@@ -64,6 +85,11 @@ describe RubyTerraform::Commands::Plan do
     expect(Open4).to(
         receive(:spawn)
             .with("terraform plan -out=some/plan.tfplan some/configuration", any_args))
+
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -out=some/plan.tfplan some/configuration")
+    )
 
     command.execute(
         directory: 'some/configuration',
@@ -77,6 +103,11 @@ describe RubyTerraform::Commands::Plan do
         receive(:spawn)
             .with('terraform plan -no-color some/path/to/terraform/configuration', any_args))
 
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -no-color some/path/to/terraform/configuration")
+    )
+
     command.execute(
         directory: 'some/path/to/terraform/configuration',
         no_color: true)
@@ -88,6 +119,11 @@ describe RubyTerraform::Commands::Plan do
     expect(Open4).to(
         receive(:spawn)
             .with('terraform plan -destroy some/path/to/terraform/configuration', any_args))
+
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -destroy some/path/to/terraform/configuration")
+    )
 
     command.execute(
         directory: 'some/path/to/terraform/configuration',
@@ -101,6 +137,11 @@ describe RubyTerraform::Commands::Plan do
         receive(:spawn)
             .with("terraform plan -var-file=some/vars.tfvars some/configuration", any_args))
 
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -var-file=some/vars.tfvars some/configuration")
+    )
+
     command.execute(
         directory: 'some/configuration',
         var_file: 'some/vars.tfvars')
@@ -113,9 +154,14 @@ describe RubyTerraform::Commands::Plan do
         receive(:spawn)
             .with("terraform plan -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars some/configuration", any_args))
 
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars some/configuration")
+    )
+
     command.execute(
         directory: 'some/configuration',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
@@ -128,10 +174,15 @@ describe RubyTerraform::Commands::Plan do
         receive(:spawn)
             .with("terraform plan -var-file=some/vars.tfvars -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars some/configuration", any_args))
 
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -var-file=some/vars.tfvars -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars some/configuration")
+    )
+
     command.execute(
         directory: 'some/configuration',
         var_file: 'some/vars.tfvars',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
@@ -143,6 +194,11 @@ describe RubyTerraform::Commands::Plan do
     expect(Open4).to(
         receive(:spawn)
             .with("terraform plan -input=false some/configuration", any_args))
+
+    expect(@logger_mock).to(
+      receive(:debug)
+        .with("Running terraform plan -input=false some/configuration")
+    )
 
     command.execute(
         directory: 'some/configuration',
