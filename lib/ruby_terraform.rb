@@ -1,5 +1,6 @@
 require 'ruby_terraform/version'
 require 'ruby_terraform/commands'
+require 'logger'
 
 module RubyTerraform
   class << self
@@ -79,10 +80,25 @@ module RubyTerraform
   end
 
   class Configuration
-    attr_accessor :binary
+    attr_accessor :binary, :logger
 
     def initialize
       @binary = 'terraform'
+      @logger = Logger.new(STDOUT, level: :info)
+    end
+  end
+
+  class MultiIO
+    def initialize(*targets)
+      @targets = targets
+    end
+
+    def write(*args)
+      @targets.each {|t| t.write(*args)}
+    end
+
+    def close
+      @targets.each(&:close)
     end
   end
 end
