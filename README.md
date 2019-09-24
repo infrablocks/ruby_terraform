@@ -306,7 +306,7 @@ require 'logger'
 
 RubyTerraform.configure do |config|
   config.logger = Logger.new(STDOUT, level: :debug)
-do
+end
 ```
 
 RubyTerraform supports logging to different outputs at once, for example:
@@ -317,8 +317,8 @@ require 'logger'
 log_file = File.open('path/to/some/ruby_terraform.log', 'a')
 
 RubyTerraform.configure do |config|
-  config.logger = Logger.new(RubyTerraform.MultiIO.new(STDOUT, log_file), level: :debug)
-do
+  config.logger = Logger.new(RubyTerraform::MultiIO.new(STDOUT, log_file), level: :debug)
+end
 ```
 
 With that configuration, the call `logger.info 'some info'` will log in the `STDOUT` and `log_file`
