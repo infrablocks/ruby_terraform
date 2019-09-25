@@ -6,7 +6,8 @@ module RubyTerraform
   module Commands
     class Output < Base
       def stdout
-        @stdout = StringIO.new unless defined?(@stdout) && @stdout.respond_to?(:string)
+        @stdout = StringIO.new unless
+            defined?(@stdout) && @stdout.respond_to?(:string)
       end
 
       def configure_command(builder, opts)

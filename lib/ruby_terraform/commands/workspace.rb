@@ -13,8 +13,11 @@ module RubyTerraform
             .with_subcommand('workspace')
             .with_subcommand(operation)
 
-        builder = builder.with_subcommand(workspace) if workspace && operation != 'list'
+        builder = builder.with_subcommand(workspace) if
+            workspace && operation != 'list'
         builder = builder.with_argument(directory)
+
+        builder
       end
     end
   end

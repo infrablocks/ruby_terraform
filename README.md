@@ -43,9 +43,11 @@ Currently, there is partial support for the following commands:
 * `RubyTerraform::Commands::Get`: executes `terraform get`
 * `RubyTerraform::Commands::Plan`: executes `terraform plan`
 * `RubyTerraform::Commands::Apply`: executes `terraform apply`
+* `RubyTerraform::Commands::Show`: executes `terraform show`
 * `RubyTerraform::Commands::Destroy`: executes `terraform destroy`
 * `RubyTerraform::Commands::Output`: executes `terraform output`
 * `RubyTerraform::Commands::RemoteConfig`: executes `terraform remote config`
+* `RubyTerraform::Commands::Validate`: executes `terraform validate`
 * `RubyTerraform::Commands::Workspace`: executes `terraform workspace`
 
 ### RubyTerraform::Commands::Clean
@@ -267,25 +269,30 @@ arguments:
 
 ### RubyTerraform::Commands::Workspace
 
-The `workspace` command configures [Terraform Workspaces](https://www.terraform.io/docs/state/workspaces.html#using-workspaces). It can be used as follows:
+The `workspace` command configures 
+[Terraform Workspaces](https://www.terraform.io/docs/state/workspaces.html#using-workspaces). 
+It can be used as follows:
 
 ```ruby
-RubyTerraform.workspace(operation: 'list') # terraform workspace list
-RubyTerraform.workspace(operation: 'new', workspace: 'staging') # terraform workspace new staging
-RubyTerraform.workspace(operation: 'select', workspace: 'staging') # terraform workspace select staging
-RubyTerraform.workspace(operation: 'list') # terraform workspace list
-RubyTerraform.workspace(operation: 'select', workspace: 'default') # terraform workspace select default
-RubyTerraform.workspace(operation: 'delete', workspace: 'staging') # terraform workspace delete staging
+RubyTerraform.workspace(operation: 'list')
+RubyTerraform.workspace(operation: 'new', workspace: 'staging')
+RubyTerraform.workspace(operation: 'select', workspace: 'staging')
+RubyTerraform.workspace(operation: 'list')
+RubyTerraform.workspace(operation: 'select', workspace: 'default')
+RubyTerraform.workspace(operation: 'delete', workspace: 'staging')
 ```
 
-The workspace command supports the following options passed as keyword arguments:
-* `directory`: the directory containing terraform configuration, the default is the current path.
+The workspace command supports the following options passed as keyword 
+arguments:
+* `directory`: the directory containing terraform configuration, the default is 
+  the current path.
 * `operation`: `list`, `select`, `new` or `delete`. default `list`.
 * `workspace`: Workspace name.
 
 ## Configure
 
-RubyTerraform offers a logger, stdin, stdout and stderr by default but this settings can be configured.
+RubyTerraform offers a logger, stdin, stdout and stderr by default but this 
+settings can be configured.
 
 ### Logger
 

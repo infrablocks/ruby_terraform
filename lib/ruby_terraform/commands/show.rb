@@ -5,7 +5,6 @@ require_relative 'base'
 
 module RubyTerraform
   module Commands
-    # Supports the `terraform show` directive
     class Show < Base
       def configure_command(builder, opts)
         no_color = opts[:no_color]

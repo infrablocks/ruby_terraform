@@ -14,7 +14,8 @@ module RubyTerraform
             .with_subcommand('config') do |sub|
               sub = sub.with_option('-backend', backend) if backend
               backend_config.each do |key, value|
-                sub = sub.with_option('-backend-config', "'#{key}=#{value}'", separator: ' ')
+                sub = sub.with_option(
+                    '-backend-config', "'#{key}=#{value}'", separator: ' ')
               end
 
               sub = sub.with_flag('-no-color') if no_color

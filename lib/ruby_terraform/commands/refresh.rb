@@ -10,16 +10,15 @@ module RubyTerraform
         var_file = opts[:var_file]
         var_files = opts[:var_files] || []
         state = opts[:state]
-        refresh = opts[:refresh]
         input = opts[:input]
         target = opts[:target]
-        destroy = opts[:destroy]
         no_color = opts[:no_color]
 
         builder
             .with_subcommand('refresh') do |sub|
               vars.each do |key, value|
-                sub = sub.with_option('-var', "'#{key}=#{value}'", separator: ' ')
+                sub = sub.with_option(
+                    '-var', "'#{key}=#{value}'", separator: ' ')
               end
               sub = sub.with_option('-var-file', var_file) if var_file
               var_files.each do |file|

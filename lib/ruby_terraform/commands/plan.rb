@@ -18,7 +18,8 @@ module RubyTerraform
         builder
             .with_subcommand('plan') do |sub|
               vars.each do |key, value|
-                sub = sub.with_option('-var', "'#{key}=#{value}'", separator: ' ')
+                sub = sub.with_option(
+                    '-var', "'#{key}=#{value}'", separator: ' ')
               end
               sub = sub.with_option('-var-file', var_file) if var_file
               var_files.each do |file|
