@@ -5,6 +5,10 @@ describe RubyTerraform::Configuration do
     allow(File).to receive(:open).with('file.log', 'a').and_return(File)
   end
 
+  after(:all) do
+    RubyTerraform.configuration.logger = RubyTerraform::Configuration.new.logger
+  end
+
   it 'Logger stream should have a default configuration' do
     expect(RubyTerraform.configuration.logger.class).to eq(Logger)
   end
