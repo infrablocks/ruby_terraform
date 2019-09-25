@@ -1,3 +1,9 @@
+## 0.27.0 (September 25th, 2019)
+
+IMPROVEMENTS:
+
+* Add configurable logger and standard streams.
+
 ## 0.12.0 (June 5th, 2018)
 
 IMPROVEMENTS:
