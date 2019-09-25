@@ -6,6 +6,7 @@ module RubyTerraform
     class Apply < Base
       def configure_command(builder, opts)
         directory = opts[:directory]
+        plan = opts[:plan]
         vars = opts[:vars] || {}
         var_file = opts[:var_file]
         var_files = opts[:var_files] || []
@@ -19,7 +20,8 @@ module RubyTerraform
         builder
             .with_subcommand('apply') do |sub|
               vars.each do |key, value|
-                sub = sub.with_option('-var', "'#{key}=#{value}'", separator: ' ')
+                sub = sub.with_option(
+                    '-var', "'#{key}=#{value}'", separator: ' ')
               end
               sub = sub.with_option('-var-file', var_file) if var_file
               var_files.each do |file|
@@ -27,12 +29,13 @@ module RubyTerraform
               end
               sub = sub.with_option('-state', state) if state
               sub = sub.with_option('-input', input) if input
-              sub = sub.with_option('-auto-approve', auto_approve) unless auto_approve.nil?
+              sub = sub.with_option('-auto-approve', auto_approve) unless
+                  auto_approve.nil?
               sub = sub.with_option('-backup', backup) if backup
               sub = sub.with_flag('-no-color') if no_color
               sub
             end
-            .with_argument(directory)
+            .with_argument(plan || directory)
       end
     end
   end

@@ -21,6 +21,29 @@ describe RubyTerraform::Commands::Apply do
     command.execute(directory: 'some/path/to/terraform/configuration')
   end
 
+  it 'calls the terraform apply command passing the supplied plan' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('terraform apply some/path/to/terraform/plan', any_args))
+
+    command.execute(plan: 'some/path/to/terraform/plan')
+  end
+
+  it 'prefers the plan if both plan and directory provided' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('terraform apply some/path/to/terraform/plan', any_args))
+
+    command
+        .execute(
+            directory: 'some/path/to/terraform/configuration',
+            plan: 'some/path/to/terraform/plan')
+  end
+
   it 'defaults to the configured binary when none provided' do
     command = RubyTerraform::Commands::Apply.new
 
@@ -116,7 +139,7 @@ describe RubyTerraform::Commands::Apply do
 
     command.execute(
         directory: 'some/configuration',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
@@ -132,7 +155,7 @@ describe RubyTerraform::Commands::Apply do
     command.execute(
         directory: 'some/configuration',
         var_file: 'some/vars.tfvars',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
