@@ -18,7 +18,7 @@ describe RubyTerraform::Commands::Show do
         receive(:spawn)
             .with('terraform show some/path/to/terraform/configuration', any_args))
 
-    command.execute(directory: 'some/path/to/terraform/configuration')
+    command.execute(path: 'some/path/to/terraform/configuration')
   end
 
   it 'defaults to the configured binary when none provided' do
@@ -28,7 +28,7 @@ describe RubyTerraform::Commands::Show do
         receive(:spawn)
             .with('path/to/binary show some/path/to/terraform/configuration', any_args))
 
-    command.execute(directory: 'some/path/to/terraform/configuration')
+    command.execute(path: 'some/path/to/terraform/configuration')
   end
 
   it 'passes the update option as true when the update option is true' do
@@ -39,7 +39,7 @@ describe RubyTerraform::Commands::Show do
             .with('path/to/binary show -module-depth=0 some/path/to/terraform/configuration', any_args))
 
     command.execute(
-        directory: 'some/path/to/terraform/configuration',
+        path: 'some/path/to/terraform/configuration',
         module_depth: 0)
   end
 
@@ -51,7 +51,7 @@ describe RubyTerraform::Commands::Show do
             .with('path/to/binary show -no-color some/path/to/terraform/configuration', any_args))
 
     command.execute(
-        directory: 'some/path/to/terraform/configuration',
+        path: 'some/path/to/terraform/configuration',
         no_color: true)
   end
 end

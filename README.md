@@ -47,6 +47,7 @@ Currently, there is partial support for the following commands:
 * `RubyTerraform::Commands::Show`: executes `terraform show`
 * `RubyTerraform::Commands::Destroy`: executes `terraform destroy`
 * `RubyTerraform::Commands::Output`: executes `terraform output`
+* `RubyTerraform::Commands::Refresh`: executes `terraform refresh`
 * `RubyTerraform::Commands::RemoteConfig`: executes `terraform remote config`
 * `RubyTerraform::Commands::Validate`: executes `terraform validate`
 * `RubyTerraform::Commands::Workspace`: executes `terraform workspace`
@@ -137,6 +138,10 @@ The plan command supports the following options passed as keyword arguments:
   `var_files` are provided, all var files will be passed to terraform.
 * `var_files`: an array of paths to terraform var files; if both `var_file` and
   `var_files` are provided, all var files will be passed to terraform.
+* `target`: the address of a resource to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
+* `targets`: and array of resource addresses to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `plan`: the name of the file in which to save the generated plan.
@@ -173,6 +178,10 @@ The apply command supports the following options passed as keyword arguments:
   `var_files` are provided, all var files will be passed to terraform.
 * `var_files`: an array of paths to terraform var files; if both `var_file` and
   `var_files` are provided, all var files will be passed to terraform.
+* `target`: the address of a resource to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
+* `targets`: and array of resource addresses to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `backup`: the path to the backup file in which to store the state backup.
@@ -183,6 +192,26 @@ The apply command supports the following options passed as keyword arguments:
   defaults to `false`.
 * `auto_approve`: if `true`, the command applys without prompting the user to 
   confirm the changes; defaults to `false`.
+
+
+### RubyTerraform::Commands::Show
+
+The show command produces human-readable output from a state file or a plan 
+file. It can be called in the following ways:
+
+```ruby
+RubyTerraform.show(
+  path: 'infra/networking')
+RubyTerraform::Commands::Apply.new.execute(
+  path: 'infra/networking')
+```
+
+The show command supports the following options passed as keyword arguments:
+* `path`: the path to a state or plan file; required.
+* `no_color`: whether or not the output from the command should be in color;
+  defaults to `false`.
+* `module_depth`: the depth of modules to show in the output; defaults to 
+  showing all modules.
 
 
 ### RubyTerraform::Commands::Destroy
@@ -211,6 +240,10 @@ The destroy command supports the following options passed as keyword arguments:
   `var_files` are provided, all var files will be passed to terraform.
 * `var_files`: an array of paths to terraform var files; if both `var_file` and
   `var_files` are provided, all var files will be passed to terraform.
+* `target`: the address of a resource to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
+* `targets`: and array of resource addresses to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
 * `state`: the path to the state file containing the current state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `force`: if `true`, the command destroys without prompting the user to confirm
@@ -240,10 +273,48 @@ The output command supports the following options passed as keyword arguments:
 * `module`: the name of a module to retrieve output from.
 
 
+### RubyTerraform::Commands::Refresh
+
+The refresh command will reconcile state with resources found in the target
+environment. It can be called in the following ways:
+
+```ruby
+RubyTerraform.refresh(
+  directory: 'infra/networking',
+  vars: {
+    region: 'eu-central'
+  })
+RubyTerraform::Commands::Refresh.new.execute(
+  directory: 'infra/networking',
+  vars: {
+    region: 'eu-central'
+  })
+```
+
+The refresh command supports the following options passed as keyword arguments:
+* `directory`: the directory containing terraform configuration; required.
+* `vars`: a map of vars to be passed in to the terraform configuration.
+* `var_file`: the path to a terraform var file; if both `var_file` and
+  `var_files` are provided, all var files will be passed to terraform.
+* `var_files`: an array of paths to terraform var files; if both `var_file` and
+  `var_files` are provided, all var files will be passed to terraform.
+* `target`: the address of a resource to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
+* `targets`: and array of resource addresses to target; if both `target` and
+  `targets` are provided, all targets will be passed to terraform.
+* `state`: the path to the state file in which to store state; defaults to
+  terraform.tfstate in the working directory or the remote state if configured.
+* `input`: when `false`, will not ask for input for variables not directly set; 
+  defaults to `true`.
+* `no_color`: whether or not the output from the command should be in color;
+  defaults to `false`.
+
+
 ### RubyTerraform::Commands::RemoteConfig
 
 The remote config command configures storage of state using a remote backend. It
-can be called in the following ways:
+has been deprecated and since removed from terraform but is retained in this 
+library for backwards compatibility. It can be called in the following ways:
 
 ```ruby
 RubyTerraform.remote_config(
@@ -269,6 +340,37 @@ arguments:
   required.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
+
+
+### RubyTerraform::Commands::Validate
+
+The validate command validates terraform configuration in the provided terraform
+configuration directory. It can be called in the following ways:
+
+```ruby
+RubyTerraform.validate(
+  directory: 'infra/networking',
+  vars: {
+    region: 'eu-central'
+  })
+RubyTerraform::Commands::Validate.new.execute(
+  directory: 'infra/networking',
+  vars: {
+    region: 'eu-central'
+  })
+```
+
+The validate command supports the following options passed as keyword arguments:
+* `directory`: the directory containing terraform configuration; required.
+* `vars`: a map of vars to be passed in to the terraform configuration.
+* `var_file`: the path to a terraform var file; if both `var_file` and
+  `var_files` are provided, all var files will be passed to terraform.
+* `var_files`: an array of paths to terraform var files; if both `var_file` and
+  `var_files` are provided, all var files will be passed to terraform.
+* `no_color`: whether or not the output from the command should be in color;
+  defaults to `false`.
+* `check_variables`: if `true`, the command checks whether all variables have
+  been provided; defaults to `true`.
 
 
 ### RubyTerraform::Commands::Workspace
