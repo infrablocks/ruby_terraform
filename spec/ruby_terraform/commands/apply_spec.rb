@@ -184,6 +184,7 @@ describe RubyTerraform::Commands::Apply do
         directory: 'some/path/to/terraform/configuration',
         auto_approve: false)
   end
+
   it 'adds a input option if a input value is provided' do
     command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
 
@@ -194,5 +195,48 @@ describe RubyTerraform::Commands::Apply do
     command.execute(
         directory: 'some/configuration',
         input: 'false')
+  end
+
+  it 'adds a target option if a target is provided' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform apply -target=some_resource_name some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        target: 'some_resource_name')
+  end
+
+  it 'adds a target option for each element of target array' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform apply -target=some_resource_1 -target=some_resource_2 some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        targets: [
+            'some_resource_1',
+            'some_resource_2'
+        ])
+  end
+
+  it 'ensures that target and targets options work together' do
+    command = RubyTerraform::Commands::Apply.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform apply -target=some_resource_1 -target=some_resource_2 -target=some_resource_3 some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        target: 'some_resource_1',
+        targets: [
+            'some_resource_2',
+            'some_resource_3'
+        ])
   end
 end

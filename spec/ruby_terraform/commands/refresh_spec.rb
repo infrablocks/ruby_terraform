@@ -100,4 +100,47 @@ describe RubyTerraform::Commands::Refresh do
             'some/vars2.tfvars'
         ])
   end
+
+  it 'adds a target option if a target is provided' do
+    command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform refresh -target=some_resource_name some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        target: 'some_resource_name')
+  end
+
+  it 'adds a target option for each element of target array' do
+    command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform refresh -target=some_resource_1 -target=some_resource_2 some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        targets: [
+            'some_resource_1',
+            'some_resource_2'
+        ])
+  end
+
+  it 'ensures that target and targets options work together' do
+    command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform refresh -target=some_resource_1 -target=some_resource_2 -target=some_resource_3 some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        target: 'some_resource_1',
+        targets: [
+            'some_resource_2',
+            'some_resource_3'
+        ])
+  end
 end
