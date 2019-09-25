@@ -80,14 +80,11 @@ module RubyTerraform
   end
 
   class Configuration
-    attr_accessor :binary, :logger, :stdin, :stdout, :stderr
+    attr_accessor :binary, :logger
 
     def initialize
       @binary = 'terraform'
       @logger = Logger.new(STDOUT, level: :info)
-      @stdin = ''
-      @stdout = $stdout
-      @stderr = $stderr
     end
   end
 

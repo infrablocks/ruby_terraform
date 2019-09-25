@@ -32,7 +32,7 @@ RubyTerraform.configure do |config|
 end
 ```
 
-In addition, each command that requires the terraform binary (all except
+In addition, each command that requires the terraform binary (all except 
 `clean`) takes a `binary` keyword argument at initialisation that overrides the
 global configuration value.
 
@@ -66,7 +66,7 @@ removes the specified directory.
 
 ### RubyTerraform::Commands::Init
 
-The init command will initialise a terraform environment. It can be called in
+The init command will initialise a terraform environment. It can be called in 
 the following ways:
 
 ```ruby
@@ -74,12 +74,12 @@ RubyTerraform.init
 RubyTerraform.init(source: 'some/module/path', path: 'infra/module')
 RubyTerraform::Commands::Init.new.execute
 RubyTerraform::Commands::Init.new.execute(
-    source: 'some/module/path',
+    source: 'some/module/path', 
     path: 'infra/module')
 ```
 
 The init command supports the following options passed as keyword arguments:
-* `source`: the source module to use to initialise; required if `path` is
+* `source`: the source module to use to initialise; required if `path` is 
   specified
 * `path`: the path to initialise.
 * `backend`: `true`/`false`, whether or not to configure the backend.
@@ -103,12 +103,12 @@ RubyTerraform::Commands::Get.new.execute(directory: 'infra/networking')
 
 The get command supports the following options passed as keyword arguments:
 * `directory`: the directory containing terraform configuration; required.
-* `update`: whether or not already downloaded modules should be updated;
+* `update`: whether or not already downloaded modules should be updated; 
   defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
-
-
+  
+  
 ### RubyTerraform::Commands::Plan
 
 The plan command will generate the execution plan in the provided
@@ -116,7 +116,7 @@ configuration directory. It can be called in the following ways:
 
 ```ruby
 RubyTerraform.plan(
-  directory: 'infra/networking',
+  directory: 'infra/networking', 
   vars: {
     region: 'eu-central'
   })
@@ -130,9 +130,9 @@ RubyTerraform::Commands::Plan.new.execute(
 The plan command supports the following options passed as keyword arguments:
 * `directory`: the directory containing terraform configuration; required.
 * `vars`: a map of vars to be passed in to the terraform configuration.
-* `var_file`: the path to a terraform var file; if both `var_file` and
+* `var_file`: the path to a terraform var file; if both `var_file` and 
   `var_files` are provided, all var files will be passed to terraform.
-* `var_files`: an array of paths to terraform var files; if both `var_file` and
+* `var_files`: an array of paths to terraform var files; if both `var_file` and 
   `var_files` are provided, all var files will be passed to terraform.
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
@@ -142,8 +142,8 @@ The plan command supports the following options passed as keyword arguments:
   managed by the given configuration and state; defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
-
-
+  
+  
 ### RubyTerraform::Commands::Apply
 
 The apply command applies terraform configuration in the provided terraform
@@ -151,7 +151,7 @@ configuration directory. It can be called in the following ways:
 
 ```ruby
 RubyTerraform.apply(
-  directory: 'infra/networking',
+  directory: 'infra/networking', 
   vars: {
     region: 'eu-central'
   })
@@ -165,10 +165,10 @@ RubyTerraform::Commands::Apply.new.execute(
 The apply command supports the following options passed as keyword arguments:
 * `directory`: the directory containing terraform configuration; required.
 * `vars`: a map of vars to be passed in to the terraform configuration.
-* `var_file`: the path to a terraform var file; if both `var_file` and
+* `var_file`: the path to a terraform var file; if both `var_file` and 
   `var_files` are provided, all var files will be passed to terraform.
-* `var_files`: an array of paths to terraform var files; if both `var_file` and
-  `var_files` are provided, all var files will be passed to terraform.
+* `var_files`: an array of paths to terraform var files; if both `var_file` and 
+  `var_files` are provided, all var files will be passed to terraform. 
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `backup`: the path to the backup file in which to store the state backup.
@@ -188,7 +188,7 @@ called in the following ways:
 
 ```ruby
 RubyTerraform.destroy(
-  directory: 'infra/networking',
+  directory: 'infra/networking', 
   vars: {
     region: 'eu-central'
   })
@@ -202,10 +202,10 @@ RubyTerraform::Commands::Destroy.new.execute(
 The destroy command supports the following options passed as keyword arguments:
 * `directory`: the directory containing terraform configuration; required.
 * `vars`: a map of vars to be passed in to the terraform configuration.
-* `var_file`: the path to a terraform var file; if both `var_file` and
+* `var_file`: the path to a terraform var file; if both `var_file` and 
   `var_files` are provided, all var files will be passed to terraform.
-* `var_files`: an array of paths to terraform var files; if both `var_file` and
-  `var_files` are provided, all var files will be passed to terraform.
+* `var_files`: an array of paths to terraform var files; if both `var_file` and 
+  `var_files` are provided, all var files will be passed to terraform. 
 * `state`: the path to the state file containing the current state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `force`: if `true`, the command destroys without prompting the user to confirm
@@ -260,7 +260,7 @@ RubyTerraform::Commands::RemoteConfig.new.execute(
 The remote config command supports the following options passed as keyword
 arguments:
 * `backend`: the type of backend to use; required.
-* `backend_config`: a map of backend specific configuration parameters;
+* `backend_config`: a map of backend specific configuration parameters; 
   required.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
@@ -283,76 +283,9 @@ The workspace command supports the following options passed as keyword arguments
 * `operation`: `list`, `select`, `new` or `delete`. default `list`.
 * `workspace`: Workspace name.
 
-## Configure
-
-RubyTerraform offers a logger, stdin, stdout and stderr by default but this settings can be configured.
-
-### Logger
-
-By default, RubyTerraform logs to `STDOUT` with level `info`.
-
-The configuration can be called in the following way:
-
-``` ruby
-RubyTerraform.configure do |config|
-  config.logger = $custom_logger
-end
-```
-
-e.g.
-
-``` ruby
-require 'logger'
-
-RubyTerraform.configure do |config|
-  config.logger = Logger.new(STDOUT, level: :debug)
-end
-```
-
-RubyTerraform supports logging to different outputs at once, for example:
-
-``` ruby
-require 'logger'
-
-log_file = File.open('path/to/some/ruby_terraform.log', 'a')
-
-RubyTerraform.configure do |config|
-  config.logger = Logger.new(RubyTerraform::MultiIO.new(STDOUT, log_file), level: :debug)
-end
-```
-
-With that configuration, the call `logger.info 'some info'` will log in the `STDOUT` and `log_file`
-
-### Output Streams
-
-By default, RubyTerraform output streams are `$stdin`, `$stdout` and `$stderr`.
-
-To add your own output streams, the configuration of RubyTerraform can be called in the following way:
-
-``` ruby
-RubyTerraform.configure do |config|
-  config.stdout = $custom_output_stream
-end
-```
-
-e.g.
-
-``` ruby
-log_file = File.open('path/to/some/ruby_terraform.log', 'a')
-
-RubyTerraform.configure do |config|
-  config.stdout = log_file
-  config.stderr = log_file
-end
-```
-
-This way, both outputs will be redirected to `log_file`.
-
-
-
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then,
+After checking out the repo, run `bin/setup` to install dependencies. Then, 
 run `rake spec` to run the tests. You can also run `bin/console` for an
 interactive prompt that will allow you to experiment.
 
@@ -387,7 +320,7 @@ openssl aes-256-cbc \
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at
+Bug reports and pull requests are welcome on GitHub at 
 https://github.com/infrablocks/ruby_terraform. This project is intended to be a
 safe, welcoming space for collaboration, and contributors are expected to adhere
 to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
@@ -395,5 +328,5 @@ to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
 
 ## License
 
-The gem is available as open source under the terms of the
+The gem is available as open source under the terms of the 
 [MIT License](http://opensource.org/licenses/MIT).
