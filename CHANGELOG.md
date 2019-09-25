@@ -1,4 +1,4 @@
-## 0.27.0 (September 25th, 2019)
+## 0.29.0 (September 25th, 2019)
 
 IMPROVEMENTS:
 
