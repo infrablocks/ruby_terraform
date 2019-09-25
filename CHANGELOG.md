@@ -1,4 +1,13 @@
-## 0.29.0 (September 25th, 2019)
+## 0.31.0 (September 25th, 2019)
+
+IMPROVEMENTS
+
+* Add support for `target` and / or `targets` options to be passed to `apply`,
+  `plan`, `refresh` and `destroy` commands.
+* Add support for `plan` option to `apply` command to be more clear when 
+  applying a prebuilt plan.
+
+## 0.30.0 (September 25th, 2019)
 
 IMPROVEMENTS:
 
