@@ -3,6 +3,7 @@
 A simple wrapper around the Terraform binary to allow execution from within
 a Ruby program or Rakefile.
 
+
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -139,7 +140,8 @@ The plan command supports the following options passed as keyword arguments:
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `plan`: the name of the file in which to save the generated plan.
-* `input`: when `false`, will not ask for input for variables not directly set; defaults to `true`.
+* `input`: when `false`, will not ask for input for variables not directly set; 
+  defaults to `true`.
 * `destroy`: when `true`, a plan will be generated to destroy all resources
   managed by the given configuration and state; defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
@@ -174,12 +176,13 @@ The apply command supports the following options passed as keyword arguments:
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `backup`: the path to the backup file in which to store the state backup.
-* `input`: when `false`, will not ask for input for variables not directly set; defaults to `true`.
+* `input`: when `false`, will not ask for input for variables not directly set; 
+  defaults to `true`.
 * `no_backup`: when `true`, no backup file will be written; defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
-* `auto_approve`: if `true`, the command applys without prompting the user to confirm
-  the changes; defaults to `false`.
+* `auto_approve`: if `true`, the command applys without prompting the user to 
+  confirm the changes; defaults to `false`.
 
 
 ### RubyTerraform::Commands::Destroy
@@ -267,6 +270,7 @@ arguments:
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
 
+
 ### RubyTerraform::Commands::Workspace
 
 The `workspace` command configures 
@@ -282,67 +286,61 @@ RubyTerraform.workspace(operation: 'select', workspace: 'default')
 RubyTerraform.workspace(operation: 'delete', workspace: 'staging')
 ```
 
-The workspace command supports the following options passed as keyword 
 arguments:
 * `directory`: the directory containing terraform configuration, the default is 
   the current path.
 * `operation`: `list`, `select`, `new` or `delete`. default `list`.
 * `workspace`: Workspace name.
 
-## Configure
 
-RubyTerraform offers a logger, stdin, stdout and stderr by default but this 
-settings can be configured.
+## Configuration
 
-### Logger
+In addition to configuring the location of the terraform binary, RubyTerraform 
+offers configuration of logging and standard streams. By default standard
+streams map to `$stdin`, `$stdout` and `$stderr` and all logging goes to 
+`$stdout`.  
 
-By default, RubyTerraform logs to `STDOUT` with level `info`.
+### Logging
 
-The configuration can be called in the following way:
+By default, RubyTerraform logs to `$stdout` with level `info`.
 
-``` ruby
-RubyTerraform.configure do |config|
-  config.logger = $custom_logger
-end
-```
-
-e.g.
+To configure a custom logger:
 
 ``` ruby
 require 'logger'
 
+logger = Logger.new($stdout)
+logger.level = Logger::DEBUG
+
 RubyTerraform.configure do |config|
-  config.logger = Logger.new(STDOUT, level: :debug)
+  config.logger = logger
 end
 ```
 
-RubyTerraform supports logging to different outputs at once, for example:
+RubyTerraform supports logging to multiple different outputs at once, 
+for example:
 
 ``` ruby
 require 'logger'
 
 log_file = File.open('path/to/some/ruby_terraform.log', 'a')
+logger = Logger.new(
+  RubyTerraform::MultiIO.new($stdout, log_file))
+logger.level = Logger::DEBUG
 
 RubyTerraform.configure do |config|
-  config.logger = Logger.new(RubyTerraform::MultiIO.new(STDOUT, log_file), level: :debug)
+  config.logger = logger
 end
 ```
 
-With that configuration, the call `logger.info 'some info'` will log in the `STDOUT` and `log_file`
+Configured in this way, any logging performed by RubyTerraform will log to both 
+`STDOUT` and the provided `log_file`.
 
-### Output Streams
+### Standard Streams
 
-By default, RubyTerraform output streams are `$stdin`, `$stdout` and `$stderr`.
+By default, RubyTerraform uses streams `$stdin`, `$stdout` and `$stderr`.
 
-To add your own output streams, the configuration of RubyTerraform can be called in the following way:
-
-``` ruby
-RubyTerraform.configure do |config|
-  config.stdout = $custom_output_stream
-end
-```
-
-e.g.
+To configure custom output and error streams:
 
 ``` ruby
 log_file = File.open('path/to/some/ruby_terraform.log', 'a')
@@ -353,8 +351,22 @@ RubyTerraform.configure do |config|
 end
 ```
 
-This way, both outputs will be redirected to `log_file`.
+In this way, both outputs will be redirected to `log_file`.
 
+Similarly, a custom input stream can be configured:
+
+``` ruby
+require 'stringio'
+
+input = StringIO.new("user\ninput\n")
+
+RubyTerraform.configure do |config|
+  config.stdin = input
+end
+``` 
+
+In this way, terraform can be driven by input from somewhere other than 
+interactive input from the terminal.
 
 
 ## Development
