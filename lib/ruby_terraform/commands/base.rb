@@ -5,21 +5,24 @@ module RubyTerraform
     class Base
       attr_reader :binary
 
-      def initialize(binary: nil, logger: nil)
+      def initialize(binary: nil, logger: nil, stdin: nil, stdout: nil, stderr: nil)
         @binary = binary || RubyTerraform.configuration.binary
         @logger = logger || RubyTerraform.configuration.logger
+        @stdin = stdin || RubyTerraform.configuration.stdin
+        @stdout = stdout || RubyTerraform.configuration.stdout
+        @stderr = stderr || RubyTerraform.configuration.stderr
       end
 
       def stdin
-        ''
+        @stdin
       end
 
       def stdout
-        $stdout
+        @stdout
       end
 
       def stderr
-        $stderr
+        @stderr
       end
 
       def execute(opts = {})
