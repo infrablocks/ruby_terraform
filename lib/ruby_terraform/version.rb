@@ -1,3 +1,3 @@
 module RubyTerraform
-  VERSION = "0.33.0-pre.1"
+  VERSION = "0.34.0"
 end
