@@ -103,7 +103,33 @@ describe RubyTerraform::Commands::Clean do
             include("Cleaning terraform directory 'some/.terraform'.")))
   end
 
+  it 'logs an exception when no terraform directory is found' do
+    string_output = StringIO.new
+    logger = Logger.new(string_output)
+    logger.level = Logger::INFO
+
+    stub_fileutils_rm_r_raise
+
+    command = RubyTerraform::Commands::Clean.new(logger: logger)
+    command.execute(directory: '/this/path/does/not/exist')
+
+    expect(string_output.string).to(
+      include('INFO').and(
+        include("Cleaning terraform directory '/this/path/does/not/exist'")
+      )
+    )
+    expect(string_output.string).to(
+      include('ERROR').and(
+        include("Couldn't clean '/this/path/does/not/exist'")
+      )
+    )
+  end
+
   def stub_fileutils_rm_r
     allow(FileUtils).to(receive(:rm_r))
+  end
+
+  def stub_fileutils_rm_r_raise
+    allow(FileUtils).to(receive(:rm_r).and_raise Errno::ENOENT)
   end
 end
