@@ -3,16 +3,15 @@ require 'fileutils'
 module RubyTerraform
   module Commands
     class Clean
-      def initialize(directory: nil)
+      def initialize(directory: nil, logger: nil)
         @directory = directory ? directory : '.terraform'
-        @logger = RubyTerraform.configure do |config|
-          config.logger
-        end
+        @logger = logger || RubyTerraform.configuration.logger
       end
 
       def execute(opts = {})
-        @logger.info "Cleaning terraform directory #{opts[:directory] || @directory}"
-        FileUtils.rm_r(opts[:directory] || @directory, :secure => true)
+        directory = opts[:directory] || @directory
+        @logger.info "Cleaning terraform directory '#{directory}'."
+        FileUtils.rm_r(directory, :secure => true)
       end
     end
   end

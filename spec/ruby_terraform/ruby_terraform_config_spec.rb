@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'logger'
 
 describe RubyTerraform::Configuration do
   after(:each) do

@@ -31,7 +31,7 @@ module RubyTerraform
         do_before(opts)
         command = configure_command(builder, opts)
                     .build
-        @logger.debug "Running #{command.to_s}"
+        @logger.debug "Running '#{command.to_s}'."
 
         command.execute(
           stdin: stdin,
