@@ -5,7 +5,7 @@ describe RubyTerraform::Commands::Clean do
     command = RubyTerraform::Commands::Clean.new
 
     expect(FileUtils).to(
-        receive(:rm_rf).with('.terraform'))
+        receive(:rm_r).with('.terraform', :secure => true))
 
     command.execute
   end
@@ -14,7 +14,7 @@ describe RubyTerraform::Commands::Clean do
     command = RubyTerraform::Commands::Clean.new(directory: 'some/path')
 
     expect(FileUtils).to(
-        receive(:rm_rf).with('some/path'))
+        receive(:rm_r).with('some/path', :secure => true))
 
     command.execute
   end
@@ -23,7 +23,7 @@ describe RubyTerraform::Commands::Clean do
     command = RubyTerraform::Commands::Clean.new
 
     expect(FileUtils).to(
-        receive(:rm_rf).with('some/.terraform'))
+        receive(:rm_r).with('some/.terraform', :secure => true))
 
     command.execute(directory: 'some/.terraform')
   end
