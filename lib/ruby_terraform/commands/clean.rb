@@ -12,6 +12,8 @@ module RubyTerraform
         directory = opts[:directory] || @directory
         @logger.info "Cleaning terraform directory '#{directory}'."
         FileUtils.rm_r(directory, :secure => true)
+      rescue Errno::ENOENT => e
+        @logger.error "Couldn't clean '#{directory}': #{e.message}"
       end
     end
   end
