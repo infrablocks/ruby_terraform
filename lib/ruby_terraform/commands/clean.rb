@@ -8,7 +8,7 @@ module RubyTerraform
       end
 
       def execute(opts = {})
-        FileUtils.rm_rf(opts[:directory] || @directory)
+        FileUtils.rm_r(opts[:directory] || @directory, :secure => true)
       end
     end
   end
