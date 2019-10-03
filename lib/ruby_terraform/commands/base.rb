@@ -39,6 +39,8 @@ module RubyTerraform
           stderr: stderr
         )
         do_after(opts)
+      rescue Open4::SpawnError
+        @logger.error "Command '#{command.to_s}' has failed."
       end
 
       def instantiate_builder
