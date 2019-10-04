@@ -230,7 +230,36 @@ describe RubyTerraform::Commands::Plan do
         ])
   end
 
+  it 'logs an exception raised when running the command' do
+    string_output = StringIO.new
+    logger = Logger.new(string_output)
+    logger.level = Logger::INFO
+
+    RubyTerraform.configure do |config|
+      config.logger = logger
+    end
+
+    stub_open4_spawn_raise
+    command = RubyTerraform::Commands::Plan.new
+
+    command.execute(directory: 'some/path/to/terraform/configuration')
+
+    expect(string_output.string).to(
+      include('ERROR').and(
+        include("Terraform has failed while running 'plan'.")
+      )
+    )
+  end
+
   def stub_open4_spawn
     allow(Open4).to(receive(:spawn))
+  end
+
+  def stub_open4_spawn_raise
+    allow_any_instance_of(Process::Status).to receive(:exitstatus).and_return(0)
+    allow(Open4).to(
+      receive(:spawn)
+        .and_raise(Open4::SpawnError.new("cmd", $?), "message")
+    )
   end
 end

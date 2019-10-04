@@ -39,6 +39,8 @@ module RubyTerraform
           stderr: stderr
         )
         do_after(opts)
+      rescue Open4::SpawnError
+        @logger.error "Terraform has failed while running '#{command_name}'."
       end
 
       def instantiate_builder
@@ -55,6 +57,11 @@ module RubyTerraform
 
       def do_after(opts)
       end
+
+      def command_name
+        self.class.to_s.split("::")[-1].downcase
+      end
+      protected :command_name
     end
   end
 end
