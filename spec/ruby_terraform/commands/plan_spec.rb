@@ -244,10 +244,9 @@ describe RubyTerraform::Commands::Plan do
 
     command.execute(directory: 'some/path/to/terraform/configuration')
 
-    cmd = 'path/to/binary plan some/path/to/terraform/configuration'
     expect(string_output.string).to(
       include('ERROR').and(
-        include("Command '#{cmd}' has failed.")
+        include("Terraform has failed while running 'plan'.")
       )
     )
   end
