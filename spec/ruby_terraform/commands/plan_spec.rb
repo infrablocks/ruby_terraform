@@ -230,7 +230,7 @@ describe RubyTerraform::Commands::Plan do
         ])
   end
 
-  it 'logs an exception raised when running the command' do
+  it 'logs an error raised when running the command' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::INFO
@@ -242,13 +242,34 @@ describe RubyTerraform::Commands::Plan do
     stub_open4_spawn_raise
     command = RubyTerraform::Commands::Plan.new
 
-    command.execute(directory: 'some/path/to/terraform/configuration')
+    begin
+      command.execute(directory: 'some/path/to/terraform/configuration')
+    rescue
+      # no-op
+    end
 
     expect(string_output.string).to(
       include('ERROR').and(
-        include("Terraform has failed while running 'plan'.")
+        include("Failed while running 'plan'.")
       )
     )
+  end
+
+  it 'raises execution error when an error occurs running the command' do
+    string_output = StringIO.new
+    logger = Logger.new(string_output)
+    logger.level = Logger::INFO
+
+    RubyTerraform.configure do |config|
+      config.logger = logger
+    end
+
+    stub_open4_spawn_raise
+    command = RubyTerraform::Commands::Plan.new
+
+    expect {
+      command.execute(directory: 'some/path/to/terraform/configuration')
+    }.to(raise_error(RubyTerraform::Errors::ExecutionError))
   end
 
   def stub_open4_spawn
@@ -256,7 +277,8 @@ describe RubyTerraform::Commands::Plan do
   end
 
   def stub_open4_spawn_raise
-    allow_any_instance_of(Process::Status).to receive(:exitstatus).and_return(0)
+    allow_any_instance_of(Process::Status).to(
+        receive(:exitstatus).and_return(0))
     allow(Open4).to(
       receive(:spawn)
         .and_raise(Open4::SpawnError.new("cmd", $?), "message")

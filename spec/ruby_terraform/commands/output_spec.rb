@@ -62,11 +62,11 @@ describe RubyTerraform::Commands::Output do
   end
 
   it 'captures and returns the output of the command directly when no name is supplied' do
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
-
     string_io = double('string IO')
     allow(StringIO).to(receive(:new).and_return(string_io))
     allow(string_io).to(receive(:string).and_return('  OUTPUT  '))
+
+    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
 
     expect(Open4)
         .to(receive(:spawn)
@@ -76,11 +76,11 @@ describe RubyTerraform::Commands::Output do
   end
 
   it 'captures, chomps and returns the output of the command when an output name is supplied' do
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
-
     string_io = double('string IO')
     allow(StringIO).to(receive(:new).and_return(string_io))
     allow(string_io).to(receive(:string).and_return("OUTPUT\n"))
+
+    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
 
     expect(Open4)
         .to(receive(:spawn)

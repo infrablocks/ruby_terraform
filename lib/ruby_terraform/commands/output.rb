@@ -5,7 +5,8 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Output < Base
-      def stdout
+      def initialize(**kwargs)
+        super(**kwargs)
         @stdout = StringIO.new unless
             defined?(@stdout) && @stdout.respond_to?(:string)
       end
@@ -18,17 +19,17 @@ module RubyTerraform
 
         builder = builder
             .with_subcommand('output') do |sub|
-              sub = sub.with_flag('-no-color') if no_color
-              sub = sub.with_option('-state', state) if state
-              sub = sub.with_option('-module', mod) if mod
-              sub
-            end
+          sub = sub.with_flag('-no-color') if no_color
+          sub = sub.with_option('-state', state) if state
+          sub = sub.with_option('-module', mod) if mod
+          sub
+        end
         builder = builder.with_argument(name) if name
         builder
       end
 
       def do_after(opts)
-        result = @stdout.string
+        result = stdout.string
         opts[:name] ? result.chomp : result
       end
     end
