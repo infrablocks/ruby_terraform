@@ -46,6 +46,54 @@ describe RubyTerraform::Commands::Refresh do
         })
   end
 
+  it 'correctly serialises list/tuple vars' do
+    command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform refresh -var 'list=[1,\"two\",3]' some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        vars: {
+            list: [1, "two", 3]
+        })
+  end
+
+  it 'correctly serialises map/object vars' do
+    command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform refresh -var 'map={\"first\":1,\"second\":\"two\"}' some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        vars: {
+            map: {
+                first: 1,
+                second: "two"
+            }
+        })
+  end
+
+  it 'correctly serialises vars with lists/tuples of maps/objects' do
+    command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform refresh -var 'list_of_maps=[{\"key\":\"value\"},{\"key\":\"value\"}]' some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        vars: {
+            list_of_maps: [
+                {key: "value"},
+                {key: "value"}
+            ]
+        })
+  end
+
   it 'adds a state option if a state path is provided' do
     command = RubyTerraform::Commands::Refresh.new(binary: 'terraform')
 

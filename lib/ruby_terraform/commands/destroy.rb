@@ -20,7 +20,9 @@ module RubyTerraform
         builder
             .with_subcommand('destroy') do |sub|
               vars.each do |key, value|
-                sub = sub.with_option('-var', "'#{key}=#{value}'", separator: ' ')
+                var_value = value.is_a?(String) ? value : JSON.generate(value)
+                sub = sub.with_option(
+                    '-var', "'#{key}=#{var_value}'", separator: ' ')
               end
               sub = sub.with_option('-var-file', var_file) if var_file
               var_files.each do |file|
