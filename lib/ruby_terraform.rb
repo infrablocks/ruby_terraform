@@ -92,7 +92,7 @@ module RubyTerraform
     def initialize
       @binary = 'terraform'
       @logger = default_logger
-      @stdin = $stdin
+      @stdin = ''
       @stdout = $stdout
       @stderr = $stderr
     end

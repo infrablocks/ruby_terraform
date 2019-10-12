@@ -85,8 +85,8 @@ describe RubyTerraform::Configuration do
     expect(RubyTerraform.configuration.stderr).to eq(stderr)
   end
 
-  it 'uses whatever $stdin points to for stdin by default' do
-    expect(RubyTerraform.configuration.stdin).to eq($stdin)
+  it 'uses empty string for stdin by default' do
+    expect(RubyTerraform.configuration.stdin).to eq('')
   end
 
   it 'allows stdin stream to be overridden' do
