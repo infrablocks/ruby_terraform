@@ -4,6 +4,7 @@ describe RubyTerraform::Commands::Destroy do
   before(:each) do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
+      config.logger = Logger.new(StringIO.new)
     end
   end
 
@@ -176,7 +177,7 @@ describe RubyTerraform::Commands::Destroy do
 
     command.execute(
         directory: 'some/configuration',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
@@ -192,7 +193,7 @@ describe RubyTerraform::Commands::Destroy do
     command.execute(
         directory: 'some/configuration',
         var_file: 'some/vars.tfvars',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
@@ -239,5 +240,18 @@ describe RubyTerraform::Commands::Destroy do
             'some_resource_2',
             'some_resource_3'
         ])
+  end
+
+  it 'auto approves any query of the destroy when the auto-approve option is true' do
+    command = RubyTerraform::Commands::Destroy.new(binary: 'terraform')
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with("terraform destroy -auto-approve=true some/configuration", any_args))
+
+    command.execute(
+        directory: 'some/configuration',
+        auto_approve: true
+    )
   end
 end
