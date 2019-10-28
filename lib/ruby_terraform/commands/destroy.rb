@@ -16,6 +16,7 @@ module RubyTerraform
         no_backup = opts[:no_backup]
         backup = no_backup ? '-' : opts[:backup]
         no_color = opts[:no_color]
+        auto_approve = opts[:auto_approve]
 
         builder
             .with_subcommand('destroy') do |sub|
@@ -33,6 +34,8 @@ module RubyTerraform
                 sub = sub.with_option('-target', target_name)
               end
               sub = sub.with_option('-state', state) if state
+              sub = sub.with_option('-auto-approve', auto_approve) unless
+                  auto_approve.nil?
               sub = sub.with_option('-backup', backup) if backup
               sub = sub.with_flag('-no-color') if no_color
               sub = sub.with_flag('-force') if force
