@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-terraform (0.45.0.pre.pre.2)
+    ruby-terraform (0.46.0)
       lino (~> 1.1)
 
 GEM
