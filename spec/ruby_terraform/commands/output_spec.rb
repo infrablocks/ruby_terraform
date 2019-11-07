@@ -98,4 +98,14 @@ describe RubyTerraform::Commands::Output do
 
     command.execute(no_color: true)
   end
+
+  it 'includes the json flag when the json option is true' do
+    command = RubyTerraform::Commands::Output.new
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('path/to/binary output -json', any_args))
+
+    command.execute(json: true)
+  end
 end
