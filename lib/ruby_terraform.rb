@@ -61,6 +61,10 @@ module RubyTerraform
       Commands::Output.new.execute(opts)
     end
 
+    def show(opts = {})
+      Commands::Show.new.execute(opts)
+    end
+
     def workspace(opts = {})
       Commands::Workspace.new.execute(opts)
     end

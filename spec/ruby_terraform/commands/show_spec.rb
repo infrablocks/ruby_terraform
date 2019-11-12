@@ -54,4 +54,17 @@ describe RubyTerraform::Commands::Show do
         path: 'some/path/to/terraform/configuration',
         no_color: true)
   end
+
+  it 'includes the json flag when the json option is true' do
+    command = RubyTerraform::Commands::Show.new
+
+    expect(Open4).to(
+        receive(:spawn)
+            .with('path/to/binary show -json some/path/to/terraform/configuration', any_args))
+
+    command.execute(
+        path: 'some/path/to/terraform/configuration',
+        json: true
+    )
+  end
 end
