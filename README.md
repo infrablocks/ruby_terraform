@@ -202,7 +202,7 @@ file. It can be called in the following ways:
 ```ruby
 RubyTerraform.show(
   path: 'infra/networking')
-RubyTerraform::Commands::Apply.new.execute(
+RubyTerraform::Commands::Show.new.execute(
   path: 'infra/networking')
 ```
 
@@ -212,7 +212,8 @@ The show command supports the following options passed as keyword arguments:
   defaults to `false`.
 * `module_depth`: the depth of modules to show in the output; defaults to 
   showing all modules.
-
+* `json`: whether or not the output from the command should be in json format;
+  defaults to `false`.
 
 ### RubyTerraform::Commands::Destroy
 
