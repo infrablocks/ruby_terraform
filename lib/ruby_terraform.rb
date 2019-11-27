@@ -108,7 +108,10 @@ module RubyTerraform
     end
 
     def write(*args)
-      @targets.each {|t| t.write(*args)}
+      @targets.each do |t|
+        t.write(*args)
+        t.flush
+      end
     end
 
     def close
