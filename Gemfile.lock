@@ -31,6 +31,7 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.9.0)
     rspec-support (3.9.2)
+    sshkey (2.0.0)
 
 PLATFORMS
   ruby
@@ -42,6 +43,7 @@ DEPENDENCIES
   rake (~> 13.0)
   rspec (~> 3.9)
   ruby-terraform!
+  sshkey (~> 2.0)
 
 BUNDLED WITH
    2.1.4

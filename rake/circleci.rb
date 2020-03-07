@@ -2,7 +2,6 @@ require 'rubygems'
 require 'excon'
 require 'yaml'
 require 'json'
-require 'pp'
 
 class CircleCI
   def initialize(config_path)
@@ -22,7 +21,7 @@ class CircleCI
   end
 
   def delete_env_var(name)
-    assert_successful(Excon.delete(env_var_url(name), headers))
+    assert_successful(Excon.delete(env_var_url(name), headers: headers))
   end
 
   def delete_env_vars
@@ -38,6 +37,43 @@ class CircleCI
         Excon.post(env_vars_url, body: body, headers: headers))
   end
 
+  def find_ssh_keys
+    response = assert_successful(Excon.get(settings_url, headers: headers))
+    body = JSON.parse(response.body)
+    ssh_keys = body["ssh_keys"].map do |ssh_key|
+      {
+          fingerprint: ssh_key["fingerprint"],
+          hostname: ssh_key["hostname"]
+      }
+    end
+
+    ssh_keys
+  end
+
+  def delete_ssh_key(ssh_key_identifier)
+    assert_successful(
+        Excon.delete(ssh_keys_url,
+            body: JSON.dump(ssh_key_identifier),
+            headers: headers))
+  end
+
+  def delete_ssh_keys
+    ssh_keys = find_ssh_keys
+    ssh_keys.each do |ssh_key|
+      delete_ssh_key(ssh_key)
+    end
+  end
+
+  def create_ssh_key(ssh_key)
+    body = JSON.dump({
+        fingerprint: ssh_key.sha1_fingerprint,
+        hostname: ssh_key.comment,
+        private_key: ssh_key.private_key
+    })
+    assert_successful(
+        Excon.post(ssh_keys_url, body: body, headers: headers))
+  end
+
   private
 
   def headers
@@ -49,7 +85,6 @@ class CircleCI
   end
 
   def assert_successful(response)
-    pp response
     unless response.status >= 200 && response.status < 300
       host = response.data[:host]
       path = response.data[:path]
@@ -65,7 +100,15 @@ class CircleCI
   end
 
   def env_var_url(name)
-    "#{@base_url}/v1.1/project/#{@project_slug}/envvar/#{name}?" +
+    "#{@base_url}/v2/project/#{@project_slug}/envvar/#{name}"
+  end
+
+  def settings_url
+    "#{@base_url}/v1.1/project/#{@project_slug}/settings"
+  end
+
+  def ssh_keys_url
+    "#{@base_url}/v1.1/project/#{@project_slug}/ssh-key?" +
         "circle-token=#{@api_token}"
   end
 end
