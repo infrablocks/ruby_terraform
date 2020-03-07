@@ -1,4 +1,5 @@
 require 'sshkey'
+require 'octokit'
 require 'rspec/core/rake_task'
 
 require_relative 'rake/circleci'
@@ -34,7 +35,7 @@ namespace :circle_ci do
       puts "Done."
     end
 
-    desc "Ensures all environment variables are configured on the CircleCI " +
+    desc "Ensure all environment variables are configured on the CircleCI " +
         "pipeline"
     task :ensure => [:'destroy', :'provision']
   end
@@ -57,7 +58,48 @@ namespace :circle_ci do
       puts "Done."
     end
 
-    desc "Ensures SSH key is configured on the CircleCI pipeline"
+    desc "Ensure SSH key is configured on the CircleCI pipeline"
+    task :ensure => [:'destroy', :'provision']
+  end
+end
+
+namespace :github do
+  namespace :deploy_key do
+    desc "Remove deploy key from the Github repository"
+    task :destroy do
+      print "Removing deploy key from the Github repository... "
+      config = YAML.load_file('config/secrets/github/config.yaml')
+      access_token = config["github_personal_access_token"]
+      repo = config["github_repository"]
+      client = Octokit::Client.new(access_token: access_token)
+
+      deploy_keys = client.list_deploy_keys(repo)
+      circle_ci_deploy_key = deploy_keys.find { |k| k[:title] == 'CircleCI' }
+      if circle_ci_deploy_key
+        client.remove_deploy_key(repo, circle_ci_deploy_key[:id])
+      end
+      puts "Done."
+    end
+
+    desc "Add deploy key to the Github repository"
+    task :provision do
+      print "Adding deploy key to the Github repository... "
+      config = YAML.load_file('config/secrets/github/config.yaml')
+      access_token = config["github_personal_access_token"]
+      repo = config["github_repository"]
+      client = Octokit::Client.new(access_token: access_token)
+
+      ssh_key = SSHKey.new(
+          File.read('config/secrets/ci/ssh.private'),
+          comment: 'CircleCI')
+      client.add_deploy_key(repo,
+          ssh_key.comment,
+          ssh_key.ssh_public_key,
+          read_only: false)
+      puts "Done."
+    end
+
+    desc "Ensure deploy key is configured on the Github repository"
     task :ensure => [:'destroy', :'provision']
   end
 end
@@ -66,6 +108,7 @@ namespace :pipeline do
   task :prepare => [
       :'circle_ci:env_vars:ensure',
       :'circle_ci:ssh_key:ensure',
+      :'github:deploy_key:ensure'
   ]
 end
 
