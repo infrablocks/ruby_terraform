@@ -8,6 +8,20 @@ RSpec::Core::RakeTask.new(:spec)
 
 task :default => :spec
 
+namespace :ssh_key do
+  desc "Generate a new SSH key for CI"
+  task :generate do
+    print "Generating a new SSH key... "
+    key = SSHKey.generate(
+        type: "RSA",
+        bits: 4096,
+        comment: "maintainers@infrablocks.io")
+    File.write('config/secrets/ci/ssh.private', key.private_key)
+    File.write('config/secrets/ci/ssh.public', key.public_key)
+    puts "Done."
+  end
+end
+
 namespace :circle_ci do
   circle_ci = CircleCI.new('config/secrets/circle_ci/config.yaml')
 
