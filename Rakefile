@@ -23,12 +23,13 @@ namespace :ssh_key do
 end
 
 namespace :circle_ci do
-  circle_ci = CircleCI.new('config/secrets/circle_ci/config.yaml')
+  circle_ci_config_path = 'config/secrets/circle_ci/config.yaml'
 
   namespace :env_vars do
     desc "Destroy all environment variables from the CircleCI pipeline"
     task :destroy do
       print "Deleting all environment variables from pipeline... "
+      circle_ci = CircleCI.new(circle_ci_config_path)
       circle_ci.delete_env_vars
       puts "Done."
     end
@@ -41,6 +42,7 @@ namespace :circle_ci do
               File.read('config/secrets/ci/encryption.passphrase').chomp
       }
 
+      circle_ci = CircleCI.new(circle_ci_config_path)
       env_vars.each do |name, value|
         print "Creating environment variable: #{name}... "
         circle_ci.create_env_var(name, value)
@@ -58,6 +60,7 @@ namespace :circle_ci do
     desc "Destroy SSH key from the CircleCI pipeline"
     task :destroy do
       print "Destroying SSH key in the pipeline... "
+      circle_ci = CircleCI.new(circle_ci_config_path)
       circle_ci.delete_ssh_keys
       puts "Done."
     end
@@ -65,6 +68,7 @@ namespace :circle_ci do
     desc "Provision SSH key to the CircleCI pipeline"
     task :provision do
       print "Creating SSH key in the pipeline... "
+      circle_ci = CircleCI.new(circle_ci_config_path)
       circle_ci.create_ssh_key(
           SSHKey.new(
               File.read('config/secrets/ci/ssh.private'),
