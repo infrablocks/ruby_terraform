@@ -1,8 +1,7 @@
 require 'sshkey'
 require 'octokit'
+require 'rake_circle_ci'
 require 'rspec/core/rake_task'
-
-require_relative 'rake/circleci'
 
 RSpec::Core::RakeTask.new(:spec)
 
@@ -22,63 +21,24 @@ namespace :ssh_key do
   end
 end
 
-namespace :circle_ci do
-  circle_ci_config_path = 'config/secrets/circle_ci/config.yaml'
+RakeCircleCI.define_project_tasks(
+    namespace: :circle_ci,
+    project_slug: 'github/infrablocks/ruby_terraform'
+) do |t|
+  circle_ci_config =
+      YAML.load_file('config/secrets/circle_ci/config.yaml')
 
-  namespace :env_vars do
-    desc "Destroy all environment variables from the CircleCI pipeline"
-    task :destroy do
-      print "Deleting all environment variables from pipeline... "
-      circle_ci = CircleCI.new(circle_ci_config_path)
-      circle_ci.delete_env_vars
-      puts "Done."
-    end
-
-    desc "Provision all environment variables to the CircleCI pipeline"
-    task :provision do
-      puts "Creating all environment variables in the pipeline... "
-      env_vars = {
-          'ENCRYPTION_PASSPHRASE':
-              File.read('config/secrets/ci/encryption.passphrase').chomp
+  t.api_token = circle_ci_config["circle_ci_api_token"]
+  t.environment_variables = {
+      ENCRYPTION_PASSPHRASE:
+          File.read('config/secrets/ci/encryption.passphrase').chomp
+  }
+  t.ssh_keys = [
+      {
+          private_key: File.read('config/secrets/ci/ssh.private'),
+          hostname: "github.com"
       }
-
-      circle_ci = CircleCI.new(circle_ci_config_path)
-      env_vars.each do |name, value|
-        print "Creating environment variable: #{name}... "
-        circle_ci.create_env_var(name, value)
-      end
-
-      puts "Done."
-    end
-
-    desc "Ensure all environment variables are configured on the CircleCI " +
-        "pipeline"
-    task :ensure => [:'destroy', :'provision']
-  end
-
-  namespace :ssh_key do
-    desc "Destroy SSH key from the CircleCI pipeline"
-    task :destroy do
-      print "Destroying SSH key in the pipeline... "
-      circle_ci = CircleCI.new(circle_ci_config_path)
-      circle_ci.delete_ssh_keys
-      puts "Done."
-    end
-
-    desc "Provision SSH key to the CircleCI pipeline"
-    task :provision do
-      print "Creating SSH key in the pipeline... "
-      circle_ci = CircleCI.new(circle_ci_config_path)
-      circle_ci.create_ssh_key(
-          SSHKey.new(
-              File.read('config/secrets/ci/ssh.private'),
-              comment: 'github.com'))
-      puts "Done."
-    end
-
-    desc "Ensure SSH key is configured on the CircleCI pipeline"
-    task :ensure => [:'destroy', :'provision']
-  end
+  ]
 end
 
 namespace :github do
@@ -125,7 +85,7 @@ end
 namespace :pipeline do
   task :prepare => [
       :'circle_ci:env_vars:ensure',
-      :'circle_ci:ssh_key:ensure',
+      :'circle_ci:ssh_keys:ensure',
       :'github:deploy_key:ensure'
   ]
 end
