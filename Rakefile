@@ -1,6 +1,7 @@
+require 'yaml'
 require 'sshkey'
-require 'octokit'
 require 'rake_circle_ci'
+require 'rake_github'
 require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
@@ -16,7 +17,7 @@ namespace :ssh_key do
         bits: 4096,
         comment: "maintainers@infrablocks.io")
     File.write('config/secrets/ci/ssh.private', key.private_key)
-    File.write('config/secrets/ci/ssh.public', key.public_key)
+    File.write('config/secrets/ci/ssh.public', key.ssh_public_key)
     puts "Done."
   end
 end
@@ -31,7 +32,8 @@ RakeCircleCI.define_project_tasks(
   t.api_token = circle_ci_config["circle_ci_api_token"]
   t.environment_variables = {
       ENCRYPTION_PASSPHRASE:
-          File.read('config/secrets/ci/encryption.passphrase').chomp
+          File.read('config/secrets/ci/encryption.passphrase')
+              .chomp
   }
   t.ssh_keys = [
       {
@@ -43,42 +45,16 @@ end
 
 namespace :github do
   namespace :deploy_key do
-    desc "Remove deploy key from the Github repository"
-    task :destroy do
-      print "Removing deploy key from the Github repository... "
-      config = YAML.load_file('config/secrets/github/config.yaml')
-      access_token = config["github_personal_access_token"]
-      repo = config["github_repository"]
-      client = Octokit::Client.new(access_token: access_token)
+    RakeGithub.define_deploy_key_tasks(
+        repository: 'infrablocks/ruby_terraform',
+        title: 'CircleCI'
+    ) do |t|
+      github_config =
+          YAML.load_file('config/secrets/github/config.yaml')
 
-      deploy_keys = client.list_deploy_keys(repo)
-      circle_ci_deploy_key = deploy_keys.find { |k| k[:title] == 'CircleCI' }
-      if circle_ci_deploy_key
-        client.remove_deploy_key(repo, circle_ci_deploy_key[:id])
-      end
-      puts "Done."
+      t.access_token = github_config["github_personal_access_token"]
+      t.public_key = File.read('config/secrets/ci/ssh.public')
     end
-
-    desc "Add deploy key to the Github repository"
-    task :provision do
-      print "Adding deploy key to the Github repository... "
-      config = YAML.load_file('config/secrets/github/config.yaml')
-      access_token = config["github_personal_access_token"]
-      repo = config["github_repository"]
-      client = Octokit::Client.new(access_token: access_token)
-
-      ssh_key = SSHKey.new(
-          File.read('config/secrets/ci/ssh.private'),
-          comment: 'CircleCI')
-      client.add_deploy_key(repo,
-          ssh_key.comment,
-          ssh_key.ssh_public_key,
-          read_only: false)
-      puts "Done."
-    end
-
-    desc "Ensure deploy key is configured on the Github repository"
-    task :ensure => [:'destroy', :'provision']
   end
 end
 
