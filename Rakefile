@@ -2,6 +2,7 @@ require 'yaml'
 require 'sshkey'
 require 'rake_circle_ci'
 require 'rake_github'
+require 'rake_ssh'
 require 'rspec/core/rake_task'
 
 RSpec::Core::RakeTask.new(:spec)
@@ -9,17 +10,9 @@ RSpec::Core::RakeTask.new(:spec)
 task :default => :spec
 
 namespace :ssh_key do
-  desc "Generate a new SSH key for CI"
-  task :generate do
-    print "Generating a new SSH key... "
-    key = SSHKey.generate(
-        type: "RSA",
-        bits: 4096,
-        comment: "maintainers@infrablocks.io")
-    File.write('config/secrets/ci/ssh.private', key.private_key)
-    File.write('config/secrets/ci/ssh.public', key.ssh_public_key)
-    puts "Done."
-  end
+  RakeSSH::Tasks::Key::Generate.define(
+      path: 'config/secrets/ci/',
+      comment: 'maintainers@infrablocks.io')
 end
 
 RakeCircleCI.define_project_tasks(
