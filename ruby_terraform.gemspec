@@ -30,7 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rake_circle_ci', '~> 0.3'
-  spec.add_development_dependency 'rake_github', '0.2.0.pre.6'
+  spec.add_development_dependency 'rake_github', '0.2.0.pre.7'
   spec.add_development_dependency 'rake_ssh', '0.1.0.pre.5'
   spec.add_development_dependency 'rspec', '~> 3.9'
   spec.add_development_dependency 'sshkey', '~> 2.0'
