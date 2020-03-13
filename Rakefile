@@ -1,19 +1,18 @@
 require 'yaml'
-require 'sshkey'
 require 'rake_circle_ci'
 require 'rake_github'
 require 'rake_ssh'
 require 'rspec/core/rake_task'
 
-RSpec::Core::RakeTask.new(:spec)
-
 task :default => :spec
 
-namespace :ssh_key do
-  RakeSSH::Tasks::Key::Generate.define(
-      path: 'config/secrets/ci/',
-      comment: 'maintainers@infrablocks.io')
-end
+RSpec::Core::RakeTask.new(:spec)
+
+RakeSSH.define_key_tasks(
+    namespace: :deploy_key,
+    path: 'config/secrets/ci/',
+    comment: 'maintainers@infrablocks.io'
+)
 
 RakeCircleCI.define_project_tasks(
     namespace: :circle_ci,
@@ -30,8 +29,8 @@ RakeCircleCI.define_project_tasks(
   }
   t.ssh_keys = [
       {
-          private_key: File.read('config/secrets/ci/ssh.private'),
-          hostname: "github.com"
+          hostname: "github.com",
+          private_key: File.read('config/secrets/ci/ssh.private')
       }
   ]
 end
@@ -55,7 +54,7 @@ namespace :pipeline do
   task :prepare => [
       :'circle_ci:env_vars:ensure',
       :'circle_ci:ssh_keys:ensure',
-      :'github:deploy_key:ensure'
+      :'github:deploy_keys:ensure'
   ]
 end
 
