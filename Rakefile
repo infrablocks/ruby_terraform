@@ -35,22 +35,20 @@ RakeCircleCI.define_project_tasks(
   ]
 end
 
-namespace :github do
-  RakeGithub.define_deploy_keys_tasks(
-      namespace: :deploy_keys,
-      repository: 'infrablocks/ruby_terraform',
-  ) do |t|
-    github_config =
-        YAML.load_file('config/secrets/github/config.yaml')
+RakeGithub.define_repository_tasks(
+    namespace: :github,
+    repository: 'infrablocks/ruby_terraform',
+) do |t|
+  github_config =
+      YAML.load_file('config/secrets/github/config.yaml')
 
-    t.access_token = github_config["github_personal_access_token"]
-    t.deploy_keys = [
-        {
-            title: 'CircleCI',
-            public_key: File.read('config/secrets/ci/ssh.public')
-        }
-    ]
-  end
+  t.access_token = github_config["github_personal_access_token"]
+  t.deploy_keys = [
+      {
+          title: 'CircleCI',
+          public_key: File.read('config/secrets/ci/ssh.public')
+      }
+  ]
 end
 
 namespace :pipeline do

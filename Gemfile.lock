@@ -45,12 +45,12 @@ GEM
     rake_factory (0.25.0)
       activesupport (>= 4)
       rake (~> 13.0)
-    rake_github (0.2.0.pre.7)
+    rake_github (0.3.0)
       colored2 (~> 3.1)
       octokit (~> 4.16)
       rake_factory (~> 0.23)
       sshkey (~> 2.0)
-    rake_ssh (0.1.0.pre.5)
+    rake_ssh (0.2.0)
       colored2 (~> 3.1)
       rake_factory (~> 0.23)
       sshkey (~> 2.0)
@@ -84,11 +84,10 @@ DEPENDENCIES
   gem-release (~> 2.1)
   rake (~> 13.0)
   rake_circle_ci (~> 0.3)
-  rake_github (= 0.2.0.pre.7)
-  rake_ssh (= 0.1.0.pre.5)
+  rake_github (~> 0.3)
+  rake_ssh (~> 0.2)
   rspec (~> 3.9)
   ruby-terraform!
-  sshkey (~> 2.0)
 
 BUNDLED WITH
    2.1.4
