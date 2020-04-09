@@ -12,6 +12,7 @@ module RubyTerraform
         state = opts[:state]
         check_variables = opts[:check_variables]
         no_color = opts[:no_color]
+        json_format = opts[:json]
 
         builder
             .with_subcommand('validate') do |sub|
@@ -28,6 +29,7 @@ module RubyTerraform
               sub = sub.with_option('-check-variables', check_variables) unless
                   check_variables.nil?
               sub = sub.with_flag('-no-color') if no_color
+              sub = sub.with_flag('-json') if json_format
               sub
             end
             .with_argument(directory)

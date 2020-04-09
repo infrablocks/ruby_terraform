@@ -139,7 +139,7 @@ describe RubyTerraform::Commands::Validate do
 
     command.execute(
         directory: 'some/configuration',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
@@ -155,9 +155,22 @@ describe RubyTerraform::Commands::Validate do
     command.execute(
         directory: 'some/configuration',
         var_file: 'some/vars.tfvars',
-        var_files: [ 
+        var_files: [
             'some/vars1.tfvars',
             'some/vars2.tfvars'
         ])
+  end
+
+  it 'includes the json flag when the json option is true' do
+    command = RubyTerraform::Commands::Validate.new(binary: 'terraform')
+
+    expect(Open4).to(
+      receive(:spawn)
+        .with('terraform validate -json some/configuration', any_args))
+
+    command.execute(
+      directory: 'some/configuration',
+      json: true
+    )
   end
 end
