@@ -78,12 +78,12 @@ RubyTerraform.init
 RubyTerraform.init(from_module: 'some/module/path', path: 'infra/module')
 RubyTerraform::Commands::Init.new.execute
 RubyTerraform::Commands::Init.new.execute(
-    from_module: 'some/module/path', 
+    from_module: 'some/module/path',
     path: 'infra/module')
 ```
 
 The init command supports the following options passed as keyword arguments:
-* `from_module`: the source module to use to initialise; required if `path` is 
+* `from_module`: the source module to use to initialise; required if `path` is
   specified
 * `path`: the path to initialise.
 * `backend`: `true`/`false`, whether or not to configure the backend.
@@ -145,7 +145,7 @@ The plan command supports the following options passed as keyword arguments:
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `plan`: the name of the file in which to save the generated plan.
-* `input`: when `false`, will not ask for input for variables not directly set; 
+* `input`: when `false`, will not ask for input for variables not directly set;
   defaults to `true`.
 * `destroy`: when `true`, a plan will be generated to destroy all resources
   managed by the given configuration and state; defaults to `false`.
@@ -185,18 +185,18 @@ The apply command supports the following options passed as keyword arguments:
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
 * `backup`: the path to the backup file in which to store the state backup.
-* `input`: when `false`, will not ask for input for variables not directly set; 
+* `input`: when `false`, will not ask for input for variables not directly set;
   defaults to `true`.
 * `no_backup`: when `true`, no backup file will be written; defaults to `false`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
-* `auto_approve`: if `true`, the command applys without prompting the user to 
+* `auto_approve`: if `true`, the command applys without prompting the user to
   confirm the changes; defaults to `false`.
 
 
 ### RubyTerraform::Commands::Show
 
-The show command produces human-readable output from a state file or a plan 
+The show command produces human-readable output from a state file or a plan
 file. It can be called in the following ways:
 
 ```ruby
@@ -210,7 +210,7 @@ The show command supports the following options passed as keyword arguments:
 * `path`: the path to a state or plan file; required.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
-* `module_depth`: the depth of modules to show in the output; defaults to 
+* `module_depth`: the depth of modules to show in the output; defaults to
   showing all modules.
 * `json`: whether or not the output from the command should be in json format;
   defaults to `false`.
@@ -305,7 +305,7 @@ The refresh command supports the following options passed as keyword arguments:
   `targets` are provided, all targets will be passed to terraform.
 * `state`: the path to the state file in which to store state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
-* `input`: when `false`, will not ask for input for variables not directly set; 
+* `input`: when `false`, will not ask for input for variables not directly set;
   defaults to `true`.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
@@ -314,7 +314,7 @@ The refresh command supports the following options passed as keyword arguments:
 ### RubyTerraform::Commands::RemoteConfig
 
 The remote config command configures storage of state using a remote backend. It
-has been deprecated and since removed from terraform but is retained in this 
+has been deprecated and since removed from terraform but is retained in this
 library for backwards compatibility. It can be called in the following ways:
 
 ```ruby
@@ -372,12 +372,13 @@ The validate command supports the following options passed as keyword arguments:
   defaults to `false`.
 * `check_variables`: if `true`, the command checks whether all variables have
   been provided; defaults to `true`.
-
+* `json`: whether or not the output from the command should be in json format;
+  defaults to `false`.
 
 ### RubyTerraform::Commands::Workspace
 
-The `workspace` command configures 
-[Terraform Workspaces](https://www.terraform.io/docs/state/workspaces.html#using-workspaces). 
+The `workspace` command configures
+[Terraform Workspaces](https://www.terraform.io/docs/state/workspaces.html#using-workspaces).
 It can be used as follows:
 
 ```ruby
@@ -390,7 +391,7 @@ RubyTerraform.workspace(operation: 'delete', workspace: 'staging')
 ```
 
 arguments:
-* `directory`: the directory containing terraform configuration, the default is 
+* `directory`: the directory containing terraform configuration, the default is
   the current path.
 * `operation`: `list`, `select`, `new` or `delete`. default `list`.
 * `workspace`: Workspace name.
@@ -398,10 +399,10 @@ arguments:
 
 ## Configuration
 
-In addition to configuring the location of the terraform binary, RubyTerraform 
+In addition to configuring the location of the terraform binary, RubyTerraform
 offers configuration of logging and standard streams. By default standard
-streams map to `$stdin`, `$stdout` and `$stderr` and all logging goes to 
-`$stdout`.  
+streams map to `$stdin`, `$stdout` and `$stderr` and all logging goes to
+`$stdout`.
 
 ### Logging
 
@@ -420,7 +421,7 @@ RubyTerraform.configure do |config|
 end
 ```
 
-RubyTerraform supports logging to multiple different outputs at once, 
+RubyTerraform supports logging to multiple different outputs at once,
 for example:
 
 ``` ruby
@@ -436,7 +437,7 @@ RubyTerraform.configure do |config|
 end
 ```
 
-Configured in this way, any logging performed by RubyTerraform will log to both 
+Configured in this way, any logging performed by RubyTerraform will log to both
 `STDOUT` and the provided `log_file`.
 
 ### Standard Streams
@@ -466,9 +467,9 @@ input = StringIO.new("user\ninput\n")
 RubyTerraform.configure do |config|
   config.stdin = input
 end
-``` 
+```
 
-In this way, terraform can be driven by input from somewhere other than 
+In this way, terraform can be driven by input from somewhere other than
 interactive input from the terminal.
 
 
