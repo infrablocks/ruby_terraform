@@ -427,15 +427,17 @@ for example:
 ``` ruby
 require 'logger'
 
-log_file = File.open('path/to/some/ruby_terraform.log', 'a')
-logger = Logger.new(
-  RubyTerraform::MultiIO.new($stdout, log_file))
-logger.level = Logger::DEBUG
+log_file = Logger::LogDevice.new('/foo/bar.log') # results in a file with sync true in the background
+logger = Logger.new(RubyTerraform::MultiIO.new(STDOUT, log_file), level: :debug)
 
 RubyTerraform.configure do |config|
+  config.binary = '/binary/path/terraform'
   config.logger = logger
+  config.stdout = logger
+  config.stderr = logger
 end
 ```
+> Creating the Logger with a file this way (using `Logger::LogDevice`), guarantees that the buffer content will be saved/written, as it sets **implicit flushing**.
 
 Configured in this way, any logging performed by RubyTerraform will log to both
 `STDOUT` and the provided `log_file`.
