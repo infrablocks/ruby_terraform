@@ -1,16 +1,16 @@
 version: 2.1
 jobs:
   test:
-    working_directory: ~/ruby-terraform
+    working_directory: ~/source
     docker:
-    - image: ruby:2.4.7
+    - image: ruby:2.6.0
     steps:
     - checkout
     - run: ./scripts/ci/steps/test.sh
   prerelease:
-    working_directory: ~/ruby-terraform
+    working_directory: ~/source
     docker:
-    - image: ruby:2.4.7
+    - image: ruby:2.6.0
     steps:
     - checkout
     - run: ./scripts/ci/common/install-git-crypt.sh
@@ -19,9 +19,9 @@ jobs:
     - run: ./scripts/ci/common/configure-rubygems.sh
     - run: ./scripts/ci/steps/prerelease.sh
   release:
-    working_directory: ~/ruby-terraform
+    working_directory: ~/source
     docker:
-    - image: ruby:2.4.7
+    - image: ruby:2.6.0
     steps:
     - checkout
     - run: ./scripts/ci/common/install-git-crypt.sh
