@@ -352,8 +352,6 @@ The import command supports the following options passed as keyword arguments:
   defaults to `true`.
 * `state`: the path to the state file containing the current state; defaults to
   terraform.tfstate in the working directory or the remote state if configured.
-* `module_depth`: the depth of modules to show in the output; defaults to
-  showing all modules.
 * `no_backup`: when `true`, no backup file will be written; defaults to `false`.
 * `backup`: the path to the backup file in which to store the state backup.
 * `no_color`: whether or not the output from the command should be in color;
