@@ -242,11 +242,6 @@ The destroy command supports the following options passed as keyword arguments:
   `var_files` are provided, all var files will be passed to terraform.
 * `var_files`: an array of paths to terraform var files; if both `var_file` and
   `var_files` are provided, all var files will be passed to terraform.
-  * `module_depth`: the depth of modules to show in the output; defaults to
-  showing all modules.
-* `json`: whether or not the output from the command should be in json format;
-  defaults to `false`.
-
 * `target`: the address of a resource to target; if both `target` and
   `targets` are provided, all targets will be passed to terraform.
 * `targets`: and array of resource addresses to target; if both `target` and
