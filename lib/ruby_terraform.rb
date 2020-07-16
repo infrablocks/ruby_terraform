@@ -68,6 +68,10 @@ module RubyTerraform
     def workspace(opts = {})
       Commands::Workspace.new.execute(opts)
     end
+
+    def import(opts = {})
+      Commands::Import.new.execute(opts)
+    end
   end
   extend ClassMethods
 

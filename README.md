@@ -48,6 +48,7 @@ Currently, there is partial support for the following commands:
 * `RubyTerraform::Commands::Destroy`: executes `terraform destroy`
 * `RubyTerraform::Commands::Output`: executes `terraform output`
 * `RubyTerraform::Commands::Refresh`: executes `terraform refresh`
+* `RubyTerraform::Commands::Import`: executes `terraform import`
 * `RubyTerraform::Commands::RemoteConfig`: executes `terraform remote config`
 * `RubyTerraform::Commands::Validate`: executes `terraform validate`
 * `RubyTerraform::Commands::Workspace`: executes `terraform workspace`
@@ -241,6 +242,11 @@ The destroy command supports the following options passed as keyword arguments:
   `var_files` are provided, all var files will be passed to terraform.
 * `var_files`: an array of paths to terraform var files; if both `var_file` and
   `var_files` are provided, all var files will be passed to terraform.
+  * `module_depth`: the depth of modules to show in the output; defaults to
+  showing all modules.
+* `json`: whether or not the output from the command should be in json format;
+  defaults to `false`.
+
 * `target`: the address of a resource to target; if both `target` and
   `targets` are provided, all targets will be passed to terraform.
 * `targets`: and array of resource addresses to target; if both `target` and
@@ -307,6 +313,49 @@ The refresh command supports the following options passed as keyword arguments:
   terraform.tfstate in the working directory or the remote state if configured.
 * `input`: when `false`, will not ask for input for variables not directly set;
   defaults to `true`.
+* `no_color`: whether or not the output from the command should be in color;
+  defaults to `false`.
+
+
+### RubyTerraform::Commands::Import
+
+The import command imports existing infrastructure into your terraform state.
+It can be called in the following ways:
+
+```ruby
+RubyTerraform.import(
+  directory: 'infra/networking',
+  address: 'a.resource.address',
+  id: 'a-resource-id',
+  vars: {
+    region: 'eu-central'
+  }))
+RubyTerraform::Commands::Import.new.execute(
+  directory: 'infra/networking',
+  address: 'a.resource.address',
+  id: 'a-resource-id',
+  vars: {
+    region: 'eu-central'
+  }))
+```
+
+The import command supports the following options passed as keyword arguments:
+* `directory`: the directory containing terraform configuration; required.
+* `address`: a valid resource address; required.
+* `id`: id of resource being imported; required.
+* `vars`: a map of vars to be passed in to the terraform configuration.
+* `var_file`: the path to a terraform var file; if both `var_file` and
+  `var_files` are provided, all var files will be passed to terraform.
+* `var_files`: an array of paths to terraform var files; if both `var_file` and
+  `var_files` are provided, all var files will be passed to terraform.
+* `input`: when `false`, will not ask for input for variables not directly set;
+  defaults to `true`.
+* `state`: the path to the state file containing the current state; defaults to
+  terraform.tfstate in the working directory or the remote state if configured.
+* `module_depth`: the depth of modules to show in the output; defaults to
+  showing all modules.
+* `no_backup`: when `true`, no backup file will be written; defaults to `false`.
+* `backup`: the path to the backup file in which to store the state backup.
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
 

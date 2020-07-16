@@ -10,6 +10,7 @@ require_relative 'commands/refresh'
 require_relative 'commands/remote_config'
 require_relative 'commands/show'
 require_relative 'commands/workspace'
+require_relative 'commands/import'
 
 module RubyTerraform
   module Commands
