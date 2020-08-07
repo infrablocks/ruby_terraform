@@ -11,6 +11,7 @@ require_relative 'commands/remote_config'
 require_relative 'commands/show'
 require_relative 'commands/workspace'
 require_relative 'commands/import'
+require_relative 'commands/fmt'
 
 module RubyTerraform
   module Commands

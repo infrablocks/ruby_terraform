@@ -50,6 +50,7 @@ Currently, there is partial support for the following commands:
 * `RubyTerraform::Commands::Refresh`: executes `terraform refresh`
 * `RubyTerraform::Commands::Import`: executes `terraform import`
 * `RubyTerraform::Commands::RemoteConfig`: executes `terraform remote config`
+* `RubyTerraform::Commands::FMT`: executes `terraform fmt`
 * `RubyTerraform::Commands::Validate`: executes `terraform validate`
 * `RubyTerraform::Commands::Workspace`: executes `terraform workspace`
 
@@ -384,7 +385,38 @@ arguments:
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
 
+### RubyTerraform::Commands::FMT
 
+The FMT command formats the terraform directory specified. It can be called in the following ways:
+
+```ruby
+RubyTerraform.fmt(
+  directory: 'infra/networking',
+  vars: {
+    region: 'eu-central'
+  })
+RubyTerraform::Commands::FMT.new.execute(
+  directory: 'infra/networking',
+  vars: {
+    region: 'eu-central'
+  })
+```
+
+The fmt command supports the following options passed as keyword arguments:
+* `directory`: the directory containing terraform configuration to be formatted; required.
+* `recursive`: Processes files in subdirectories;
+  defaults to `false`.
+* `list`: Don't list files whose formatting differs;
+  defaults to `false`.
+* `write`: Don't write to source files;
+  defaults to `false`.
+* `check`: Checks if the input is formatted, exit status will be 0 if all input is properly formatted and non zero otherwise;
+  defaults to `false`.
+* `diff`: Displays a diff of the formatting changes;
+  defaults to `false`.
+* `no_color`: whether or not the output from the command should be in color;
+  defaults to `false`.
+  
 ### RubyTerraform::Commands::Validate
 
 The validate command validates terraform configuration in the provided terraform
