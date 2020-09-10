@@ -50,7 +50,7 @@ Currently, there is partial support for the following commands:
 * `RubyTerraform::Commands::Refresh`: executes `terraform refresh`
 * `RubyTerraform::Commands::Import`: executes `terraform import`
 * `RubyTerraform::Commands::RemoteConfig`: executes `terraform remote config`
-* `RubyTerraform::Commands::FMT`: executes `terraform fmt`
+* `RubyTerraform::Commands::Format`: executes `terraform fmt`
 * `RubyTerraform::Commands::Validate`: executes `terraform validate`
 * `RubyTerraform::Commands::Workspace`: executes `terraform workspace`
 
@@ -385,24 +385,24 @@ arguments:
 * `no_color`: whether or not the output from the command should be in color;
   defaults to `false`.
 
-### RubyTerraform::Commands::FMT
+### RubyTerraform::Commands::Format
 
-The FMT command formats the terraform directory specified. It can be called in the following ways:
+The format command formats the terraform directory specified. It can be called in the following ways:
 
 ```ruby
-RubyTerraform.fmt(
+RubyTerraform.format(
   directory: 'infra/networking',
   vars: {
     region: 'eu-central'
   })
-RubyTerraform::Commands::FMT.new.execute(
+RubyTerraform::Commands::Format.new.execute(
   directory: 'infra/networking',
   vars: {
     region: 'eu-central'
   })
 ```
 
-The fmt command supports the following options passed as keyword arguments:
+The format command supports the following options passed as keyword arguments:
 * `directory`: the directory containing terraform configuration to be formatted; required.
 * `recursive`: Processes files in subdirectories;
   defaults to `false`.

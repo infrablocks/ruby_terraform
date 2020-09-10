@@ -5,7 +5,7 @@ require_relative 'base'
 
 module RubyTerraform
   module Commands
-    class FMT < Base
+    class Format < Base
       def configure_command(builder, opts)
         directory = opts[:directory]
         check = opts[:check]

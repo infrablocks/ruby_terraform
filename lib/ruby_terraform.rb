@@ -73,8 +73,8 @@ module RubyTerraform
       Commands::Import.new.execute(opts)
     end
 
-    def fmt(opts = {})
-      Commands::FMT.new.execute(opts)
+    def format(opts = {})
+      Commands::Format.new.execute(opts)
     end
   end
   extend ClassMethods
