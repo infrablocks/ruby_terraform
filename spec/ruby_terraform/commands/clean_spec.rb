@@ -1,39 +1,46 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require 'logger'
 
 describe RubyTerraform::Commands::Clean do
-  before(:each) do
+  before do
     RubyTerraform.configure do |config|
       config.logger = Logger.new(StringIO.new)
     end
+    stub_fileutils_rm_r
   end
 
-  after(:each) do
+  after do
     RubyTerraform.reset!
   end
 
   it 'deletes the .terraform directory in the current directory by default' do
-    command = RubyTerraform::Commands::Clean.new
-
-    expect(FileUtils).to(
-        receive(:rm_r).with('.terraform', :secure => true))
+    command = described_class.new
 
     command.execute
+
+    expect(FileUtils).to(
+      have_received(:rm_r).with('.terraform', secure: true)
+    )
   end
 
-  it 'logs to the provided logger at info level when deleting .terraform directory' do
+  it 'logs to the provided logger at info level ' \
+     'when deleting .terraform directory' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::INFO
 
     stub_fileutils_rm_r
 
-    command = RubyTerraform::Commands::Clean.new(logger: logger)
+    command = described_class.new(logger: logger)
     command.execute
 
     expect(string_output.string).to(
-        include('INFO').and(
-            include("Cleaning terraform directory '.terraform'.")))
+      include('INFO').and(
+        include("Cleaning terraform directory '.terraform'.")
+      )
+    )
   end
 
   it 'logs to the globally configured logger by default' do
@@ -47,60 +54,70 @@ describe RubyTerraform::Commands::Clean do
 
     stub_fileutils_rm_r
 
-    command = RubyTerraform::Commands::Clean.new
+    command = described_class.new
     command.execute
 
     expect(string_output.string).to(
-        include('INFO').and(
-            include("Cleaning terraform directory '.terraform'.")))
+      include('INFO').and(
+        include("Cleaning terraform directory '.terraform'.")
+      )
+    )
   end
 
   it 'deletes the provided directory when specified' do
-    command = RubyTerraform::Commands::Clean.new(directory: 'some/path')
-
-    expect(FileUtils).to(
-        receive(:rm_r).with('some/path', :secure => true))
+    command = described_class.new(directory: 'some/path')
 
     command.execute
+
+    expect(FileUtils).to(
+      have_received(:rm_r).with('some/path', secure: true)
+    )
   end
 
-  it 'logs to the provided logger at info level when deleting provided directory' do
+  it 'logs to the provided logger at info level ' \
+     'when deleting provided directory' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::INFO
 
-    stub_fileutils_rm_r
-
-    command = RubyTerraform::Commands::Clean.new(
-        directory: 'some/path', logger: logger)
+    command = described_class.new(
+      directory: 'some/path', logger: logger
+    )
     command.execute
 
     expect(string_output.string).to(
-        include('INFO').and(
-            include("Cleaning terraform directory 'some/path'.")))
+      include('INFO').and(
+        include("Cleaning terraform directory 'some/path'.")
+      )
+    )
   end
 
   it 'allows the directory to be overridden on execution' do
-    command = RubyTerraform::Commands::Clean.new
+    command = described_class.new
+
+    command.execute(directory: 'some/.terraform')
 
     expect(FileUtils).to(
-        receive(:rm_r).with('some/.terraform', :secure => true))
-    command.execute(directory: 'some/.terraform')
+      have_received(:rm_r).with('some/.terraform', secure: true)
+    )
   end
 
-  it 'logs to the provided logger at info level when deleting overridden directory' do
+  it 'logs to the provided logger at info level ' \
+     'when deleting overridden directory' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::INFO
 
     stub_fileutils_rm_r
 
-    command = RubyTerraform::Commands::Clean.new(logger: logger)
+    command = described_class.new(logger: logger)
     command.execute(directory: 'some/.terraform')
 
     expect(string_output.string).to(
-        include('INFO').and(
-            include("Cleaning terraform directory 'some/.terraform'.")))
+      include('INFO').and(
+        include("Cleaning terraform directory 'some/.terraform'.")
+      )
+    )
   end
 
   it 'logs an exception when no terraform directory is found' do
@@ -110,7 +127,7 @@ describe RubyTerraform::Commands::Clean do
 
     stub_fileutils_rm_r_raise
 
-    command = RubyTerraform::Commands::Clean.new(logger: logger)
+    command = described_class.new(logger: logger)
     command.execute(directory: '/this/path/does/not/exist')
 
     expect(string_output.string).to(
@@ -130,6 +147,6 @@ describe RubyTerraform::Commands::Clean do
   end
 
   def stub_fileutils_rm_r_raise
-    allow(FileUtils).to(receive(:rm_r).and_raise Errno::ENOENT)
+    allow(FileUtils).to(receive(:rm_r).and_raise(Errno::ENOENT))
   end
 end
