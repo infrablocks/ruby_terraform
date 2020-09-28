@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'fileutils'
 
 module RubyTerraform
@@ -6,15 +8,15 @@ module RubyTerraform
       attr_reader :logger
 
       def initialize(directory: nil, logger: nil)
-        @directory = directory ? directory : '.terraform'
+        @directory = directory || '.terraform'
         @logger = logger || RubyTerraform.configuration.logger
       end
 
-      def execute(opts = {})
+      def execute(opts={})
         directory = opts[:directory] || @directory
         begin
           logger.info "Cleaning terraform directory '#{directory}'."
-          FileUtils.rm_r(directory, :secure => true)
+          FileUtils.rm_r(directory, secure: true)
         rescue Errno::ENOENT => e
           logger.error "Couldn't clean '#{directory}': #{e.message}"
         end
