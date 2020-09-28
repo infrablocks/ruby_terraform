@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'lino'
 require_relative 'base'
 
@@ -10,8 +12,8 @@ module RubyTerraform
         workspace = opts[:workspace] || nil
 
         builder = builder
-            .with_subcommand('workspace')
-            .with_subcommand(operation)
+                  .with_subcommand('workspace')
+                  .with_subcommand(operation)
 
         builder = builder.with_subcommand(workspace) if
             workspace && operation != 'list'
