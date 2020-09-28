@@ -1,83 +1,111 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Workspace do
-  before(:each) do
+  before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
     end
   end
 
-  after(:each) do
+  after do
     RubyTerraform.reset!
   end
 
   it 'calls the terraform workspace command passing the supplied directory' do
-    command = RubyTerraform::Commands::Workspace.new(binary: 'terraform')
+    command = described_class.new(binary: 'terraform')
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('terraform workspace list some/path/to/terraform/configuration', any_args))
+    allow(Open4).to receive(:spawn)
 
     command.execute(directory: 'some/path/to/terraform/configuration')
+
+    expect(Open4).to(
+      have_received(:spawn)
+        .with(
+          'terraform workspace list some/path/to/terraform/configuration',
+          any_args
+        )
+    )
   end
 
   it 'defaults to the configured binary when none provided' do
-    command = RubyTerraform::Commands::Workspace.new
+    command = described_class.new
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace list some/path/to/terraform/configuration', any_args))
+    allow(Open4).to receive(:spawn)
 
     command.execute(directory: 'some/path/to/terraform/configuration')
-  end
-
-  it 'should defaults to list operation when no operation provided' do
-    command = RubyTerraform::Commands::Workspace.new
 
     expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace list', any_args))
+      have_received(:spawn)
+        .with(
+          'path/to/binary workspace list some/path/to/terraform/configuration',
+          any_args
+        )
+    )
+  end
+
+  it 'defaults to list operation when no operation provided' do
+    command = described_class.new
+
+    allow(Open4).to receive(:spawn)
 
     command.execute
-  end
-
-  it 'should not use workspace option if operation list is provided' do
-    command = RubyTerraform::Commands::Workspace.new
 
     expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace list', any_args))
+      have_received(:spawn)
+        .with('path/to/binary workspace list', any_args)
+    )
+  end
+
+  it 'does not use workspace option if operation list is provided' do
+    command = described_class.new
+
+    allow(Open4).to receive(:spawn)
 
     command.execute(operation: 'list', workspace: 'qa')
-  end
-
-  it 'should select the specified workspace' do
-    command = RubyTerraform::Commands::Workspace.new
 
     expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace select staging', any_args))
+      have_received(:spawn)
+        .with('path/to/binary workspace list', any_args)
+    )
+  end
+
+  it 'selects the specified workspace' do
+    command = described_class.new
+
+    allow(Open4).to receive(:spawn)
 
     command.execute(operation: 'select', workspace: 'staging')
-  end
-
-  it 'should create the specified workspace' do
-    command = RubyTerraform::Commands::Workspace.new
 
     expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace new staging', any_args))
+      have_received(:spawn)
+        .with('path/to/binary workspace select staging', any_args)
+    )
+  end
+
+  it 'creates the specified workspace' do
+    command = described_class.new
+
+    allow(Open4).to receive(:spawn)
 
     command.execute(operation: 'new', workspace: 'staging')
-  end
-
-  it 'should delete the specified workspace' do
-    command = RubyTerraform::Commands::Workspace.new
 
     expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace delete staging', any_args))
+      have_received(:spawn)
+        .with('path/to/binary workspace new staging', any_args)
+    )
+  end
+
+  it 'deletes the specified workspace' do
+    command = described_class.new
+    allow(Open4).to receive(:spawn)
 
     command.execute(operation: 'delete', workspace: 'staging')
+
+    expect(Open4).to(
+      have_received(:spawn)
+        .with('path/to/binary workspace delete staging', any_args)
+    )
   end
 end
