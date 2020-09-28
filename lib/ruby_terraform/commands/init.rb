@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'lino'
 require_relative 'base'
 
@@ -15,21 +17,23 @@ module RubyTerraform
         force_copy = opts[:force_copy]
 
         builder = builder
-            .with_subcommand('init') do |sub|
-              sub = sub.with_option('-backend', backend) unless backend.nil?
-              sub = sub.with_option('-force-copy', force_copy) unless force_copy.nil?
-              sub = sub.with_option('-get', get) unless get.nil?
-              sub = sub.with_option('-from-module', source) if source
-              sub = sub.with_flag('-no-color') if no_color
-              sub = sub.with_option('-plugin-dir', plugin_dir) unless plugin_dir.nil?
-              backend_config.each do |key, value|
-                sub = sub.with_option(
-                    '-backend-config',
-                    "'#{key}=#{value}'",
-                    separator: ' ')
-              end
-              sub
-            end
+                  .with_subcommand('init') do |sub|
+          sub = sub.with_option('-backend', backend) unless backend.nil?
+
+          sub = sub.with_option('-force-copy', force_copy) unless force_copy.nil? # rubocop:disable Metrics/LineLength
+          sub = sub.with_option('-get', get) unless get.nil?
+          sub = sub.with_option('-from-module', source) if source
+          sub = sub.with_flag('-no-color') if no_color
+          sub = sub.with_option('-plugin-dir', plugin_dir) unless plugin_dir.nil? # rubocop:disable Metrics/LineLength
+          backend_config.each do |key, value|
+            sub = sub.with_option(
+              '-backend-config',
+              "'#{key}=#{value}'",
+              separator: ' '
+            )
+          end
+          sub
+        end
 
         builder = builder.with_argument(path) if path
 
