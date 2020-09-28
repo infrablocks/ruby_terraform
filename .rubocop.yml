@@ -1,0 +1,77 @@
+inherit_from: .rubocop_todo.yml
+
+require:
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - 'bin/*'
+    - 'vendor/**/*'
+    - 'packaging/*'
+
+Bundler/OrderedGems:
+  TreatCommentsAsGroupSeparators: true
+
+Style/Encoding:
+  Exclude:
+    - 'ruby_terraform.gemspec'
+
+Layout/AlignHash:
+  EnforcedHashRocketStyle: table
+  EnforcedColonStyle: table
+
+Layout/AlignArguments:
+  EnforcedStyle: with_fixed_indentation
+
+Layout/CaseIndentation:
+  EnforcedStyle: end
+
+Layout/EndAlignment:
+  EnforcedStyleAlignWith: start_of_line
+
+Layout/SpaceAroundEqualsInParameterDefault:
+  EnforcedStyle: no_space
+
+Layout/MultilineMethodCallBraceLayout:
+  EnforcedStyle: new_line
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Style/WordArray:
+  EnforcedStyle: brackets
+
+RSpec/ExampleLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
+
+# When testing instantiation, it's perfectly valid to stub any instance
+RSpec/AnyInstance:
+  Enabled: false
+
+Style/Documentation:
+  Exclude:
+    - "spec/**/*"
+    - "lib/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "spec/**/*_spec.rb"
+    - "bin/**/*"
+    - "scripts/**/*"
+
+Naming/FileName:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 80
+  Exclude:
+    - "config/**/*"
+
+Metrics/MethodLength:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
