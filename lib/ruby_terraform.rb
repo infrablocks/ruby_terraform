@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'ruby_terraform/version'
 require 'ruby_terraform/errors'
 require 'ruby_terraform/commands'
@@ -21,59 +23,59 @@ module RubyTerraform
   end
 
   module ClassMethods
-    def clean(opts = {})
+    def clean(opts={})
       Commands::Clean.new.execute(opts)
     end
 
-    def init(opts = {})
+    def init(opts={})
       Commands::Init.new.execute(opts)
     end
 
-    def get(opts = {})
+    def get(opts={})
       Commands::Get.new.execute(opts)
     end
 
-    def validate(opts = {})
+    def validate(opts={})
       Commands::Validate.new.execute(opts)
     end
 
-    def plan(opts = {})
+    def plan(opts={})
       Commands::Plan.new.execute(opts)
     end
 
-    def apply(opts = {})
+    def apply(opts={})
       Commands::Apply.new.execute(opts)
     end
 
-    def destroy(opts = {})
+    def destroy(opts={})
       Commands::Destroy.new.execute(opts)
     end
 
-    def remote_config(opts = {})
+    def remote_config(opts={})
       Commands::RemoteConfig.new.execute(opts)
     end
 
-    def refresh(opts = {})
+    def refresh(opts={})
       Commands::Refresh.new.execute(opts)
     end
 
-    def output(opts = {})
+    def output(opts={})
       Commands::Output.new.execute(opts)
     end
 
-    def show(opts = {})
+    def show(opts={})
       Commands::Show.new.execute(opts)
     end
 
-    def workspace(opts = {})
+    def workspace(opts={})
       Commands::Workspace.new.execute(opts)
     end
 
-    def import(opts = {})
+    def import(opts={})
       Commands::Import.new.execute(opts)
     end
 
-    def format(opts = {})
+    def format(opts={})
       Commands::Format.new.execute(opts)
     end
   end
@@ -107,7 +109,7 @@ module RubyTerraform
     end
 
     def write(*args)
-      @targets.each {|t| t.write(*args)}
+      @targets.each { |t| t.write(*args) }
     end
 
     def close
