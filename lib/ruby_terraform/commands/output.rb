@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'lino'
 require 'stringio'
 require_relative 'base'
@@ -19,7 +21,7 @@ module RubyTerraform
         mod = opts[:module]
 
         builder = builder
-            .with_subcommand('output') do |sub|
+                  .with_subcommand('output') do |sub|
           sub = sub.with_flag('-no-color') if no_color
           sub = sub.with_flag('-json') if json
           sub = sub.with_option('-state', state) if state
