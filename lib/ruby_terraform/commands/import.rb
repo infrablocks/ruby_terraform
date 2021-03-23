@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'lino'
+require 'json'
 require_relative 'base'
 
 module RubyTerraform

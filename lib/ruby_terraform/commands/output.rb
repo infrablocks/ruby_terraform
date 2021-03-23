@@ -1,4 +1,3 @@
-require 'lino'
 require 'stringio'
 require_relative 'base'
 
