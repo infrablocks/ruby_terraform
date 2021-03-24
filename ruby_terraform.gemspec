@@ -35,5 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake_gpg', '~> 0.12'
   spec.add_development_dependency 'rake_ssh', '~> 0.4'
   spec.add_development_dependency 'rspec', '~> 3.9'
-  spec.add_development_dependency 'gem-release', '~> 2.1'
+
+  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard-rspec'
 end
