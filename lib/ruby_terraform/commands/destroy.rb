@@ -8,8 +8,8 @@ module RubyTerraform
         RubyTerraform::CommandLine::Options.new(
           option_values: option_values,
           command_arguments: {
-            standard: %i[backup state target var_file],
-            boolean: %i[auto_approve],
+            standard: %i[backup lock_timeout parallelism state state_out target var var_file],
+            boolean: %i[auto_approve lock refresh],
             flags: %i[force no_color],
             switch_overrides: { vars: '-var', targets: '-target', var_files: '-var-file' }
           }
