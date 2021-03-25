@@ -1,32 +1,30 @@
 require 'stringio'
 require_relative 'base'
+require_relative '../command_line/options'
 
 module RubyTerraform
   module Commands
     class Output < Base
-      def initialize(**kwargs)
-        super(**kwargs)
-        @stdout = StringIO.new unless
-            defined?(@stdout) && @stdout.respond_to?(:string)
+      def initialize_command
+        @stdout = StringIO.new unless defined?(@stdout) && @stdout.respond_to?(:string)
       end
 
-      def configure_command(builder, opts)
-        name = opts[:name]
-        state = opts[:state]
-        no_color = opts[:no_color]
-        json = opts[:json]
-        mod = opts[:module]
+      def command_line_options(option_values)
+        RubyTerraform::CommandLine::Options.new(
+          option_values: option_values,
+          command_arguments: {
+            standard: %i[module state],
+            flags: %i[json no_color]
+          }
+        )
+      end
 
-        builder = builder
-            .with_subcommand('output') do |sub|
-          sub = sub.with_flag('-no-color') if no_color
-          sub = sub.with_flag('-json') if json
-          sub = sub.with_option('-state', state) if state
-          sub = sub.with_option('-module', mod) if mod
-          sub
-        end
-        builder = builder.with_argument(name) if name
-        builder
+      def command_line_commands(_option_values)
+        'output'
+      end
+
+      def command_line_arguments(option_values)
+        option_values[:name]
       end
 
       def do_after(opts)

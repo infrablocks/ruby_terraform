@@ -1,38 +1,30 @@
 require_relative 'base'
+require_relative '../command_line/options'
 
 module RubyTerraform
   module Commands
     class Init < Base
-      def configure_command(builder, opts)
-        no_color = opts[:no_color]
-        backend = opts[:backend]
-        get = opts[:get]
-        backend_config = opts[:backend_config] || {}
-        source = opts[:from_module]
-        path = opts[:path]
-        plugin_dir = opts[:plugin_dir]
-        force_copy = opts[:force_copy]
+      def command_line_options(option_values)
+        RubyTerraform::CommandLine::Options.new(
+          option_values: option_values,
+          command_arguments: {
+            standard: %i[backend_config from_module plugin_dir],
+            boolean: %i[backend force_copy get],
+            flags: %i[no_color]
+          }
+        )
+      end
 
-        builder = builder
-            .with_subcommand('init') do |sub|
-              sub = sub.with_option('-backend', backend) unless backend.nil?
-              sub = sub.with_option('-force-copy', force_copy) unless force_copy.nil?
-              sub = sub.with_option('-get', get) unless get.nil?
-              sub = sub.with_option('-from-module', source) if source
-              sub = sub.with_flag('-no-color') if no_color
-              sub = sub.with_option('-plugin-dir', plugin_dir) unless plugin_dir.nil?
-              backend_config.each do |key, value|
-                sub = sub.with_option(
-                    '-backend-config',
-                    "'#{key}=#{value}'",
-                    separator: ' ')
-              end
-              sub
-            end
+      def command_line_commands(_option_values)
+        'init'
+      end
 
-        builder = builder.with_argument(path) if path
+      def command_line_arguments(option_values)
+        option_values[:path]
+      end
 
-        builder
+      def option_default_values(_opts)
+        { backend_config: {} }
       end
     end
   end

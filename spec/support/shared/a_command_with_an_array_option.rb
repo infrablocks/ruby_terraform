@@ -15,7 +15,7 @@ shared_examples 'a command with an array option' do |command, option, directory 
 
   it_behaves_like 'a valid command line', {
     reason: "ensures that #{singular} and #{option} options work together",
-    expected_command: "terraform #{command} #{switch}=option-value #{switch}=option-value1 #{switch}=option-value2#{argument}",
+    expected_command: "terraform #{command} #{switch}=option-value1 #{switch}=option-value2 #{switch}=option-value#{argument}",
     options: { directory: directory,
                single_option => 'option-value',
                option => %w[option-value1 option-value2] }

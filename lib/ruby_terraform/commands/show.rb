@@ -1,24 +1,26 @@
 # frozen_string_literal: true
 
 require_relative 'base'
+require_relative '../command_line/options'
 
 module RubyTerraform
   module Commands
     class Show < Base
-      def configure_command(builder, opts)
-        path = opts[:path] || opts[:directory]
-        json_format = opts[:json]
-        no_color = opts[:no_color]
-        module_depth = opts[:module_depth]
+      def command_line_options(option_values)
+        RubyTerraform::CommandLine::Options.new(
+          option_values: option_values,
+          command_arguments: {
+            flags: %i[json no_color]
+          }
+        )
+      end
 
-        builder
-          .with_subcommand('show') do |sub|
-          sub = sub.with_option('-module-depth', module_depth) if module_depth
-          sub = sub.with_flag('-no-color') if no_color
-          sub = sub.with_flag('-json') if json_format
-          sub
-        end
-          .with_argument(path)
+      def command_line_commands(_option_values)
+        'show'
+      end
+
+      def command_line_arguments(option_values)
+        option_values[:path] || option_values[:directory]
       end
     end
   end

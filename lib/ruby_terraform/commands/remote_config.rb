@@ -1,25 +1,25 @@
 require_relative 'base'
+require_relative '../command_line/options'
 
 module RubyTerraform
   module Commands
     class RemoteConfig < Base
-      def configure_command(builder, opts)
-        backend = opts[:backend]
-        no_color = opts[:no_color]
-        backend_config = opts[:backend_config] || {}
+      def command_line_options(option_values)
+        RubyTerraform::CommandLine::Options.new(
+          option_values: option_values,
+          command_arguments: {
+            standard: %i[backend backend_config],
+            flags: %i[no_color]
+          }
+        )
+      end
 
-        builder
-            .with_subcommand('remote')
-            .with_subcommand('config') do |sub|
-              sub = sub.with_option('-backend', backend) if backend
-              backend_config.each do |key, value|
-                sub = sub.with_option(
-                    '-backend-config', "'#{key}=#{value}'", separator: ' ')
-              end
+      def command_line_commands(_option_values)
+        %w[remote config]
+      end
 
-              sub = sub.with_flag('-no-color') if no_color
-              sub
-            end
+      def option_default_values(_opts)
+        { backend_config: {} }
       end
     end
   end

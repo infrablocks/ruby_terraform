@@ -16,10 +16,6 @@ describe RubyTerraform::Commands::Workspace do
   terraform_command = 'workspace list'
   terraform_config_path = Faker::File.dir
 
-  it_behaves_like 'a command with an argument', [terraform_command, :directory]
-
-  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class, terraform_config_path]
-
   it_behaves_like 'a valid command line', {
     options: nil,
     reason: 'should default to list operation when no operation provided',
@@ -49,4 +45,8 @@ describe RubyTerraform::Commands::Workspace do
     reason: 'should delete the specified workspace',
     expected_command: 'terraform workspace delete staging'
   }
+
+  it_behaves_like 'a command with an argument', [terraform_command, :directory]
+
+  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class, terraform_config_path]
 end

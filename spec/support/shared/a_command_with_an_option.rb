@@ -4,9 +4,9 @@ shared_examples 'a command with an option' do |command, option, directory = nil,
 
   it_behaves_like 'a valid command line', {
     reason: "adds a #{switch} option if a #{option} is provided",
-    expected_command: "terraform #{command} #{switch}=true#{argument}",
+    expected_command: "terraform #{command} #{switch}=option-value#{argument}",
     options: { directory: directory,
-               option => 'true' }
+               option => 'option-value' }
   }
 
   it_behaves_like 'a valid command line', {

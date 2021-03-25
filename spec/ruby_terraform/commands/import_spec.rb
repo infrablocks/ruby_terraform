@@ -61,10 +61,6 @@ describe RubyTerraform::Commands::Import do
     options: common_options.merge({ vars: { list_of_maps: [{ key: 'value' }, { key: 'value' }] } })
   }
 
-  it_behaves_like 'an import command with an option', :state
-
-  it_behaves_like 'an import command with an option', :backup
-
   it_behaves_like 'a valid command line', {
     reason: 'disables backup if no_backup is true',
     expected_command: "terraform import -config=#{common_options[:directory]} -backup=- #{common_options[:address]} #{common_options[:id]}",
@@ -87,9 +83,13 @@ describe RubyTerraform::Commands::Import do
 
   it_behaves_like 'a valid command line', {
     reason: 'ensures that var_file and var_files options work together',
-    expected_command: "terraform import -config=#{common_options[:directory]} -var-file=some/vars.tfvars -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars #{common_options[:address]} #{common_options[:id]}",
+    expected_command: "terraform import -config=#{common_options[:directory]} -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars -var-file=some/vars.tfvars #{common_options[:address]} #{common_options[:id]}",
     options: common_options.merge({ var_file: 'some/vars.tfvars', var_files: %w[some/vars1.tfvars some/vars2.tfvars] })
   }
 
   it_behaves_like 'an import command with a boolean option', :input
+
+  it_behaves_like 'an import command with an option', :state
+
+  it_behaves_like 'an import command with an option', :backup
 end

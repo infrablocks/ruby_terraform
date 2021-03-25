@@ -15,14 +15,6 @@ describe RubyTerraform::Commands::Output do
 
   terraform_command = 'output'
 
-  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]
-
-  it_behaves_like 'a command with an option', [terraform_command, :state]
-
-  it_behaves_like 'a command with an argument', [terraform_command, :name]
-
-  it_behaves_like 'a command with an option', [terraform_command, :module]
-
   it 'captures and returns the output of the command directly when no name is supplied' do
     string_io = double('string IO')
     allow(StringIO).to(receive(:new).and_return(string_io))
@@ -50,6 +42,14 @@ describe RubyTerraform::Commands::Output do
 
     expect(command.execute(name: 'some_output')).to(eq('OUTPUT'))
   end
+
+  it_behaves_like 'a command with an argument', [terraform_command, :name]
+
+  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]
+
+  it_behaves_like 'a command with an option', [terraform_command, :module]
+
+  it_behaves_like 'a command with an option', [terraform_command, :state]
 
   it_behaves_like 'a command with a flag', [terraform_command, :no_color]
 

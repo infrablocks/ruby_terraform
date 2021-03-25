@@ -1,48 +1,35 @@
-require 'json'
 require_relative 'base'
+require_relative '../command_line/options'
 
 module RubyTerraform
   module Commands
     class Apply < Base
-      def configure_command(builder, opts)
-        directory = opts[:directory]
-        plan = opts[:plan]
-        vars = opts[:vars] || {}
-        var_file = opts[:var_file]
-        var_files = opts[:var_files] || []
-        target = opts[:target]
-        targets = opts[:targets] || []
-        state = opts[:state]
-        input = opts[:input]
-        auto_approve = opts[:auto_approve]
-        no_backup = opts[:no_backup]
-        backup = no_backup ? '-' : opts[:backup]
-        no_color = opts[:no_color]
+      def command_line_options(option_values)
+        RubyTerraform::CommandLine::Options.new(
+          option_values: option_values,
+          command_arguments: {
+            standard: %i[backup state target var_file],
+            boolean: %i[auto_approve input],
+            flags: %i[no_color],
+            switch_overrides: { vars: '-var', targets: '-target', var_files: '-var-file' }
+          }
+        )
+      end
 
-        builder
-            .with_subcommand('apply') do |sub|
-              vars.each do |key, value|
-                var_value = value.is_a?(String) ? value : JSON.generate(value)
-                sub = sub.with_option(
-                    '-var', "'#{key}=#{var_value}'", separator: ' ')
-              end
-              sub = sub.with_option('-var-file', var_file) if var_file
-              var_files.each do |file|
-                sub = sub.with_option('-var-file', file)
-              end
-              sub = sub.with_option('-target', target) if target
-              targets.each do |file|
-                sub = sub.with_option('-target', file)
-              end
-              sub = sub.with_option('-state', state) if state
-              sub = sub.with_option('-input', input) if input
-              sub = sub.with_option('-auto-approve', auto_approve) unless
-                  auto_approve.nil?
-              sub = sub.with_option('-backup', backup) if backup
-              sub = sub.with_flag('-no-color') if no_color
-              sub
-            end
-            .with_argument(plan || directory)
+      def command_line_commands(_option_values)
+        'apply'
+      end
+
+      def command_line_arguments(option_values)
+        option_values[:plan] || option_values[:directory]
+      end
+
+      def option_default_values(_opts)
+        { vars: {}, var_files: [], targets: [] }
+      end
+
+      def option_override_values(opts)
+        { backup: opts[:no_backup] ? '-' : opts[:backup] }
       end
     end
   end
