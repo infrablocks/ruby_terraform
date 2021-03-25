@@ -15,6 +15,8 @@ describe RubyTerraform::Commands::Init do
 
   terraform_command = 'init'
 
+  it_behaves_like 'a command that accepts global options', terraform_command
+
   it_behaves_like 'a command with an argument', [terraform_command, :path]
 
   it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]

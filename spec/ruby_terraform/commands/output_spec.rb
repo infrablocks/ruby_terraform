@@ -43,6 +43,8 @@ describe RubyTerraform::Commands::Output do
     expect(command.execute(name: 'some_output')).to(eq('OUTPUT'))
   end
 
+  it_behaves_like 'a command that accepts global options', terraform_command
+
   it_behaves_like 'a command with an argument', [terraform_command, :name]
 
   it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]

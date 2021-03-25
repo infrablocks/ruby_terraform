@@ -14,11 +14,16 @@ module RubyTerraform
         append_flags(command_arguments[:flags])
       end
 
+      def self.global_options
+        %i[chdir]
+      end
+
       private
 
       attr_reader :option_values
 
       def append_options(options)
+        Options.global_options.each { |opt_key| append(command_line_option(opt_key)) }
         (options || []).each { |opt_key| append(command_line_option(opt_key)) }
       end
 

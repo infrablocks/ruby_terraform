@@ -108,6 +108,8 @@ describe RubyTerraform::Commands::Plan do
     )
   end
 
+  it_behaves_like 'a command that accepts global options', [terraform_command, terraform_config_path]
+
   it_behaves_like 'a command with an argument', [terraform_command, :directory]
 
   it_behaves_like 'a command without a binary supplied', [terraform_command, described_class, terraform_config_path]

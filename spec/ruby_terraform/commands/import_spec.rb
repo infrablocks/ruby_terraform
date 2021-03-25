@@ -87,6 +87,8 @@ describe RubyTerraform::Commands::Import do
     options: common_options.merge({ var_file: 'some/vars.tfvars', var_files: %w[some/vars1.tfvars some/vars2.tfvars] })
   }
 
+  it_behaves_like 'an import command that accepts global options'
+
   it_behaves_like 'an import command with a boolean option', :input
 
   it_behaves_like 'an import command with an option', :state

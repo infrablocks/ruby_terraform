@@ -62,3 +62,9 @@ shared_examples 'an import command with a boolean option' do |opt_key|
     options: common_options.merge({ opt_key => false })
   }
 end
+
+shared_examples 'an import command that accepts global options' do
+  RubyTerraform::CommandLine::Options.global_options.each do |opt_key|
+    it_behaves_like 'an import command with an option', opt_key
+  end
+end

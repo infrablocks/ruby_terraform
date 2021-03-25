@@ -23,6 +23,8 @@ describe RubyTerraform::Commands::Apply do
                plan: 'some/path/to/terraform/plan' }
   }
 
+  it_behaves_like 'a command that accepts global options', [terraform_command, terraform_config_path]
+
   it_behaves_like 'a command with an argument', [terraform_command, :directory]
 
   it_behaves_like 'a command with an argument', [terraform_command, :plan]

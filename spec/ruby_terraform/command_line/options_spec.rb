@@ -21,23 +21,28 @@ module RubyTerraform
 
       let(:option_values) do
         {
+          my_global => my_global_value,
           my_option: my_option_value,
           my_flag: my_flag_value,
           my_boolean: my_boolean_value,
           my_override: my_override_value
         }
       end
+      let(:my_global) { Options.global_options.first}
+      let(:my_global_value) { 'value' }
       let(:my_option_value) { 'value' }
       let(:my_flag_value) { true }
       let(:my_boolean_value) { true }
       let(:my_override_value) { 'value' }
       let(:switch_override) { '-different-switch' }
+      let(:command_line_global) { instance_double(Option) }
       let(:command_line_option) { instance_double(Option) }
       let(:command_line_override) { instance_double(Option) }
       let(:command_line_flag) { instance_double(Flag) }
       let(:command_line_boolean) { instance_double(BooleanOption) }
 
       before do
+        allow(Option).to receive(:new).with(my_global, any_args).and_return(command_line_global)
         allow(Option).to receive(:new).with(:my_option, any_args).and_return(command_line_option)
         allow(Flag).to receive(:new).with(:my_flag, any_args).and_return(command_line_flag)
         allow(BooleanOption).to receive(:new).with(:my_boolean, any_args).and_return(command_line_boolean)
@@ -48,6 +53,10 @@ module RubyTerraform
       describe '.new' do
         it 'creates a CommandLineOption with an overridden switch for each switch_overrides' do
           expect(Option).to have_received(:new).with(:my_override, my_override_value, switch_override: switch_override)
+        end
+
+        it 'creates a CommandLineOption option for each global option' do
+          expect(Option).to have_received(:new).with(my_global, my_global_value, switch_override: nil)
         end
 
         it 'creates a CommandLineOption option for each standard option' do
@@ -63,7 +72,7 @@ module RubyTerraform
         end
 
         it 'populates the array with the created command line options' do
-          expect(command_line_options).to eq([command_line_override, command_line_option, command_line_boolean, command_line_flag])
+          expect(command_line_options).to eq([command_line_override, command_line_global, command_line_option, command_line_boolean, command_line_flag])
         end
       end
     end
