@@ -39,6 +39,10 @@ describe RubyTerraform::Commands::Apply do
 
   it_behaves_like 'a command with a boolean option', [terraform_command, :input, terraform_config_path]
 
+  it_behaves_like 'a command with a boolean option', [terraform_command, :lock, terraform_config_path]
+
+  it_behaves_like 'a command with a boolean option', [terraform_command, :refresh, terraform_config_path]
+
   it_behaves_like 'a command with an array option', [terraform_command, :targets, terraform_config_path]
 
   it_behaves_like 'a command with an array option', [terraform_command, :var_files, terraform_config_path]
@@ -47,5 +51,15 @@ describe RubyTerraform::Commands::Apply do
 
   it_behaves_like 'a command with an option', [terraform_command, :state, terraform_config_path]
 
+  it_behaves_like 'a command with an option', [terraform_command, :chdir, terraform_config_path]
+
+  it_behaves_like 'a command with an option', [terraform_command, :lock_timeout, terraform_config_path]
+
+  it_behaves_like 'a command with an option', [terraform_command, :parallelism, terraform_config_path]
+
+  it_behaves_like 'a command with an option', [terraform_command, :state_out, terraform_config_path]
+
   it_behaves_like 'a command with a flag', [terraform_command, :no_color, terraform_config_path]
+
+  it_behaves_like 'a command with a flag', [terraform_command, :compact_warnings, terraform_config_path]
 end
