@@ -8,9 +8,9 @@ module RubyTerraform
         RubyTerraform::CommandLine::Options.new(
           option_values: option_values,
           command_arguments: {
-            standard: %i[state target var_file],
+            standard: %i[backup lock_timeout state state_out target var var_file],
             boolean: %i[input],
-            flags: %i[no_color],
+            flags: %i[compact_warnings lock no_color],
             switch_overrides: { targets: '-target', vars: '-var', var_files: '-var-file' }
           }
         )
