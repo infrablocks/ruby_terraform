@@ -1,6 +1,8 @@
-require "bundler/setup"
+require 'bundler/setup'
+require 'faker'
+require 'ruby_terraform'
 
-require "ruby_terraform"
+Dir[File.join(__dir__, 'support', '**', '*.rb')].sort.each { |f| require f }
 
 RSpec.configure do |config|
   config.example_status_persistence_file_path = ".rspec_status"
