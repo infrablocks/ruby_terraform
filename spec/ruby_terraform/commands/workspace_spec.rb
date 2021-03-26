@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Workspace do
+  let(:command) { described_class.new(binary: 'terraform') }
+
   before(:each) do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -11,73 +13,40 @@ describe RubyTerraform::Commands::Workspace do
     RubyTerraform.reset!
   end
 
-  it 'calls the terraform workspace command passing the supplied directory' do
-    command = RubyTerraform::Commands::Workspace.new(binary: 'terraform')
+  terraform_command = 'workspace list'
+  terraform_config_path = Faker::File.dir
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('terraform workspace list some/path/to/terraform/configuration', any_args))
+  it_behaves_like 'a command with an argument', [terraform_command, :directory]
 
-    command.execute(directory: 'some/path/to/terraform/configuration')
-  end
+  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class, terraform_config_path]
 
-  it 'defaults to the configured binary when none provided' do
-    command = RubyTerraform::Commands::Workspace.new
+  it_behaves_like 'a valid command line', {
+    options: nil,
+    reason: 'should default to list operation when no operation provided',
+    expected_command: 'terraform workspace list'
+  }
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace list some/path/to/terraform/configuration', any_args))
+  it_behaves_like 'a valid command line', {
+    options: { operation: 'list', workspace: 'qa' },
+    reason: 'should not use workspace option if operation list is provided',
+    expected_command: 'terraform workspace list'
+  }
 
-    command.execute(directory: 'some/path/to/terraform/configuration')
-  end
+  it_behaves_like 'a valid command line', {
+    options: { operation: 'select', workspace: 'staging' },
+    reason: 'should select the specified workspace',
+    expected_command: 'terraform workspace select staging'
+  }
 
-  it 'should defaults to list operation when no operation provided' do
-    command = RubyTerraform::Commands::Workspace.new
+  it_behaves_like 'a valid command line', {
+    options: { operation: 'new', workspace: 'staging' },
+    reason: 'should create the specified workspace',
+    expected_command: 'terraform workspace new staging'
+  }
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace list', any_args))
-
-    command.execute
-  end
-
-  it 'should not use workspace option if operation list is provided' do
-    command = RubyTerraform::Commands::Workspace.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace list', any_args))
-
-    command.execute(operation: 'list', workspace: 'qa')
-  end
-
-  it 'should select the specified workspace' do
-    command = RubyTerraform::Commands::Workspace.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace select staging', any_args))
-
-    command.execute(operation: 'select', workspace: 'staging')
-  end
-
-  it 'should create the specified workspace' do
-    command = RubyTerraform::Commands::Workspace.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace new staging', any_args))
-
-    command.execute(operation: 'new', workspace: 'staging')
-  end
-
-  it 'should delete the specified workspace' do
-    command = RubyTerraform::Commands::Workspace.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary workspace delete staging', any_args))
-
-    command.execute(operation: 'delete', workspace: 'staging')
-  end
+  it_behaves_like 'a valid command line', {
+    options: { operation: 'delete', workspace: 'staging' },
+    reason: 'should delete the specified workspace',
+    expected_command: 'terraform workspace delete staging'
+  }
 end

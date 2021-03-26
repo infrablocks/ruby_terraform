@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Init do
+  let(:command) { described_class.new(binary: 'terraform') }
+
   before(:each) do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -11,120 +13,23 @@ describe RubyTerraform::Commands::Init do
     RubyTerraform.reset!
   end
 
-  it 'calls the terraform init command' do
-    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
+  terraform_command = 'init'
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('terraform init', any_args))
+  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]
 
-    command.execute
-  end
+  it_behaves_like 'a command with a flag', [terraform_command, :no_color]
 
-  it 'defaults to the configured binary when none provided' do
-    command = RubyTerraform::Commands::Init.new
+  it_behaves_like 'a command with an option', [terraform_command, :force_copy]
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary init', any_args))
+  it_behaves_like 'a command with a map option', [terraform_command, :backend_config]
 
-    command.execute
-  end
+  it_behaves_like 'a command with an option', [terraform_command, :from_module]
 
-  it 'includes the no-color flag when the no_color option is true' do
-    command = RubyTerraform::Commands::Init.new
+  it_behaves_like 'a command with an option', [terraform_command, :plugin_dir]
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary init -no-color', any_args))
+  it_behaves_like 'a command with an argument', [terraform_command, :path]
 
-    command.execute(no_color: true)
-  end
+  it_behaves_like 'a command with a boolean option', [terraform_command, :backend]
 
-  it 'includes the force-copy flag when the force_copy option is true' do
-    command = RubyTerraform::Commands::Init.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary init -force-copy=true', any_args))
-
-    command.execute(force_copy: true)
-  end
-
-  it 'adds a backend-config option for each supplied backend config' do
-    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with("terraform init -backend-config 'thing=blah' " +
-                      "-backend-config 'other=wah'", any_args))
-
-    command.execute(
-        backend_config: {
-            thing: 'blah',
-            other: 'wah'
-        })
-  end
-
-  it 'uses the supplied module source when provided' do
-    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('terraform init -from-module=some/module/source', any_args))
-
-    command.execute(
-        from_module: 'some/module/source')
-  end
-
-  it 'uses the supplied plugin directory when provided' do
-    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
-
-    expect(Open4).to(
-      receive(:spawn)
-          .with('terraform init -plugin-dir=some/plugin/directory', any_args))
-
-    command.execute(
-      plugin_dir: 'some/plugin/directory')
-  end
-
-  it 'adds the supplied path when provided' do
-    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with(
-                'terraform init -from-module=some/module/source some/output/path',
-                any_args))
-
-    command.execute(
-        from_module: 'some/module/source',
-        path: 'some/output/path')
-  end
-
-  it 'passes backend as false when specified' do
-    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with(
-                'terraform init -backend=false',
-                any_args))
-
-    command.execute(
-        backend: false)
-  end
-
-  it 'passes get as false when specified' do
-    command = RubyTerraform::Commands::Init.new(binary: 'terraform')
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with(
-                'terraform init -get=false',
-                any_args))
-
-    command.execute(
-        get: false)
-  end
+  it_behaves_like 'a command with a boolean option', [terraform_command, :get]
 end
