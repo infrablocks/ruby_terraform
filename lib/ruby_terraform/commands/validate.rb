@@ -8,10 +8,7 @@ module RubyTerraform
         RubyTerraform::CommandLine::Options.new(
           option_values: option_values,
           command_arguments: {
-            standard: %i[state var_file],
-            boolean: %i[check_variables],
-            flags: %i[json no_color],
-            switch_overrides: { vars: '-var', var_files: '-var-file' }
+            flags: %i[json no_color]
           }
         )
       end
