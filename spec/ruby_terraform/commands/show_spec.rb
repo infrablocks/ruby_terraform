@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Show do
+  let(:command) { described_class.new(binary: 'terraform') }
+
   before(:each) do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -11,60 +13,16 @@ describe RubyTerraform::Commands::Show do
     RubyTerraform.reset!
   end
 
-  it 'calls the terraform show command passing the supplied directory' do
-    command = RubyTerraform::Commands::Show.new(binary: 'terraform')
+  terraform_command = 'show'
+  terraform_config_path = Faker::File.dir
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('terraform show some/path/to/terraform/configuration', any_args))
+  it_behaves_like 'a command with an argument', [terraform_command, :directory]
 
-    command.execute(path: 'some/path/to/terraform/configuration')
-  end
+  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class, terraform_config_path]
 
-  it 'defaults to the configured binary when none provided' do
-    command = RubyTerraform::Commands::Show.new
+  it_behaves_like 'a command with an option', [terraform_command, :module_depth, terraform_config_path]
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary show some/path/to/terraform/configuration', any_args))
+  it_behaves_like 'a command with a flag', [terraform_command, :no_color, terraform_config_path]
 
-    command.execute(path: 'some/path/to/terraform/configuration')
-  end
-
-  it 'passes the update option as true when the update option is true' do
-    command = RubyTerraform::Commands::Show.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary show -module-depth=0 some/path/to/terraform/configuration', any_args))
-
-    command.execute(
-        path: 'some/path/to/terraform/configuration',
-        module_depth: 0)
-  end
-
-  it 'includes the no-color flag when the no_color option is true' do
-    command = RubyTerraform::Commands::Show.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary show -no-color some/path/to/terraform/configuration', any_args))
-
-    command.execute(
-        path: 'some/path/to/terraform/configuration',
-        no_color: true)
-  end
-
-  it 'includes the json flag when the json option is true' do
-    command = RubyTerraform::Commands::Show.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary show -json some/path/to/terraform/configuration', any_args))
-
-    command.execute(
-        path: 'some/path/to/terraform/configuration',
-        json: true
-    )
-  end
+  it_behaves_like 'a command with a flag', [terraform_command, :json, terraform_config_path]
 end

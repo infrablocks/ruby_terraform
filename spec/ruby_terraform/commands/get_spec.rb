@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Get do
+  let(:command) { described_class.new(binary: 'terraform') }
+
   before(:each) do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -11,47 +13,14 @@ describe RubyTerraform::Commands::Get do
     RubyTerraform.reset!
   end
 
-  it 'calls the terraform get command passing the supplied directory' do
-    command = RubyTerraform::Commands::Get.new(binary: 'terraform')
+  terraform_command = 'get'
+  terraform_config_path = Faker::File.dir
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('terraform get some/path/to/terraform/configuration', any_args))
+  it_behaves_like 'a command with an argument', [terraform_command, :directory]
 
-    command.execute(directory: 'some/path/to/terraform/configuration')
-  end
+  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class, terraform_config_path]
 
-  it 'defaults to the configured binary when none provided' do
-    command = RubyTerraform::Commands::Get.new
+  it_behaves_like 'a command with an option', [terraform_command, :update, terraform_config_path]
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary get some/path/to/terraform/configuration', any_args))
-
-    command.execute(directory: 'some/path/to/terraform/configuration')
-  end
-
-  it 'passes the update option as true when the update option is true' do
-    command = RubyTerraform::Commands::Get.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary get -update=true some/path/to/terraform/configuration', any_args))
-
-    command.execute(
-        directory: 'some/path/to/terraform/configuration',
-        update: true)
-  end
-
-  it 'includes the no-color flag when the no_color option is true' do
-    command = RubyTerraform::Commands::Get.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary get -no-color some/path/to/terraform/configuration', any_args))
-
-    command.execute(
-        directory: 'some/path/to/terraform/configuration',
-        no_color: true)
-  end
+  it_behaves_like 'a command with a flag', [terraform_command, :no_color, terraform_config_path]
 end

@@ -1,6 +1,8 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Output do
+  let(:command) { described_class.new(binary: 'terraform') }
+
   before(:each) do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -11,55 +13,15 @@ describe RubyTerraform::Commands::Output do
     RubyTerraform.reset!
   end
 
-  it 'calls the terraform get command passing the supplied directory' do
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
+  terraform_command = 'output'
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('terraform output', any_args))
+  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]
 
-    command.execute
-  end
+  it_behaves_like 'a command with an option', [terraform_command, :state]
 
-  it 'defaults to the configured binary when none provided' do
-    command = RubyTerraform::Commands::Output.new
+  it_behaves_like 'a command with an argument', [terraform_command, :name]
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary output', any_args))
-
-    command.execute(directory: 'some/path/to/terraform/configuration')
-  end
-
-  it 'adds a state option if a state path is provided' do
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with("terraform output -state=some/state.tfstate", any_args))
-
-    command.execute(state: 'some/state.tfstate')
-  end
-
-  it 'passes the provided output name if supplied' do
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with("terraform output important_output", any_args))
-
-    command.execute(name: 'important_output')
-  end
-
-  it 'passes the provided module name if supplied' do
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
-
-    expect(Open4).to(
-      receive(:spawn)
-          .with("terraform output -module=some_module", any_args))
-
-    command.execute(module: 'some_module')
-  end
+  it_behaves_like 'a command with an option', [terraform_command, :module]
 
   it 'captures and returns the output of the command directly when no name is supplied' do
     string_io = double('string IO')
@@ -69,7 +31,7 @@ describe RubyTerraform::Commands::Output do
     command = RubyTerraform::Commands::Output.new(binary: 'terraform')
 
     expect(Open4)
-        .to(receive(:spawn)
+      .to(receive(:spawn)
                 .with(instance_of(String), hash_including(stdout: string_io)))
 
     expect(command.execute).to(eq('  OUTPUT  '))
@@ -83,29 +45,13 @@ describe RubyTerraform::Commands::Output do
     command = RubyTerraform::Commands::Output.new(binary: 'terraform')
 
     expect(Open4)
-        .to(receive(:spawn)
+      .to(receive(:spawn)
                 .with(instance_of(String), hash_including(stdout: string_io)))
 
     expect(command.execute(name: 'some_output')).to(eq('OUTPUT'))
   end
 
-  it 'includes the no-color flag when the no_color option is true' do
-    command = RubyTerraform::Commands::Output.new
+  it_behaves_like 'a command with a flag', [terraform_command, :no_color]
 
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary output -no-color', any_args))
-
-    command.execute(no_color: true)
-  end
-
-  it 'includes the json flag when the json option is true' do
-    command = RubyTerraform::Commands::Output.new
-
-    expect(Open4).to(
-        receive(:spawn)
-            .with('path/to/binary output -json', any_args))
-
-    command.execute(json: true)
-  end
+  it_behaves_like 'a command with a flag', [terraform_command, :json]
 end
