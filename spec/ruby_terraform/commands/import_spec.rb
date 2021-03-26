@@ -91,7 +91,15 @@ describe RubyTerraform::Commands::Import do
 
   it_behaves_like 'an import command with a boolean option', :input
 
+  it_behaves_like 'an import command with an option', :backup
+
+  it_behaves_like 'an import command with an option', :lock_timeout
+
   it_behaves_like 'an import command with an option', :state
 
-  it_behaves_like 'an import command with an option', :backup
+  it_behaves_like 'an import command with an option', :state_out
+
+  it_behaves_like 'an import command with a flag', :allow_missing_config
+
+  it_behaves_like 'an import command with a flag', :ignore_remote_version
 end

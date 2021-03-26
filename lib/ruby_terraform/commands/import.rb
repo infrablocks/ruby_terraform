@@ -10,9 +10,9 @@ module RubyTerraform
         RubyTerraform::CommandLine::Options.new(
           option_values: option_values,
           command_arguments: {
-            standard: %i[backup state var_file],
-            boolean: %i[input],
-            flags: %i[no_color],
+            standard: %i[backup lock_timeout state state_out var var_file],
+            boolean: %i[input lock],
+            flags: %i[allow_missing_config ignore_remote_version no_color],
             switch_overrides: { directory: '-config', vars: '-var', var_files: '-var-file' }
           }
         )
