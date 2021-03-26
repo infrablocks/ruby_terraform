@@ -8,9 +8,9 @@ module RubyTerraform
         RubyTerraform::CommandLine::Options.new(
           option_values: option_values,
           command_arguments: {
-            standard: %i[backend_config from_module plugin_dir],
-            boolean: %i[backend force_copy get],
-            flags: %i[no_color]
+            standard: %i[backend_config from_module lock_timeout plugin_dir],
+            boolean: %i[backend force_copy get get_plugins input lock upgrade verify_plugins],
+            flags: %i[no_color reconfigure]
           }
         )
       end

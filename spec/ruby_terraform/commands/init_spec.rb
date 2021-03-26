@@ -27,11 +27,26 @@ describe RubyTerraform::Commands::Init do
 
   it_behaves_like 'a command with a boolean option', [terraform_command, :get]
 
+  it_behaves_like 'a command with a boolean option', [terraform_command, :get_plugins]
+
+  it_behaves_like 'a command with a boolean option', [terraform_command, :input]
+
+  it_behaves_like 'a command with a boolean option', [terraform_command, :lock]
+
+  it_behaves_like 'a command with a boolean option', [terraform_command, :upgrade]
+
+  it_behaves_like 'a command with a boolean option', [terraform_command, :verify_plugins]
+
   it_behaves_like 'a command with a map option', [terraform_command, :backend_config]
 
   it_behaves_like 'a command with an option', [terraform_command, :from_module]
 
+  it_behaves_like 'a command with an option', [terraform_command, :lock_timeout]
+
   it_behaves_like 'a command with an option', [terraform_command, :plugin_dir]
 
   it_behaves_like 'a command with a flag', [terraform_command, :no_color]
+
+  it_behaves_like 'a command with a flag', [terraform_command, :reconfigure]
+
 end
