@@ -8,9 +8,9 @@ module RubyTerraform
         RubyTerraform::CommandLine::Options.new(
           option_values: option_values,
           command_arguments: {
-            standard: %i[state target var_file],
-            boolean: %i[input],
-            flags: %i[destroy no_color],
+            standard: %i[lock_timeout parallelism state target var var_file],
+            boolean: %i[input lock refresh],
+            flags: %i[compact_warnings destroy detailed_exitcode no_color],
             switch_overrides: { vars: '-var', targets: '-target', var_files: '-var-file', plan: '-out' }
           }
         )
