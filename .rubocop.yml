@@ -1,0 +1,11 @@
+AllCops:
+  NewCops: enable
+
+Metrics/BlockLength:
+  IgnoredMethods:
+    - describe
+    - context
+    - shared_examples
+
+Style/Documentation:
+  Enabled: false
