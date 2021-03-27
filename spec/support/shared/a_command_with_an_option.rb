@@ -8,4 +8,10 @@ shared_examples 'a command with an option' do |command, option, directory = nil,
     options: { directory: directory,
                option => 'true' }
   }
+
+  it_behaves_like 'a valid command line', {
+    reason: "does not add a #{switch} option if a #{option} is not provided",
+    expected_command: "terraform #{command}#{argument}",
+    options: { directory: directory }
+  }
 end
