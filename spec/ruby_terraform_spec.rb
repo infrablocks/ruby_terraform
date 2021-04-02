@@ -1,7 +1,7 @@
-require "spec_helper"
+require 'spec_helper'
 
 describe RubyTerraform do
-  it "has a version number" do
+  it 'has a version number' do
     expect(RubyTerraform::VERSION).not_to be nil
   end
 
@@ -20,24 +20,24 @@ describe RubyTerraform do
       $stdout = StringIO.new
 
       RubyTerraform.configuration.logger
-          .info("Logging with the default logger.")
+                   .info('Logging with the default logger.')
 
-      expect($stdout.string).to include("Logging with the default logger.")
+      expect($stdout.string).to include('Logging with the default logger.')
     end
 
     it 'has info log level by default' do
       $stdout = StringIO.new
 
       RubyTerraform.configuration.logger
-          .debug("Logging with the default logger at debug level.")
+                   .debug('Logging with the default logger at debug level.')
 
-      expect($stdout.string).to eq("")
+      expect($stdout.string).to eq('')
 
       RubyTerraform.configuration.logger
-          .info("Logging with the default logger at info level.")
+                   .info('Logging with the default logger at info level.')
 
       expect($stdout.string)
-          .to include("Logging with the default logger at info level.")
+        .to include('Logging with the default logger at info level.')
     end
 
     it 'allows default logger to be overridden' do
@@ -50,10 +50,10 @@ describe RubyTerraform do
       end
 
       RubyTerraform.configuration.logger
-          .debug("Logging with a custom logger at debug level.")
+                   .debug('Logging with a custom logger at debug level.')
 
       expect(string_output.string)
-          .to include("Logging with a custom logger at debug level.")
+        .to include('Logging with a custom logger at debug level.')
     end
 
     it 'has bare terraform command as default binary' do

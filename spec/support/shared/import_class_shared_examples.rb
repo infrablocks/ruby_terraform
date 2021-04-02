@@ -1,7 +1,5 @@
-# frozen_string_literal: true
-
-shared_examples 'an import command with an option' do |option|
-  switch = "-#{option.keys[0].to_s.sub('_', '-')}"
+shared_examples 'an import command with an option' do |opt_key|
+  switch = "-#{opt_key.to_s.sub('_', '-')}"
   common_options = {
     directory: Faker::File.dir,
     address: Faker::Lorem.word,
@@ -9,9 +7,15 @@ shared_examples 'an import command with an option' do |option|
   }.freeze
 
   it_behaves_like 'a valid command line', {
-    reason: "adds a #{switch} option if a #{option} is provided",
-    expected_command: "terraform import -config=#{common_options[:directory]} #{switch}=#{option.values[0]} #{common_options[:address]} #{common_options[:id]}",
-    options: common_options.merge(option)
+    reason: "adds a #{switch} option if a #{opt_key} is provided",
+    expected_command: "terraform import -config=#{common_options[:directory]} #{switch}=option-value #{common_options[:address]} #{common_options[:id]}",
+    options: common_options.merge({ opt_key => 'option-value' })
+  }
+
+  it_behaves_like 'a valid command line', {
+    reason: "does not add a #{switch} option if a #{opt_key} is not provided",
+    expected_command: "terraform import -config=#{common_options[:directory]} #{common_options[:address]} #{common_options[:id]}",
+    options: common_options
   }
 end
 

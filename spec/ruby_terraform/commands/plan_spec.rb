@@ -38,7 +38,9 @@ describe RubyTerraform::Commands::Plan do
 
     expect(string_output.string).to(
       include('DEBUG').and(
-        include("Running 'terraform plan some/path/to/terraform/configuration'.")))
+        include("Running 'terraform plan some/path/to/terraform/configuration'.")
+      )
+    )
   end
 
   it 'logs the command being executed at debug level using the provided logger' do
@@ -54,7 +56,9 @@ describe RubyTerraform::Commands::Plan do
 
     expect(string_output.string).to(
       include('DEBUG').and(
-        include("Running 'terraform plan some/path/to/terraform/configuration'.")))
+        include("Running 'terraform plan some/path/to/terraform/configuration'.")
+      )
+    )
   end
 
   it_behaves_like 'a command that accepts vars', [terraform_command, terraform_config_path]
@@ -87,7 +91,7 @@ describe RubyTerraform::Commands::Plan do
 
     begin
       command.execute(directory: 'some/path/to/terraform/configuration')
-    rescue
+    rescue StandardError
       # no-op
     end
 
@@ -110,9 +114,9 @@ describe RubyTerraform::Commands::Plan do
     stub_open4_spawn_raise
     command = RubyTerraform::Commands::Plan.new
 
-    expect {
+    expect do
       command.execute(directory: 'some/path/to/terraform/configuration')
-    }.to(raise_error(RubyTerraform::Errors::ExecutionError))
+    end.to(raise_error(RubyTerraform::Errors::ExecutionError))
   end
 
   def stub_open4_spawn
@@ -121,10 +125,11 @@ describe RubyTerraform::Commands::Plan do
 
   def stub_open4_spawn_raise
     allow_any_instance_of(Process::Status).to(
-      receive(:exitstatus).and_return(0))
+      receive(:exitstatus).and_return(0)
+    )
     allow(Open4).to(
       receive(:spawn)
-        .and_raise(Open4::SpawnError.new('cmd', $?), 'message')
+        .and_raise(Open4::SpawnError.new('cmd', $CHILD_STATUS), 'message')
     )
   end
 end

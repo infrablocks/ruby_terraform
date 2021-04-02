@@ -9,7 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors = ['Toby Clemson']
   spec.email = ['tobyclemson@gmail.com']
 
-  spec.date = Date.today.to_s
   spec.summary = 'A simple Ruby wrapper for invoking Terraform commands.'
   spec.description = 'Wraps the Terraform CLI so that Terraform can be invoked from a Ruby script or Rakefile.'
   spec.homepage = 'https://github.com/infrablocks/ruby_terraform'
@@ -29,13 +28,15 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'faker', '~> 2.17'
   spec.add_development_dependency 'gem-release', '~> 2.1'
+  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard-rspec'
   spec.add_development_dependency 'rake', '~> 13.0'
   spec.add_development_dependency 'rake_circle_ci', '~> 0.9'
   spec.add_development_dependency 'rake_github', '~> 0.5'
   spec.add_development_dependency 'rake_gpg', '~> 0.12'
   spec.add_development_dependency 'rake_ssh', '~> 0.4'
   spec.add_development_dependency 'rspec', '~> 3.9'
-
-  spec.add_development_dependency 'guard'
-  spec.add_development_dependency 'guard-rspec'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-rspec'
+  spec.add_development_dependency 'simplecov'
 end

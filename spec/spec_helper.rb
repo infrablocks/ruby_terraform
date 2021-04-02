@@ -1,3 +1,10 @@
+require 'simplecov'
+
+SimpleCov.start do
+  enable_coverage :branch
+  minimum_coverage line: 98.0, branch: 98.7
+end
+
 require 'bundler/setup'
 require 'faker'
 require 'ruby_terraform'

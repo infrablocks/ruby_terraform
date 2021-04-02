@@ -23,4 +23,3 @@ describe RubyTerraform::Commands::RemoteConfig do
 
   it_behaves_like 'a command with a flag', [terraform_command, :no_color]
 end
-

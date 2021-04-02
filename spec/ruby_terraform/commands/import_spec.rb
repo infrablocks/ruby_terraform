@@ -61,9 +61,9 @@ describe RubyTerraform::Commands::Import do
     options: common_options.merge({ vars: { list_of_maps: [{ key: 'value' }, { key: 'value' }] } })
   }
 
-  it_behaves_like 'an import command with an option', { state: 'some/state.tfstate' }
+  it_behaves_like 'an import command with an option', :state
 
-  it_behaves_like 'an import command with an option', { backup: 'some/state.tfstate.backup' }
+  it_behaves_like 'an import command with an option', :backup
 
   it_behaves_like 'a valid command line', {
     reason: 'disables backup if no_backup is true',

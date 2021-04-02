@@ -1,0 +1,24 @@
+AllCops:
+  NewCops: enable
+
+Layout/LineLength:
+  Max: 80
+  Exclude:
+    - spec/**/*.rb
+    - ./*.gemspec
+
+Metrics/BlockLength:
+  IgnoredMethods:
+    - describe
+    - context
+    - shared_examples
+
+Naming/FileName:
+  Exclude:
+    - lib/ruby-terraform.rb
+
+Style/Documentation:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
