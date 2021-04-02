@@ -1,4 +1,6 @@
-shared_examples 'a command that accepts vars' do |command, directory = nil| # rubocop:disable Metrics/BlockLength
+# frozen_string_literal: true
+
+shared_examples 'a command that accepts vars' do |command, directory = nil|
   argument = directory.nil? ? nil : " #{directory}"
 
   it_behaves_like 'a valid command line', {

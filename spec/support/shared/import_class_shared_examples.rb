@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 shared_examples 'an import command with an option' do |option|
   switch = "-#{option.keys[0].to_s.sub('_', '-')}"
   common_options = {
