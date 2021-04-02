@@ -1,6 +1,10 @@
 require 'spec_helper'
 require_relative '../lib/ruby_terraform/commands'
 
+class RTIncluded
+  include RubyTerraform
+end
+
 describe RubyTerraform do
   terraform_commands = {
     apply: RubyTerraform::Commands::Apply,
@@ -142,6 +146,14 @@ describe RubyTerraform do
         it "creates an instance of the #{command_class} class and calls its execute method" do
           expect(instance).to have_received(:execute).with(options)
         end
+      end
+    end
+  end
+
+  describe 'when included in a class' do
+    terraform_commands.each_key do |method|
+      it "exposes #{method} as a class method on the class" do
+        expect(RTIncluded).to respond_to(method)
       end
     end
   end
