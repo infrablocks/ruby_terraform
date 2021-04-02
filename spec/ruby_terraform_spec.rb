@@ -1,6 +1,24 @@
 require 'spec_helper'
+require_relative '../lib/ruby_terraform/commands'
 
 describe RubyTerraform do
+  terraform_commands = {
+    apply: RubyTerraform::Commands::Apply,
+    clean: RubyTerraform::Commands::Clean,
+    destroy: RubyTerraform::Commands::Destroy,
+    format: RubyTerraform::Commands::Format,
+    get: RubyTerraform::Commands::Get,
+    import: RubyTerraform::Commands::Import,
+    init: RubyTerraform::Commands::Init,
+    output: RubyTerraform::Commands::Output,
+    plan: RubyTerraform::Commands::Plan,
+    refresh: RubyTerraform::Commands::Refresh,
+    remote_config: RubyTerraform::Commands::RemoteConfig,
+    show: RubyTerraform::Commands::Show,
+    validate: RubyTerraform::Commands::Validate,
+    workspace: RubyTerraform::Commands::Workspace
+  }
+
   it 'has a version number' do
     expect(RubyTerraform::VERSION).not_to be nil
   end
@@ -107,6 +125,24 @@ describe RubyTerraform do
       end
 
       expect(RubyTerraform.configuration.stdin).to eq(stdin)
+    end
+  end
+
+  describe 'terraform commands' do
+    terraform_commands.each do |method, command_class|
+      describe ".#{method}" do
+        let(:options) { { user: 'options' } }
+        let(:instance) { instance_double(command_class, execute: nil) }
+
+        before do
+          allow(command_class).to receive(:new).and_return(instance)
+          described_class.send(method, options)
+        end
+
+        it "creates an instance of the #{command_class} class and calls its execute method" do
+          expect(instance).to have_received(:execute).with(options)
+        end
+      end
     end
   end
 end
