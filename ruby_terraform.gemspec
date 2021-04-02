@@ -37,5 +37,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rake_gpg', '~> 0.12'
   spec.add_development_dependency 'rake_ssh', '~> 0.4'
   spec.add_development_dependency 'rspec', '~> 3.9'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-rspec'
   spec.add_development_dependency 'simplecov'
 end
