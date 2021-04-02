@@ -22,6 +22,8 @@ describe RubyTerraform::Commands::Refresh do
 
   it_behaves_like 'a command that accepts vars', [terraform_command, terraform_config_path]
 
+  it_behaves_like 'a command with an option', [terraform_command, :input, terraform_config_path]
+
   it_behaves_like 'a command with an option', [terraform_command, :state, terraform_config_path]
 
   it_behaves_like 'a command with a flag', [terraform_command, :no_color, terraform_config_path]
