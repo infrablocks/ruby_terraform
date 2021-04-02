@@ -39,27 +39,15 @@ describe RubyTerraform do
     end
 
     it 'logs to standard output by default' do
-      $stdout = StringIO.new
-
-      RubyTerraform.configuration.logger
-                   .info('Logging with the default logger.')
-
-      expect($stdout.string).to include('Logging with the default logger.')
+      expect do
+        RubyTerraform.configuration
+                     .logger
+                     .info('Logging with the default logger.')
+      end.to output(/Logging with the default logger./).to_stdout
     end
 
     it 'has info log level by default' do
-      $stdout = StringIO.new
-
-      RubyTerraform.configuration.logger
-                   .debug('Logging with the default logger at debug level.')
-
-      expect($stdout.string).to eq('')
-
-      RubyTerraform.configuration.logger
-                   .info('Logging with the default logger at info level.')
-
-      expect($stdout.string)
-        .to include('Logging with the default logger at info level.')
+      expect(RubyTerraform.configuration.logger.level).to eq(Logger::INFO)
     end
 
     it 'allows default logger to be overridden' do
