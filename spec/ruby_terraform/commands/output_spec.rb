@@ -1,7 +1,8 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Output do
-  let(:command) { described_class.new(binary: 'terraform') }
+  let(:command) { described_class.new(command_opts) }
+  let(:command_opts) { { binary: 'terraform' } }
 
   before(:each) do
     RubyTerraform.configure do |config|
@@ -23,32 +24,58 @@ describe RubyTerraform::Commands::Output do
 
   it_behaves_like 'a command with an option', [terraform_command, :module]
 
-  it 'captures and returns the output of the command directly when no name is supplied' do
-    string_io = double('string IO')
-    allow(StringIO).to(receive(:new).and_return(string_io))
-    allow(string_io).to(receive(:string).and_return('  OUTPUT  '))
+  shared_examples 'it supports output naming' do
+    it 'captures and returns the output of the command directly' do
+      expect(execute).to(eq(string_output))
+    end
 
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
+    context 'when an output name is supplied' do
+      let(:opts) { { name: 'some_output' } }
 
-    expect(Open4)
-      .to(receive(:spawn)
-                .with(instance_of(String), hash_including(stdout: string_io)))
-
-    expect(command.execute).to(eq('  OUTPUT  '))
+      it 'captures, chomps and returns the output of the command' do
+        expect(execute).to(eq('  OUTPUT  '))
+      end
+    end
   end
 
-  it 'captures, chomps and returns the output of the command when an output name is supplied' do
-    string_io = double('string IO')
-    allow(StringIO).to(receive(:new).and_return(string_io))
-    allow(string_io).to(receive(:string).and_return("OUTPUT\n"))
+  describe 'output handling' do
+    let(:string_io) { instance_double(StringIO, string: string_output) }
+    let(:string_output) { "  OUTPUT  \n" }
+    let(:execute) { command.execute(opts) }
+    let(:opts) { {} }
 
-    command = RubyTerraform::Commands::Output.new(binary: 'terraform')
+    before do
+      allow(StringIO).to receive(:new).and_return(string_io)
+      allow(Open4).to receive(:spawn)
+      execute
+    end
 
-    expect(Open4)
-      .to(receive(:spawn)
-                .with(instance_of(String), hash_including(stdout: string_io)))
+    context 'when no stdout is supplied' do
+      it 'creates a new StringIO instance' do
+        expect(StringIO).to have_received(:new)
+      end
 
-    expect(command.execute(name: 'some_output')).to(eq('OUTPUT'))
+      it 'supplies the StringIO instance as the stdout when running the command' do
+        expect(Open4).to have_received(:spawn).with(instance_of(String), hash_including(stdout: string_io))
+      end
+    end
+
+    it_behaves_like 'it supports output naming'
+
+    context 'when a stdout option is supplied' do
+      let(:command_opts) { { binary: 'terraform', stdout: dummy_stdout } }
+      let(:dummy_stdout) { instance_double(StringIO, string: string_output) }
+
+      it 'does not create a new StringIO instance' do
+        expect(StringIO).not_to have_received(:new)
+      end
+
+      it 'passes the stdout option as the stdout when running the command' do
+        expect(Open4).to have_received(:spawn).with(instance_of(String), hash_including(stdout: dummy_stdout))
+      end
+
+      it_behaves_like 'it supports output naming'
+    end
   end
 
   it_behaves_like 'a command with a flag', [terraform_command, :no_color]
