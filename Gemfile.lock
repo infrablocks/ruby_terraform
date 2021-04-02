@@ -157,18 +157,18 @@ DEPENDENCIES
   bundler (~> 2.0)
   faker (~> 2.17)
   gem-release (~> 2.1)
-  guard
-  guard-rspec
+  guard (~> 2.16)
+  guard-rspec (~> 4.7)
   rake (~> 13.0)
   rake_circle_ci (~> 0.9)
   rake_github (~> 0.5)
   rake_gpg (~> 0.12)
   rake_ssh (~> 0.4)
   rspec (~> 3.9)
-  rubocop
-  rubocop-rspec
+  rubocop (~> 1.12)
+  rubocop-rspec (~> 2.2)
   ruby-terraform!
-  simplecov
+  simplecov (~> 0.21)
 
 BUNDLED WITH
    2.2.15

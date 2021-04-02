@@ -467,7 +467,7 @@ RubyTerraform.workspace(operation: 'delete', workspace: 'staging')
 arguments:
 * `directory`: the directory containing terraform configuration, the default is
   the current path.
-* `operation`: `list`, `select`, `new` or `delete`. default `list`.
+* `operation`: `list`, `select`, `new` or `delete`. default `list`.
 * `workspace`: Workspace name.
 
 
@@ -551,15 +551,35 @@ interactive input from the terminal.
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. Then,
-run `rake spec` to run the tests. You can also run `bin/console` for an
-interactive prompt that will allow you to experiment.
+To install dependencies and run the build, run the pre-commit build:
 
-To install this gem onto your local machine, run `bundle exec rake install`. To
-release a new version, update the version number in `version.rb`, and then run
-`bundle exec rake release`, which will create a git tag for the version, push
-git commits and tags, and push the `.gem` file to
-[rubygems.org](https://rubygems.org).
+```shell script
+./go
+```
+
+This runs all unit tests and other checks including coverage and code linting / 
+formatting.
+
+To run only the unit tests, including coverage:
+
+```shell script
+./go test:unit
+```
+
+To attempt to fix any code linting / formatting issues:
+
+```shell script
+./go library:fix
+```
+
+To check for code linting / formatting issues without fixing:
+
+```shell script
+./go library:check
+```
+
+You can also run `bin/console` for an interactive prompt that will allow you to 
+experiment.
 
 ### Managing CircleCI keys
 

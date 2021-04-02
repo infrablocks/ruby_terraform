@@ -9,14 +9,12 @@ module RubyTerraform
         workspace = opts[:workspace] || nil
 
         builder = builder
-            .with_subcommand('workspace')
-            .with_subcommand(operation)
+                  .with_subcommand('workspace')
+                  .with_subcommand(operation)
 
         builder = builder.with_subcommand(workspace) if
             workspace && operation != 'list'
-        builder = builder.with_argument(directory)
-
-        builder
+        builder.with_argument(directory)
       end
     end
   end

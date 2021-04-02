@@ -5,10 +5,12 @@ require 'rake_ssh'
 require 'rake_gpg'
 require 'securerandom'
 require 'rspec/core/rake_task'
+require 'rubocop/rake_task'
 
-task default: :spec
-
-RSpec::Core::RakeTask.new(:spec)
+task default: [
+  #:'library:fix',
+  :'test:unit'
+]
 
 namespace :encryption do
   namespace :passphrase do
@@ -37,6 +39,20 @@ namespace :keys do
       owner_comment: 'ruby_terraform CI Key'
     )
   end
+end
+
+RuboCop::RakeTask.new
+
+namespace :library do
+  desc 'Run all checks of the library'
+  task check: [:rubocop]
+
+  desc 'Attempt to automatically fix issues with the library'
+  task fix: [:'rubocop:auto_correct']
+end
+
+namespace :test do
+  RSpec::Core::RakeTask.new(:unit)
 end
 
 RakeCircleCI.define_project_tasks(
