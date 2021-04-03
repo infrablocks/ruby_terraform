@@ -1,20 +1,23 @@
 module RubyTerraform
   class Output
-    def self.for(opts)
-      name = opts[:name]
-      backend_config = opts[:backend_config]
+    class << self
+      def for(opts)
+        Dir.chdir(create_config_directory(opts)) do
+          RubyTerraform.init(backend_config: opts[:backend_config])
+          RubyTerraform.output(name: opts[:name])
+        end
+      end
 
-      source_directory = opts[:source_directory]
-      work_directory = opts[:work_directory]
+      private
 
-      configuration_directory = File.join(work_directory, source_directory)
+      def create_config_directory(opts)
+        source_directory = opts[:source_directory]
+        work_directory = opts[:work_directory]
 
-      FileUtils.mkdir_p File.dirname(configuration_directory)
-      FileUtils.cp_r source_directory, configuration_directory
-
-      Dir.chdir(configuration_directory) do
-        RubyTerraform.init(backend_config: backend_config)
-        RubyTerraform.output(name: name)
+        configuration_directory = File.join(work_directory, source_directory)
+        FileUtils.mkdir_p File.dirname(configuration_directory)
+        FileUtils.cp_r source_directory, configuration_directory
+        configuration_directory
       end
     end
   end
