@@ -3,24 +3,16 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class RemoteConfig < Base
-      def configure_command(builder, opts)
-        backend = opts[:backend]
-        no_color = opts[:no_color]
-        backend_config = opts[:backend_config] || {}
+      def switches
+        %w[-backend -backend-config -no-color]
+      end
 
-        builder
-          .with_subcommand('remote')
-          .with_subcommand('config') do |sub|
-          sub = sub.with_option('-backend', backend) if backend
-          backend_config.each do |key, value|
-            sub = sub.with_option(
-              '-backend-config', "'#{key}=#{value}'", separator: ' '
-            )
-          end
+      def sub_commands(_values)
+        %w[remote config]
+      end
 
-          sub = sub.with_flag('-no-color') if no_color
-          sub
-        end
+      def option_default_values(_opts)
+        { backend_config: {} }
       end
     end
   end

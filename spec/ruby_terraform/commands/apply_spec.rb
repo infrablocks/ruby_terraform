@@ -43,7 +43,7 @@ describe RubyTerraform::Commands::Apply do
 
   it_behaves_like 'a command with a boolean option', [terraform_command, :auto_approve, terraform_config_path]
 
-  it_behaves_like 'a command with an option', [terraform_command, :input, terraform_config_path]
+  it_behaves_like 'a command with a boolean option', [terraform_command, :input, terraform_config_path]
 
   it_behaves_like 'a command with an array option', [terraform_command, :targets, terraform_config_path]
 end

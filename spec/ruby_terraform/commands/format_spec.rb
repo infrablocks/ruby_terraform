@@ -28,9 +28,9 @@ describe RubyTerraform::Commands::Format do
 
   it_behaves_like 'a command with a flag', [terraform_command, :diff, terraform_config_path]
 
-  it_behaves_like 'a command with an option', [terraform_command, :list, terraform_config_path]
+  it_behaves_like 'a command with a boolean option', [terraform_command, :list, terraform_config_path]
 
   it_behaves_like 'a command with a flag', [terraform_command, :recursive, terraform_config_path]
 
-  it_behaves_like 'a command with an option', [terraform_command, :write, terraform_config_path]
+  it_behaves_like 'a command with a boolean option', [terraform_command, :write, terraform_config_path]
 end
