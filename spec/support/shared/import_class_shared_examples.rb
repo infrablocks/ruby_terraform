@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 shared_examples('an import command with an option') do |opt_key|
-  switch = "-#{opt_key.to_s.sub('_', '-')}"
+  switch = "-#{opt_key.to_s.gsub('_', '-')}"
   common =
     {
       directory: Faker::File.dir,
@@ -33,7 +33,7 @@ shared_examples('an import command with an option') do |opt_key|
 end
 
 shared_examples('an import command with a flag') do |opt_key|
-  switch = "-#{opt_key.to_s.sub('_', '-')}"
+  switch = "-#{opt_key.to_s.gsub('_', '-')}"
   common =
     {
       directory: Faker::File.dir,
@@ -67,7 +67,7 @@ shared_examples('an import command with a flag') do |opt_key|
 end
 
 shared_examples('an import command with a boolean option') do |opt_key|
-  switch = "-#{opt_key.to_s.sub('_', '-')}"
+  switch = "-#{opt_key.to_s.gsub('_', '-')}"
   common =
     {
       directory: Faker::File.dir,

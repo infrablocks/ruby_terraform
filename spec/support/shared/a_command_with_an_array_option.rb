@@ -5,7 +5,7 @@ shared_examples(
 ) do |command, option, directory|
   singular = option.to_s.chop
   singular_option = singular.to_sym
-  name = "-#{singular.sub('_', '-')}"
+  name = "-#{singular.gsub('_', '-')}"
 
   it_behaves_like(
     'a command with an option',
