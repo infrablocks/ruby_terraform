@@ -21,60 +21,25 @@ module RubyTerraform
   end
 
   module ClassMethods
-    def clean(opts = {})
-      Commands::Clean.new.execute(opts)
-    end
-
-    def init(opts = {})
-      Commands::Init.new.execute(opts)
-    end
-
-    def get(opts = {})
-      Commands::Get.new.execute(opts)
-    end
-
-    def validate(opts = {})
-      Commands::Validate.new.execute(opts)
-    end
-
-    def plan(opts = {})
-      Commands::Plan.new.execute(opts)
-    end
-
-    def apply(opts = {})
-      Commands::Apply.new.execute(opts)
-    end
-
-    def destroy(opts = {})
-      Commands::Destroy.new.execute(opts)
-    end
-
-    def remote_config(opts = {})
-      Commands::RemoteConfig.new.execute(opts)
-    end
-
-    def refresh(opts = {})
-      Commands::Refresh.new.execute(opts)
-    end
-
-    def output(opts = {})
-      Commands::Output.new.execute(opts)
-    end
-
-    def show(opts = {})
-      Commands::Show.new.execute(opts)
-    end
-
-    def workspace(opts = {})
-      Commands::Workspace.new.execute(opts)
-    end
-
-    def import(opts = {})
-      Commands::Import.new.execute(opts)
-    end
-
-    def format(opts = {})
-      Commands::Format.new.execute(opts)
+    {
+      apply: RubyTerraform::Commands::Apply,
+      clean: RubyTerraform::Commands::Clean,
+      destroy: RubyTerraform::Commands::Destroy,
+      format: RubyTerraform::Commands::Format,
+      get: RubyTerraform::Commands::Get,
+      import: RubyTerraform::Commands::Import,
+      init: RubyTerraform::Commands::Init,
+      output: RubyTerraform::Commands::Output,
+      plan: RubyTerraform::Commands::Plan,
+      refresh: RubyTerraform::Commands::Refresh,
+      remote_config: RubyTerraform::Commands::RemoteConfig,
+      show: RubyTerraform::Commands::Show,
+      validate: RubyTerraform::Commands::Validate,
+      workspace: RubyTerraform::Commands::Workspace
+    }.each do |method, command_class|
+      define_method(method) do |opts = {}|
+        command_class.new.execute(opts)
+      end
     end
   end
   extend ClassMethods

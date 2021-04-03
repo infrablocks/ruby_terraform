@@ -1,6 +1,28 @@
 require 'spec_helper'
+require_relative '../lib/ruby_terraform/commands'
+
+class RTIncluded
+  include RubyTerraform
+end
 
 describe RubyTerraform do
+  terraform_commands = {
+    apply: RubyTerraform::Commands::Apply,
+    clean: RubyTerraform::Commands::Clean,
+    destroy: RubyTerraform::Commands::Destroy,
+    format: RubyTerraform::Commands::Format,
+    get: RubyTerraform::Commands::Get,
+    import: RubyTerraform::Commands::Import,
+    init: RubyTerraform::Commands::Init,
+    output: RubyTerraform::Commands::Output,
+    plan: RubyTerraform::Commands::Plan,
+    refresh: RubyTerraform::Commands::Refresh,
+    remote_config: RubyTerraform::Commands::RemoteConfig,
+    show: RubyTerraform::Commands::Show,
+    validate: RubyTerraform::Commands::Validate,
+    workspace: RubyTerraform::Commands::Workspace
+  }
+
   it 'has a version number' do
     expect(RubyTerraform::VERSION).not_to be nil
   end
@@ -17,27 +39,15 @@ describe RubyTerraform do
     end
 
     it 'logs to standard output by default' do
-      $stdout = StringIO.new
-
-      RubyTerraform.configuration.logger
-                   .info('Logging with the default logger.')
-
-      expect($stdout.string).to include('Logging with the default logger.')
+      expect do
+        RubyTerraform.configuration
+                     .logger
+                     .info('Logging with the default logger.')
+      end.to output(/Logging with the default logger./).to_stdout
     end
 
     it 'has info log level by default' do
-      $stdout = StringIO.new
-
-      RubyTerraform.configuration.logger
-                   .debug('Logging with the default logger at debug level.')
-
-      expect($stdout.string).to eq('')
-
-      RubyTerraform.configuration.logger
-                   .info('Logging with the default logger at info level.')
-
-      expect($stdout.string)
-        .to include('Logging with the default logger at info level.')
+      expect(RubyTerraform.configuration.logger.level).to eq(Logger::INFO)
     end
 
     it 'allows default logger to be overridden' do
@@ -107,6 +117,32 @@ describe RubyTerraform do
       end
 
       expect(RubyTerraform.configuration.stdin).to eq(stdin)
+    end
+  end
+
+  describe 'terraform commands' do
+    terraform_commands.each do |method, command_class|
+      describe ".#{method}" do
+        let(:options) { { user: 'options' } }
+        let(:instance) { instance_double(command_class, execute: nil) }
+
+        before do
+          allow(command_class).to receive(:new).and_return(instance)
+          described_class.send(method, options)
+        end
+
+        it "creates an instance of the #{command_class} class and calls its execute method" do
+          expect(instance).to have_received(:execute).with(options)
+        end
+      end
+    end
+  end
+
+  describe 'when included in a class' do
+    terraform_commands.each_key do |method|
+      it "exposes #{method} as a class method on the class" do
+        expect(RTIncluded).to respond_to(method)
+      end
     end
   end
 end

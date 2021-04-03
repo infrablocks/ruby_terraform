@@ -2,7 +2,7 @@ require 'simplecov'
 
 SimpleCov.start do
   enable_coverage :branch
-  minimum_coverage line: 98.0, branch: 98.7
+  minimum_coverage line: 100, branch: 100
 end
 
 require 'bundler/setup'
