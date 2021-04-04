@@ -56,7 +56,7 @@ shared_examples 'an import command with a boolean option' do |opt_key|
 
   it_behaves_like 'a valid command line', {
     reason: "does not include #{switch}=false when the #{opt_key} option is false",
-    expected_command: "terraform import -config=#{common_options[:directory]} #{common_options[:address]} #{common_options[:id]}",
+    expected_command: "terraform import -config=#{common_options[:directory]} #{switch}=false #{common_options[:address]} #{common_options[:id]}",
     options: common_options.merge({ opt_key => false })
   }
 end

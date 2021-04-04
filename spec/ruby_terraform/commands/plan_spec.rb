@@ -73,7 +73,7 @@ describe RubyTerraform::Commands::Plan do
 
   it_behaves_like 'a command with an array option', [terraform_command, :var_files, terraform_config_path]
 
-  it_behaves_like 'a command with an option', [terraform_command, :input, terraform_config_path]
+  it_behaves_like 'a command with a boolean option', [terraform_command, :input, terraform_config_path]
 
   it_behaves_like 'a command with an array option', [terraform_command, :targets, terraform_config_path]
 

@@ -19,7 +19,7 @@ describe RubyTerraform::Commands::Init do
 
   it_behaves_like 'a command with a flag', [terraform_command, :no_color]
 
-  it_behaves_like 'a command with an option', [terraform_command, :force_copy]
+  it_behaves_like 'a command with a flag', [terraform_command, :force_copy]
 
   it_behaves_like 'a command with a map option', [terraform_command, :backend_config]
 

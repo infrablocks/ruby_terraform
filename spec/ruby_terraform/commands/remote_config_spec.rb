@@ -17,7 +17,7 @@ describe RubyTerraform::Commands::RemoteConfig do
 
   it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]
 
-  it_behaves_like 'a command with an option', [terraform_command, :backend]
+  it_behaves_like 'a command with a boolean option', [terraform_command, :backend]
 
   it_behaves_like 'a command with a map option', [terraform_command, :backend_config]
 
