@@ -2,13 +2,13 @@
 
 require 'spec_helper'
 
-describe RubyTerraform::Commands::Output do
-  let(:command) { described_class.new(command_opts) }
-  let(:command_opts) { { binary: 'terraform' } }
+describe RubyTerraform::Commands::Plan do
+  let(:command) { described_class.new(binary: 'terraform') }
 
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
+      config.logger = Logger.new(StringIO.new)
     end
   end
 
@@ -16,81 +16,195 @@ describe RubyTerraform::Commands::Output do
     RubyTerraform.reset!
   end
 
-  terraform_command = 'output'
+  command = 'plan'
+  directory = Faker::File.dir
+
+  it 'logs the command being executed at debug level using the globally ' \
+     'configured logger by default' do
+    string_output = StringIO.new
+    logger = Logger.new(string_output)
+    logger.level = Logger::DEBUG
+
+    RubyTerraform.configure do |config|
+      config.logger = logger
+    end
+
+    stub_open4_spawn
+
+    command = described_class.new(binary: 'terraform')
+
+    command.execute(directory: 'some/path/to/terraform/configuration')
+
+    expect(string_output.string).to(
+      include('DEBUG').and(
+        include(
+          "Running 'terraform plan some/path/to/terraform/configuration'."
+        )
+      )
+    )
+  end
+
+  it 'logs the command being executed at debug level using the ' \
+     'provided logger' do
+    string_output = StringIO.new
+    logger = Logger.new(string_output)
+    logger.level = Logger::DEBUG
+
+    stub_open4_spawn
+
+    command = described_class.new(
+      binary: 'terraform',
+      logger: logger
+    )
+
+    command.execute(directory: 'some/path/to/terraform/configuration')
+
+    expect(string_output.string).to(
+      include('DEBUG').and(
+        include(
+          "Running 'terraform plan some/path/to/terraform/configuration'."
+        )
+      )
+    )
+  end
+
+  it 'logs an error raised when running the command' do
+    string_output = StringIO.new
+    logger = Logger.new(string_output)
+    logger.level = Logger::INFO
+
+    RubyTerraform.configure do |config|
+      config.logger = logger
+    end
+
+    stub_open4_spawn_raise
+    command = described_class.new
+
+    begin
+      command.execute(directory: 'some/path/to/terraform/configuration')
+    rescue StandardError
+      # no-op
+    end
+
+    expect(string_output.string).to(
+      include('ERROR').and(
+        include("Failed while running 'plan'.")
+      )
+    )
+  end
+
+  it 'raises execution error when an error occurs running the command' do
+    string_output = StringIO.new
+    logger = Logger.new(string_output)
+    logger.level = Logger::INFO
+
+    RubyTerraform.configure do |config|
+      config.logger = logger
+    end
+
+    stub_open4_spawn_raise
+    command = described_class.new
+
+    expect do
+      command.execute(directory: 'some/path/to/terraform/configuration')
+    end.to(raise_error(RubyTerraform::Errors::ExecutionError))
+  end
+
+  def stub_open4_spawn
+    allow(Open4).to(receive(:spawn))
+  end
+
+  def stub_open4_spawn_raise
+    allow_any_instance_of(Process::Status).to(
+      receive(:exitstatus).and_return(0)
+    )
+    allow(Open4).to(
+      receive(:spawn)
+        .and_raise(Open4::SpawnError.new('cmd', $CHILD_STATUS), 'message')
+    )
+  end
 
   it_behaves_like(
-    'a command without a binary supplied', [terraform_command, described_class]
+    'a command with an argument', [command, :directory]
   )
 
-  it_behaves_like('a command with an option', [terraform_command, :state])
+  it_behaves_like(
+    'a command without a binary supplied',
+    [command, described_class, directory]
+  )
 
-  it_behaves_like('a command with an argument', [terraform_command, :name])
+  it_behaves_like(
+    'a command with a flag',
+    [command, :compact_warnings, directory]
+  )
 
-  it_behaves_like('a command with an option', [terraform_command, :module])
+  it_behaves_like(
+    'a command with a flag',
+    [command, :destroy, directory]
+  )
 
-  shared_examples 'it supports output naming' do
-    it 'captures and returns the output of the command directly' do
-      expect(execute).to(eq(string_output))
-    end
+  it_behaves_like(
+    'a command with a flag',
+    [command, :detailed_exitcode, directory]
+  )
 
-    context 'when an output name is supplied' do
-      let(:opts) { { name: 'some_output' } }
+  it_behaves_like(
+    'a command with a boolean option',
+    [command, :input, directory]
+  )
 
-      it 'captures, chomps and returns the output of the command' do
-        expect(execute).to(eq('  OUTPUT  '))
-      end
-    end
-  end
+  it_behaves_like(
+    'a command with a boolean option',
+    [command, :lock, directory]
+  )
 
-  describe 'output handling' do
-    let(:string_io) { instance_double(StringIO, string: string_output) }
-    let(:string_output) { "  OUTPUT  \n" }
-    let(:execute) { command.execute(opts) }
-    let(:opts) { {} }
+  it_behaves_like(
+    'a command with an option',
+    [command, :lock_timeout, directory]
+  )
 
-    before do
-      allow(StringIO).to receive(:new).and_return(string_io)
-      allow(Open4).to receive(:spawn)
-      execute
-    end
+  it_behaves_like(
+    'a command with a flag',
+    [command, :no_color, directory]
+  )
 
-    context 'when no stdout is supplied' do
-      it 'creates a new StringIO instance' do
-        expect(StringIO).to have_received(:new)
-      end
+  it_behaves_like(
+    'a command with an option',
+    [command, :plan, directory,
+     { name_override: '-out' }]
+  )
 
-      it 'supplies the StringIO instance as the stdout when running ' \
-         'the command' do
-        expect(Open4)
-          .to(have_received(:spawn)
-                .with(instance_of(String), hash_including(stdout: string_io)))
-      end
-    end
+  it_behaves_like(
+    'a command with an option',
+    [command, :parallelism, directory]
+  )
 
-    it_behaves_like('it supports output naming')
+  it_behaves_like(
+    'a command with a boolean option',
+    [command, :refresh, directory]
+  )
 
-    context 'when a stdout option is supplied' do
-      let(:command_opts) { { binary: 'terraform', stdout: dummy_stdout } }
-      let(:dummy_stdout) { instance_double(StringIO, string: string_output) }
+  it_behaves_like(
+    'a command with an option',
+    [command, :state, directory]
+  )
 
-      it 'does not create a new StringIO instance' do
-        expect(StringIO).not_to have_received(:new)
-      end
+  it_behaves_like(
+    'a command with an array option',
+    [command, :targets, directory]
+  )
 
-      it 'passes the stdout option as the stdout when running the command' do
-        expect(Open4)
-          .to(have_received(:spawn)
-                .with(
-                  instance_of(String),
-                  hash_including(stdout: dummy_stdout)
-                ))
-      end
+  it_behaves_like(
+    'a command that accepts vars', [command, directory]
+  )
 
-      it_behaves_like('it supports output naming')
-    end
-  end
+  it_behaves_like(
+    'a command with an array option',
+    [command, :var_files, directory]
+  )
 
-  it_behaves_like('a command with a flag', [terraform_command, :no_color])
-
-  it_behaves_like('a command with a flag', [terraform_command, :json])
+  it_behaves_like(
+    'a command with common options',
+    [command, directory]
+  )
 end

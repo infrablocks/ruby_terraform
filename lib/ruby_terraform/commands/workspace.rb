@@ -1,10 +1,13 @@
 # frozen_string_literal: true
 
 require_relative 'base'
+require_relative '../options/common'
 
 module RubyTerraform
   module Commands
     class Workspace < Base
+      include RubyTerraform::Options::Common
+
       def subcommands(parameters)
         commands = ['workspace', parameters[:operation]]
         if parameters[:workspace] && parameters[:operation] != 'list'

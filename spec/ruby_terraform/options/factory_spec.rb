@@ -10,8 +10,7 @@ describe RubyTerraform::Options::Factory do
     )
   end
 
-  # rubocop:disable Metrics/BlockLength
-  let(:test_data) do
+  let(:test_data) do # rubocop:disable Metrics/BlockLength
     {
       my_standard: {
         switch: '-my-standard',
@@ -51,8 +50,6 @@ describe RubyTerraform::Options::Factory do
       }
     }
   end
-  # rubocop:enable Metrics/BlockLength
-
   let(:values) do
     values = test_data.transform_values { |v| v[:value] }
     values[:option_key] = values.delete(:override)
@@ -145,8 +142,8 @@ describe RubyTerraform::Options::Factory do
     end
 
     it 'returns the array of Options' do
-      expect(options)
-        .to(eq([standard, boolean, flag, singular, plural, override]))
+      expect(options).to eq([standard, boolean, flag, singular, plural,
+                             override])
     end
   end
 

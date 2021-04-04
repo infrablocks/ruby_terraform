@@ -15,46 +15,46 @@ describe RubyTerraform::Commands::Format do
     RubyTerraform.reset!
   end
 
-  terraform_command = 'fmt'
-  terraform_config_path = Faker::File.dir
+  command = 'fmt'
+  directory = Faker::File.dir
 
   it_behaves_like(
     'a command with an argument',
-    [terraform_command, :directory]
+    [command, :directory]
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [terraform_command, described_class, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with a flag',
-    [terraform_command, :no_color, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with a flag',
-    [terraform_command, :check, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with a flag',
-    [terraform_command, :diff, terraform_config_path]
+    [command, described_class, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :list, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with a flag',
-    [terraform_command, :recursive, terraform_config_path]
+    [command, :list, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :write, terraform_config_path]
+    [command, :write, directory]
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    [command, :diff, directory]
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    [command, :check, directory]
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    [command, :recursive, directory]
+  )
+
+  it_behaves_like(
+    'a command with common options',
+    [command, directory]
   )
 end

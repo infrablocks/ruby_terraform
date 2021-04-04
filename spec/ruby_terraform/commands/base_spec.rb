@@ -120,7 +120,7 @@ describe RubyTerraform::Commands::Base do
   end
 
   describe '#execute' do
-    let(:opts) { { sample: 'provided' } }
+    let(:parameters) { { sample: 'provided' } }
     let(:command_line) do
       instance_double(Lino::CommandLine, execute: nil)
     end
@@ -149,7 +149,7 @@ describe RubyTerraform::Commands::Base do
         allow(builder).to(receive(method).and_return(builder))
       end
 
-      subclass.execute(opts)
+      subclass.execute(parameters)
     end
 
     it 'uses the options factory to compile the options to pass to lino' do
@@ -165,23 +165,11 @@ describe RubyTerraform::Commands::Base do
                 .with(any_args, { default: 'value', sample: 'overridden' }))
       end
 
-      # it 'uses the subcommand provided by the subclass' do
-      #   expect(RubyTerraform::Builder)
-      #     .to(have_received(:new)
-      #           .with(hash_including(subcommands: ['apply'])))
-      # end
-
       it 'uses the switches provided by the subclass' do
         expect(RubyTerraform::Options::Factory)
           .to(have_received(:from)
                 .with(['-sample'], any_args))
       end
-
-      # it 'uses the arguments provided by the subclass' do
-      #   expect(RubyTerraform::Builder)
-      #     .to(have_received(:new)
-      #           .with(hash_including(arguments: 'an argument')))
-      # end
     end
 
     context 'when the subclass does not contain overrides for the ' \
@@ -194,23 +182,11 @@ describe RubyTerraform::Commands::Base do
                 .with(any_args, { sample: 'provided' }))
       end
 
-      # it 'uses the empty array of subcommands provided by Base' do
-      #   expect(RubyTerraform::Builder)
-      #     .to(have_received(:new)
-      #           .with(hash_including(subcommands: [])))
-      # end
-
       it 'uses the empty array of switches provided by Base' do
         expect(RubyTerraform::Options::Factory)
           .to(have_received(:from)
                 .with([], any_args))
       end
-
-      # it 'uses the empty array of arguments provided by Base' do
-      #   expect(RubyTerraform::Builder)
-      #     .to(have_received(:new)
-      #           .with(hash_including(arguments: [])))
-      # end
     end
   end
 end

@@ -2,28 +2,30 @@
 
 require 'stringio'
 require_relative 'base'
+require_relative '../options/common'
 
 module RubyTerraform
   module Commands
     class Output < Base
+      include RubyTerraform::Options::Common
+
       def initialize_command
         return if defined?(@stdout) && @stdout.respond_to?(:string)
 
         @stdout = StringIO.new
       end
 
+      def subcommands(_parameters)
+        %w[output]
+      end
+
       def options
         %w[
           -json
-          -module
-          -no-color
           -raw
+          -no-color
           -state
-        ]
-      end
-
-      def subcommands(_parameters)
-        %w[output]
+        ] + super
       end
 
       def arguments(parameters)

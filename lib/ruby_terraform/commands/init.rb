@@ -1,24 +1,34 @@
 # frozen_string_literal: true
 
 require_relative 'base'
+require_relative '../options/common'
 
 module RubyTerraform
   module Commands
     class Init < Base
-      def options
+      include RubyTerraform::Options::Common
+
+      def subcommands(_parameters)
+        %w[init]
+      end
+
+      def options # rubocop:disable Metrics/MethodLength
         %w[
           -backend
           -backend-config
           -force-copy
           -from-module
           -get
+          -get-plugins
+          -input
+          -lock
+          -lock-timeout
           -no-color
           -plugin-dir
-        ]
-      end
-
-      def subcommands(_parameters)
-        %w[init]
+          -reconfigure
+          -upgrade
+          -verify-plugins
+        ] + super
       end
 
       def arguments(parameters)

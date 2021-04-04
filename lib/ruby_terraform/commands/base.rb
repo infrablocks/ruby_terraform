@@ -82,7 +82,7 @@ module RubyTerraform
         {}
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         []
       end
 
@@ -90,7 +90,7 @@ module RubyTerraform
         []
       end
 
-      def arguments(_values)
+      def arguments(_parameters)
         []
       end
     end
