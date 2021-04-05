@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require_relative '../../../lib/ruby_terraform/options/standard'
-
 describe RubyTerraform::Options::Standard do
   let(:switch) { '-switch' }
   let(:value) { 'some/state.tfstate' }

@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require_relative '../../../lib/ruby_terraform/options/boolean'
-
 describe RubyTerraform::Options::Boolean do
   let(:switch) { '-switch' }
   let(:value) { true }

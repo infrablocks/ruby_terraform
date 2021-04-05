@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require_relative '../../../lib/ruby_terraform/options/base'
-
 describe RubyTerraform::Options::Base do
   let(:switch) { '-switch' }
   let(:value) { 'options value' }

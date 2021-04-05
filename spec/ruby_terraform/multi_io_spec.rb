@@ -1,5 +1,5 @@
 require 'logger'
-require_relative '../../lib/ruby_terraform'
+require 'spec_helper'
 
 describe RubyTerraform::MultiIO do
   subject(:multi_io) { described_class.new(log_file1, log_file2) }

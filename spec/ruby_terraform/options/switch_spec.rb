@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require_relative '../../../lib/ruby_terraform/options/switch'
-
 describe RubyTerraform::Options::Switch do
   subject(:switch) { described_class.new(switch_string) }
 

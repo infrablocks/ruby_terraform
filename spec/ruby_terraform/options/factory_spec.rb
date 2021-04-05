@@ -1,11 +1,6 @@
 require 'spec_helper'
 
-require_relative '../../../lib/ruby_terraform/options/factory'
-require_relative '../../../lib/ruby_terraform/options/standard'
-require_relative '../../../lib/ruby_terraform/options/flag'
-require_relative '../../../lib/ruby_terraform/options/boolean'
-
-describe RubyTerraform::Options::Factory do
+ describe RubyTerraform::Options::Factory do
   subject(:options) do
     described_class.from(
       values,

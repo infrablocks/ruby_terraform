@@ -1,5 +1,6 @@
 require 'ruby_terraform/version'
 require 'ruby_terraform/errors'
+require 'ruby_terraform/options'
 require 'ruby_terraform/commands'
 require 'logger'
 

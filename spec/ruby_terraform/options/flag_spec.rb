@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-require_relative '../../../lib/ruby_terraform/options/flag'
-
 describe RubyTerraform::Options::Flag do
   subject(:option) { described_class.new(switch, value) }
 

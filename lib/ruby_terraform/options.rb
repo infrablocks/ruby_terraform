@@ -1,0 +1,5 @@
+require_relative 'options/switch'
+require_relative 'options/flag'
+require_relative 'options/boolean'
+require_relative 'options/standard'
+require_relative 'options/factory'
