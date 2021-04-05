@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Destroy < Base
-      def switches
+      def options
         %w[
           -auto-approve
           -backup
@@ -16,20 +16,20 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[destroy]
       end
 
-      def arguments(values)
-        [values[:directory]]
+      def arguments(parameters)
+        [parameters[:directory]]
       end
 
-      def option_default_values(_opts)
+      def parameter_defaults(_parameters)
         { vars: {}, var_files: [], targets: [] }
       end
 
-      def option_override_values(opts)
-        { backup: opts[:no_backup] ? '-' : opts[:backup] }
+      def parameter_overrides(parameters)
+        { backup: parameters[:no_backup] ? '-' : parameters[:backup] }
       end
     end
   end

@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Validate < Base
-      def switches
+      def options
         %w[
           -check-variables
           -json
@@ -14,15 +14,15 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[validate]
       end
 
-      def arguments(values)
-        [values[:directory]]
+      def arguments(parameters)
+        [parameters[:directory]]
       end
 
-      def option_default_values(_opts)
+      def parameter_defaults(_parameters)
         { vars: {}, var_files: [] }
       end
     end

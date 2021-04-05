@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Format < Base
-      def switches
+      def options
         %w[
           -check
           -diff
@@ -14,12 +14,12 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[fmt]
       end
 
-      def arguments(values)
-        [values[:directory]]
+      def arguments(parameters)
+        [parameters[:directory]]
       end
     end
   end

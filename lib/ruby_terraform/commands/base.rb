@@ -17,10 +17,10 @@ module RubyTerraform
         initialize_command
       end
 
-      def execute(opts = {})
-        do_before(opts)
-        build_and_execute_command(opts)
-        do_after(opts)
+      def execute(parameters = {})
+        do_before(parameters)
+        build_and_execute_command(parameters)
+        do_after(parameters)
       rescue Open4::SpawnError
         message = "Failed while running '#{command_name}'."
         logger.error(message)
@@ -31,8 +31,8 @@ module RubyTerraform
 
       attr_reader :binary, :logger, :stdin, :stdout, :stderr
 
-      def build_and_execute_command(opts)
-        command = build_command(opts)
+      def build_and_execute_command(parameters)
+        command = build_command(parameters)
         logger.debug("Running '#{command}'.")
         command.execute(
           stdin: stdin,
@@ -45,38 +45,38 @@ module RubyTerraform
         self.class.to_s.split('::')[-1].downcase
       end
 
-      def do_before(_opts); end
+      def do_before(_parameters); end
 
-      def do_after(_opts); end
+      def do_after(_parameters); end
 
       private
 
       def initialize_command; end
 
-      def build_command(opts)
-        values = apply_option_defaults_and_overrides(opts)
+      def build_command(parameters)
+        parameters = resolve_parameters(parameters)
 
         Lino::CommandLineBuilder
           .for_command(@binary)
           .with_options_after_subcommands
           .with_option_separator('=')
-          .with_appliables(options(values))
-          .with_subcommands(subcommands(values))
-          .with_arguments(arguments(values))
+          .with_appliables(Options::Factory.from(options, parameters))
+          .with_subcommands(subcommands(parameters))
+          .with_arguments(arguments(parameters))
           .build
       end
 
-      def apply_option_defaults_and_overrides(opts)
-        option_default_values(opts)
-          .merge(opts)
-          .merge(option_override_values(opts))
+      def resolve_parameters(parameters)
+        parameter_defaults(parameters)
+          .merge(parameters)
+          .merge(parameter_overrides(parameters))
       end
 
-      def option_default_values(_values)
+      def parameter_defaults(_parameters)
         {}
       end
 
-      def option_override_values(_values)
+      def parameter_overrides(_parameters)
         {}
       end
 
@@ -84,11 +84,7 @@ module RubyTerraform
         []
       end
 
-      def options(values)
-        RubyTerraform::Options::Factory.from(values, switches)
-      end
-
-      def switches
+      def options
         []
       end
 

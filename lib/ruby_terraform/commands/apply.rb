@@ -8,7 +8,7 @@ module RubyTerraform
       end
 
       # rubocop:disable Metrics/MethodLength
-      def switches
+      def options
         %w[
           -auto-approve
           -backup
@@ -28,12 +28,12 @@ module RubyTerraform
         [values[:plan] || values[:directory]]
       end
 
-      def option_default_values(_opts)
+      def parameter_defaults(_parameters)
         { vars: {}, var_files: [], targets: [] }
       end
 
-      def option_override_values(opts)
-        { backup: opts[:no_backup] ? '-' : opts[:backup] }
+      def parameter_overrides(parameters)
+        { backup: parameters[:no_backup] ? '-' : parameters[:backup] }
       end
     end
   end

@@ -9,23 +9,23 @@ class TestWith < RubyTerraform::Commands::Base
     @initialized = true
   end
 
-  def option_default_values(_values)
+  def parameter_defaults(_parameters)
     { default: 'value' }
   end
 
-  def option_override_values(_values)
+  def parameter_overrides(_parameters)
     { sample: 'overridden' }
   end
 
-  def sub_commands(_values)
+  def subcommands(_parameters)
     %w[apply]
   end
 
-  def switches
+  def options
     %w[-sample]
   end
 
-  def arguments(_values)
+  def arguments(_parameters)
     ['an argument']
   end
 end
@@ -158,7 +158,7 @@ describe RubyTerraform::Commands::Base do
       it 'applies the subclass options defaults and overrides to the supplied options' do
         expect(RubyTerraform::Options::Factory)
           .to(have_received(:from)
-                .with({ default: 'value', sample: 'overridden' }, any_args))
+                .with(any_args, { default: 'value', sample: 'overridden' }))
       end
 
       # it 'uses the subcommand provided by the subclass' do
@@ -170,7 +170,7 @@ describe RubyTerraform::Commands::Base do
       it 'uses the switches provided by the subclass' do
         expect(RubyTerraform::Options::Factory)
           .to(have_received(:from)
-                .with(any_args, ['-sample']))
+                .with(['-sample'], any_args))
       end
 
       # it 'uses the arguments provided by the subclass' do
@@ -186,7 +186,7 @@ describe RubyTerraform::Commands::Base do
       it 'uses the empty options defaults and overrides provided by Base' do
         expect(RubyTerraform::Options::Factory)
           .to(have_received(:from)
-                .with({ sample: 'provided' }, any_args))
+                .with(any_args, { sample: 'provided' }))
       end
 
       # it 'uses the empty array of subcommands provided by Base' do
@@ -198,7 +198,7 @@ describe RubyTerraform::Commands::Base do
       it 'uses the empty array of switches provided by Base' do
         expect(RubyTerraform::Options::Factory)
           .to(have_received(:from)
-                .with(any_args, []))
+                .with([], any_args))
       end
 
       # it 'uses the empty array of arguments provided by Base' do

@@ -13,16 +13,12 @@ describe RubyTerraform::Commands::Apply do
     RubyTerraform.reset!
   end
 
-  terraform_command = 'apply'
-  terraform_config_path = Faker::File.dir
+  command = 'apply'
+  directory = Faker::File.dir
 
-  it_behaves_like(
-    'a command with an argument', [terraform_command, :directory]
-  )
+  it_behaves_like('a command with an argument', [command, :directory])
 
-  it_behaves_like(
-    'a command with an argument', [terraform_command, :plan]
-  )
+  it_behaves_like('a command with an argument', [command, :plan])
 
   it_behaves_like(
     'a valid command line',
@@ -38,51 +34,51 @@ describe RubyTerraform::Commands::Apply do
 
   it_behaves_like(
     'a command without a binary supplied',
-    [terraform_command, described_class, terraform_config_path]
+    [command, described_class, directory]
   )
 
   it_behaves_like(
     'a command that accepts vars',
-    [terraform_command, terraform_config_path]
+    [command, directory]
   )
 
   it_behaves_like(
     'a command with an option',
-    [terraform_command, :state, terraform_config_path]
+    [command, :state, directory]
   )
 
   it_behaves_like(
     'a command with an option',
-    [terraform_command, :backup, terraform_config_path]
+    [command, :backup, directory]
   )
 
   it_behaves_like(
     'a command that can disable backup',
-    [terraform_command, terraform_config_path]
+    [command, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :no_color, terraform_config_path]
+    [command, :no_color, directory]
   )
 
   it_behaves_like(
     'a command with an array option',
-    [terraform_command, :var_files, terraform_config_path]
+    [command, :var_files, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :auto_approve, terraform_config_path]
+    [command, :auto_approve, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :input, terraform_config_path]
+    [command, :input, directory]
   )
 
   it_behaves_like(
     'a command with an array option',
-    [terraform_command, :targets, terraform_config_path]
+    [command, :targets, directory]
   )
 end

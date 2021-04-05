@@ -3,20 +3,20 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Workspace < Base
-      def subcommands(values)
-        commands = ['workspace', values[:operation]]
-        if values[:workspace] && values[:operation] != 'list'
-          commands << values[:workspace]
+      def subcommands(parameters)
+        commands = ['workspace', parameters[:operation]]
+        if parameters[:workspace] && parameters[:operation] != 'list'
+          commands << parameters[:workspace]
         else
           commands
         end
       end
 
-      def arguments(values)
-        [values[:directory]]
+      def arguments(parameters)
+        [parameters[:directory]]
       end
 
-      def option_default_values(_opts)
+      def parameter_defaults(_parameters)
         { directory: nil, operation: 'list', workspace: nil }
       end
     end

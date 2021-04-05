@@ -92,7 +92,7 @@ describe RubyTerraform::Commands::Plan do
       terraform_command,
       :plan,
       terraform_config_path,
-      { switch_override: '-out' }
+      { name_override: '-out' }
     ]
   )
 

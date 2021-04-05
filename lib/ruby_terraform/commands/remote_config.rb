@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class RemoteConfig < Base
-      def switches
+      def options
         %w[
           -backend
           -backend-config
@@ -11,11 +11,11 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[remote config]
       end
 
-      def option_default_values(_opts)
+      def parameter_defaults(_parameters)
         { backend_config: {} }
       end
     end

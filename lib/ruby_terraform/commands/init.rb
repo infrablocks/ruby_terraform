@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Init < Base
-      def switches
+      def options
         %w[
           -backend
           -backend-config
@@ -15,15 +15,15 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[init]
       end
 
-      def arguments(values)
-        [values[:path]]
+      def arguments(parameters)
+        [parameters[:path]]
       end
 
-      def option_default_values(_opts)
+      def parameter_defaults(_parameters)
         { backend_config: {} }
       end
     end

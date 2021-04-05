@@ -10,7 +10,7 @@ module RubyTerraform
         @stdout = StringIO.new
       end
 
-      def switches
+      def options
         %w[
           -json
           -module
@@ -20,17 +20,17 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[output]
       end
 
-      def arguments(values)
-        [values[:name]]
+      def arguments(parameters)
+        [parameters[:name]]
       end
 
-      def do_after(opts)
+      def do_after(parameters)
         result = stdout.string
-        opts[:name] ? result.chomp : result
+        parameters[:name] ? result.chomp : result
       end
     end
   end

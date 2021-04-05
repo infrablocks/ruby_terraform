@@ -61,15 +61,15 @@ module RubyTerraform
           out: :plan
         }.freeze
 
-      def self.from(values, switches)
-        new(values, switches).from
+      def self.from(names, parameters)
+        new(names, parameters).from
       end
 
       private_class_method :new
 
-      def initialize(values, names)
-        @names = names.map { |switch| Name.new(switch) }
-        @values = values
+      def initialize(names, parameters)
+        @names = names.map { |name| Name.new(name) }
+        @parameters = parameters
       end
 
       def from
@@ -80,7 +80,7 @@ module RubyTerraform
 
       private
 
-      attr_reader :names, :values
+      attr_reader :names, :parameters
 
       def options_from_name(name)
         return plural_options(name) if PLURAL_OPTIONS.include?(name)
@@ -92,15 +92,15 @@ module RubyTerraform
       end
 
       def boolean_option(name)
-        [Types::Boolean.new(name.to_s, values[name.as_key])]
+        [Types::Boolean.new(name.to_s, parameters[name.as_key])]
       end
 
       def flag_option(name)
-        [Types::Flag.new(name.to_s, values[name.as_key])]
+        [Types::Flag.new(name.to_s, parameters[name.as_key])]
       end
 
       def standard_option(name, hash_key)
-        [Types::Standard.new(name.to_s, values[hash_key])]
+        [Types::Standard.new(name.to_s, parameters[hash_key])]
       end
 
       def override_option(name)

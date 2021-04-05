@@ -38,8 +38,8 @@ module RubyTerraform
       validate: RubyTerraform::Commands::Validate,
       workspace: RubyTerraform::Commands::Workspace
     }.each do |method, command_class|
-      define_method(method) do |opts = {}|
-        command_class.new.execute(opts)
+      define_method(method) do |parameters = {}|
+        command_class.new.execute(parameters)
       end
     end
   end

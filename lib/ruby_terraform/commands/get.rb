@@ -3,19 +3,19 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Get < Base
-      def switches
+      def options
         %w[
           -no-color
           -update
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[get]
       end
 
-      def arguments(values)
-        [values[:directory]]
+      def arguments(parameters)
+        [parameters[:directory]]
       end
     end
   end

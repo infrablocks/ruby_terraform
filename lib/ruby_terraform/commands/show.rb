@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Show < Base
-      def switches
+      def options
         %w[
           -json
           -module-depth
@@ -11,12 +11,12 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[show]
       end
 
-      def arguments(values)
-        [values[:path] || values[:directory]]
+      def arguments(parameters)
+        [parameters[:path] || parameters[:directory]]
       end
     end
   end

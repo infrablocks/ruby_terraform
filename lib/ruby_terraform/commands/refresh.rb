@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Refresh < Base
-      def switches
+      def options
         %w[
           -input
           -no-color
@@ -14,15 +14,15 @@ module RubyTerraform
         ]
       end
 
-      def subcommands(_values)
+      def subcommands(_parameters)
         %w[refresh]
       end
 
-      def arguments(values)
-        [values[:directory]]
+      def arguments(parameters)
+        [parameters[:directory]]
       end
 
-      def option_default_values(_opts)
+      def parameter_defaults(_parameters)
         { vars: {}, var_files: [], targets: [] }
       end
     end

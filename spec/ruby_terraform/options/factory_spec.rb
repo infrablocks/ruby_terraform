@@ -3,8 +3,8 @@ require 'spec_helper'
 describe RubyTerraform::Options::Factory do
   subject(:options) do
     described_class.from(
-      values,
-      test_data.map { |_k, v| v[:switch] }.uniq
+      test_data.map { |_k, v| v[:switch] }.uniq,
+      values
     )
   end
 
