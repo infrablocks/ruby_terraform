@@ -8,15 +8,15 @@ module RubyTerraform
       end
 
       def sub_commands(_values)
-        'plan'
+        %w[plan]
+      end
+
+      def arguments(values)
+        [values[:directory]]
       end
 
       def option_default_values(_opts)
         { vars: {}, var_files: [], targets: [] }
-      end
-
-      def arguments(values)
-        values[:directory]
       end
     end
   end

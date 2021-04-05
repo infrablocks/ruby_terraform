@@ -1,6 +1,7 @@
+require 'lino'
+
 require_relative '../errors'
-require_relative '../command_line/builder'
-require_relative '../command_line/options_factory'
+require_relative '../options/factory'
 
 module RubyTerraform
   module Commands
@@ -54,17 +55,21 @@ module RubyTerraform
 
       def build_command(opts)
         values = apply_option_defaults_and_overrides(opts)
-        RubyTerraform::CommandLine::Builder.new(
-          binary: @binary,
-          sub_commands: sub_commands(values),
-          options: options(values),
-          arguments: arguments(values)
-        ).build
+
+        Lino::CommandLineBuilder
+          .for_command(@binary)
+          .with_options_after_subcommands
+          .with_option_separator('=')
+          .with_appliables(options(values))
+          .with_subcommands(sub_commands(values))
+          .with_arguments(arguments(values))
+          .build
       end
 
       def apply_option_defaults_and_overrides(opts)
-        option_default_values(opts).merge(opts)
-                                   .merge(option_override_values(opts))
+        option_default_values(opts)
+          .merge(opts)
+          .merge(option_override_values(opts))
       end
 
       def option_default_values(_values)
@@ -80,7 +85,7 @@ module RubyTerraform
       end
 
       def options(values)
-        RubyTerraform::CommandLine::OptionsFactory.from(values, switches)
+        RubyTerraform::Options::Factory.from(values, switches)
       end
 
       def switches

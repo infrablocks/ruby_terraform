@@ -13,7 +13,7 @@ module RubyTerraform
       end
 
       def arguments(values)
-        values[:directory]
+        [values[:directory]]
       end
 
       def option_default_values(_opts)

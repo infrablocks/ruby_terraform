@@ -8,11 +8,11 @@ module RubyTerraform
       end
 
       def sub_commands(_values)
-        'get'
+        %w[get]
       end
 
       def arguments(values)
-        values[:directory]
+        [values[:directory]]
       end
     end
   end

@@ -16,13 +16,15 @@ describe RubyTerraform::Commands::Output do
 
   terraform_command = 'output'
 
-  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class]
+  it_behaves_like(
+    'a command without a binary supplied', [terraform_command, described_class]
+  )
 
-  it_behaves_like 'a command with an option', [terraform_command, :state]
+  it_behaves_like('a command with an option', [terraform_command, :state])
 
-  it_behaves_like 'a command with an argument', [terraform_command, :name]
+  it_behaves_like('a command with an argument', [terraform_command, :name])
 
-  it_behaves_like 'a command with an option', [terraform_command, :module]
+  it_behaves_like('a command with an option', [terraform_command, :module])
 
   shared_examples 'it supports output naming' do
     it 'captures and returns the output of the command directly' do
@@ -56,11 +58,13 @@ describe RubyTerraform::Commands::Output do
       end
 
       it 'supplies the StringIO instance as the stdout when running the command' do
-        expect(Open4).to have_received(:spawn).with(instance_of(String), hash_including(stdout: string_io))
+        expect(Open4)
+          .to(have_received(:spawn)
+                .with(instance_of(String), hash_including(stdout: string_io)))
       end
     end
 
-    it_behaves_like 'it supports output naming'
+    it_behaves_like('it supports output naming')
 
     context 'when a stdout option is supplied' do
       let(:command_opts) { { binary: 'terraform', stdout: dummy_stdout } }
@@ -71,14 +75,18 @@ describe RubyTerraform::Commands::Output do
       end
 
       it 'passes the stdout option as the stdout when running the command' do
-        expect(Open4).to have_received(:spawn).with(instance_of(String), hash_including(stdout: dummy_stdout))
+        expect(Open4)
+          .to(have_received(:spawn)
+                .with(
+                  instance_of(String),
+                  hash_including(stdout: dummy_stdout)))
       end
 
-      it_behaves_like 'it supports output naming'
+      it_behaves_like('it supports output naming')
     end
   end
 
-  it_behaves_like 'a command with a flag', [terraform_command, :no_color]
+  it_behaves_like('a command with a flag', [terraform_command, :no_color])
 
-  it_behaves_like 'a command with a flag', [terraform_command, :json]
+  it_behaves_like('a command with a flag', [terraform_command, :json])
 end

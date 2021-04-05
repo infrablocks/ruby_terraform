@@ -17,11 +17,18 @@ describe RubyTerraform::Commands::Plan do
   terraform_command = 'plan'
   terraform_config_path = Faker::File.dir
 
-  it_behaves_like 'a command with an argument', [terraform_command, :directory]
+  it_behaves_like(
+    'a command with an argument',
+    [terraform_command, :directory]
+  )
 
-  it_behaves_like 'a command without a binary supplied', [terraform_command, described_class, terraform_config_path]
+  it_behaves_like(
+    'a command without a binary supplied',
+    [terraform_command, described_class, terraform_config_path]
+  )
 
-  it 'logs the command being executed at debug level using the globally configured logger by default' do
+  it 'logs the command being executed at debug level using the globally ' \
+     'configured logger by default' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::DEBUG
@@ -38,44 +45,81 @@ describe RubyTerraform::Commands::Plan do
 
     expect(string_output.string).to(
       include('DEBUG').and(
-        include("Running 'terraform plan some/path/to/terraform/configuration'.")
+        include(
+          "Running 'terraform plan some/path/to/terraform/configuration'."
+        )
       )
     )
   end
 
-  it 'logs the command being executed at debug level using the provided logger' do
+  it 'logs the command being executed at debug level using the ' \
+     'provided logger' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::DEBUG
 
     stub_open4_spawn
 
-    command = RubyTerraform::Commands::Plan.new(binary: 'terraform', logger: logger)
+    command = RubyTerraform::Commands::Plan.new(
+      binary: 'terraform',
+      logger: logger
+    )
 
     command.execute(directory: 'some/path/to/terraform/configuration')
 
     expect(string_output.string).to(
       include('DEBUG').and(
-        include("Running 'terraform plan some/path/to/terraform/configuration'.")
+        include(
+          "Running 'terraform plan some/path/to/terraform/configuration'."
+        )
       )
     )
   end
 
-  it_behaves_like 'a command that accepts vars', [terraform_command, terraform_config_path]
+  it_behaves_like(
+    'a command that accepts vars',
+    [terraform_command, terraform_config_path]
+  )
 
-  it_behaves_like 'a command with an option', [terraform_command, :state, terraform_config_path]
+  it_behaves_like(
+    'a command with an option',
+    [terraform_command, :state, terraform_config_path]
+  )
 
-  it_behaves_like 'a command with an option', [terraform_command, :plan, terraform_config_path, { switch_override: '-out' }]
+  it_behaves_like(
+    'a command with an option',
+    [
+      terraform_command,
+      :plan,
+      terraform_config_path,
+      { switch_override: '-out' }
+    ]
+  )
 
-  it_behaves_like 'a command with a flag', [terraform_command, :no_color, terraform_config_path]
+  it_behaves_like(
+    'a command with a flag',
+    [terraform_command, :no_color, terraform_config_path]
+  )
 
-  it_behaves_like 'a command with a flag', [terraform_command, :destroy, terraform_config_path]
+  it_behaves_like(
+    'a command with a flag',
+    [terraform_command, :destroy, terraform_config_path]
+  )
 
-  it_behaves_like 'a command with an array option', [terraform_command, :var_files, terraform_config_path]
+  it_behaves_like(
+    'a command with an array option',
+    [terraform_command, :var_files, terraform_config_path]
+  )
 
-  it_behaves_like 'a command with a boolean option', [terraform_command, :input, terraform_config_path]
+  it_behaves_like(
+    'a command with a boolean option',
+    [terraform_command, :input, terraform_config_path]
+  )
 
-  it_behaves_like 'a command with an array option', [terraform_command, :targets, terraform_config_path]
+  it_behaves_like(
+    'a command with an array option',
+    [terraform_command, :targets, terraform_config_path]
+  )
 
   it 'logs an error raised when running the command' do
     string_output = StringIO.new

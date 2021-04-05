@@ -8,7 +8,7 @@ module RubyTerraform
       end
 
       def sub_commands(_values)
-        'import'
+        %w[import]
       end
 
       def arguments(values)

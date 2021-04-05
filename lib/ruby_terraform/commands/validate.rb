@@ -8,11 +8,11 @@ module RubyTerraform
       end
 
       def sub_commands(_values)
-        'validate'
+        %w[validate]
       end
 
       def arguments(values)
-        values[:directory]
+        [values[:directory]]
       end
 
       def option_default_values(_opts)

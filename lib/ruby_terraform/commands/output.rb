@@ -15,11 +15,11 @@ module RubyTerraform
       end
 
       def sub_commands(_values)
-        'output'
+        %w[output]
       end
 
       def arguments(values)
-        values[:name]
+        [values[:name]]
       end
 
       def do_after(opts)

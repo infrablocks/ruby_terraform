@@ -1,14 +1,14 @@
 module RubyTerraform
-  module CommandLine
-    module Option
-      module BooleanValue
+  module Options
+    module Values
+      module Boolean
         def coerce_value(value)
-          @value = boolean_val(value)
+          @value = to_boolean(value)
         end
 
         private
 
-        def boolean_val(value)
+        def to_boolean(value)
           return nil if value.nil?
           return value if a_boolean?(value)
           return true if true_as_string?(value)

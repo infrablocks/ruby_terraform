@@ -4,7 +4,7 @@ module RubyTerraform
   module Commands
     class Apply < Base
       def sub_commands(_values)
-        'apply'
+        %w[apply]
       end
 
       def switches
@@ -13,7 +13,7 @@ module RubyTerraform
       end
 
       def arguments(values)
-        values[:plan] || values[:directory]
+        [values[:plan] || values[:directory]]
       end
 
       def option_default_values(_opts)

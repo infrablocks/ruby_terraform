@@ -8,11 +8,11 @@ module RubyTerraform
       end
 
       def sub_commands(_values)
-        'fmt'
+        %w[fmt]
       end
 
       def arguments(values)
-        values[:directory]
+        [values[:directory]]
       end
     end
   end

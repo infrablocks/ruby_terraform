@@ -9,11 +9,11 @@ module RubyTerraform
       end
 
       def sub_commands(_values)
-        'init'
+        %w[init]
       end
 
       def arguments(values)
-        values[:path]
+        [values[:path]]
       end
 
       def option_default_values(_opts)
