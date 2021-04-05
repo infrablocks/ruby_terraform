@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../lib/ruby_terraform/commands'
 
 class RTIncluded
   include RubyTerraform
 end
 
 describe RubyTerraform do
-  terraform_commands = {
+  commands = {
     apply: RubyTerraform::Commands::Apply,
     clean: RubyTerraform::Commands::Clean,
     destroy: RubyTerraform::Commands::Destroy,
@@ -22,7 +21,11 @@ describe RubyTerraform do
     remote_config: RubyTerraform::Commands::RemoteConfig,
     show: RubyTerraform::Commands::Show,
     validate: RubyTerraform::Commands::Validate,
-    workspace: RubyTerraform::Commands::Workspace
+    workspace_list: RubyTerraform::Commands::WorkspaceList,
+    workspace_select: RubyTerraform::Commands::WorkspaceSelect,
+    workspace_new: RubyTerraform::Commands::WorkspaceNew,
+    workspace_delete: RubyTerraform::Commands::WorkspaceDelete,
+    workspace_show: RubyTerraform::Commands::WorkspaceShow
   }
 
   it 'has a version number' do
@@ -124,12 +127,13 @@ describe RubyTerraform do
   end
 
   describe 'terraform commands' do
-    terraform_commands.each do |method, command_class|
+    commands.each do |method, command_class|
       describe ".#{method}" do
         let(:options) { { user: 'options' } }
         let(:instance) { instance_double(command_class, execute: nil) }
 
         before do
+          allow(Open4).to receive(:spawn)
           allow(command_class).to receive(:new).and_return(instance)
           described_class.send(method, options)
         end
@@ -140,10 +144,57 @@ describe RubyTerraform do
         end
       end
     end
+
+    describe '.workspace (old workspace command support)' do
+      {
+        workspace: RubyTerraform::Commands::WorkspaceList,
+        list: RubyTerraform::Commands::WorkspaceList,
+        select: RubyTerraform::Commands::WorkspaceSelect,
+        new: RubyTerraform::Commands::WorkspaceNew,
+        delete: RubyTerraform::Commands::WorkspaceDelete,
+        show: RubyTerraform::Commands::WorkspaceShow
+      }.each do |subcommand, command_class|
+        if subcommand.eql?(:workspace)
+          operation = nil
+          description = 'when the workspace operation is nil'
+        else
+          operation = subcommand.to_s
+          description = "when the workspace operation is #{operation}"
+        end
+
+        describe description do
+          let(:options) { { operation: operation } }
+          let(:instance) { instance_double(command_class, execute: nil) }
+
+          before do
+            allow(Open4).to receive(:spawn)
+            allow(command_class).to receive(:new).and_return(instance)
+            described_class.send(:workspace, options)
+          end
+
+          it "creates an instance of the #{command_class} class and calls " \
+             'its execute method' do
+            expect(instance).to have_received(:execute).with(options)
+          end
+        end
+
+        describe 'when an unknown operation is provided' do
+          let(:options) { { operation: 'unknown' } }
+
+          it 'raises an error including the invalid operation' do
+            expect { described_class.send(:workspace, options) }
+              .to raise_error(
+                StandardError,
+                "Invalid operation 'unknown' supplied to workspace"
+              )
+          end
+        end
+      end
+    end
   end
 
   describe 'when included in a class' do
-    terraform_commands.each_key do |method|
+    commands.each_key do |method|
       it "exposes #{method} as a class method on the class" do
         expect(RTIncluded).to respond_to(method)
       end
