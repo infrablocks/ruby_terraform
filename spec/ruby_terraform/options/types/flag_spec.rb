@@ -1,47 +1,43 @@
 require 'spec_helper'
 
 describe RubyTerraform::Options::Types::Flag do
-  subject(:option) { described_class.new(switch, value) }
-
-  let(:switch) { '-switch' }
-  let(:value) { true }
-  let(:builder) { instance_double(Lino::CommandLineBuilder) }
-  let(:apply) { option.apply(builder) }
-
-  before do
-    allow(builder).to receive(:with_flag).and_return(builder)
-    apply
+  let(:builder) do
+    Lino::CommandLineBuilder
+      .for_command('test')
   end
 
-  describe '.new' do
-    it_behaves_like 'an option that converts its value to a boolean'
+  it 'adds an option with value true when passed boolean true' do
+    option = described_class.new('-name', true)
+    result = option.apply(builder).build
+
+    expect(result.to_s).to(match(/ -name($| )/))
   end
 
-  describe '#add_to_subcommand' do
-    context 'when the options value is true' do
-      it 'adds the switch to the terraform command line' do
-        expect(builder).to have_received(:with_flag).with(switch)
-      end
+  it 'adds the flag when passed string true' do
+    option = described_class.new('-name', 'true')
+    result = option.apply(builder).build
 
-      context 'when the options value is false' do
-        let(:value) { false }
+    expect(result.to_s).to(match(/ -name($| )/))
+  end
 
-        it 'does not add the switch to the terraform command line' do
-          expect(builder).not_to have_received(:with_flag)
-        end
-      end
+  it 'does not add the flag when passed boolean false' do
+    option = described_class.new('-name', false)
+    result = option.apply(builder).build
 
-      context 'when the options value is nil' do
-        let(:value) { nil }
+    expect(result.to_s).not_to(match(/-name/))
+  end
 
-        it 'does not add the switch to the terraform command line' do
-          expect(builder).not_to have_received(:with_flag)
-        end
-      end
+  it 'does not add the flag when passed string false' do
+    option = described_class.new('-name', 'false')
+    result = option.apply(builder).build
 
-      it 'returns the altered subcommand' do
-        expect(apply).to eq(builder)
-      end
-    end
+    expect(result.to_s).not_to(match(/-name/))
+  end
+
+  it 'does not add the flag when passed nil value' do
+    option = described_class.new('-name', nil)
+    result = option.apply(builder).build
+
+    expect(result.to_s).not_to(match(/-name/))
   end
 end
