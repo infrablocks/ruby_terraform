@@ -35,6 +35,13 @@ describe RubyTerraform::Options::Types::Boolean do
     expect(result.to_s).to(match(/ -name=false($| )/))
   end
 
+  it 'treats unknown string values as false' do
+    option = described_class.new('-name', 'unknown')
+    result = option.apply(builder).build
+
+    expect(result.to_s).to(match(/ -name=false($| )/))
+  end
+
   it 'does not add an option when passed nil value' do
     option = described_class.new('-name', nil)
     result = option.apply(builder).build

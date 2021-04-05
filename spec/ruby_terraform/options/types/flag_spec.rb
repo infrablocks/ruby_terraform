@@ -34,6 +34,13 @@ describe RubyTerraform::Options::Types::Flag do
     expect(result.to_s).not_to(match(/-name/))
   end
 
+  it 'does not add the flag when passed an unknown string value' do
+    option = described_class.new('-name', 'unknown')
+    result = option.apply(builder).build
+
+    expect(result.to_s).not_to(match(/-name/))
+  end
+
   it 'does not add the flag when passed nil value' do
     option = described_class.new('-name', nil)
     result = option.apply(builder).build
