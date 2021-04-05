@@ -40,9 +40,10 @@ describe RubyTerraform do
 
     it 'logs to standard output by default' do
       expect do
-        RubyTerraform.configuration
-                     .logger
-                     .info('Logging with the default logger.')
+        RubyTerraform
+          .configuration
+          .logger
+          .info('Logging with the default logger.')
       end.to output(/Logging with the default logger./).to_stdout
     end
 

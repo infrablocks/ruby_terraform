@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-config -backup -input -no-color -state -var -var-file]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[import]
       end
 

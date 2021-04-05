@@ -1,15 +1,15 @@
 require 'spec_helper'
 
-describe RubyTerraform::Options::Flag do
-  subject(:option) { described_class.new(switch, value) }
-
+describe RubyTerraform::Options::Types::Boolean do
   let(:switch) { '-switch' }
   let(:value) { true }
   let(:builder) { instance_double(Lino::CommandLineBuilder) }
   let(:apply) { option.apply(builder) }
 
+  subject(:option) { described_class.new(switch, value) }
+
   before do
-    allow(builder).to receive(:with_flag).and_return(builder)
+    allow(builder).to receive(:with_option).and_return(builder)
     apply
   end
 
@@ -19,23 +19,23 @@ describe RubyTerraform::Options::Flag do
 
   describe '#add_to_subcommand' do
     context 'when the options value is true' do
-      it 'adds the switch to the terraform command line' do
-        expect(builder).to have_received(:with_flag).with(switch)
+      it 'adds the options=true to the terraform command line' do
+        expect(builder).to have_received(:with_option).with(switch, true)
       end
 
       context 'when the options value is false' do
         let(:value) { false }
 
-        it 'does not add the switch to the terraform command line' do
-          expect(builder).not_to have_received(:with_flag)
+        it 'adds the options=false to the terraform command line' do
+          expect(builder).to have_received(:with_option).with(switch, false)
         end
       end
 
       context 'when the options value is nil' do
         let(:value) { nil }
 
-        it 'does not add the switch to the terraform command line' do
-          expect(builder).not_to have_received(:with_flag)
+        it 'calls with_option with the options key and value (where it is ignored)' do
+          expect(builder).to have_received(:with_option).with(switch, nil)
         end
       end
 

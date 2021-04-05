@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-json -no-color -var -var-file -state -check-variables] + super
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[validate]
       end
 

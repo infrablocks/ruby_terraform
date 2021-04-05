@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-backup -auto-approve -force -no-color -state -target -var -var-file]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[destroy]
       end
 

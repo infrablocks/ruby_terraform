@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-backend -backend-config -no-color]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[remote config]
       end
 

@@ -1,12 +1,16 @@
 module RubyTerraform
   module Options
-    class Switch
-      def initialize(switch)
-        @switch_without_prefix = switch[0] == '-' ? switch[1..] : switch
+    class Name
+      def initialize(name)
+        @name = name
+      end
+
+      def without_prefix
+        @name[0] == '-' ? @name[1..] : @name
       end
 
       def to_s
-        "-#{switch_without_prefix}"
+        "-#{without_prefix}"
       end
 
       def as_key
@@ -31,10 +35,8 @@ module RubyTerraform
 
       private
 
-      attr_reader :switch_without_prefix
-
       def snake_case
-        switch_without_prefix.gsub('-', '_')
+        without_prefix.gsub('-', '_')
       end
     end
   end

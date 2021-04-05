@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Workspace < Base
-      def sub_commands(values)
+      def subcommands(values)
         commands = ['workspace', values[:operation]]
         if values[:workspace] && values[:operation] != 'list'
           commands << values[:workspace]

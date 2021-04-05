@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-list -write -diff -check -recursive -no-color]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[fmt]
       end
 

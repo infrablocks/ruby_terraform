@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-update -no-color]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[get]
       end
 

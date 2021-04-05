@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-destroy -input -no-color -out -state -target -var -var-file]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[plan]
       end
 

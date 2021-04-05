@@ -1,61 +1,61 @@
-require_relative 'switch'
-require_relative 'boolean'
-require_relative 'flag'
-require_relative 'standard'
+require_relative 'name'
+require_relative 'types/boolean'
+require_relative 'types/flag'
+require_relative 'types/standard'
 
 module RubyTerraform
   module Options
     class Factory
-      PLURAL_SWITCHES =
+      PLURAL_OPTIONS =
         Set.new(
           %w[
-              -var
-              -target
-              -var-file
-            ]
+            -var
+            -target
+            -var-file
+          ]
         ).freeze
 
-      BOOLEAN_SWITCHES =
+      BOOLEAN_OPTIONS =
         Set.new(
           %w[
-              -auto-approve
-              -backend
-              -get
-              -get-plugins
-              -input
-              -list
-              -lock
-              -refresh
-              -upgrade
-              -verify-plugins
-              -write
-            ]
+            -auto-approve
+            -backend
+            -get
+            -get-plugins
+            -input
+            -list
+            -lock
+            -refresh
+            -upgrade
+            -verify-plugins
+            -write
+          ]
         ).freeze
 
-      FLAG_SWITCHES =
+      FLAG_OPTIONS =
         Set.new(
           %w[
-              -allow-missing
-              -allow-missing-config
-              -check
-              -compact-warnings
-              -destroy
-              -detailed-exitcode
-              -diff
-              -draw-cycles
-              -force
-              -force-copy
-              -ignore-remote-version
-              -json
-              -no-color
-              -raw
-              -reconfigure
-              -recursive
-              -update
-            ]
+            -allow-missing
+            -allow-missing-config
+            -check
+            -compact-warnings
+            -destroy
+            -detailed-exitcode
+            -diff
+            -draw-cycles
+            -force
+            -force-copy
+            -ignore-remote-version
+            -json
+            -no-color
+            -raw
+            -reconfigure
+            -recursive
+            -update
+          ]
         ).freeze
 
-      OVERRIDE_SWITCHES =
+      OVERRIDE_OPTIONS =
         {
           config: :directory,
           out: :plan
@@ -67,49 +67,49 @@ module RubyTerraform
 
       private_class_method :new
 
-      def initialize(values, switches)
-        @switches = switches.map { |switch| Switch.new(switch) }
+      def initialize(values, names)
+        @names = names.map { |switch| Name.new(switch) }
         @values = values
       end
 
       def from
-        switches.each_with_object([]) do |switch, options|
-          options.append(*options_from_switch(switch))
+        names.each_with_object([]) do |name, options|
+          options.append(*options_from_name(name))
         end
       end
 
       private
 
-      attr_reader :switches, :values
+      attr_reader :names, :values
 
-      def options_from_switch(switch)
-        return plural_options(switch) if PLURAL_SWITCHES.include?(switch)
-        return boolean_option(switch) if BOOLEAN_SWITCHES.include?(switch)
-        return flag_option(switch) if FLAG_SWITCHES.include?(switch)
-        return override_option(switch) if OVERRIDE_SWITCHES.key?(switch.as_key)
+      def options_from_name(name)
+        return plural_options(name) if PLURAL_OPTIONS.include?(name)
+        return boolean_option(name) if BOOLEAN_OPTIONS.include?(name)
+        return flag_option(name) if FLAG_OPTIONS.include?(name)
+        return override_option(name) if OVERRIDE_OPTIONS.key?(name.as_key)
 
-        standard_option(switch, switch.as_key)
+        standard_option(name, name.as_key)
       end
 
-      def boolean_option(switch)
-        [Boolean.new(switch.to_s, values[switch.as_key])]
+      def boolean_option(name)
+        [Types::Boolean.new(name.to_s, values[name.as_key])]
       end
 
-      def flag_option(switch)
-        [Flag.new(switch.to_s, values[switch.as_key])]
+      def flag_option(name)
+        [Types::Flag.new(name.to_s, values[name.as_key])]
       end
 
-      def standard_option(switch, hash_key)
-        [Standard.new(switch.to_s, values[hash_key])]
+      def standard_option(name, hash_key)
+        [Types::Standard.new(name.to_s, values[hash_key])]
       end
 
-      def override_option(switch)
-        standard_option(switch, OVERRIDE_SWITCHES[switch.as_key])
+      def override_option(name)
+        standard_option(name, OVERRIDE_OPTIONS[name.as_key])
       end
 
-      def plural_options(switch)
-        standard_option(switch.to_s, switch.as_key) +
-          standard_option(switch.to_s, switch.as_plural_key)
+      def plural_options(name)
+        standard_option(name.to_s, name.as_key) +
+          standard_option(name.to_s, name.as_plural_key)
       end
     end
   end

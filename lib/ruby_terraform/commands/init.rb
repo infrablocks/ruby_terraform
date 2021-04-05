@@ -8,7 +8,7 @@ module RubyTerraform
            -force-copy]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[init]
       end
 

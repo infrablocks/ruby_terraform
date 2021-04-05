@@ -3,7 +3,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class Apply < Base
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[apply]
       end
 

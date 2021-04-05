@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RubyTerraform::Options::Base do
+describe RubyTerraform::Options::Types::Base do
   let(:switch) { '-switch' }
   let(:value) { 'options value' }
   let(:builder) { instance_double(Lino::CommandLineBuilder) }

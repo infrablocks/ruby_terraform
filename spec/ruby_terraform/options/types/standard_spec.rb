@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe RubyTerraform::Options::Standard do
+describe RubyTerraform::Options::Types::Standard do
   let(:switch) { '-switch' }
   let(:value) { 'some/state.tfstate' }
   let(:builder) { instance_double(Lino::CommandLineBuilder) }

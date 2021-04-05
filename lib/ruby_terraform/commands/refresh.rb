@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-input -no-color -state -target -var -var-file]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[refresh]
       end
 

@@ -7,7 +7,7 @@ module RubyTerraform
         %w[-json -no-color -module-depth]
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         %w[show]
       end
 

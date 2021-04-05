@@ -61,7 +61,7 @@ module RubyTerraform
           .with_options_after_subcommands
           .with_option_separator('=')
           .with_appliables(options(values))
-          .with_subcommands(sub_commands(values))
+          .with_subcommands(subcommands(values))
           .with_arguments(arguments(values))
           .build
       end
@@ -80,7 +80,7 @@ module RubyTerraform
         {}
       end
 
-      def sub_commands(_values)
+      def subcommands(_values)
         []
       end
 
