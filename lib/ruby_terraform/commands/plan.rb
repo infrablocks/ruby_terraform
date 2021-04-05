@@ -4,7 +4,16 @@ module RubyTerraform
   module Commands
     class Plan < Base
       def switches
-        %w[-destroy -input -no-color -out -state -target -var -var-file]
+        %w[
+          -destroy
+          -input
+          -no-color
+          -out
+          -state
+          -target
+          -var
+          -var-file
+        ]
       end
 
       def subcommands(_values)

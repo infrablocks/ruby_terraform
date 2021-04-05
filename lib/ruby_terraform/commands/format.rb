@@ -4,7 +4,14 @@ module RubyTerraform
   module Commands
     class Format < Base
       def switches
-        %w[-list -write -diff -check -recursive -no-color]
+        %w[
+          -check
+          -diff
+          -list
+          -no-color
+          -recursive
+          -write
+        ]
       end
 
       def subcommands(_values)

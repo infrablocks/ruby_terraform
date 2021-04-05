@@ -4,7 +4,16 @@ module RubyTerraform
   module Commands
     class Destroy < Base
       def switches
-        %w[-backup -auto-approve -force -no-color -state -target -var -var-file]
+        %w[
+          -auto-approve
+          -backup
+          -force
+          -no-color
+          -state
+          -target
+          -var
+          -var-file
+        ]
       end
 
       def subcommands(_values)

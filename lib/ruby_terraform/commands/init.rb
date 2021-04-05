@@ -4,8 +4,15 @@ module RubyTerraform
   module Commands
     class Init < Base
       def switches
-        %w[-backend -backend-config -from-module -get -no-color -plugin-dir
-           -force-copy]
+        %w[
+          -backend
+          -backend-config
+          -force-copy
+          -from-module
+          -get
+          -no-color
+          -plugin-dir
+        ]
       end
 
       def subcommands(_values)

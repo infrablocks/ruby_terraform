@@ -7,10 +7,22 @@ module RubyTerraform
         %w[apply]
       end
 
+      # rubocop:disable Metrics/MethodLength
       def switches
-        %w[-backup -lock -lock-timeout -input -auto-approve -no-color -state
-           -target -var -var-file]
+        %w[
+          -auto-approve
+          -backup
+          -input
+          -lock
+          -lock-timeout
+          -no-color
+          -state
+          -target
+          -var
+          -var-file
+        ]
       end
+      # rubocop:enable Metrics/MethodLength
 
       def arguments(values)
         [values[:plan] || values[:directory]]

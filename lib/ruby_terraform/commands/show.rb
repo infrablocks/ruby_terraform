@@ -4,7 +4,11 @@ module RubyTerraform
   module Commands
     class Show < Base
       def switches
-        %w[-json -no-color -module-depth]
+        %w[
+          -json
+          -module-depth
+          -no-color
+        ]
       end
 
       def subcommands(_values)

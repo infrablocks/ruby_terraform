@@ -4,7 +4,11 @@ module RubyTerraform
   module Commands
     class RemoteConfig < Base
       def switches
-        %w[-backend -backend-config -no-color]
+        %w[
+          -backend
+          -backend-config
+          -no-color
+        ]
       end
 
       def subcommands(_values)

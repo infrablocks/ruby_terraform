@@ -4,7 +4,14 @@ module RubyTerraform
   module Commands
     class Validate < Base
       def switches
-        %w[-json -no-color -var -var-file -state -check-variables] + super
+        %w[
+          -check-variables
+          -json
+          -no-color
+          -state
+          -var
+          -var-file
+        ]
       end
 
       def subcommands(_values)

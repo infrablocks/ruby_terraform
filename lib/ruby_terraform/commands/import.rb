@@ -4,7 +4,15 @@ module RubyTerraform
   module Commands
     class Import < Base
       def switches
-        %w[-config -backup -input -no-color -state -var -var-file]
+        %w[
+          -config
+          -backup
+          -input
+          -no-color
+          -state
+          -var
+          -var-file
+        ]
       end
 
       def subcommands(_values)

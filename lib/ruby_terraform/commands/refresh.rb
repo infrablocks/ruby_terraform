@@ -4,7 +4,14 @@ module RubyTerraform
   module Commands
     class Refresh < Base
       def switches
-        %w[-input -no-color -state -target -var -var-file]
+        %w[
+          -input
+          -no-color
+          -state
+          -target
+          -var
+          -var-file
+        ]
       end
 
       def subcommands(_values)

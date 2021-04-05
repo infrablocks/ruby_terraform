@@ -11,7 +11,13 @@ module RubyTerraform
       end
 
       def switches
-        %w[-json -raw -no-color -state -module]
+        %w[
+          -json
+          -module
+          -no-color
+          -raw
+          -state
+        ]
       end
 
       def subcommands(_values)

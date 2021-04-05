@@ -4,7 +4,10 @@ module RubyTerraform
   module Commands
     class Get < Base
       def switches
-        %w[-update -no-color]
+        %w[
+          -no-color
+          -update
+        ]
       end
 
       def subcommands(_values)
