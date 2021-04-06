@@ -14,6 +14,7 @@ module RubyTerraform
             -var
             -target
             -var-file
+            -platform
           ]
         ).freeze
 

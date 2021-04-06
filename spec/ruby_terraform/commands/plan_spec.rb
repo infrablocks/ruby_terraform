@@ -16,8 +16,8 @@ describe RubyTerraform::Commands::Plan do
     RubyTerraform.reset!
   end
 
-  terraform_command = 'plan'
-  terraform_config_path = Faker::File.dir
+  command = 'plan'
+  directory = Faker::File.dir
 
   it 'logs the command being executed at debug level using the globally ' \
      'configured logger by default' do
@@ -125,86 +125,86 @@ describe RubyTerraform::Commands::Plan do
   end
 
   it_behaves_like(
-    'a command with an argument', [terraform_command, :directory]
+    'a command with an argument', [command, :directory]
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [terraform_command, described_class, terraform_config_path]
+    [command, described_class, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :compact_warnings, terraform_config_path]
+    [command, :compact_warnings, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :destroy, terraform_config_path]
+    [command, :destroy, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :detailed_exitcode, terraform_config_path]
+    [command, :detailed_exitcode, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :input, terraform_config_path]
+    [command, :input, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :lock, terraform_config_path]
+    [command, :lock, directory]
   )
 
   it_behaves_like(
     'a command with an option',
-    [terraform_command, :lock_timeout, terraform_config_path]
+    [command, :lock_timeout, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :no_color, terraform_config_path]
+    [command, :no_color, directory]
   )
 
   it_behaves_like(
     'a command with an option',
-    [terraform_command, :plan, terraform_config_path,
+    [command, :plan, directory,
      { name_override: '-out' }]
   )
 
   it_behaves_like(
     'a command with an option',
-    [terraform_command, :parallelism, terraform_config_path]
+    [command, :parallelism, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :refresh, terraform_config_path]
+    [command, :refresh, directory]
   )
 
   it_behaves_like(
     'a command with an option',
-    [terraform_command, :state, terraform_config_path]
+    [command, :state, directory]
   )
 
   it_behaves_like(
     'a command with an array option',
-    [terraform_command, :targets, terraform_config_path]
+    [command, :targets, directory]
   )
 
   it_behaves_like(
-    'a command that accepts vars', [terraform_command, terraform_config_path]
+    'a command that accepts vars', [command, directory]
   )
 
   it_behaves_like(
     'a command with an array option',
-    [terraform_command, :var_files, terraform_config_path]
+    [command, :var_files, directory]
   )
 
   it_behaves_like(
     'a command with common options',
-    [terraform_command, terraform_config_path]
+    [command, directory]
   )
 end
