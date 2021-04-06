@@ -8,7 +8,7 @@ module RubyTerraform
     class Import < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[import]
       end
 

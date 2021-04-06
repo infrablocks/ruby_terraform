@@ -8,7 +8,7 @@ module RubyTerraform
     class Destroy < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[destroy]
       end
 

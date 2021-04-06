@@ -8,7 +8,7 @@ module RubyTerraform
     class WorkspaceSelect < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[workspace select]
       end
 

@@ -8,7 +8,7 @@ module RubyTerraform
     class WorkspaceShow < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[workspace show]
       end
     end

@@ -5,7 +5,7 @@ require_relative 'base'
 module RubyTerraform
   module Commands
     class RemoteConfig < Base
-      def subcommands(_parameters)
+      def subcommands
         %w[remote config]
       end
 

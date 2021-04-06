@@ -19,7 +19,7 @@ class TestWith < RubyTerraform::Commands::Base
     { sample: 'overridden' }
   end
 
-  def subcommands(_parameters)
+  def subcommands
     %w[apply]
   end
 

@@ -8,7 +8,7 @@ module RubyTerraform
     class WorkspaceNew < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[workspace new]
       end
 

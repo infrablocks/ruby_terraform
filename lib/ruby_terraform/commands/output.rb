@@ -15,7 +15,7 @@ module RubyTerraform
         @stdout = StringIO.new
       end
 
-      def subcommands(_parameters)
+      def subcommands
         %w[output]
       end
 

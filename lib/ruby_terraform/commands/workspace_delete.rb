@@ -8,7 +8,7 @@ module RubyTerraform
     class WorkspaceDelete < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[workspace delete]
       end
 

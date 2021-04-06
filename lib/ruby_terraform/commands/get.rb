@@ -8,7 +8,7 @@ module RubyTerraform
     class Get < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[get]
       end
 

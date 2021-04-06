@@ -8,7 +8,7 @@ module RubyTerraform
     class Format < Base
       include RubyTerraform::Options::Common
 
-      def subcommands(_parameters)
+      def subcommands
         %w[fmt]
       end
 
