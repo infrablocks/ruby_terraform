@@ -4,53 +4,111 @@ require 'logger'
 require 'spec_helper'
 
 describe RubyTerraform::MultiIO do
-  subject(:multi_io) { described_class.new(log_file1, log_file2) }
+  describe '#write' do
+    it 'writes to a single passed IO' do
+      io = StringIO.new
+      multi_io = described_class.new(io)
 
-  let(:log_file1) do
-    instance_double(Logger::LogDevice, write: nil, close: nil)
+      multi_io.write("Hello world!\n")
+      multi_io.write("This should be written\n")
+
+      expect(io.string)
+        .to(eq("Hello world!\nThis should be written\n"))
+    end
+
+    it 'writes to multiple passed IOs' do
+      io1 = StringIO.new
+      io2 = StringIO.new
+      io3 = StringIO.new
+      multi_io = described_class.new(io1, io2, io3)
+
+      multi_io.write("Hello world!\n")
+      multi_io.write("This should be written\n")
+
+      expect([io1.string, io2.string, io3.string])
+        .to(all(eq("Hello world!\nThis should be written\n")))
+    end
+
+    it 'allows multiple arguments to be passed to write' do
+      io1 = StringIO.new
+      io2 = StringIO.new
+      multi_io = described_class.new(io1, io2)
+
+      multi_io.write("Hello world!\n", "This should be written\n")
+
+      expect([io1.string, io2.string])
+        .to(all(eq("Hello world!\nThis should be written\n")))
+    end
   end
-  let(:log_file2) do
-    instance_double(Logger::LogDevice, write: nil, close: nil)
+
+  describe '#close' do
+    it 'closes a single passed IO' do
+      io = StringIO.new
+      multi_io = described_class.new(io)
+
+      multi_io.close
+
+      expect(io.closed?).to(be(true))
+    end
+
+    it 'closes multiple passed IOs' do
+      io1 = StringIO.new
+      io2 = StringIO.new
+      io3 = StringIO.new
+      multi_io = described_class.new(io1, io2, io3)
+
+      multi_io.close
+
+      expect([io1.closed?, io2.closed?, io3.closed?])
+        .to(all(be(true)))
+    end
   end
-  let(:logger) { Logger.new(multi_io, level: :debug) }
 
-  context 'when configured with multiple log_file targets' do
-    before do
-      allow(Open4).to receive(:spawn)
-      allow(RubyTerraform::Commands::Refresh)
-        .to(receive(:new).and_call_original)
-      RubyTerraform.configure do |config|
-        config.binary = '/binary/path/terraform'
-        config.logger = logger
-        config.stdout = logger
-        config.stderr = logger
-      end
-      RubyTerraform.refresh
-      RubyTerraform.reset!
+  describe '#reopen' do
+    it 'reopens a single passed IO' do
+      io1 = StringIO.new
+      io2 = StringIO.new
+
+      io1.close
+
+      multi_io = described_class.new(io1)
+
+      multi_io.reopen(io2)
+
+      expect(io1.closed?).to(be(false))
     end
 
-    it 'writes log messages to the first log file target' do
-      expect(log_file1)
-        .to(have_received(:write)
-              .with(%r{Running '/binary/path/terraform refresh'}))
+    it 'reopens multiple passed IOs' do
+      io1 = StringIO.new
+      io2 = StringIO.new
+      io3 = StringIO.new
+      io4 = StringIO.new
+
+      io1.close
+      io2.close
+      io3.close
+
+      multi_io = described_class.new(io1, io2, io3)
+
+      multi_io.reopen(io4)
+
+      expect([io1.closed?, io2.closed?, io3.closed?])
+        .to(all(be(false)))
     end
 
-    it 'writes log messages to the second file target' do
-      expect(log_file2)
-        .to(have_received(:write)
-              .with(%r{Running '/binary/path/terraform refresh'}))
-    end
+    it 'allows multiple arguments to be passed to reopen' do
+      io1 = StringIO.new
+      io2 = StringIO.new
 
-    describe '#close' do
-      before { multi_io.close }
+      io1.close
+      io2.close
 
-      it 'closes the first log file target' do
-        expect(log_file1).to have_received(:close)
-      end
+      multi_io = described_class.new(io1, io2)
 
-      it 'closes the second log file target' do
-        expect(log_file2).to have_received(:close)
-      end
+      multi_io.reopen('Hello', 'r')
+
+      expect([io1.closed?, io2.closed?])
+        .to(all(eq(false)))
     end
   end
 end

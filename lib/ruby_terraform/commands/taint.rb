@@ -18,7 +18,8 @@ module RubyTerraform
           -backup
           -lock
           -lock-timeout
-          -state -state-out
+          -state
+          -state-out
           -ignore-remote-version
         ] + super
       end

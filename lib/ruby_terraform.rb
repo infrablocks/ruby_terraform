@@ -125,5 +125,9 @@ module RubyTerraform
     def close
       @targets.each(&:close)
     end
+
+    def reopen(*args)
+      @targets.each { |t| t.reopen(*args) }
+    end
   end
 end
