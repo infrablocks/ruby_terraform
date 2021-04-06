@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Workspace do
   let(:command) { described_class.new(binary: 'terraform') }
 
-  before(:each) do
+  before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
     end
   end
 
-  after(:each) do
+  after do
     RubyTerraform.reset!
   end
 

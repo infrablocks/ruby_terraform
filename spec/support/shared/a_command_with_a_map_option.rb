@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples('a command with a map option') do |command, option|
   name = "-#{option.to_s.sub('_', '-')}"
 

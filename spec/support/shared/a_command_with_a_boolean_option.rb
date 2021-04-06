@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples(
   'a command with a boolean option'
 ) do |command, option, directory = nil|

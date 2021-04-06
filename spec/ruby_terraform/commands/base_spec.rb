@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 class TestWith < RubyTerraform::Commands::Base
@@ -63,6 +65,7 @@ describe RubyTerraform::Commands::Base do
     logger.level = Logger::INFO
     logger
   end
+
   before do
     allow(RubyTerraform).to receive(:configuration).and_return(configuration)
   end
@@ -155,7 +158,8 @@ describe RubyTerraform::Commands::Base do
     end
 
     context 'when the subclass contains overrides for the Base defaults' do
-      it 'applies the subclass options defaults and overrides to the supplied options' do
+      it 'applies the subclass options defaults and overrides to the ' \
+         'supplied options' do
         expect(RubyTerraform::Options::Factory)
           .to(have_received(:from)
                 .with(any_args, { default: 'value', sample: 'overridden' }))
@@ -180,7 +184,8 @@ describe RubyTerraform::Commands::Base do
       # end
     end
 
-    context 'when the subclass does not contain overrides for the Base defaults' do
+    context 'when the subclass does not contain overrides for the ' \
+            'Base defaults' do
       let(:subclass) { TestWithout.new(options) }
 
       it 'uses the empty options defaults and overrides provided by Base' do

@@ -1,12 +1,14 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RubyTerraform::Options::Types::Standard do
+  subject(:option) { described_class.new(switch, value) }
+
   let(:switch) { '-switch' }
   let(:value) { 'some/state.tfstate' }
   let(:builder) { instance_double(Lino::CommandLineBuilder) }
   let(:apply) { option.apply(builder) }
-
-  subject(:option) { described_class.new(switch, value) }
 
   before do
     allow(JSON).to receive(:generate).and_call_original
@@ -25,8 +27,11 @@ describe RubyTerraform::Options::Types::Standard do
         context 'when the options value is populated / true' do
           let(:value) { true }
 
-          it 'calls the SubcommandBuilder with_option with the switch and value' do
-            expect(builder).to have_received(:with_option).with(switch, value)
+          it 'calls the SubcommandBuilder with_option with the switch ' \
+             'and value' do
+            expect(builder)
+              .to(have_received(:with_option)
+                    .with(switch, value))
           end
         end
 
@@ -34,7 +39,8 @@ describe RubyTerraform::Options::Types::Standard do
           let(:value) { false }
 
           it 'does not call the SubcommandBuilder with_option' do
-            expect(builder).not_to have_received(:with_repeated_option)
+            expect(builder)
+              .not_to(have_received(:with_repeated_option))
           end
         end
 
@@ -51,11 +57,18 @@ describe RubyTerraform::Options::Types::Standard do
     context 'when the options value responds to keys' do
       let(:value) { { key: 'value', another: 'value' } }
 
-      it 'calls the SubcommandBuilder with_repeated_option with the switch and an array key value pairs' do
-        expect(builder).to have_received(:with_repeated_option).with(
-          switch, %w['key=value' 'another=value'], anything # rubocop:disable Lint/PercentStringArray
-        )
+      # rubocop:disable Lint/PercentStringArray
+      it 'calls the SubcommandBuilder with_repeated_option with the switch ' \
+         'and an array key value pairs' do
+        expect(builder)
+          .to(have_received(:with_repeated_option)
+                .with(
+                  switch,
+                  %w['key=value' 'another=value'],
+                  anything
+                ))
       end
+      # rubocop:enable Lint/PercentStringArray
 
       it 'specifies the separator is a single space' do
         expect(builder).to have_received(:with_repeated_option).with(
@@ -70,10 +83,11 @@ describe RubyTerraform::Options::Types::Standard do
           expect(JSON).to have_received(:generate).with(123)
         end
 
-        it 'calls the SubcommandBuilder with_repeated_option with the switch and the converted value' do
-          expect(builder).to have_received(:with_repeated_option).with(
-            switch, ["'key=123'"], anything
-          )
+        it 'calls the SubcommandBuilder with_repeated_option with the ' \
+           'switch and the converted value' do
+          expect(builder)
+            .to(have_received(:with_repeated_option)
+                  .with(switch, ["'key=123'"], anything))
         end
       end
     end
@@ -81,11 +95,11 @@ describe RubyTerraform::Options::Types::Standard do
     context 'when the options value responds to each' do
       let(:value) { %w[some/state.tfstate another/state.tfstate] }
 
-      it 'calls the SubcommandBuilder with_repeated_option withthe switch and the array value' do
-        expect(builder).to have_received(:with_repeated_option).with(
-          switch,
-          %w[some/state.tfstate another/state.tfstate]
-        )
+      it 'calls the SubcommandBuilder with_repeated_option with the switch ' \
+         'and the array value' do
+        expect(builder)
+          .to(have_received(:with_repeated_option)
+                .with(switch, %w[some/state.tfstate another/state.tfstate]))
       end
     end
   end

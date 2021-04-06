@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 require_relative '../lib/ruby_terraform/commands'
 
@@ -30,17 +32,17 @@ describe RubyTerraform do
   it 'allows commands to be run without configure having been called' do
     allow(Open4).to(receive(:spawn))
 
-    RubyTerraform.apply(directory: 'some/path/to/terraform/configuration')
+    described_class.apply(directory: 'some/path/to/terraform/configuration')
   end
 
   context 'configuration' do
-    before(:each) do
-      RubyTerraform.reset!
+    before do
+      described_class.reset!
     end
 
     it 'logs to standard output by default' do
       expect do
-        RubyTerraform
+        described_class
           .configuration
           .logger
           .info('Logging with the default logger.')
@@ -48,7 +50,7 @@ describe RubyTerraform do
     end
 
     it 'has info log level by default' do
-      expect(RubyTerraform.configuration.logger.level).to eq(Logger::INFO)
+      expect(described_class.configuration.logger.level).to eq(Logger::INFO)
     end
 
     it 'allows default logger to be overridden' do
@@ -56,68 +58,68 @@ describe RubyTerraform do
       logger = Logger.new(string_output)
       logger.level = Logger::DEBUG
 
-      RubyTerraform.configure do |config|
+      described_class.configure do |config|
         config.logger = logger
       end
 
-      RubyTerraform.configuration.logger
-                   .debug('Logging with a custom logger at debug level.')
+      described_class.configuration.logger
+                     .debug('Logging with a custom logger at debug level.')
 
       expect(string_output.string)
         .to include('Logging with a custom logger at debug level.')
     end
 
     it 'has bare terraform command as default binary' do
-      expect(RubyTerraform.configuration.binary).to eq('terraform')
+      expect(described_class.configuration.binary).to eq('terraform')
     end
 
     it 'allows binary to be overridden' do
-      RubyTerraform.configure do |config|
+      described_class.configure do |config|
         config.binary = '/path/to/terraform'
       end
-      expect(RubyTerraform.configuration.binary).to eq('/path/to/terraform')
+      expect(described_class.configuration.binary).to eq('/path/to/terraform')
     end
 
     it 'uses whatever $stdout points to for stdout by default' do
-      expect(RubyTerraform.configuration.stdout).to eq($stdout)
+      expect(described_class.configuration.stdout).to eq($stdout)
     end
 
     it 'allows stdout stream to be overridden' do
       stdout = StringIO.new
 
-      RubyTerraform.configure do |config|
+      described_class.configure do |config|
         config.stdout = stdout
       end
 
-      expect(RubyTerraform.configuration.stdout).to eq(stdout)
+      expect(described_class.configuration.stdout).to eq(stdout)
     end
 
     it 'uses whatever $stderr points to for stderr by default' do
-      expect(RubyTerraform.configuration.stderr).to eq($stderr)
+      expect(described_class.configuration.stderr).to eq($stderr)
     end
 
     it 'allows stderr stream to be overridden' do
       stderr = StringIO.new
 
-      RubyTerraform.configure do |config|
+      described_class.configure do |config|
         config.stderr = stderr
       end
 
-      expect(RubyTerraform.configuration.stderr).to eq(stderr)
+      expect(described_class.configuration.stderr).to eq(stderr)
     end
 
     it 'uses empty string for stdin by default' do
-      expect(RubyTerraform.configuration.stdin).to eq('')
+      expect(described_class.configuration.stdin).to eq('')
     end
 
     it 'allows stdin stream to be overridden' do
       stdin = StringIO.new("some\nuser\ninput\n")
 
-      RubyTerraform.configure do |config|
+      described_class.configure do |config|
         config.stdin = stdin
       end
 
-      expect(RubyTerraform.configuration.stdin).to eq(stdin)
+      expect(described_class.configuration.stdin).to eq(stdin)
     end
   end
 
@@ -132,7 +134,8 @@ describe RubyTerraform do
           described_class.send(method, options)
         end
 
-        it "creates an instance of the #{command_class} class and calls its execute method" do
+        it "creates an instance of the #{command_class} class and calls " \
+           'its execute method' do
           expect(instance).to have_received(:execute).with(options)
         end
       end

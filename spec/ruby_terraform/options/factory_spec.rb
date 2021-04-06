@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RubyTerraform::Options::Factory do
@@ -8,6 +10,7 @@ describe RubyTerraform::Options::Factory do
     )
   end
 
+  # rubocop:disable Metrics/BlockLength
   let(:test_data) do
     {
       my_standard: {
@@ -48,6 +51,8 @@ describe RubyTerraform::Options::Factory do
       }
     }
   end
+  # rubocop:enable Metrics/BlockLength
+
   let(:values) do
     values = test_data.transform_values { |v| v[:value] }
     values[:option_key] = values.delete(:override)
@@ -82,44 +87,66 @@ describe RubyTerraform::Options::Factory do
   end
 
   describe '.from' do
-    it 'creates a Standard Option with the singular switch and singular value for each plural options' do
-      expect(RubyTerraform::Options::Types::Standard).to have_received(:new).with(
-        test_data[:my_plural][:switch], test_data[:my_plural][:value]
-      )
+    it 'creates a Standard Option with the singular switch and singular ' \
+       'value for each plural options' do
+      expect(RubyTerraform::Options::Types::Standard)
+        .to(have_received(:new)
+              .with(
+                test_data[:my_plural][:switch],
+                test_data[:my_plural][:value]
+              ))
     end
 
-    it 'creates a Standard Option with the singular switch and plural value for each plural options' do
-      expect(RubyTerraform::Options::Types::Standard).to have_received(:new).with(
-        test_data[:my_plurals][:switch], test_data[:my_plurals][:value]
-      )
+    it 'creates a Standard Option with the singular switch and plural ' \
+       'value for each plural options' do
+      expect(RubyTerraform::Options::Types::Standard)
+        .to(have_received(:new)
+              .with(
+                test_data[:my_plurals][:switch],
+                test_data[:my_plurals][:value]
+              ))
     end
 
     it 'creates a Boolean Option for each boolean switch' do
-      expect(RubyTerraform::Options::Types::Boolean).to have_received(:new).with(
-        test_data[:my_boolean][:switch], test_data[:my_boolean][:value]
-      )
+      expect(RubyTerraform::Options::Types::Boolean)
+        .to(have_received(:new)
+              .with(
+                test_data[:my_boolean][:switch],
+                test_data[:my_boolean][:value]
+              ))
     end
 
     it 'creates a Flag Option each flag switch' do
-      expect(RubyTerraform::Options::Types::Flag).to have_received(:new).with(
-        test_data[:my_flag][:switch], test_data[:my_flag][:value]
-      )
+      expect(RubyTerraform::Options::Types::Flag)
+        .to(have_received(:new)
+              .with(
+                test_data[:my_flag][:switch],
+                test_data[:my_flag][:value]
+              ))
     end
 
-    it 'uses the overridden options value when creating an overridden switch' do
-      expect(RubyTerraform::Options::Types::Standard).to have_received(:new).with(
-        test_data[:override][:switch], test_data[:override][:value]
-      )
+    it 'uses the overridden options value when creating an ' \
+       'overridden switch' do
+      expect(RubyTerraform::Options::Types::Standard)
+        .to(have_received(:new)
+              .with(
+                test_data[:override][:switch],
+                test_data[:override][:value]
+              ))
     end
 
     it 'creates a Standard Option for any other switches' do
-      expect(RubyTerraform::Options::Types::Standard).to have_received(:new).with(
-        test_data[:my_standard][:switch], test_data[:my_standard][:value]
-      )
+      expect(RubyTerraform::Options::Types::Standard)
+        .to(have_received(:new)
+              .with(
+                test_data[:my_standard][:switch],
+                test_data[:my_standard][:value]
+              ))
     end
 
     it 'returns the array of Options' do
-      expect(options).to eq([standard, boolean, flag, singular, plural, override])
+      expect(options)
+        .to(eq([standard, boolean, flag, singular, plural, override]))
     end
   end
 

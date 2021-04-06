@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'options/name'
 require_relative 'options/types/flag'
 require_relative 'options/types/boolean'

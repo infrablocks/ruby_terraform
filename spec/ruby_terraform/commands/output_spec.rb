@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Output do
   let(:command) { described_class.new(command_opts) }
   let(:command_opts) { { binary: 'terraform' } }
 
-  before(:each) do
+  before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
     end
   end
 
-  after(:each) do
+  after do
     RubyTerraform.reset!
   end
 
@@ -57,7 +59,8 @@ describe RubyTerraform::Commands::Output do
         expect(StringIO).to have_received(:new)
       end
 
-      it 'supplies the StringIO instance as the stdout when running the command' do
+      it 'supplies the StringIO instance as the stdout when running ' \
+         'the command' do
         expect(Open4)
           .to(have_received(:spawn)
                 .with(instance_of(String), hash_including(stdout: string_io)))
@@ -79,7 +82,8 @@ describe RubyTerraform::Commands::Output do
           .to(have_received(:spawn)
                 .with(
                   instance_of(String),
-                  hash_including(stdout: dummy_stdout)))
+                  hash_including(stdout: dummy_stdout)
+                ))
       end
 
       it_behaves_like('it supports output naming')

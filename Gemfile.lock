@@ -126,6 +126,8 @@ GEM
       unicode-display_width (>= 1.4.0, < 3.0)
     rubocop-ast (1.4.1)
       parser (>= 2.7.1.5)
+    rubocop-rake (0.5.1)
+      rubocop
     rubocop-rspec (2.2.0)
       rubocop (~> 1.0)
       rubocop-ast (>= 1.1.0)
@@ -166,6 +168,7 @@ DEPENDENCIES
   rake_ssh (~> 0.4)
   rspec (~> 3.9)
   rubocop (~> 1.12)
+  rubocop-rake (~> 0.5)
   rubocop-rspec (~> 2.2)
   ruby-terraform!
   simplecov (~> 0.21)

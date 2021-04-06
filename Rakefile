@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'yaml'
 require 'rake_circle_ci'
 require 'rake_github'
@@ -7,13 +9,14 @@ require 'securerandom'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 
-task default: [
-  #:'library:fix',
-  :'test:unit'
+task default: %i[
+  library:fix
+  test:unit
 ]
 
 namespace :encryption do
   namespace :passphrase do
+    desc 'Generate encryption passphrase for CI GPG key'
     task :generate do
       File.open('config/secrets/ci/encryption.passphrase', 'w') do |f|
         f.write(SecureRandom.base64(36))
@@ -94,6 +97,7 @@ RakeGithub.define_repository_tasks(
 end
 
 namespace :pipeline do
+  desc 'Prepare CircleCI Pipeline'
   task prepare: %i[
     circle_ci:project:follow
     circle_ci:env_vars:ensure

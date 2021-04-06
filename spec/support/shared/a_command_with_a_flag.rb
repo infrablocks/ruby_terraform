@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples('a command with a flag') do |command, option, directory = nil|
   name = "-#{option.to_s.sub('_', '-')}"
   argument = directory.nil? ? nil : " #{directory}"

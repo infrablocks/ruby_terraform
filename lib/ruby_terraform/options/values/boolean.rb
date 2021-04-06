@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module RubyTerraform
   module Options
     module Values

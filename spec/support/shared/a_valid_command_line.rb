@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples 'a valid command line' do |options:, reason:, expected_command:|
   before do
     allow(Open4).to receive(:spawn)

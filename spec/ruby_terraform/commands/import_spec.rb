@@ -5,17 +5,17 @@ require 'spec_helper'
 describe RubyTerraform::Commands::Import do
   let(:command) { described_class.new(binary: 'terraform') }
 
-  before(:each) do
+  before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
     end
   end
 
-  after(:each) do
+  after do
     RubyTerraform.reset!
   end
 
-  common_options =
+  common =
     {
       directory: Faker::File.dir,
       address: Faker::Lorem.word,
@@ -25,9 +25,12 @@ describe RubyTerraform::Commands::Import do
   it_behaves_like(
     'a valid command line',
     {
-      reason: 'calls the terraform import command passing the supplied directory',
-      expected_command: "terraform import -config=#{common_options[:directory]} #{common_options[:address]} #{common_options[:id]}",
-      options: common_options
+      reason:
+        'calls the terraform import command passing the supplied directory',
+      expected_command:
+        "terraform import -config=#{common[:directory]} " \
+          "#{common[:address]} #{common[:id]}",
+      options: common
     }
   )
 
@@ -38,8 +41,10 @@ describe RubyTerraform::Commands::Import do
       'a valid command line',
       {
         reason: 'defaults to the configured binary when none provided',
-        expected_command: "path/to/binary import -config=#{common_options[:directory]} #{common_options[:address]} #{common_options[:id]}",
-        options: common_options
+        expected_command:
+          "path/to/binary import -config=#{common[:directory]} " \
+            "#{common[:address]} #{common[:id]}",
+        options: common
       }
     )
   end
@@ -48,8 +53,10 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'adds a var option for each supplied var',
-      expected_command: "terraform import -config=#{common_options[:directory]} -var 'first=1' -var 'second=two' #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ vars: { first: 1, second: 'two' } })
+      expected_command:
+        "terraform import -config=#{common[:directory]} " \
+          "-var 'first=1' -var 'second=two' #{common[:address]} #{common[:id]}",
+      options: common.merge({ vars: { first: 1, second: 'two' } })
     }
   )
 
@@ -57,8 +64,10 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'correctly serialises list/tuple vars',
-      expected_command: "terraform import -config=#{common_options[:directory]} -var 'list=[1,\"two\",3]' #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ vars: { list: [1, 'two', 3] } })
+      expected_command:
+        "terraform import -config=#{common[:directory]} " \
+          "-var 'list=[1,\"two\",3]' #{common[:address]} #{common[:id]}",
+      options: common.merge({ vars: { list: [1, 'two', 3] } })
     }
   )
 
@@ -66,8 +75,11 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'correctly serialises map/object vars',
-      expected_command: "terraform import -config=#{common_options[:directory]} -var 'map={\"first\":1,\"second\":\"two\"}' #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ vars: { map: { first: 1, second: 'two' } } })
+      expected_command:
+        "terraform import -config=#{common[:directory]} -var " \
+          "'map={\"first\":1,\"second\":\"two\"}' " \
+          "#{common[:address]} #{common[:id]}",
+      options: common.merge({ vars: { map: { first: 1, second: 'two' } } })
     }
   )
 
@@ -75,8 +87,17 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'correctly serialises vars with lists/tuples of maps/objects',
-      expected_command: "terraform import -config=#{common_options[:directory]} -var 'list_of_maps=[{\"key\":\"value\"},{\"key\":\"value\"}]' #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ vars: { list_of_maps: [{ key: 'value' }, { key: 'value' }] } })
+      expected_command:
+        "terraform import -config=#{common[:directory]} -var " \
+          "'list_of_maps=[{\"key\":\"value\"},{\"key\":\"value\"}]' " \
+          "#{common[:address]} #{common[:id]}",
+      options: common.merge(
+        {
+          vars: {
+            list_of_maps: [{ key: 'value' }, { key: 'value' }]
+          }
+        }
+      )
     }
   )
 
@@ -94,8 +115,15 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'disables backup if no_backup is true',
-      expected_command: "terraform import -config=#{common_options[:directory]} -backup=- #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ backup: 'some/state.tfstate.backup', no_backup: true })
+      expected_command:
+        "terraform import -config=#{common[:directory]} -backup=- " \
+          "#{common[:address]} #{common[:id]}",
+      options: common.merge(
+        {
+          backup: 'some/state.tfstate.backup',
+          no_backup: true
+        }
+      )
     }
   )
 
@@ -108,8 +136,10 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'adds a var-file option if a var file is provided',
-      expected_command: "terraform import -config=#{common_options[:directory]} -var-file=some/vars.tfvars #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ var_file: 'some/vars.tfvars' })
+      expected_command:
+        "terraform import -config=#{common[:directory]} " \
+          "-var-file=some/vars.tfvars #{common[:address]} #{common[:id]}",
+      options: common.merge({ var_file: 'some/vars.tfvars' })
     }
   )
 
@@ -117,8 +147,15 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'adds a var-file option for each element of var-files array',
-      expected_command: "terraform import -config=#{common_options[:directory]} -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ var_files: %w[some/vars1.tfvars some/vars2.tfvars] })
+      expected_command:
+        "terraform import -config=#{common[:directory]} " \
+          '-var-file=some/vars1.tfvars -var-file=some/vars2.tfvars ' \
+          "#{common[:address]} #{common[:id]}",
+      options: common.merge(
+        {
+          var_files: %w[some/vars1.tfvars some/vars2.tfvars]
+        }
+      )
     }
   )
 
@@ -126,8 +163,16 @@ describe RubyTerraform::Commands::Import do
     'a valid command line',
     {
       reason: 'ensures that var_file and var_files options work together',
-      expected_command: "terraform import -config=#{common_options[:directory]} -var-file=some/vars.tfvars -var-file=some/vars1.tfvars -var-file=some/vars2.tfvars #{common_options[:address]} #{common_options[:id]}",
-      options: common_options.merge({ var_file: 'some/vars.tfvars', var_files: %w[some/vars1.tfvars some/vars2.tfvars] })
+      expected_command:
+        "terraform import -config=#{common[:directory]} " \
+          '-var-file=some/vars.tfvars -var-file=some/vars1.tfvars ' \
+          "-var-file=some/vars2.tfvars #{common[:address]} #{common[:id]}",
+      options: common.merge(
+        {
+          var_file: 'some/vars.tfvars',
+          var_files: %w[some/vars1.tfvars some/vars2.tfvars]
+        }
+      )
     }
   )
 

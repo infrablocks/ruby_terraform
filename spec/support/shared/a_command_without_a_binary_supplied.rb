@@ -1,8 +1,11 @@
+# frozen_string_literal: true
+
 shared_examples(
   'a command without a binary supplied'
 ) do |terraform_command, klass, directory = nil|
   context 'when no binary is supplied' do
     let(:command) { klass.new }
+
     argument = directory.nil? ? nil : " #{directory}"
 
     it_behaves_like(

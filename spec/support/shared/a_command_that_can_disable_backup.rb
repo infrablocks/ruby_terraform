@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples('a command that can disable backup') do |command, directory|
   it_behaves_like(
     'a valid command line',

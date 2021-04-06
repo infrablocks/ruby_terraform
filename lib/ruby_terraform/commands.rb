@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'commands/clean'
 require_relative 'commands/init'
 require_relative 'commands/get'

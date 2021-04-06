@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 shared_examples(
   'a command with an array option'
 ) do |command, option, directory|

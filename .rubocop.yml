@@ -1,11 +1,12 @@
+require:
+  - rubocop-rake
+#  - rubocop-rspec
+
 AllCops:
   NewCops: enable
 
 Layout/LineLength:
   Max: 80
-  Exclude:
-    - spec/**/*.rb
-    - ./*.gemspec
 
 Metrics/ModuleLength:
   Exclude:
@@ -16,6 +17,7 @@ Metrics/BlockLength:
     - describe
     - context
     - shared_examples
+    - it
 
 Naming/FileName:
   Exclude:
@@ -24,5 +26,5 @@ Naming/FileName:
 Style/Documentation:
   Enabled: false
 
-Style/FrozenStringLiteralComment:
-  Enabled: false
+#RSpec/ExampleLength:
+#  Max: 40
