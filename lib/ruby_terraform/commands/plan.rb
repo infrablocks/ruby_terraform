@@ -1,25 +1,34 @@
 # frozen_string_literal: true
 
 require_relative 'base'
+require_relative '../options/common'
 
 module RubyTerraform
   module Commands
     class Plan < Base
-      def options
+      include RubyTerraform::Options::Common
+
+      def subcommands
+        %w[plan]
+      end
+
+      def options # rubocop:disable Metrics/MethodLength
         %w[
+          -compact-warnings
           -destroy
+          -detailed-exitcode
           -input
+          -lock
+          -lock-timeout
           -no-color
           -out
+          -parallelism
+          -refresh
           -state
           -target
           -var
           -var-file
-        ]
-      end
-
-      def subcommands(_parameters)
-        %w[plan]
+        ] + super
       end
 
       def arguments(parameters)

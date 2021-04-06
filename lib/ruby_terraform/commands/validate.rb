@@ -1,23 +1,22 @@
 # frozen_string_literal: true
 
 require_relative 'base'
+require_relative '../options/common'
 
 module RubyTerraform
   module Commands
     class Validate < Base
-      def options
-        %w[
-          -check-variables
-          -json
-          -no-color
-          -state
-          -var
-          -var-file
-        ]
+      include RubyTerraform::Options::Common
+
+      def subcommands
+        %w[validate]
       end
 
-      def subcommands(_parameters)
-        %w[validate]
+      def options
+        %w[
+          -json
+          -no-color
+        ] + super
       end
 
       def arguments(parameters)

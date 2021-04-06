@@ -15,26 +15,31 @@ describe RubyTerraform::Commands::Get do
     RubyTerraform.reset!
   end
 
-  terraform_command = 'get'
-  terraform_config_path = Faker::File.dir
+  command = 'get'
+  directory = Faker::File.dir
 
   it_behaves_like(
     'a command with an argument',
-    [terraform_command, :directory]
+    [command, :directory]
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [terraform_command, described_class, terraform_config_path]
+    [command, described_class, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :update, terraform_config_path]
+    [command, :no_color, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :no_color, terraform_config_path]
+    [command, :update, directory]
+  )
+
+  it_behaves_like(
+    'a command with common options',
+    [command, directory]
   )
 end

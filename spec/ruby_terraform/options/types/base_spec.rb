@@ -11,7 +11,7 @@ describe RubyTerraform::Options::Types::Base do
 
   describe '.new' do
     it 'uses a method to assign the options value to allow value setting ' \
-       'to be overridden' do
+         'to be overridden' do
       expect(option.instance_variable_get(:@value)).to eq(value)
     end
   end

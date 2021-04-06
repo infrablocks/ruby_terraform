@@ -16,61 +16,98 @@ describe RubyTerraform::Commands::Destroy do
     RubyTerraform.reset!
   end
 
-  terraform_command = 'destroy'
-  terraform_config_path = Faker::File.dir
+  command = 'destroy'
+  directory = Faker::File.dir
 
   it_behaves_like(
     'a command with an argument',
-    [terraform_command, :directory]
+    [command, :directory]
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [terraform_command, described_class, terraform_config_path]
+    [command, described_class, directory]
   )
 
   it_behaves_like(
-    'a command that accepts vars',
-    [terraform_command, terraform_config_path]
+    'a command with an argument', [command, :directory]
+  )
+
+  it_behaves_like(
+    'a command without a binary supplied',
+    [command, described_class, directory]
   )
 
   it_behaves_like(
     'a command with an option',
-    [terraform_command, :state, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with an option',
-    [terraform_command, :backup, terraform_config_path]
+    [command, :backup, directory]
   )
 
   it_behaves_like(
     'a command that can disable backup',
-    [terraform_command, terraform_config_path]
+    [command, directory]
   )
 
   it_behaves_like(
     'a command with a flag',
-    [terraform_command, :no_color, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with a flag',
-    [terraform_command, :force, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with an array option',
-    [terraform_command, :var_files, terraform_config_path]
-  )
-
-  it_behaves_like(
-    'a command with an array option',
-    [terraform_command, :targets, terraform_config_path]
+    [command, :compact_warnings, directory]
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [terraform_command, :auto_approve, terraform_config_path]
+    [command, :lock, directory]
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    [command, :lock_timeout, directory]
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    [command, :input, directory]
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    [command, :auto_approve, directory]
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    [command, :no_color, directory]
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    [command, :parallelism, directory]
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    [command, :refresh, directory]
+  )
+  it_behaves_like(
+    'a command with an option',
+    [command, :state, directory]
+  )
+  it_behaves_like(
+    'a command with an option',
+    [command, :state_out, directory]
+  )
+  it_behaves_like(
+    'a command with an array option',
+    [command, :targets, directory]
+  )
+  it_behaves_like(
+    'a command that accepts vars', [command, directory]
+  )
+  it_behaves_like(
+    'a command with an array option',
+    [command, :var_files, directory]
+  )
+  it_behaves_like(
+    'a command with common options',
+    [command, directory]
   )
 end

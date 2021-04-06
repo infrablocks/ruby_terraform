@@ -102,16 +102,6 @@ describe RubyTerraform::Commands::Import do
   )
 
   it_behaves_like(
-    'an import command with an option',
-    :state
-  )
-
-  it_behaves_like(
-    'an import command with an option',
-    :backup
-  )
-
-  it_behaves_like(
     'a valid command line',
     {
       reason: 'disables backup if no_backup is true',
@@ -125,11 +115,6 @@ describe RubyTerraform::Commands::Import do
         }
       )
     }
-  )
-
-  it_behaves_like(
-    'an import command with a flag',
-    :no_color
   )
 
   it_behaves_like(
@@ -175,9 +160,25 @@ describe RubyTerraform::Commands::Import do
       )
     }
   )
+  it_behaves_like('an import command with an option', :backup)
 
-  it_behaves_like(
-    'an import command with a boolean option',
-    :input
-  )
+  it_behaves_like('an import command with a boolean option', :input)
+
+  it_behaves_like('an import command with a boolean option', :lock)
+
+  it_behaves_like('an import command with an option', :lock_timeout)
+
+  it_behaves_like('an import command with a flag', :no_color)
+
+  it_behaves_like('an import command with an option', :parallelism)
+
+  it_behaves_like('an import command with an option', :provider)
+
+  it_behaves_like('an import command with an option', :state)
+
+  it_behaves_like('an import command with an option', :state_out)
+
+  it_behaves_like('an import command with a flag', :ignore_remote_version)
+
+  it_behaves_like('an import command with common options')
 end

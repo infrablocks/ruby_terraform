@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 shared_examples('a command with a map option') do |command, option|
-  name = "-#{option.to_s.sub('_', '-')}"
+  name = "-#{option.to_s.gsub('_', '-')}"
 
   it_behaves_like(
     'a valid command line',

@@ -3,7 +3,7 @@
 shared_examples(
   'a command with an option'
 ) do |command, option, directory = nil, name_override: nil|
-  name = name_override.nil? ? "-#{option.to_s.sub('_', '-')}" : name_override
+  name = name_override.nil? ? "-#{option.to_s.gsub('_', '-')}" : name_override
   value = 'option-value'
   argument = directory.nil? ? nil : " #{directory}"
 

@@ -12,8 +12,8 @@ module RubyTerraform
         @logger = logger || RubyTerraform.configuration.logger
       end
 
-      def execute(opts = {})
-        directory = opts[:directory] || @directory
+      def execute(parameters = {})
+        directory = parameters[:directory] || @directory
         begin
           logger.info "Cleaning terraform directory '#{directory}'."
           FileUtils.rm_r(directory, secure: true)

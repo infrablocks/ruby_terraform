@@ -1,20 +1,22 @@
 # frozen_string_literal: true
 
 require_relative 'base'
+require_relative '../options/common'
 
 module RubyTerraform
   module Commands
     class Show < Base
+      include RubyTerraform::Options::Common
+
+      def subcommands
+        %w[show]
+      end
+
       def options
         %w[
           -json
-          -module-depth
           -no-color
-        ]
-      end
-
-      def subcommands(_parameters)
-        %w[show]
+        ] + super
       end
 
       def arguments(parameters)

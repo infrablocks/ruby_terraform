@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Output do
-  let(:command) { described_class.new(command_opts) }
-  let(:command_opts) { { binary: 'terraform' } }
+  let(:command) { described_class.new(parameters) }
+  let(:parameters) { { binary: 'terraform' } }
 
   before do
     RubyTerraform.configure do |config|
@@ -16,17 +16,7 @@ describe RubyTerraform::Commands::Output do
     RubyTerraform.reset!
   end
 
-  terraform_command = 'output'
-
-  it_behaves_like(
-    'a command without a binary supplied', [terraform_command, described_class]
-  )
-
-  it_behaves_like('a command with an option', [terraform_command, :state])
-
-  it_behaves_like('a command with an argument', [terraform_command, :name])
-
-  it_behaves_like('a command with an option', [terraform_command, :module])
+  output_command = 'output'
 
   shared_examples 'it supports output naming' do
     it 'captures and returns the output of the command directly' do
@@ -34,7 +24,7 @@ describe RubyTerraform::Commands::Output do
     end
 
     context 'when an output name is supplied' do
-      let(:opts) { { name: 'some_output' } }
+      let(:exec_parameters) { { name: 'some_output' } }
 
       it 'captures, chomps and returns the output of the command' do
         expect(execute).to(eq('  OUTPUT  '))
@@ -45,8 +35,8 @@ describe RubyTerraform::Commands::Output do
   describe 'output handling' do
     let(:string_io) { instance_double(StringIO, string: string_output) }
     let(:string_output) { "  OUTPUT  \n" }
-    let(:execute) { command.execute(opts) }
-    let(:opts) { {} }
+    let(:execute) { command.execute(exec_parameters) }
+    let(:exec_parameters) { {} }
 
     before do
       allow(StringIO).to receive(:new).and_return(string_io)
@@ -70,7 +60,7 @@ describe RubyTerraform::Commands::Output do
     it_behaves_like('it supports output naming')
 
     context 'when a stdout option is supplied' do
-      let(:command_opts) { { binary: 'terraform', stdout: dummy_stdout } }
+      let(:parameters) { { binary: 'terraform', stdout: dummy_stdout } }
       let(:dummy_stdout) { instance_double(StringIO, string: string_output) }
 
       it 'does not create a new StringIO instance' do
@@ -90,7 +80,20 @@ describe RubyTerraform::Commands::Output do
     end
   end
 
-  it_behaves_like('a command with a flag', [terraform_command, :no_color])
+  it_behaves_like('a command with an argument', [output_command, :name])
 
-  it_behaves_like('a command with a flag', [terraform_command, :json])
+  it_behaves_like(
+    'a command without a binary supplied',
+    [output_command, described_class]
+  )
+
+  it_behaves_like('a command with an option', [output_command, :state])
+
+  it_behaves_like('a command with a flag', [output_command, :no_color])
+
+  it_behaves_like('a command with a flag', [output_command, :json])
+
+  it_behaves_like('a command with a flag', [output_command, :raw])
+
+  it_behaves_like('a command with common options', output_command)
 end

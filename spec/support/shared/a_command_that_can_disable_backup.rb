@@ -5,7 +5,7 @@ shared_examples('a command that can disable backup') do |command, directory|
     'a valid command line',
     {
       reason: 'disables backup if no_backup is true',
-      expected_command: "terraform #{command} -backup=- #{directory}",
+      expected_command: "terraform #{command} -backup=- #{directory}".rstrip,
       options: {
         directory: directory,
         backup: 'some/state.tfstate.backup',

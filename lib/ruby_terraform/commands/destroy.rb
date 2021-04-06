@@ -1,25 +1,34 @@
 # frozen_string_literal: true
 
 require_relative 'base'
+require_relative '../options/common'
 
 module RubyTerraform
   module Commands
     class Destroy < Base
-      def options
+      include RubyTerraform::Options::Common
+
+      def subcommands
+        %w[destroy]
+      end
+
+      def options # rubocop:disable Metrics/MethodLength
         %w[
-          -auto-approve
           -backup
-          -force
+          -compact-warnings
+          -lock
+          -lock-timeout
+          -input
+          -auto-approve
           -no-color
+          -parallelism
+          -refresh
           -state
+          -state-out
           -target
           -var
           -var-file
-        ]
-      end
-
-      def subcommands(_parameters)
-        %w[destroy]
+        ] + super
       end
 
       def arguments(parameters)
