@@ -74,18 +74,20 @@ describe RubyTerraform do
     end
 
     it 'allows default logger to be overridden' do
-      string_output = StringIO.new
-      logger = Logger.new(string_output)
+      string_io = StringIO.new
+      logger = Logger.new(string_io)
       logger.level = Logger::DEBUG
 
       described_class.configure do |config|
         config.logger = logger
       end
 
-      described_class.configuration.logger
-                     .debug('Logging with a custom logger at debug level.')
+      described_class
+        .configuration
+        .logger
+        .debug('Logging with a custom logger at debug level.')
 
-      expect(string_output.string)
+      expect(string_io.string)
         .to include('Logging with a custom logger at debug level.')
     end
 
@@ -163,7 +165,7 @@ describe RubyTerraform do
     end
 
     describe '.workspace (old workspace command support)' do
-      { # rubocop:disable Metrics/BlockLength
+      {
         workspace: RubyTerraform::Commands::WorkspaceList,
         list: RubyTerraform::Commands::WorkspaceList,
         select: RubyTerraform::Commands::WorkspaceSelect,
@@ -171,15 +173,9 @@ describe RubyTerraform do
         delete: RubyTerraform::Commands::WorkspaceDelete,
         show: RubyTerraform::Commands::WorkspaceShow
       }.each do |subcommand, command_class|
-        if subcommand.eql?(:workspace)
-          operation = nil
-          description = 'when the workspace operation is nil'
-        else
-          operation = subcommand.to_s
-          description = "when the workspace operation is #{operation}"
-        end
+        operation = subcommand.eql?(:workspace) ? nil : subcommand.to_s
 
-        describe description do
+        describe "when the workspace operation is #{operation}" do
           let(:options) { { operation: operation } }
           let(:instance) { instance_double(command_class, execute: nil) }
 
@@ -194,17 +190,17 @@ describe RubyTerraform do
             expect(instance).to have_received(:execute).with(options)
           end
         end
+      end
 
-        describe 'when an unknown operation is provided' do
-          let(:options) { { operation: 'unknown' } }
+      describe 'when an unknown operation is provided' do
+        let(:options) { { operation: 'unknown' } }
 
-          it 'raises an error including the invalid operation' do
-            expect { described_class.send(:workspace, options) }
-              .to raise_error(
-                StandardError,
-                "Invalid operation 'unknown' supplied to workspace"
-              )
-          end
+        it 'raises an error including the invalid operation' do
+          expect { described_class.send(:workspace, options) }
+            .to raise_error(
+              StandardError,
+              "Invalid operation 'unknown' supplied to workspace"
+            )
         end
       end
     end
