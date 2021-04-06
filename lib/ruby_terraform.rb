@@ -79,7 +79,9 @@ module RubyTerraform
       when 'show'
         exec(RubyTerraform::Commands::WorkspaceShow, parameters)
       else
-        raise "Invalid operation '#{parameters[:operation]}' supplied to workspace"
+        raise(
+          "Invalid operation '#{parameters[:operation]}' supplied to workspace"
+        )
       end
     end
 

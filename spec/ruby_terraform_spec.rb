@@ -163,7 +163,7 @@ describe RubyTerraform do
     end
 
     describe '.workspace (old workspace command support)' do
-      {
+      { # rubocop:disable Metrics/BlockLength
         workspace: RubyTerraform::Commands::WorkspaceList,
         list: RubyTerraform::Commands::WorkspaceList,
         select: RubyTerraform::Commands::WorkspaceSelect,
