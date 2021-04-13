@@ -1,24 +1,17 @@
 # frozen_string_literal: true
 
+require 'immutable-struct'
+
 module RubyTerraform
   module Options
     module Types
-      class Base
-        def initialize(name, value)
-          @name = name
-          coerce_value(value)
+      class Base < ImmutableStruct.new(:name, :value, :separator)
+        def initialize(name, value, **opts)
+          super(name: name, value: value, separator: opts[:separator])
         end
 
         def apply(_builder)
           raise 'not implemented'
-        end
-
-        private
-
-        attr_reader :name, :value
-
-        def coerce_value(value)
-          @value = value
         end
       end
     end

@@ -187,7 +187,8 @@ describe RubyTerraform do
 
           it "creates an instance of the #{command_class} class and calls " \
              'its execute method' do
-            expect(instance).to have_received(:execute).with(options)
+            expect(instance)
+              .to(have_received(:execute).with(options))
           end
         end
       end
@@ -197,10 +198,10 @@ describe RubyTerraform do
 
         it 'raises an error including the invalid operation' do
           expect { described_class.send(:workspace, options) }
-            .to raise_error(
-              StandardError,
-              "Invalid operation 'unknown' supplied to workspace"
-            )
+            .to(raise_error(
+                  StandardError,
+                  "Invalid operation 'unknown' supplied to workspace"
+                ))
         end
       end
     end

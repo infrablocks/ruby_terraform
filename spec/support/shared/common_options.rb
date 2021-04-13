@@ -12,7 +12,7 @@ class CommonOptions
 
   def each_key
     options.each do |switch|
-      yield RubyTerraform::Options::Name.new(switch).as_key
+      yield RubyTerraform::Options::Name.new(switch).as_singular_key
     end
   end
 end

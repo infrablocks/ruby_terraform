@@ -3,19 +3,17 @@
 require 'lino'
 
 require_relative '../errors'
-require_relative '../options/factory'
 
 module RubyTerraform
   module Commands
     class Base
-      def initialize(
-        binary: nil, logger: nil, stdin: nil, stdout: nil, stderr: nil
-      )
-        @binary = binary || RubyTerraform.configuration.binary
-        @logger = logger || RubyTerraform.configuration.logger
-        @stdin = stdin || RubyTerraform.configuration.stdin
-        @stdout = stdout || RubyTerraform.configuration.stdout
-        @stderr = stderr || RubyTerraform.configuration.stderr
+      def initialize(**opts) # rubocop:disable Metrics/AbcSize
+        @binary = opts[:binary] || RubyTerraform.configuration.binary
+        @logger = opts[:logger] || RubyTerraform.configuration.logger
+        @options = opts[:options] || RubyTerraform.configuration.options
+        @stdin = opts[:stdin] || RubyTerraform.configuration.stdin
+        @stdout = opts[:stdout] || RubyTerraform.configuration.stdout
+        @stderr = opts[:stderr] || RubyTerraform.configuration.stderr
         initialize_command
       end
 
@@ -35,6 +33,7 @@ module RubyTerraform
 
       def build_and_execute_command(parameters)
         command = build_command(parameters)
+
         logger.debug("Running '#{command}'.")
         command.execute(
           stdin: stdin,
@@ -62,7 +61,7 @@ module RubyTerraform
           .for_command(@binary)
           .with_options_after_subcommands
           .with_option_separator('=')
-          .with_appliables(Options::Factory.from(options, parameters))
+          .with_appliables(@options.resolve(options, parameters))
           .with_subcommands(subcommands)
           .with_arguments(arguments(parameters))
           .build

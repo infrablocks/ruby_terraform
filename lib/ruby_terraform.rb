@@ -98,7 +98,7 @@ module RubyTerraform
   end
 
   class Configuration
-    attr_accessor :binary, :logger, :stdin, :stdout, :stderr
+    attr_accessor :binary, :logger, :options, :stdin, :stdout, :stderr
 
     def default_logger
       logger = Logger.new($stdout)
@@ -106,9 +106,14 @@ module RubyTerraform
       logger
     end
 
+    def default_options
+      Options::Factory.new(Options::DEFINITIONS)
+    end
+
     def initialize
       @binary = 'terraform'
       @logger = default_logger
+      @options = default_options
       @stdin = ''
       @stdout = $stdout
       @stderr = $stderr

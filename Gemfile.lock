@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     ruby-terraform (0.65.0.pre.11)
+      immutable-struct (>= 2.4)
       lino (>= 2.3)
 
 GEM
@@ -50,6 +51,7 @@ GEM
       concurrent-ruby (~> 1.0)
     i18n (1.8.10)
       concurrent-ruby (~> 1.0)
+    immutable-struct (2.4.1)
     lino (2.3.0)
       hamster (~> 3.0)
       open4 (~> 1.3)

@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
+require 'immutable-struct'
+
 module RubyTerraform
   module Options
-    class Name
+    class Name < ImmutableStruct.new(:name)
       def initialize(name)
-        @name = name
+        super(name: name.to_s)
       end
 
-      def without_prefix
-        @name[0] == '-' ? @name[1..] : @name
-      end
-
-      def to_s
+      def name
         "-#{without_prefix}"
       end
 
-      def as_key
+      alias to_s name
+
+      def as_singular_key
         snake_case.to_sym
       end
 
@@ -23,19 +23,11 @@ module RubyTerraform
         "#{snake_case}s".to_sym
       end
 
-      def ==(other)
-        to_s == other
-      end
-
-      def eql?(other)
-        to_s == other
-      end
-
-      def hash
-        to_s.hash
-      end
-
       private
+
+      def without_prefix
+        @name.sub(/^-+/, '')
+      end
 
       def snake_case
         without_prefix.gsub('-', '_')
