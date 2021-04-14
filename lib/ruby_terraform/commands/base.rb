@@ -8,13 +8,12 @@ module RubyTerraform
   module Commands
     class Base
       def initialize(**opts) # rubocop:disable Metrics/AbcSize
-        @binary = opts[:binary] || RubyTerraform.configuration.binary
-        @logger = opts[:logger] || RubyTerraform.configuration.logger
+        @binary  = opts[:binary]  || RubyTerraform.configuration.binary
+        @logger  = opts[:logger]  || RubyTerraform.configuration.logger
         @options = opts[:options] || RubyTerraform.configuration.options
-        @stdin = opts[:stdin] || RubyTerraform.configuration.stdin
-        @stdout = opts[:stdout] || RubyTerraform.configuration.stdout
-        @stderr = opts[:stderr] || RubyTerraform.configuration.stderr
-        initialize_command
+        @stdin   = opts[:stdin]   || RubyTerraform.configuration.stdin
+        @stdout  = opts[:stdout]  || RubyTerraform.configuration.stdout
+        @stderr  = opts[:stderr]  || RubyTerraform.configuration.stderr
       end
 
       def execute(parameters = {})
@@ -52,8 +51,6 @@ module RubyTerraform
 
       private
 
-      def initialize_command; end
-
       def build_command(parameters)
         parameters = resolve_parameters(parameters)
 
@@ -63,8 +60,7 @@ module RubyTerraform
           .with_option_separator('=')
           .with_appliables(@options.resolve(options, parameters))
           .with_subcommands(subcommands)
-          .with_arguments(arguments(parameters))
-          .build
+          .with_arguments(arguments(parameters)).build
       end
 
       def resolve_parameters(parameters)

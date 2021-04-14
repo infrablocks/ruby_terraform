@@ -9,10 +9,8 @@ module RubyTerraform
     class Output < Base
       include RubyTerraform::Options::Common
 
-      def initialize_command
-        return if defined?(@stdout) && @stdout.respond_to?(:string)
-
-        @stdout = StringIO.new
+      def stdout
+        @stdout.respond_to?(:string) ? @stdout : (@stdout = StringIO.new)
       end
 
       def subcommands

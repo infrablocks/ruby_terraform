@@ -62,7 +62,7 @@ module RubyTerraform
       workspace_show: RubyTerraform::Commands::WorkspaceShow
     }.each do |method, command_class|
       define_method(method) do |parameters = {}|
-        command_class.new.execute(parameters)
+        exec(command_class, parameters)
       end
     end
 

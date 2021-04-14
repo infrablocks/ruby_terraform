@@ -11,7 +11,7 @@ module RubyTerraform
         end
 
         def apply(_builder)
-          raise 'not implemented'
+          raise 'Not implemented.'
         end
       end
     end

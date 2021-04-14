@@ -19,7 +19,7 @@ module RubyTerraform
       :repeatable?
     )
       def initialize(opts) # rubocop:disable Metrics/MethodLength
-        raise 'Missing name' unless opts[:name]
+        raise 'Missing name.' unless opts[:name]
 
         super(
           name: Name.new(opts[:name]),
@@ -107,7 +107,7 @@ module RubyTerraform
       end
 
       def build_singular(value)
-        value.nil? ? build_no_options : build_single_option(value)
+        build_single_option(value)
       end
 
       def build_singulars(values)

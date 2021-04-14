@@ -1,0 +1,59 @@
+# frozen_string_literal: true
+
+require 'spec_helper'
+
+describe RubyTerraform::Options::Types do
+  describe '.flag' do
+    it 'builds a flag type' do
+      expect(RubyTerraform::Options::Types.flag(
+               '-flag', RubyTerraform::Options::Values.boolean(true)
+             ))
+        .to(eq(RubyTerraform::Options::Types::Flag.new(
+                 '-flag', RubyTerraform::Options::Values.boolean(true)
+               )))
+    end
+  end
+
+  describe '.standard' do
+    it 'builds a standard type' do
+      expect(RubyTerraform::Options::Types.standard(
+               '-opt',
+               RubyTerraform::Options::Values.string('/some/path')
+             ))
+        .to(eq(RubyTerraform::Options::Types::Standard.new(
+                 '-opt',
+                 RubyTerraform::Options::Values.string('/some/path')
+               )))
+    end
+
+    it 'passes the provided keyword arguments' do
+      expect(RubyTerraform::Options::Types.standard(
+               '-opt',
+               RubyTerraform::Options::Values.string('/some/path'),
+               separator: '~'
+             ))
+        .to(eq(RubyTerraform::Options::Types::Standard.new(
+                 '-opt',
+                 RubyTerraform::Options::Values.string('/some/path'),
+                 separator: '~'
+               )))
+    end
+  end
+
+  describe '.resolve' do
+    it 'returns Types::Flag for :flag' do
+      expect(RubyTerraform::Options::Types.resolve(:flag))
+        .to(eq(RubyTerraform::Options::Types::Flag))
+    end
+
+    it 'returns Types::Standard for :complex' do
+      expect(RubyTerraform::Options::Types.resolve(:standard))
+        .to(eq(RubyTerraform::Options::Types::Standard))
+    end
+
+    it 'returns provided value otherwise' do
+      expect(RubyTerraform::Options::Types.resolve(Object))
+        .to(eq(Object))
+    end
+  end
+end
