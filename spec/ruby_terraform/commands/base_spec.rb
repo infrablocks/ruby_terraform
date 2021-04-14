@@ -6,14 +6,14 @@ require 'open4'
 O = RubyTerraform::Options
 
 describe RubyTerraform::Commands::Base do
-  after(:each) do
+  after do
     RubyTerraform.reset!
   end
 
   describe 'by default' do
     it 'uses the globally defined binary' do
       binary = RubyTerraform.configuration.binary
-      klass = Class.new(RubyTerraform::Commands::Base)
+      klass = Class.new(described_class)
       instance = klass.new
 
       allow(Open4).to(receive(:spawn))
@@ -27,7 +27,7 @@ describe RubyTerraform::Commands::Base do
 
     it 'has no arguments, subcommands or options' do
       binary = RubyTerraform.configuration.binary
-      klass = Class.new(RubyTerraform::Commands::Base)
+      klass = Class.new(described_class)
       instance = klass.new
 
       allow(Open4).to(receive(:spawn))
@@ -149,17 +149,16 @@ describe RubyTerraform::Commands::Base do
 
   describe 'when executing commands' do
     it 'logs an error to the globally defined logger when the command fails' do
-      logger = double('Logger')
+      exitstatus = instance_double('exit status').as_null_object
+      logger = instance_double('Logger')
       RubyTerraform.configure { |c| c.logger = logger }
 
-      klass = Class.new(RubyTerraform::Commands::Base)
+      klass = Class.new(described_class)
       instance = klass.new
 
       allow(Open4)
         .to(receive(:spawn)
-              .and_raise(Open4::SpawnError.new(
-                           'thing', double('exit status').as_null_object
-                         )))
+              .and_raise(Open4::SpawnError.new('thing', exitstatus)))
       allow(logger).to(receive(:error))
       allow(logger).to(receive(:debug))
       allow(instance).to(receive(:class).and_return('Something::Important'))

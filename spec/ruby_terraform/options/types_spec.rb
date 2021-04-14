@@ -5,7 +5,7 @@ require 'spec_helper'
 describe RubyTerraform::Options::Types do
   describe '.flag' do
     it 'builds a flag type' do
-      expect(RubyTerraform::Options::Types.flag(
+      expect(described_class.flag(
                '-flag', RubyTerraform::Options::Values.boolean(true)
              ))
         .to(eq(RubyTerraform::Options::Types::Flag.new(
@@ -16,7 +16,7 @@ describe RubyTerraform::Options::Types do
 
   describe '.standard' do
     it 'builds a standard type' do
-      expect(RubyTerraform::Options::Types.standard(
+      expect(described_class.standard(
                '-opt',
                RubyTerraform::Options::Values.string('/some/path')
              ))
@@ -27,7 +27,7 @@ describe RubyTerraform::Options::Types do
     end
 
     it 'passes the provided keyword arguments' do
-      expect(RubyTerraform::Options::Types.standard(
+      expect(described_class.standard(
                '-opt',
                RubyTerraform::Options::Values.string('/some/path'),
                separator: '~'
@@ -42,17 +42,17 @@ describe RubyTerraform::Options::Types do
 
   describe '.resolve' do
     it 'returns Types::Flag for :flag' do
-      expect(RubyTerraform::Options::Types.resolve(:flag))
+      expect(described_class.resolve(:flag))
         .to(eq(RubyTerraform::Options::Types::Flag))
     end
 
     it 'returns Types::Standard for :complex' do
-      expect(RubyTerraform::Options::Types.resolve(:standard))
+      expect(described_class.resolve(:standard))
         .to(eq(RubyTerraform::Options::Types::Standard))
     end
 
     it 'returns provided value otherwise' do
-      expect(RubyTerraform::Options::Types.resolve(Object))
+      expect(described_class.resolve(Object))
         .to(eq(Object))
     end
   end

@@ -55,7 +55,7 @@ describe RubyTerraform do
     described_class.apply(directory: 'some/path/to/terraform/configuration')
   end
 
-  context 'configuration' do
+  describe 'configuration' do
     before do
       described_class.reset!
     end
@@ -145,6 +145,7 @@ describe RubyTerraform do
     end
   end
 
+  # rubocop:disable RSpec/NestedGroups
   describe 'terraform commands' do
     commands.each do |method, command_class|
       describe ".#{method}" do
@@ -206,6 +207,7 @@ describe RubyTerraform do
       end
     end
   end
+  # rubocop:enable RSpec/NestedGroups
 
   describe 'when included in a class' do
     commands.each_key do |method|

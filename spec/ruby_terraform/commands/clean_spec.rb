@@ -17,11 +17,13 @@ describe RubyTerraform::Commands::Clean do
   it 'deletes the .terraform directory in the current directory by default' do
     command = described_class.new
 
-    expect(FileUtils).to(
-      receive(:rm_r).with('.terraform', secure: true)
-    )
+    allow(FileUtils).to(receive(:rm_r))
 
     command.execute
+
+    expect(FileUtils)
+      .to(have_received(:rm_r)
+            .with('.terraform', secure: true))
   end
 
   it 'logs to the provided logger at info level when deleting ' \
@@ -66,11 +68,13 @@ describe RubyTerraform::Commands::Clean do
   it 'deletes the provided directory when specified' do
     command = described_class.new(directory: 'some/path')
 
-    expect(FileUtils).to(
-      receive(:rm_r).with('some/path', secure: true)
-    )
+    allow(FileUtils).to(receive(:rm_r))
 
     command.execute
+
+    expect(FileUtils)
+      .to(have_received(:rm_r)
+            .with('some/path', secure: true))
   end
 
   it 'logs to the provided logger at info level when deleting ' \
@@ -96,10 +100,13 @@ describe RubyTerraform::Commands::Clean do
   it 'allows the directory to be overridden on execution' do
     command = described_class.new
 
-    expect(FileUtils).to(
-      receive(:rm_r).with('some/.terraform', secure: true)
-    )
+    allow(FileUtils).to(receive(:rm_r))
+
     command.execute(directory: 'some/.terraform')
+
+    expect(FileUtils)
+      .to(have_received(:rm_r)
+            .with('some/.terraform', secure: true))
   end
 
   it 'logs to the provided logger at info level when deleting ' \
@@ -130,16 +137,13 @@ describe RubyTerraform::Commands::Clean do
     command = described_class.new(logger: logger)
     command.execute(directory: '/this/path/does/not/exist')
 
-    expect(string_output.string).to(
-      include('INFO').and(
-        include("Cleaning terraform directory '/this/path/does/not/exist'")
-      )
-    )
-    expect(string_output.string).to(
-      include('ERROR').and(
-        include("Couldn't clean '/this/path/does/not/exist'")
-      )
-    )
+    expect(string_output.string)
+      .to(include('INFO')
+            .and(include(
+                   "Cleaning terraform directory '/this/path/does/not/exist'"
+                 ))
+            .and(include('ERROR'))
+            .and(include("Couldn't clean '/this/path/does/not/exist'")))
   end
 
   def stub_fileutils_rm_r

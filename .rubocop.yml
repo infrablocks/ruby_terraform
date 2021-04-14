@@ -1,16 +1,12 @@
 require:
   - rubocop-rake
-#  - rubocop-rspec
+  - rubocop-rspec
 
 AllCops:
   NewCops: enable
 
 Layout/LineLength:
   Max: 80
-
-Metrics/ModuleLength:
-  Exclude:
-    - spec/**/*.rb
 
 Metrics/BlockLength:
   IgnoredMethods:
@@ -26,5 +22,5 @@ Naming/FileName:
 Style/Documentation:
   Enabled: false
 
-#RSpec/ExampleLength:
-#  Max: 40
+RSpec/ExampleLength:
+  Max: 40

@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe RubyTerraform::Commands::Output do
   let(:command) { described_class.new(parameters) }
   let(:parameters) { { binary: 'terraform' } }
@@ -97,3 +98,4 @@ describe RubyTerraform::Commands::Output do
 
   it_behaves_like('a command with common options', output_command)
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers
