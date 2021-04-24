@@ -162,10 +162,33 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Destroy, parameters)
     end
 
+    # Invokes the +terraform force-unlock+ command which manually unlocks the
+    # state for the defined configuration.
+    #
+    # This will not modify your infrastructure. This command removes the lock on
+    # the state for the current workspace. The behavior of this lock is
+    # dependent on the backend being used. Local state files cannot be unlocked
+    # by another process.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :lock_id The directory containing terraform
+    #   configuration; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :force (false) If +true+, does not ask for input for
+    #   unlock confirmation.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.force_unlock(
+    #     lock_id: '50e844a7-ebb0-fcfd-da85-5cce5bd1ec90')
+    #
+    def force_unlock(parameters = {})
+      exec(RubyTerraform::Commands::ForceUnlock, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
       format: RubyTerraform::Commands::Format,
-      force_unlock: RubyTerraform::Commands::ForceUnlock,
       get: RubyTerraform::Commands::Get,
       graph: RubyTerraform::Commands::Graph,
       import: RubyTerraform::Commands::Import,
