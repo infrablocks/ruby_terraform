@@ -7,7 +7,11 @@ require_relative '../errors'
 module RubyTerraform
   module Commands
     class Base
-      def initialize(**opts) # rubocop:disable Metrics/AbcSize
+      # rubocop:disable Metrics/AbcSize
+
+      # Constructs an instance of the command.
+      #
+      def initialize(**opts)
         @binary  = opts[:binary]  || RubyTerraform.configuration.binary
         @logger  = opts[:logger]  || RubyTerraform.configuration.logger
         @options = opts[:options] || RubyTerraform.configuration.options
@@ -16,6 +20,10 @@ module RubyTerraform
         @stderr  = opts[:stderr]  || RubyTerraform.configuration.stderr
       end
 
+      # rubocop:enable Metrics/AbcSize
+
+      # Executes the command instance.
+      #
       def execute(parameters = {})
         do_before(parameters)
         build_and_execute_command(parameters)

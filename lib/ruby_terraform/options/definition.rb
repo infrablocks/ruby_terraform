@@ -18,7 +18,8 @@ module RubyTerraform
       :separator,
       :repeatable?
     )
-      def initialize(opts) # rubocop:disable Metrics/MethodLength
+      # rubocop:disable Metrics/MethodLength
+      def initialize(opts)
         raise 'Missing name.' unless opts[:name]
 
         super(
@@ -35,6 +36,7 @@ module RubyTerraform
               .merge(opts[:override_keys] || {})
         )
       end
+      # rubocop:enable Metrics/MethodLength
 
       def matches?(name)
         @name == Name.new(name)
