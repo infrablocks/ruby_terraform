@@ -325,14 +325,14 @@ RubyTerraform.import(
   id: 'a-resource-id',
   vars: {
     region: 'eu-central'
-  }))
+  })
 RubyTerraform::Commands::Import.new.execute(
   directory: 'infra/networking',
   address: 'a.resource.address',
   id: 'a-resource-id',
   vars: {
     region: 'eu-central'
-  }))
+  })
 ```
 
 The import command supports the following options passed as keyword arguments:
