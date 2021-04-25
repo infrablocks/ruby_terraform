@@ -484,9 +484,35 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Logout, parameters)
     end
 
+    # Invokes the +terraform output+ command which reads an output variable from
+    # a Terraform state file and prints the value. With no additional arguments,
+    # output will display all the outputs for the root module. If +:name+ is not
+    # specified, all outputs are printed.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :name The name of the output to read.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :state The path to the state file to read;
+    #   defaults to +"terraform.tfstate"+.
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [Boolean] :json (false) If +true+, machine readable
+    #   output will be printed in JSON format.
+    # @option parameters [Boolean] :raw (false) If +true+, for value types that
+    #   can be automatically converted to a string, will print the raw string
+    #   directly, rather than a human-oriented representation of the value.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.output(
+    #     name: 'vpc_id')
+    #
+    def output(parameters = {})
+      exec(RubyTerraform::Commands::Output, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      output: RubyTerraform::Commands::Output,
       plan: RubyTerraform::Commands::Plan,
       providers: RubyTerraform::Commands::Providers,
       providers_lock: RubyTerraform::Commands::ProvidersLock,
