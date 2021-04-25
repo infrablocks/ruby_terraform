@@ -465,9 +465,27 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Login, parameters)
     end
 
+    # Invokes the +terraform logout+ command which removes locally-stored
+    # credentials for specified hostname.
+    #
+    # Note: the API token is only removed from local storage, not destroyed on
+    # the remote server, so it will remain valid until manually revoked.
+    #
+    # If no hostname is provided, the default hostname is app.terraform.io.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.logout
+    #
+    def logout(parameters = {})
+      exec(RubyTerraform::Commands::Logout, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      logout: RubyTerraform::Commands::Logout,
       output: RubyTerraform::Commands::Output,
       plan: RubyTerraform::Commands::Plan,
       providers: RubyTerraform::Commands::Providers,
