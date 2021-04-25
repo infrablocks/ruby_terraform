@@ -381,13 +381,70 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Import, parameters)
     end
 
+    # Invokes the +terraform init+ command which initializes a new or existing
+    # Terraform working directory by creating initial files, loading any remote
+    # state, downloading modules, etc.
+    #
+    # This is the first command that should be run for any new or existing
+    # Terraform configuration per machine. This sets up all the local data
+    # necessary to run Terraform that is typically not committed to version
+    # control.
+    #
+    # This command is always safe to run multiple times. Though subsequent runs
+    # may give errors, this command will never delete your configuration or
+    # state. Even so, if you have important information, please back it up prior
+    # to running this command, just in case.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :path The path to initialize; defaults to the
+    #   current directory.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :backend (true) Whether or not to configure
+    #   the backend for this configuration.
+    # @option parameters [Hash<String,Object>] :backend_config A map of backend
+    #   specific configuration parameters.
+    # @option parameters [Boolean] :force_copy (false) If +true+, suppresses
+    #   prompts about copying state data; this is equivalent to providing a
+    #   "yes" to all confirmation prompts.
+    # @option parameters [String] :from_module copies the contents of the given
+    #   module into the target directory before initialization.
+    # @option parameters [Boolean] :get (true) Whether or not to download any
+    #   modules for this configuration.
+    # @option parameters [Boolean] :get_plugins (true) Whether or not to install
+    #   plugins for this configuration (deprecated, removed in terraform 0.15).
+    # @option parameters [Boolean] :input (true) When +false+, will not ask for
+    #   input for variables not directly set.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file (deprecated, removed in terraform 0.15).
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock (deprecated, removed in terraform 0.15).
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [String] :plugin_dir The path to a directory containing
+    #   plugin binaries; this overrides all default search paths for plugins,
+    #   and prevents the automatic installation of plugins.
+    # @option parameters [Boolean] :reconfigure (false) If +true+, reconfigures
+    #   the backend, ignoring any saved configuration.
+    # @option parameters [Boolean] :upgrade (false) If +true+, when installing
+    #   modules or plugins, ignores previously-downloaded objects and installs
+    #   the latest version allowed within configured constraints.
+    # @option parameters [Boolean] :verify_plugins (true) Whether or not to
+    #   verify plugins for this configuration (deprecated, removed in terraform
+    #   0.15).
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.init(
+    #     from_module: 'some/module/path',
+    #     path: 'infra/module')
+    #
     def init(parameters = {})
       exec(RubyTerraform::Commands::Init, parameters)
     end
 
     {
       clean: RubyTerraform::Commands::Clean,
-      import: RubyTerraform::Commands::Import,
       login: RubyTerraform::Commands::Login,
       logout: RubyTerraform::Commands::Logout,
       output: RubyTerraform::Commands::Output,
