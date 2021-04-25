@@ -37,23 +37,6 @@ In addition, each command that requires the terraform binary (all except
 `clean`) takes a `binary` keyword argument at initialisation that overrides the
 global configuration value.
 
-Currently, there is partial support for the following commands:
-* `RubyTerraform::Commands::Clean`: clean up all locally held terraform state
-  and modules.
-* `RubyTerraform::Commands::Init`: executes `terraform init`
-* `RubyTerraform::Commands::Get`: executes `terraform get`
-* `RubyTerraform::Commands::Plan`: executes `terraform plan`
-* `RubyTerraform::Commands::Apply`: executes `terraform apply`
-* `RubyTerraform::Commands::Show`: executes `terraform show`
-* `RubyTerraform::Commands::Destroy`: executes `terraform destroy`
-* `RubyTerraform::Commands::Output`: executes `terraform output`
-* `RubyTerraform::Commands::Refresh`: executes `terraform refresh`
-* `RubyTerraform::Commands::Import`: executes `terraform import`
-* `RubyTerraform::Commands::RemoteConfig`: executes `terraform remote config`
-* `RubyTerraform::Commands::Format`: executes `terraform fmt`
-* `RubyTerraform::Commands::Validate`: executes `terraform validate`
-* `RubyTerraform::Commands::Workspace`: executes `terraform workspace`
-
 ### RubyTerraform::Commands::Clean
 
 The clean command can be called in the following ways:

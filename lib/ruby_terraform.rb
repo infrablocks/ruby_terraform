@@ -110,7 +110,7 @@ module RubyTerraform
     # @option parameters [String] :backup The path to backup the existing state
     #   file before modifying; defaults to the +:state_out+ path with
     #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
-    #   entirely.
+    #   entirely (legacy).
     # @option parameters [Boolean] :compact_warnings (false) When +true+, if
     #   terraform produces any warnings that are not accompanied by errors,
     #   they are shown in a more compact form that includes only the summary
@@ -123,7 +123,7 @@ module RubyTerraform
     # @option parameters [String] :lock_timeout ("0s") The duration to retry a
     #   state lock.
     # @option parameters [Boolean] :no_backup (false) When +true+, no backup
-    #   file will be written.
+    #   file will be written (legacy).
     # @option parameters [Boolean] :no_color (false) Whether or not the output
     #   from the command should be in color.
     # @option parameters [Integer] :parallelism (10) The number of parallel
@@ -133,9 +133,10 @@ module RubyTerraform
     #   state.
     # @option parameters [String] :state ("terraform.tfstate") The path to the
     #   state file from which to read state and in which to store state (unless
-    #   +:state_out+ is specified).
+    #   +:state_out+ is specified) (legacy).
     # @option parameters [String] :state_out The path to write state to that is
-    #   different than +:state+; this can be used to preserve the old state.
+    #   different than +:state+; this can be used to preserve the old state
+    #   (legacy).
     # @option parameters [String] :target The address of a resource to target;
     #   if both +:target+ and +:targets+ are provided, all targets will be
     #   passed to terraform.
@@ -287,6 +288,97 @@ module RubyTerraform
     #
     def graph(parameters = {})
       exec(RubyTerraform::Commands::Graph, parameters)
+    end
+
+    # Invokes the +terraform import+ command which imports existing infrastructure
+    # into your terraform state.
+    #
+    # This will find and import the specified resource into your terraform
+    # state, allowing existing infrastructure to come under terraform
+    # management without having to be initially created by terraform.
+    #
+    # The +:address+ specified is the address to import the resource to. Please
+    # see the documentation online for resource addresses. The +:id+ is a
+    # resource-specific ID to identify that resource being imported. Please
+    # reference the documentation for the resource type you're importing to
+    # determine the ID syntax to use. It typically matches directly to the ID
+    # that the provider uses.
+    #
+    # The current implementation of terraform import can only import resources
+    # into the state. It does not generate configuration. A future version of
+    # terraform will also generate configuration.
+    #
+    # Because of this, prior to running terraform import it is necessary to
+    # write a resource configuration block for the resource manually, to which
+    # the imported object will be attached.
+    #
+    # This command will not modify your infrastructure, but it will make network
+    # requests to inspect parts of your infrastructure relevant to the resource
+    # being imported.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The path to a directory of
+    #   terraform configuration files to use to configure the provider; defaults
+    #   to the current directory; if no config files are present, they must be
+    #   provided via the input prompts or env vars.
+    # @option parameters [String] :address The address to import the resource
+    #   to; required.
+    # @option parameters [String] :id The resource-specific ID identifying the
+    #   resource being imported; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :backup The path to backup the existing state
+    #   file before modifying; defaults to the +:state_out+ path with
+    #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
+    #   entirely (legacy).
+    # @option parameters [Boolean] :input (true) When +false+, will not ask for
+    #   input for variables not directly set.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
+    # @option parameters [Boolean] :no_backup (false) When +true+, no backup
+    #   file will be written (legacy).
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [Integer] :parallelism (10) The number of parallel
+    #   resource operations.
+    # @option parameters [String] :provider The provider configuration to use
+    #   when importing the object; by default, terraform uses the provider
+    #   specified in the configuration for the target resource, and that is the
+    #   best behavior in most cases (deprecated).
+    # @option parameters [String] :state ("terraform.tfstate") The path to the
+    #   state file from which to read state and in which to store state (unless
+    #   +:state_out+ is specified) (legacy).
+    # @option parameters [String] :state_out The path to write state to that is
+    #   different than +:state+; this can be used to preserve the old state
+    #   (legacy).
+    # @option parameters [Hash<String, Object>] :vars A map of variables to be
+    #   passed to the terraform configuration.
+    # @option parameters [String] :var_file The path to a terraform var file;
+    #   if both +:var_file+ and +:var_files+ are provided, all var files will be
+    #   passed to terraform.
+    # @option parameters [Array<String>] :var_files An array of paths to
+    #   terraform var files; if both +:var_file+ and +:var_files+ are provided,
+    #   all var files will be passed to terraform.
+    # @option parameters [Boolean] :ignore_remote_version (false) If +true+,
+    #   when using the enhanced remote backend with Terraform Cloud, continue
+    #   even if remote and local Terraform versions differ; this may result in
+    #   an unusable Terraform Cloud workspace, and should be used with extreme
+    #   caution.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.import(
+    #     directory: 'infra/networking',
+    #     address: 'a.resource.address',
+    #     id: 'a-resource-id',
+    #     vars: {
+    #       region: 'eu-central'
+    #     })
+    #
+    def import(parameters = {})
+      exec(RubyTerraform::Commands::Import, parameters)
     end
 
     def init(parameters = {})

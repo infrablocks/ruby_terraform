@@ -19,9 +19,9 @@ module RubyTerraform
     #   the given subcommand.
     # * +:auto_approve+: if +true+, skips interactive approval before
     #   destroying; defaults to +false+.
-    # * +:backup+: the path to backup the existing state file before modifying;
-    #   defaults to the +:state_out+ path with +".backup"+ extension; set
-    #   +:no_backup+ to +true+ to skip backups entirely.
+    # * +:backup+: (legacy) the path to backup the existing state file before
+    #   modifying; defaults to the +:state_out+ path with +".backup"+ extension;
+    #   set +:no_backup+ to +true+ to skip backups entirely.
     # * +:compact_warnings+: when +true+, if terraform produces any warnings
     #   that are not accompanied by errors, they are shown in a more compact
     #   form that includes only the summary messages; defaults to +false+.
@@ -39,10 +39,10 @@ module RubyTerraform
     # * +:refresh+: when +true+, updates state prior to checking for
     #   differences; when +false+ uses locally available state; defaults to
     #   +true+.
-    # * +:state+: the path to the state file from which to read state and in
-    #   which to store state (unless +:state_out+ is specified); defaults to
-    #   +"terraform.tfstate"+.
-    # * +:state_out+: the path to write state to that is different than
+    # * +:state+: (legacy) the path to the state file from which to read state
+    #   and in which to store state (unless +:state_out+ is specified); defaults
+    #   to +"terraform.tfstate"+.
+    # * +:state_out+: (legacy) the path to write state to that is different than
     #   +:state+; this can be used to preserve the old state.
     # * +:target+: the address of a resource to target; if both +:target+ and
     #   +:targets+ are provided, all targets will be passed to terraform.
