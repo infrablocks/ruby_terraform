@@ -578,9 +578,27 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Plan, parameters)
     end
 
+    # Invokes the +terraform providers+ command which prints out a tree of
+    # modules in the referenced configuration annotated with their provider
+    # requirements.
+    #
+    # This provides an overview of all of the provider requirements across all
+    # referenced modules, as an aid to understanding why particular provider
+    # plugins are needed and why particular versions are selected.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.providers
+    #
+    def providers(parameters = {})
+      exec(RubyTerraform::Commands::Providers, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      providers: RubyTerraform::Commands::Providers,
       providers_lock: RubyTerraform::Commands::ProvidersLock,
       providers_mirror: RubyTerraform::Commands::ProvidersMirror,
       providers_schema: RubyTerraform::Commands::ProvidersSchema,
