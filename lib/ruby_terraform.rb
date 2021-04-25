@@ -253,13 +253,48 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Get, parameters)
     end
 
+    # Invokes the +terraform graph+ command which outputs the visual execution
+    # graph of terraform resources according to either the current configuration
+    # or an execution plan.
+    #
+    # The graph is outputted in DOT format. The typical program that can
+    # read this format is GraphViz, but many web services are also available to
+    # read this format.
+    #
+    # The +:type+ option can be used to control the type of graph shown.
+    # Terraform creates different graphs for different operations. See the
+    # options below for the list of types supported. The default type is
+    # +"plan"+ if a configuration is given, and +"apply"+ if a plan file is
+    # passed as an argument.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :plan Render the graph using the specified
+    #   plan file instead of the configuration in the current directory.
+    # @option parameters [Boolean] :draw_cycles (false) If +true+, highlights
+    #   any cycles in the graph with colored edges; this helps when diagnosing
+    #   cycle errors.
+    # @option parameters [String] :type The type of graph to output; can be:
+    #   +"plan"+, +"plan-destroy"+, +"apply"+, +"validate"+, +"input"+,
+    #   +"refresh"+; defaults to +"apply"+ if +:plan+ is provided, +"plan"+
+    #   otherwise.
+    # @option parameters [Integer] :module_depth In prior versions of terraform,
+    #   specified the depth of modules to show in the output (deprecated).
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.graph
+    #
+    def graph(parameters = {})
+      exec(RubyTerraform::Commands::Graph, parameters)
+    end
+
     def init(parameters = {})
       exec(RubyTerraform::Commands::Init, parameters)
     end
 
     {
       clean: RubyTerraform::Commands::Clean,
-      graph: RubyTerraform::Commands::Graph,
       import: RubyTerraform::Commands::Import,
       login: RubyTerraform::Commands::Login,
       logout: RubyTerraform::Commands::Logout,
