@@ -176,8 +176,8 @@ module RubyTerraform
     #   operation that failed due to a lock; required.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
-    # @option parameters [Boolean] :force (false) If +true+, does not ask for input for
-    #   unlock confirmation.
+    # @option parameters [Boolean] :force (false) If +true+, does not ask for
+    #   input for unlock confirmation.
     #
     # @example Basic Invocation
     #   RubyTerraform.force_unlock(
@@ -290,8 +290,8 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Graph, parameters)
     end
 
-    # Invokes the +terraform import+ command which imports existing infrastructure
-    # into your terraform state.
+    # Invokes the +terraform import+ command which imports existing
+    # infrastructure into your terraform state.
     #
     # This will find and import the specified resource into your terraform
     # state, allowing existing infrastructure to come under terraform
