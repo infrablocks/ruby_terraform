@@ -511,9 +511,75 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Output, parameters)
     end
 
+    # Invokes the +terraform plan+ command which generates a speculative
+    # execution plan, showing what actions Terraform would take to apply the
+    # current configuration. This command will not actually perform the planned
+    # actions.
+    #
+    # You can optionally save the plan to a file, which you can then pass to
+    # the {#apply} command to perform exactly the actions described in the plan.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :plan The path to output the plan if it should
+    #   be saved to a file.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :compact_warnings (false) When +true+, if
+    #   terraform produces any warnings that are not accompanied by errors,
+    #   they are shown in a more compact form that includes only the summary
+    #   messages.
+    # @option parameters [Boolean] :destroy (false) When +true+, a plan will be
+    #   generated to destroy all resources managed by the given configuration
+    #   and state.
+    # @option parameters [Boolean] :detailed_exitcode (false) Whether or not to
+    #   return detailed exit codes when the command exits; this will change the
+    #   meaning of exit codes to: 0 - Succeeded, diff is empty (no changes); 1 -
+    #   Errored; 2 - Succeeded, there is a diff.
+    # @option parameters [Boolean] :input (true) When +false+, will not ask for
+    #   input for variables not directly set.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [Integer] :parallelism (10) The number of parallel
+    #   resource operations.
+    # @option parameters [Boolean] :refresh (true) When +true+, updates state
+    #   prior to checking for differences; when +false+ uses locally available
+    #   state; this has no effect when +:plan+ is provided.
+    # @option parameters [String] :state ("terraform.tfstate") The path to the
+    #   state file from which to read state and in which to store state (unless
+    #   +:state_out+ is specified).
+    # @option parameters [String] :target The address of a resource to target;
+    #   if both +:target+ and +:targets+ are provided, all targets will be
+    #   passed to terraform.
+    # @option parameters [Array<String>] :targets An array of resource addresses
+    #   to target; if both +:target+ and +:targets+ are provided, all targets
+    #   will be passed to terraform.
+    # @option parameters [Hash<String, Object>] :vars A map of variables to be
+    #   passed to the terraform configuration.
+    # @option parameters [String] :var_file The path to a terraform var file;
+    #   if both +:var_file+ and +:var_files+ are provided, all var files will be
+    #   passed to terraform.
+    # @option parameters [Array<String>] :var_files An array of paths to
+    #   terraform var files; if both +:var_file+ and +:var_files+ are provided,
+    #   all var files will be passed to terraform.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.plan(
+    #     directory: 'infra/networking',
+    #     vars: {
+    #       region: 'eu-central'
+    #     })
+    #
+    def plan(parameters = {})
+      exec(RubyTerraform::Commands::Plan, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      plan: RubyTerraform::Commands::Plan,
       providers: RubyTerraform::Commands::Providers,
       providers_lock: RubyTerraform::Commands::ProvidersLock,
       providers_mirror: RubyTerraform::Commands::ProvidersMirror,
