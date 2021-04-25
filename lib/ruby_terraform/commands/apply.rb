@@ -23,13 +23,13 @@ module RubyTerraform
     #   required unless +:plan+ is provided.
     # * +:plan+: the path to a pre-computed plan to be applied;
     #   required unless +:directory+ is provided.
+    # * +:chdir+: the path of a working directory to switch to before executing
+    #   the given subcommand.
     # * +:auto_approve+: if +true+, skips interactive approval of the generated
     #   plan before applying; defaults to +false+.
     # * +:backup+: the path to backup the existing state file before modifying;
     #   defaults to the +:state_out+ path with +".backup"+ extension; set
     #   +:no_backup+ to +true+ to skip backups entirely.
-    # * +:chdir+: the path of a working directory to switch to before executing
-    #   the given subcommand.
     # * +:compact_warnings+: when +true+, if terraform produces any warnings
     #   that are not accompanied by errors, they are shown in a more compact
     #   form that includes only the summary messages; defaults to +false+.

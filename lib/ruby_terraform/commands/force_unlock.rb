@@ -18,7 +18,8 @@ module RubyTerraform
     # When executing an instance of {ForceUnlock} via {#execute}, the following
     # options are supported:
     #
-    # * +:lock_id+: the directory containing terraform configuration; required.
+    # * +:lock_id+: the lock ID output when attempting an operation that failed
+    #   due to a lock; required.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:force+: If +true+, does not ask for input for unlock confirmation;
@@ -42,6 +43,7 @@ module RubyTerraform
       end
 
       # @!visibility private
+      # @todo Add directory option.
       def arguments(parameters)
         [parameters[:lock_id]]
       end

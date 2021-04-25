@@ -38,14 +38,14 @@ module RubyTerraform
     #   configuration; required unless +:plan+ is provided.
     # @option parameters [String] :plan The path to a pre-computed plan to be
     #   applied; required unless +:directory+ is provided.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :auto_approve (false) If +true+, skips
     #   interactive approval of the generated plan before applying.
     # @option parameters [String] :backup The path to backup the existing state
     #   file before modifying; defaults to the +:state_out+ path with
     #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
     #   entirely.
-    # @option parameters [String] :chdir The path of a working directory to
-    #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :compact_warnings (false) When +true+, if
     #   terraform produces any warnings that are not accompanied by errors,
     #   they are shown in a more compact form that includes only the summary
@@ -103,14 +103,14 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :directory The directory containing terraform
     #   configuration; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :auto_approve (false) If +true+, skips
     #   interactive approval before destroying.
     # @option parameters [String] :backup The path to backup the existing state
     #   file before modifying; defaults to the +:state_out+ path with
     #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
     #   entirely.
-    # @option parameters [String] :chdir The path of a working directory to
-    #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :compact_warnings (false) When +true+, if
     #   terraform produces any warnings that are not accompanied by errors,
     #   they are shown in a more compact form that includes only the summary
@@ -171,8 +171,8 @@ module RubyTerraform
     # by another process.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :lock_id The directory containing terraform
-    #   configuration; required.
+    # @option parameters [String] :lock_id The lock ID output when attempting an
+    #   operation that failed due to a lock; required.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :force (false) If +true+, does not ask for input for
@@ -186,9 +186,45 @@ module RubyTerraform
       exec(RubyTerraform::Commands::ForceUnlock, parameters)
     end
 
+    # Invokes the +terraform fmt+ command which rewrites all terraform
+    # configuration files to a canonical format.
+    #
+    # Both configuration files (.tf) and variables files (.tfvars) are updated.
+    # JSON files (.tf.json or .tfvars.json) are not modified.
+    #
+    # If +:directory+ is not specified in the parameters map then the current
+    # working directory will be used. If +:directory+ is +"-"+ then content will
+    # be read from the standard input. The given content must be in the
+    # terraform language native syntax; JSON is not supported.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The directory containing terraform
+    #   configuration.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :list (false) If +true+, lists files whose
+    #   formatting differs; always disabled if using standard input.
+    # @option parameters [Boolean] :write (false) If +true+, writes to source
+    #   files; always disabled if using standard input or +:check+ is +true+.
+    # @option parameters [Boolean] :diff (false) If +true+, displays diffs of
+    #   formatting changes.
+    # @option parameters [Boolean] :check (false) If +true+, checks if the input
+    #   is formatted; if any input is not properly formatted, an
+    #   {RubyTerraform::Errors::ExecutionError} will be thrown.
+    # @option parameters [Boolean] :recursive (false) If +true+, also processes
+    #   files in subdirectories; by default, only the provided +:directory+ is
+    #   processed.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.format(
+    #     directory: 'infra/networking')
+    #
+    def format(parameters = {})
+      exec(RubyTerraform::Commands::Format, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      format: RubyTerraform::Commands::Format,
       get: RubyTerraform::Commands::Get,
       graph: RubyTerraform::Commands::Graph,
       import: RubyTerraform::Commands::Import,
