@@ -223,12 +223,44 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Format, parameters)
     end
 
+    # Invokes the +terraform get+ command which downloads and installs modules
+    # needed for the given configuration.
+    #
+    # This recursively downloads all modules needed, such as modules imported by
+    # the root and so on. If a module is already downloaded, it will not be
+    # redownloaded or checked for updates unless +:update+ is +true+.
+    #
+    # Module installation also happens automatically by default as part of
+    # the {.init} command, so you should rarely need to run this command
+    # separately.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The directory containing terraform
+    #   configuration; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :update (false) If +true+, checks
+    #   already-downloaded modules for available updates and installs the
+    #   newest versions available.
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.get(
+    #     directory: 'infra/networking')
+    #
+    def get(parameters = {})
+      exec(RubyTerraform::Commands::Get, parameters)
+    end
+
+    def init(parameters = {})
+      exec(RubyTerraform::Commands::Init, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      get: RubyTerraform::Commands::Get,
       graph: RubyTerraform::Commands::Graph,
       import: RubyTerraform::Commands::Import,
-      init: RubyTerraform::Commands::Init,
       login: RubyTerraform::Commands::Login,
       logout: RubyTerraform::Commands::Logout,
       output: RubyTerraform::Commands::Output,
