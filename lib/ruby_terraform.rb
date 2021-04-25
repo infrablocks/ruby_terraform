@@ -443,9 +443,30 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Init, parameters)
     end
 
+    # Invokes the +terraform login+ command which retrieves an authentication
+    # token for the given hostname, if it supports automatic login, and saves it
+    # in a credentials file in your home directory.
+    #
+    # If no hostname is provided, the default hostname is app.terraform.io, to
+    # log in to Terraform Cloud.
+    #
+    # If not overridden by credentials helper settings in the CLI configuration,
+    # the credentials will be written to the following local file:
+    #   ~/.terraform.d/credentials.tfrc.json
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.login
+    #
+    def login(parameters = {})
+      exec(RubyTerraform::Commands::Login, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      login: RubyTerraform::Commands::Login,
       logout: RubyTerraform::Commands::Logout,
       output: RubyTerraform::Commands::Output,
       plan: RubyTerraform::Commands::Plan,
