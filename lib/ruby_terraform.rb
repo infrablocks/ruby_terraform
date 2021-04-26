@@ -597,9 +597,71 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Providers, parameters)
     end
 
+    # Invokes the +terraform providers lock+ command which writes out dependency
+    # locks for the configured providers.
+    #
+    # Normally the dependency lock file (.terraform.lock.hcl) is updated
+    # automatically by "terraform init", but the information available to the
+    # normal provider installer can be constrained when you're installing
+    # providers from filesystem or network mirrors, and so the generated lock
+    # file can end up incomplete.
+    #
+    # The "providers lock" subcommand addresses that by updating the lock file
+    # based on the official packages available in the origin registry, ignoring
+    # the currently-configured installation strategy.
+    #
+    # After this command succeeds, the lock file will contain suitable checksums
+    # to allow installation of the providers needed by the current configuration
+    # on all of the selected platforms.
+    #
+    # By default this command updates the lock file for every provider declared
+    # in the configuration. You can override that behavior by providing one or
+    # more provider source addresses on the command line.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :providers The provider source addresses for
+    #   which the lock file should be updated.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :fs_mirror If provided, consults the given
+    #   filesystem mirror directory instead of the origin registry for each of
+    #   the given providers; this would be necessary to generate lock file
+    #   entries for a provider that is available only via a mirror, and not
+    #   published in an upstream registry; in this case, the set of valid
+    #   checksums will be limited only to what Terraform can learn from the data
+    #   in the mirror directory.
+    # @option parameters [String] :net_mirror If provided, consults the given
+    #   network mirror (given as a base URL) instead of the origin registry for
+    #   each of the given providers; this would be necessary to generate lock
+    #   file entries for a provider that is available only via a mirror, and not
+    #   published in an upstream registry; in this case, the set of valid
+    #   checksums will be limited only to what Terraform can learn from the data
+    #   in the mirror indices.
+    # @option parameters [String] :platform The target platform to request
+    #   package checksums for; by default Terraform will request package
+    #   checksums suitable only for the platform where you run this command;
+    #   target names consist of an operating system and a CPU architecture; for
+    #   example, "linux_amd64" selects the Linux operating system running on an
+    #   AMD64 or x86_64 CPU; each provider is available only for a limited set
+    #   of target platforms; if both +:platform+ and +:platforms+ are provided,
+    #   all platforms will be passed to Terraform.
+    # @option parameters [Array<String>] :platforms An array of target platforms
+    #   to request package checksums for; see +:platform+ for more details; if
+    #   both +:platform+ and +:platforms+ are provided, all platforms will be
+    #   passed to Terraform.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.providers_lock(
+    #     fs_mirror: "/usr/local/terraform/providers",
+    #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"],
+    #     providers: "tf.example.com/ourcompany/ourplatform")
+    #
+    def providers_lock(parameters = {})
+      exec(RubyTerraform::Commands::ProvidersLock, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      providers_lock: RubyTerraform::Commands::ProvidersLock,
       providers_mirror: RubyTerraform::Commands::ProvidersMirror,
       providers_schema: RubyTerraform::Commands::ProvidersSchema,
       refresh: RubyTerraform::Commands::Refresh,

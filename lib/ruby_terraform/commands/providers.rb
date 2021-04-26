@@ -32,7 +32,7 @@ module RubyTerraform
         %w[providers]
       end
 
-      # @todo Add directory argu
+      # @todo Add directory argument
     end
   end
 end
