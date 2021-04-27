@@ -719,9 +719,9 @@ module RubyTerraform
       exec(RubyTerraform::Commands::ProvidersSchema, parameters)
     end
 
-    # Invokes the +terraform refresh+ command which updates the state file of your
-    # infrastructure with metadata that matches the physical resources they are
-    # tracking.
+    # Invokes the +terraform refresh+ command which updates the state file of
+    # your infrastructure with metadata that matches the physical resources they
+    # are tracking.
     #
     # This will not modify your infrastructure, but it can modify your state
     # file to update metadata. This metadata might cause new changes to occur
@@ -788,9 +788,29 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Refresh, parameters)
     end
 
+    # Invokes the +terraform show+ command which reads and outputs a Terraform
+    # state or plan file in a human-readable form. If no path is specified, the
+    # current state will be shown.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :path The path to a state file or plan to
+    #   show.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [Boolean] :json (false) If +true+, outputs the
+    #   Terraform plan or state in a machine-readable form.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.show
+    #
+    def show(parameters = {})
+      exec(RubyTerraform::Commands::Show, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      show: RubyTerraform::Commands::Show,
       state_list: RubyTerraform::Commands::StateList,
       state_mv: RubyTerraform::Commands::StateMove,
       state_pull: RubyTerraform::Commands::StatePull,

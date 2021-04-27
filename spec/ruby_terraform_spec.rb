@@ -26,7 +26,6 @@ describe RubyTerraform do
     providers_mirror: RubyTerraform::Commands::ProvidersMirror,
     providers_schema: RubyTerraform::Commands::ProvidersSchema,
     refresh: RubyTerraform::Commands::Refresh,
-    remote_config: RubyTerraform::Commands::RemoteConfig,
     show: RubyTerraform::Commands::Show,
     state_list: RubyTerraform::Commands::StateList,
     state_mv: RubyTerraform::Commands::StateMove,
