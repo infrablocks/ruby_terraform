@@ -1,34 +1,47 @@
+## 0.66.0 (? ? 2021)
+
+BREAKING CHANGES:
+
+* Removed `RemoteConfig` command since it has not been a part of Terraform since
+  version 0.8.
+  
+IMPROVEMENTS:
+
+* Added support for most outstanding commands
+* Added support for all outstanding options
+* Added Terraform 0.15 support.
+
 ## 0.31.0 (September 25th, 2019)
 
 IMPROVEMENTS
 
-* Add support for `target` and / or `targets` options to be passed to `apply`,
+* Added support for `target` and / or `targets` options to be passed to `apply`,
   `plan`, `refresh` and `destroy` commands.
-* Add support for `plan` option to `apply` command to be more clear when 
+* Added support for `plan` option to `apply` command to be more clear when 
   applying a prebuilt plan.
 
 ## 0.30.0 (September 25th, 2019)
 
 IMPROVEMENTS:
 
-* Add configurable logger and standard streams.
+* Added configurable logger and standard streams.
 
 ## 0.12.0 (June 5th, 2018)
 
 IMPROVEMENTS:
 
-* Allow `check_variables` option to be passed to `validate` command
+* Allowed `check_variables` option to be passed to `validate` command
 
 BUG FIXES:
 
-* Add missing `StringIO` dependency in `output` command 
+* Added missing `StringIO` dependency in `output` command 
 
 ## 0.11.2 (May 1st, 2018)
 
 IMPROVEMENTS:
 
-* Add refresh command
-* Add validate command
+* Added refresh command
+* Added validate command
 
 ## 0.9.0 (September 3rd, 2017)
 
