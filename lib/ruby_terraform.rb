@@ -693,7 +693,7 @@ module RubyTerraform
     #   to Terraform.
     #
     # @example Basic Invocation
-    #   RubyTerraform.platforms_mirror(
+    #   RubyTerraform.providers_mirror(
     #     directory: './plugins',
     #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"])
     #
@@ -701,9 +701,26 @@ module RubyTerraform
       exec(RubyTerraform::Commands::ProvidersMirror, parameters)
     end
 
+    # Invokes the +terraform providers schema+ command which prints out a json
+    # representation of the schemas for all providers used in the current
+    # configuration.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The path to the directory
+    #   containing the configuration to show provider schemas for.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.providers_schema(
+    #     directory: 'infra/networking')
+    #
+    def providers_schema(parameters = {})
+      exec(RubyTerraform::Commands::ProvidersSchema, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      providers_schema: RubyTerraform::Commands::ProvidersSchema,
       refresh: RubyTerraform::Commands::Refresh,
       remote_config: RubyTerraform::Commands::RemoteConfig,
       show: RubyTerraform::Commands::Show,

@@ -40,7 +40,7 @@ module RubyTerraform
     #   are provided, all platforms will be passed to Terraform.
     #
     # @example Basic Invocation
-    #   RubyTerraform::Commands::PlatformsMirror.new.execute(
+    #   RubyTerraform::Commands::ProvidersMirror.new.execute(
     #     directory: './plugins',
     #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"])
     #
