@@ -703,7 +703,6 @@ module RubyTerraform
 
     {
       clean: RubyTerraform::Commands::Clean,
-      providers_mirror: RubyTerraform::Commands::ProvidersMirror,
       providers_schema: RubyTerraform::Commands::ProvidersSchema,
       refresh: RubyTerraform::Commands::Refresh,
       remote_config: RubyTerraform::Commands::RemoteConfig,
