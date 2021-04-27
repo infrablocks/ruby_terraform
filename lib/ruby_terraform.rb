@@ -719,9 +719,77 @@ module RubyTerraform
       exec(RubyTerraform::Commands::ProvidersSchema, parameters)
     end
 
+    # Invokes the +terraform refresh+ command which updates the state file of your
+    # infrastructure with metadata that matches the physical resources they are
+    # tracking.
+    #
+    # This will not modify your infrastructure, but it can modify your state
+    # file to update metadata. This metadata might cause new changes to occur
+    # when you generate a plan or call apply next.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The directory containing terraform
+    #   configuration (deprecated, removed in Terraform 0.15).
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :backup The path to backup the existing state
+    #   file before modifying; defaults to the +:state_out+ path with
+    #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
+    #   entirely (legacy).
+    # @option parameters [Boolean] :compact_warnings (false) When +true+, if
+    #   terraform produces any warnings that are not accompanied by errors,
+    #   they are shown in a more compact form that includes only the summary
+    #   messages.
+    # @option parameters [Boolean] :input (true) When +false+, will not ask for
+    #   input for variables not directly set.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
+    # @option parameters [Boolean] :no_backup (false) When +true+, no backup
+    #   file will be written (legacy).
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [Integer] :parallelism (10) The number of parallel
+    #   resource operations.
+    # @option parameters [Boolean] :refresh (true) When +true+, updates state
+    #   prior to checking for differences; when +false+ uses locally available
+    #   state; this has no effect when +:plan+ is provided.
+    # @option parameters [String] :state ("terraform.tfstate") The path to the
+    #   state file from which to read state and in which to store state (unless
+    #   +:state_out+ is specified) (legacy).
+    # @option parameters [String] :state_out The path to write state to that is
+    #   different than +:state+; this can be used to preserve the old state
+    #   (legacy).
+    # @option parameters [String] :target The address of a resource to target;
+    #   if both +:target+ and +:targets+ are provided, all targets will be
+    #   passed to terraform.
+    # @option parameters [Array<String>] :targets An array of resource addresses
+    #   to target; if both +:target+ and +:targets+ are provided, all targets
+    #   will be passed to terraform.
+    # @option parameters [Hash<String, Object>] :vars A map of variables to be
+    #   passed to the terraform configuration.
+    # @option parameters [String] :var_file The path to a terraform var file;
+    #   if both +:var_file+ and +:var_files+ are provided, all var files will be
+    #   passed to terraform.
+    # @option parameters [Array<String>] :var_files An array of paths to
+    #   terraform var files; if both +:var_file+ and +:var_files+ are provided,
+    #   all var files will be passed to terraform.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.refresh(
+    #     directory: 'infra/networking',
+    #     vars: {
+    #       region: 'eu-central'
+    #     })
+    #
+    def refresh(parameters = {})
+      exec(RubyTerraform::Commands::Refresh, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      refresh: RubyTerraform::Commands::Refresh,
       remote_config: RubyTerraform::Commands::RemoteConfig,
       show: RubyTerraform::Commands::Show,
       state_list: RubyTerraform::Commands::StateList,
