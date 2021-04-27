@@ -790,7 +790,6 @@ module RubyTerraform
 
     {
       clean: RubyTerraform::Commands::Clean,
-      remote_config: RubyTerraform::Commands::RemoteConfig,
       show: RubyTerraform::Commands::Show,
       state_list: RubyTerraform::Commands::StateList,
       state_mv: RubyTerraform::Commands::StateMove,
