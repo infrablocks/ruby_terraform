@@ -660,6 +660,47 @@ module RubyTerraform
       exec(RubyTerraform::Commands::ProvidersLock, parameters)
     end
 
+    # Invokes the +terraform providers mirror+ command which saves local copies
+    # of all required provider plugins.
+    #
+    # Populates a local directory with copies of the provider plugins needed for
+    # the current configuration, so that the directory can be used either
+    # directly as a filesystem mirror or as the basis for a network mirror and
+    # thus obtain those providers without access to their origin registries in
+    # future.
+    #
+    # The mirror directory will contain JSON index files that can be published
+    # along with the mirrored packages on a static HTTP file server to produce a
+    # network mirror. Those index files will be ignored if the directory is used
+    # instead as a local filesystem mirror.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The directory to populate with the
+    #   mirrored provider plugins.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :platform The target platform to build a
+    #   mirror for; by default Terraform will obtain plugin packages suitable
+    #   for the platform where you run this command; target names consist of an
+    #   operating system and a CPU architecture; for example, "linux_amd64"
+    #   selects the Linux operating system running on an AMD64 or x86_64 CPU;
+    #   each provider is available only for a limited set of target platforms;
+    #   if both +:platform+ and +:platforms+ are provided, all platforms will be
+    #   passed to Terraform.
+    # @option parameters [Array<String>] :platforms An array of target platforms
+    #   to build a mirror for for; see +:platform+ for more details; if both
+    #   +:platform+ and +:platforms+ are provided, all platforms will be passed
+    #   to Terraform.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.platforms_mirror(
+    #     directory: './plugins',
+    #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"])
+    #
+    def providers_mirror(parameters = {})
+      exec(RubyTerraform::Commands::ProvidersMirror, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
       providers_mirror: RubyTerraform::Commands::ProvidersMirror,
