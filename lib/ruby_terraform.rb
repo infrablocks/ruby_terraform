@@ -23,6 +23,8 @@ module RubyTerraform
     end
   end
 
+  # rubocop:disable Metrics/ModuleLength
+
   module ClassMethods
     # Invokes the +terraform apply+ command which creates or updates
     # infrastructure according to terraform configuration files in the provided
@@ -809,9 +811,39 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Show, parameters)
     end
 
+    # Invokes the +terraform state list+ command which lists resources in the
+    # Terraform state.
+    #
+    # This command lists resource instances in the Terraform state. The address
+    # option can be used to filter the instances by resource or module. If no
+    # pattern is given, all resource instances are listed.
+    #
+    # The addresses must either be module addresses or absolute resource
+    # addresses, such as:
+    #
+    # * +aws_instance.example+
+    # * +module.example+
+    # * +module.example.module.child+
+    # * +module.example.aws_instance.example+
+    #
+    # An {RubyTerraform::Errors::ExecutionError} will be raised if any of the
+    # resources or modules given as filter addresses do not exist in the state.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :address The module address or absolute
+    #   resource address to filter by.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.state_list
+    #
+    def state_list(parameters = {})
+      exec(RubyTerraform::Commands::StateList, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      state_list: RubyTerraform::Commands::StateList,
       state_mv: RubyTerraform::Commands::StateMove,
       state_pull: RubyTerraform::Commands::StatePull,
       state_push: RubyTerraform::Commands::StatePush,
@@ -857,6 +889,9 @@ module RubyTerraform
       command_class.new.execute(parameters)
     end
   end
+
+  # rubocop:enable Metrics/ModuleLength
+
   extend ClassMethods
 
   def self.included(other)
