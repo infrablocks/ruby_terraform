@@ -918,9 +918,42 @@ module RubyTerraform
     def state_pull(parameters = {})
       exec(RubyTerraform::Commands::StatePull, parameters)
     end
+
+    # Invokes the +terraform state push+ command which updates remote state from
+    # a local state file.
+    #
+    # This command "pushes" a local state and overwrites remote state with a
+    # local state file. The command will protect you against writing
+    # an older serial or a different state file lineage unless you pass +true+
+    # for the +:force+ option.
+    #
+    # This command works with local state (it will overwrite the local state),
+    # but is less useful for this use case.
+    #
+    # If +:path+ is +"-"+, then this command will read the state to push from
+    # stdin. Data from stdin is not streamed to the backend: it is loaded
+    # completely (until pipe close), verified, and then pushed.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :path The path to the state file to push; when
+    #   passed +"-"+ will read state from standard input.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :ignore_remote_version Whether or not to
+    #   continue even if remote and local Terraform versions are incompatible;
+    #   this may result in an unusable workspace, and should be used with
+    #   extreme caution.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.state_push(
+    #     path: 'some/statefile.tfstate')
+    #
+    def state_push(parameters = {})
+      exec(RubyTerraform::Commands::StatePush, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      state_push: RubyTerraform::Commands::StatePush,
       state_replace_provider: RubyTerraform::Commands::StateReplaceProvider,
       state_rm: RubyTerraform::Commands::StateRemove,
       state_show: RubyTerraform::Commands::StateShow,
