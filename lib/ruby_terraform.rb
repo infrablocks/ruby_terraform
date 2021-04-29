@@ -898,9 +898,28 @@ module RubyTerraform
     end
     alias state_mv state_move
 
+    # Invokes the +terraform state pull+ command which pulls the state from its
+    # location, upgrades the local copy, and outputs it to stdout.
+    #
+    # This command "pulls" the current state and outputs it to stdout. As part
+    # of this process, Terraform will upgrade the state format of the local copy
+    # to the current version.
+    #
+    # The primary use of this is for state stored remotely. This command will
+    # still work with local state but is less useful for this.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.state_pull
+    #
+    def state_pull(parameters = {})
+      exec(RubyTerraform::Commands::StatePull, parameters)
+    end
     {
       clean: RubyTerraform::Commands::Clean,
-      state_pull: RubyTerraform::Commands::StatePull,
       state_push: RubyTerraform::Commands::StatePush,
       state_replace_provider: RubyTerraform::Commands::StateReplaceProvider,
       state_rm: RubyTerraform::Commands::StateRemove,
