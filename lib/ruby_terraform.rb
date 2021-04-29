@@ -225,6 +225,7 @@ module RubyTerraform
     def format(parameters = {})
       exec(RubyTerraform::Commands::Format, parameters)
     end
+    alias fmt format
 
     # Invokes the +terraform get+ command which downloads and installs modules
     # needed for the given configuration.
@@ -842,9 +843,63 @@ module RubyTerraform
       exec(RubyTerraform::Commands::StateList, parameters)
     end
 
+    # Invokes the +terraform state mv+ command which moves an item in the state.
+    #
+    # This command will move an item matched by the address given to the
+    # destination address. This command can also move to a destination address
+    # in a completely different state file.
+    #
+    # This can be used for simple resource renaming, moving items to and from
+    # a module, moving entire modules, and more. And because this command can
+    # also move data to a completely new state, it can also be used for
+    # refactoring one configuration into multiple separately managed Terraform
+    # configurations.
+    #
+    # This command will output a backup copy of the state prior to saving any
+    # changes. The backup cannot be disabled. Due to the destructive nature
+    # of this command, backups are required.
+    #
+    # If you're moving an item to a different state file, a backup will be
+    # created for each state file.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :source The source address of the item to
+    #   move; required.
+    # @option parameters [String] :destination The destination address to move
+    #   the item to; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :backup The path where Terraform should write
+    #   the backup for the original state; this can't be disabled; if not set,
+    #   Terraform will write it to the same path as the state file with a
+    #   +".backup"+ extension.
+    # @option parameters [String] :backup_out The path where Terraform should
+    #   write the backup for the destination state; this can't be disabled; if
+    #   not set, Terraform will write it to the same path as the destination
+    #   state file with a +".backup"+ extension; this only needs to be specified
+    #   if +:state_out+ is set to a different path than +:state+.
+    # @option parameters [String] :state the path to the source state file;
+    #   defaults to the configured backend, or +"terraform.tfstate"+.
+    # @option parameters [String] :state_out The path to the destination state
+    #   file to write to; if this isn't specified, the source state file will be
+    #   used; this can be a new or existing path.
+    # @option parameters [Boolean] :ignore_remote_version (false) Whether or not
+    #   to continue even if remote and local Terraform versions are
+    #   incompatible; this may result in an unusable workspace, and should be
+    #   used with extreme caution.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.state_move(
+    #     source: 'packet_device.worker',
+    #     destination: 'packet_device.helper')
+    #
+    def state_move(parameters = {})
+      exec(RubyTerraform::Commands::StateMove, parameters)
+    end
+    alias state_mv state_move
+
     {
       clean: RubyTerraform::Commands::Clean,
-      state_mv: RubyTerraform::Commands::StateMove,
       state_pull: RubyTerraform::Commands::StatePull,
       state_push: RubyTerraform::Commands::StatePush,
       state_replace_provider: RubyTerraform::Commands::StateReplaceProvider,
