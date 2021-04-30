@@ -1294,16 +1294,27 @@ module RubyTerraform
       exec(RubyTerraform::Commands::WorkspaceSelect, parameters)
     end
 
-    {
-      clean: RubyTerraform::Commands::Clean,
-      workspace_show: RubyTerraform::Commands::WorkspaceShow
-    }.each do |method, command_class|
-      define_method(method) do |parameters = {}|
-        exec(command_class, parameters)
-      end
+    # Invokes the +terraform workspace show+ command which shows the name of the
+    # current workspace.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.workspace_show
+    #
+    def workspace_show(parameters = {})
+      exec(RubyTerraform::Commands::WorkspaceShow, parameters)
     end
 
-    def workspace(parameters = {}) # rubocop:disable Metrics/MethodLength
+    def clean(parameters = {})
+      exec(RubyTerraform::Commands::Clean, parameters)
+    end
+
+    # rubocop:disable Metrics/MethodLength
+
+    def workspace(parameters = {})
       case parameters[:operation]
       when nil, 'list'
         exec(RubyTerraform::Commands::WorkspaceList, parameters)
@@ -1321,6 +1332,8 @@ module RubyTerraform
         )
       end
     end
+
+    # rubocop:enable Metrics/MethodLength
 
     private
 
