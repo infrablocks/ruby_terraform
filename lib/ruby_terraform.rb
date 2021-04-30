@@ -1026,9 +1026,29 @@ module RubyTerraform
       exec(RubyTerraform::Commands::StateReplaceProvider, parameters)
     end
 
+    # Invokes the +terraform state show+ command which shows the attributes of a
+    # resource in the Terraform state.
+    #
+    # This command shows the attributes of a single resource in the Terraform
+    # state. The +:address+ argument must be used to specify a single resource.
+    # You can view the list of available resources with {#state_list}.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :address The module address or absolute
+    #   resource address of the resource instance to show; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.state_show(
+    #     address: 'packet_device.worker')
+    #
+    def state_show(parameters = {})
+      exec(RubyTerraform::Commands::StateShow, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      state_show: RubyTerraform::Commands::StateShow,
       taint: RubyTerraform::Commands::Taint,
       untaint: RubyTerraform::Commands::Untaint,
       validate: RubyTerraform::Commands::Validate,
