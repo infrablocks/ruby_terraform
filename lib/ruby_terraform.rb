@@ -954,7 +954,7 @@ module RubyTerraform
 
     # Invokes the +terraform state rm+ command which removes one or more items
     # from the Terraform state, causing Terraform to "forget" those items
-    #  without first destroying them in the remote system.
+    # without first destroying them in the remote system.
     #
     # This command removes one or more resource instances from the Terraform
     # state based on the addresses given. You can view and list the available
@@ -967,8 +967,8 @@ module RubyTerraform
     # all of the instances of that resource will be removed from the state.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :addressTthe module address or absolute
-    #   resource address to remove.
+    # @option parameters [String] :address The module address or absolute
+    #   resource address of the resource instance to remove; required.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [String] :backup The path where Terraform should
@@ -989,9 +989,45 @@ module RubyTerraform
     end
     alias state_rm state_remove
 
+    # Invoke the +terraform state replace-provider+ command which replaces
+    # provider for resources in the Terraform state.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :from The fully qualified name of the provider
+    #   to be replaced; required.
+    # @option parameters [String] :to The fully qualified name of the provider
+    #   to replace with; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :auto_approve (false) If +true+, skips
+    #   interactive approval.
+    # @option parameters [String] :backup The path where Terraform should write
+    #   the backup for the state file; this can't be disabled; if not set,
+    # 	Terraform will write it to the same path as the state file with a
+    # 	".backup" extension.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
+    # @option parameters [String] :state The path to the state file to update;
+    #   defaults to the current workspace state.
+    # @option parameters [Boolean] :ignore_remote_version (false) Whether or not
+    #   to continue even if remote and local Terraform versions are
+    #   incompatible; this may result in an unusable workspace, and should be
+    #   used with extreme caution.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.state_replace_provider(
+    #     from: 'hashicorp/aws',
+    #     to: 'registry.acme.corp/acme/aws')
+    #
+    def state_replace_provider(parameters = {})
+      exec(RubyTerraform::Commands::StateReplaceProvider, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      state_replace_provider: RubyTerraform::Commands::StateReplaceProvider,
       state_show: RubyTerraform::Commands::StateShow,
       taint: RubyTerraform::Commands::Taint,
       untaint: RubyTerraform::Commands::Untaint,

@@ -24,8 +24,8 @@ module RubyTerraform
     # When executing an instance of {StateRemove} via {#execute}, the following
     # options are supported:
     #
-    # * +:address+: the module address or absolute resource address to filter
-    #   by.
+    # * +:address+: the module address or absolute resource address of the
+    #   resource instance to remove; required.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:backup+: the path where Terraform should write the backup state.
