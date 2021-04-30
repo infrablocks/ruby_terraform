@@ -1275,9 +1275,27 @@ module RubyTerraform
       exec(RubyTerraform::Commands::WorkspaceNew, parameters)
     end
 
+    # Invokes the +terraform workspace select+ command which selects a
+    # workspace.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :workspace The name of the workspace to
+    #   select; required.
+    # @option parameters [String] :directory The directory containing terraform
+    #   configuration (deprecated).
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example BasicInvocation
+    #   RubyTerraform.workspace_select(
+    #     workspace: 'example')
+    #
+    def workspace_select(parameters = {})
+      exec(RubyTerraform::Commands::WorkspaceSelect, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      workspace_select: RubyTerraform::Commands::WorkspaceSelect,
       workspace_show: RubyTerraform::Commands::WorkspaceShow
     }.each do |method, command_class|
       define_method(method) do |parameters = {}|
