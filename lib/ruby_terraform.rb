@@ -939,7 +939,7 @@ module RubyTerraform
     #   passed +"-"+ will read state from standard input.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
-    # @option parameters [String] :ignore_remote_version Whether or not to
+    # @option parameters [Boolean] :ignore_remote_version Whether or not to
     #   continue even if remote and local Terraform versions are incompatible;
     #   this may result in an unusable workspace, and should be used with
     #   extreme caution.
@@ -952,10 +952,46 @@ module RubyTerraform
       exec(RubyTerraform::Commands::StatePush, parameters)
     end
 
+    # Invokes the +terraform state rm+ command which removes one or more items
+    # from the Terraform state, causing Terraform to "forget" those items
+    #  without first destroying them in the remote system.
+    #
+    # This command removes one or more resource instances from the Terraform
+    # state based on the addresses given. You can view and list the available
+    # instances with {#state_list}.
+    #
+    # If you give the address of an entire module then all of the instances in
+    # that module and any of its child modules will be removed from the state.
+    #
+    # If you give the address of a resource that has "count" or "for_each" set,
+    # all of the instances of that resource will be removed from the state.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :addressTthe module address or absolute
+    #   resource address to remove.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :backup The path where Terraform should
+    #   write the backup state.
+    # @option parameters [String] :state The path to the state file to update;
+    #   defaults to the current workspace state.
+    # @option parameters [Boolean] :ignore_remote_version (false) Whether or not
+    #   to continue even if remote and local Terraform versions are
+    #   incompatible; this may result in an unusable workspace, and should be
+    #   used with extreme caution.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.state_remove(
+    #     address: 'packet_device.worker')
+    #
+    def state_remove(parameters = {})
+      exec(RubyTerraform::Commands::StateRemove, parameters)
+    end
+    alias state_rm state_remove
+
     {
       clean: RubyTerraform::Commands::Clean,
       state_replace_provider: RubyTerraform::Commands::StateReplaceProvider,
-      state_rm: RubyTerraform::Commands::StateRemove,
       state_show: RubyTerraform::Commands::StateShow,
       taint: RubyTerraform::Commands::Taint,
       untaint: RubyTerraform::Commands::Untaint,
