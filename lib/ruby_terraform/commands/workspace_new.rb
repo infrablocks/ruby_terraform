@@ -5,13 +5,36 @@ require_relative '../options/common'
 
 module RubyTerraform
   module Commands
+    # Wraps the +terraform workspace new+ command which creates a new workspace.
+    #
+    # For options accepted on construction, see {#initialize}.
+    #
+    # When executing an instance of {WorkspaceNew} via {#execute}, the
+    # following options are supported:
+    #
+    # * +:workspace+: the name of the workspace to create; required.
+    # * +:directory+: the directory containing terraform configuration
+    #   (deprecated).
+    # * +:chdir+: the path of a working directory to switch to before executing
+    #   the given subcommand.
+    # * +:lock+: when +true+, locks the state file when locking is supported;
+    #   when +false+, does not lock the state file; defaults to +true+.
+    # * +:lock_timeout+: the duration to retry a state lock; defaults to +"0s"+.
+    # * +:state+: the path to a state file to copy into the new workspace.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform::Commands::WorkspaceNew.new.execute(
+    #     workspace: 'example')
+    #
     class WorkspaceNew < Base
       include RubyTerraform::Options::Common
 
+      # @!visibility private
       def subcommands
         %w[workspace new]
       end
 
+      # @!visibility private
       def options
         %w[
           -lock
@@ -20,12 +43,9 @@ module RubyTerraform
         ] + super
       end
 
+      # @!visibility private
       def arguments(parameters)
         [parameters[:workspace], parameters[:directory]]
-      end
-
-      def parameter_defaults(_parameters)
-        { directory: nil }
       end
     end
   end
