@@ -1207,9 +1207,24 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Validate, parameters)
     end
 
+    # Invokes the +terraform workspace list+ command which lists workspaces.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The directory containing terraform
+    #   configuration (deprecated).
+    # @option parameters [String] :chdir the path of a working directory to
+    #   switch to before executing the given subcommand.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.workspace_list(
+    #     directory: 'infra/networking')
+    #
+    def workspace_list(parameters = {})
+      exec(RubyTerraform::Commands::WorkspaceList, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      workspace_list: RubyTerraform::Commands::WorkspaceList,
       workspace_select: RubyTerraform::Commands::WorkspaceSelect,
       workspace_new: RubyTerraform::Commands::WorkspaceNew,
       workspace_delete: RubyTerraform::Commands::WorkspaceDelete,
