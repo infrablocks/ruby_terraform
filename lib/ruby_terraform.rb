@@ -1207,6 +1207,32 @@ module RubyTerraform
       exec(RubyTerraform::Commands::Validate, parameters)
     end
 
+    # Invokes the +terraform workspace delete+ command which deletes a
+    # workspace.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :workspace The name of the workspace to
+    #   delete; required.
+    # @option parameters [String] :directory The directory containing terraform
+    #   configuration (deprecated).
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :force (false) Whether or not to remove a
+    #   non-empty workspace; defaults to +false+.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.workspace_delete(
+    #     workspace: 'example')
+    #
+    def workspace_delete(parameters = {})
+      exec(RubyTerraform::Commands::WorkspaceDelete, parameters)
+    end
+
     # Invokes the +terraform workspace list+ command which lists workspaces.
     #
     # @param parameters The parameters used to invoke the command
@@ -1227,7 +1253,6 @@ module RubyTerraform
       clean: RubyTerraform::Commands::Clean,
       workspace_select: RubyTerraform::Commands::WorkspaceSelect,
       workspace_new: RubyTerraform::Commands::WorkspaceNew,
-      workspace_delete: RubyTerraform::Commands::WorkspaceDelete,
       workspace_show: RubyTerraform::Commands::WorkspaceShow
     }.each do |method, command_class|
       define_method(method) do |parameters = {}|
