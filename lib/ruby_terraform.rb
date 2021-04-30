@@ -1047,10 +1047,123 @@ module RubyTerraform
       exec(RubyTerraform::Commands::StateShow, parameters)
     end
 
+    # Invokes the +terraform taint+ command which marks a resource instance as
+    # not fully functional.
+    #
+    # Terraform uses the term "tainted" to describe a resource instance which
+    # may not be fully functional, either because its creation partially failed
+    # or because you've manually marked it as such using this command.
+    #
+    # This will not modify your infrastructure directly, but subsequent
+    # Terraform plans will include actions to destroy the remote object and
+    # create a new object to replace it.
+    #
+    # You can remove the "taint" state from a resource instance using the
+    # {#untaint} command.
+    #
+    # The address is in the usual resource address syntax, such as:
+    #
+    # * +aws_instance.foo+
+    # * <tt>aws_instance.bar[1]</tt>
+    # * +module.foo.module.bar.aws_instance.baz+
+    #
+    # Use your shell's quoting or escaping syntax to ensure that the address
+    # will reach Terraform correctly, without any special interpretation.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :address The module address or absolute
+    #   resource address of the resource instance to taint; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :allow_missing (false) If +true+, the command
+    #   will succeed (i.e., will not throw an
+    #   {RubyTerraform::Errors::ExecutionError}) even if the resource is
+    #   missing.
+    # @option parameters [String] :backup The path to backup the existing state
+    #   file before modifying; defaults to the +:state_out+ path with
+    #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
+    #   entirely.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
+    # @option parameters [Boolean] :no_backup (false) When +true+, no backup
+    #   file will be written.
+    # @option parameters [String] :state The path to the state file from which
+    #   to read state and in which to store state (unless +:state_out+ is
+    #   specified); defaults to +"terraform.tfstate"+.
+    # @option parameters [String] :state_out The path to write state to that is
+    #   different than +:state+; this can be used to preserve the old state.
+    # @option parameters [Boolean] :ignore_remote_version (false) Whether or not
+    #   to continue even if remote and local Terraform versions are
+    #   incompatible; this may result in an unusable workspace, and should be
+    #   used with extreme caution.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.taint(
+    #     address: 'aws_security_group.allow_all')
+    #
+    def taint(parameters = {})
+      exec(RubyTerraform::Commands::Taint, parameters)
+    end
+
+    # Invokes the +terraform untaint+ command which removes the 'tainted' state
+    # from a resource instance.
+    #
+    # Terraform uses the term "tainted" to describe a resource instance
+    # which may not be fully functional, either because its creation partially
+    # failed or because you've manually marked it as such using the {#taint}
+    # command.
+    #
+    # This command removes that state from a resource instance, causing
+    # Terraform to see it as fully-functional and not in need of replacement.
+    #
+    # This will not modify your infrastructure directly. It only avoids
+    # Terraform planning to replace a tainted instance in a future operation.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :name The name of the resource instance to
+    #   untaint; required.
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :allow_missing (false) If +true+, the command
+    #   will succeed (i.e., will not throw an
+    #   {RubyTerraform::Errors::ExecutionError}) even if the resource is
+    #   missing.
+    # @option parameters [String] :backup The path to backup the existing state
+    #   file before modifying; defaults to the +:state_out+ path with
+    #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
+    #   entirely.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout The duration to retry a state
+    #   lock; defaults to +"0s"+.
+    # @option parameters [Boolean] :no_backup (false) When +true+, no backup
+    #   file will be written.
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [String] :state The path to the state file from which
+    #   to read state and in which to store state (unless +:state_out+ is
+    #   specified); defaults to +"terraform.tfstate"+.
+    # @option parameters [String] :state_out The path to write state to that is
+    #   different than +:state+; this can be used to preserve the old state.
+    # @option parameters [Boolean] :ignore_remote_version (false) Whether or not
+    #   to continue even if remote and local Terraform versions are
+    #   incompatible; this may result in an unusable workspace, and should be
+    #   used with extreme caution.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.untaint(
+    #     name: 'aws_security_group.allow_all')
+    #
+    def untaint(parameters = {})
+      exec(RubyTerraform::Commands::Untaint, parameters)
+    end
+
     {
       clean: RubyTerraform::Commands::Clean,
-      taint: RubyTerraform::Commands::Taint,
-      untaint: RubyTerraform::Commands::Untaint,
       validate: RubyTerraform::Commands::Validate,
       workspace_list: RubyTerraform::Commands::WorkspaceList,
       workspace_select: RubyTerraform::Commands::WorkspaceSelect,

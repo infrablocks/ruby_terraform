@@ -31,7 +31,8 @@ module RubyTerraform
     #   the given subcommand.
     # * +:ignore_remote_version+: whether or not to continue even if remote and
     #   local Terraform versions are incompatible; this may result in an
-    #   unusable workspace, and should be used with extreme caution.
+    #   unusable workspace, and should be used with extreme caution; defaults to
+    #   +false+.
     #
     # @example Basic Invocation
     #   RubyTerraform::Commands::StatePush.new.execute(
