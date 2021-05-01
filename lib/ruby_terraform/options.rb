@@ -5,7 +5,7 @@ require_relative 'options/types'
 require_relative 'options/values'
 require_relative 'options/definition'
 require_relative 'options/factory'
-require_relative 'options/common'
+require_relative 'options/global'
 
 module RubyTerraform
   module Options

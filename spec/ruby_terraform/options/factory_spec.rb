@@ -802,6 +802,31 @@ describe RubyTerraform::Options::Factory do
         )]))
     end
   end
+
+  context 'when placement provided' do
+    it 'builds a standard option with the provided placement' do
+      definitions = [
+        O.definition(
+          name: '-option',
+          option_type: :standard,
+          value_type: :string,
+          placement: :after_subcommands
+        )
+      ]
+      factory = O::Factory.new(definitions)
+      names = ['-option']
+      parameters = { option: 'value' }
+
+      options = factory.resolve(names, parameters)
+
+      expect(options)
+        .to(eq([O.types.standard(
+          O.name('-option'),
+          O.values.string('value'),
+          placement: :after_subcommands
+        )]))
+    end
+  end
 end
 
 # defaulting of definition parameters

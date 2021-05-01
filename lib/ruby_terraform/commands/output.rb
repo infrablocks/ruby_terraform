@@ -2,7 +2,7 @@
 
 require 'stringio'
 require_relative 'base'
-require_relative '../options/common'
+require_relative '../options/global'
 
 module RubyTerraform
   module Commands
@@ -34,7 +34,7 @@ module RubyTerraform
     #     name: 'vpc_id')
     #
     class Output < Base
-      include RubyTerraform::Options::Common
+      include RubyTerraform::Options::Global
 
       # @!visibility private
       def stdout

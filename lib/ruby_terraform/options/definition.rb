@@ -16,6 +16,7 @@ module RubyTerraform
       :override_keys,
       :extra_keys,
       :separator,
+      :placement,
       :repeatable?
     )
       # rubocop:disable Metrics/MethodLength
@@ -28,6 +29,7 @@ module RubyTerraform
           value_type: Values.resolve(opts[:value_type]) || Values::String,
           repeatable: opts[:repeatable] || false,
           separator: opts[:separator],
+          placement: opts[:placement],
           extra_keys:
             { singular: [], plural: [] }
               .merge(opts[:extra_keys] || {}),
@@ -97,7 +99,7 @@ module RubyTerraform
       end
 
       def build_option(value)
-        option_type.new(name, value, separator: separator)
+        option_type.new(name, value, separator: separator, placement: placement)
       end
 
       def build_value(value)

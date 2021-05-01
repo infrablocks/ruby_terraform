@@ -93,7 +93,7 @@ describe RubyTerraform::Commands::Refresh do
   )
 
   it_behaves_like(
-    'a command with common options',
+    'a command with global options',
     [command, directory]
   )
 end

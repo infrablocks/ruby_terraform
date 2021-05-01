@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'base'
-require_relative '../options/common'
+require_relative '../options/global'
 
 module RubyTerraform
   module Commands
@@ -37,7 +37,7 @@ module RubyTerraform
     #   RubyTerraform::Commands::StateList.new.execute
     #
     class StateList < Base
-      include RubyTerraform::Options::Common
+      include RubyTerraform::Options::Global
 
       # @!visibility private
       def subcommands

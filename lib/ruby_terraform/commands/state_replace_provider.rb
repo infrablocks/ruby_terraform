@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'base'
-require_relative '../options/common'
+require_relative '../options/global'
 
 module RubyTerraform
   module Commands
@@ -40,7 +40,7 @@ module RubyTerraform
     #     to: 'registry.acme.corp/acme/aws')
     #
     class StateReplaceProvider < Base
-      include RubyTerraform::Options::Common
+      include RubyTerraform::Options::Global
 
       # @!visibility private
       def subcommands

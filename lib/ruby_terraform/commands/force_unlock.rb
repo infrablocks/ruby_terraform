@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'base'
-require_relative '../options/common'
+require_relative '../options/global'
 
 module RubyTerraform
   module Commands
@@ -30,7 +30,7 @@ module RubyTerraform
     #     lock_id: '50e844a7-ebb0-fcfd-da85-5cce5bd1ec90')
     #
     class ForceUnlock < Base
-      include RubyTerraform::Options::Common
+      include RubyTerraform::Options::Global
 
       # @!visibility private
       def subcommands

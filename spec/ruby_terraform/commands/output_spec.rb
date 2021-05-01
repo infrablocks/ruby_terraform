@@ -96,6 +96,6 @@ describe RubyTerraform::Commands::Output do
 
   it_behaves_like('a command with a flag', [output_command, :raw])
 
-  it_behaves_like('a command with common options', output_command)
+  it_behaves_like('a command with global options', output_command)
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers

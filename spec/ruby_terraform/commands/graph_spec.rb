@@ -26,5 +26,5 @@ describe RubyTerraform::Commands::Graph do
 
   it_behaves_like 'a command with a flag', [command, :draw_cycles]
 
-  it_behaves_like 'a command with common options', command
+  it_behaves_like 'a command with global options', command
 end

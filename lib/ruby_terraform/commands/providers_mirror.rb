@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'base'
-require_relative '../options/common'
+require_relative '../options/global'
 
 module RubyTerraform
   module Commands
@@ -45,7 +45,7 @@ module RubyTerraform
     #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"])
     #
     class ProvidersMirror < Base
-      include RubyTerraform::Options::Common
+      include RubyTerraform::Options::Global
 
       # @!visibility private
       def subcommands

@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative '../../../lib/ruby_terraform/options/common'
+require_relative '../../../lib/ruby_terraform/options/global'
 require_relative '../../../lib/ruby_terraform/options/name'
 
-class CommonOptions
-  include RubyTerraform::Options::Common
+class GlobalOptions
+  include RubyTerraform::Options::Global
 
   def self.each_key(&block)
     new.each_key(&block)

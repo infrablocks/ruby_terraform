@@ -2,7 +2,7 @@
 
 module RubyTerraform
   module Options
-    module Common
+    module Global
       # @!visibility private
       def options
         %w[-chdir]

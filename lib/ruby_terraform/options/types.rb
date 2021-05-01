@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'types/base'
 require_relative 'types/standard'
 require_relative 'types/flag'
 

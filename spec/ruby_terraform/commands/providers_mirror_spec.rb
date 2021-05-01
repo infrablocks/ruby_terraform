@@ -37,6 +37,6 @@ describe RubyTerraform::Commands::ProvidersMirror do
   )
 
   it_behaves_like(
-    'a command with common options', command
+    'a command with global options', command
   )
 end

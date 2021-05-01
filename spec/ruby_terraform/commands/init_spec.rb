@@ -80,5 +80,5 @@ describe RubyTerraform::Commands::Init do
     'a command with a boolean option', [command, :verify_plugins]
   )
 
-  it_behaves_like('a command with common options', command)
+  it_behaves_like('a command with global options', command)
 end

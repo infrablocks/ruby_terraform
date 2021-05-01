@@ -73,7 +73,6 @@ module RubyTerraform
         %w[
           -backup
           -backup-out
-          -chdir
           -from-module
           -fs-mirror
           -lock-timeout
@@ -97,6 +96,13 @@ module RubyTerraform
         definition(
           name: '-out', option_type: :standard, value_type: :string,
           extra_keys: { singular: %i[plan] }
+        ),
+
+        # global options
+        definition(
+          name: '-chdir', option_type: :standard, value_type: :string,
+          placement: :after_command,
+          extra_keys: { singular: %i[working_directory] }
         )
       ].flatten.freeze
   end

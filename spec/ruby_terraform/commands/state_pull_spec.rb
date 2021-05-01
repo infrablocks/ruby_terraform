@@ -20,5 +20,5 @@ describe RubyTerraform::Commands::StatePull do
   it_behaves_like 'a command without a binary supplied',
                   [command, described_class]
 
-  it_behaves_like 'a command with common options', command
+  it_behaves_like 'a command with global options', command
 end

@@ -50,5 +50,5 @@ describe RubyTerraform::Commands::StateReplaceProvider do
 
   it_behaves_like 'a command with a flag', [command, :ignore_remote_version]
 
-  it_behaves_like 'a command with common options', command
+  it_behaves_like 'a command with global options', command
 end

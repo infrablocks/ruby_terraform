@@ -24,5 +24,5 @@ describe RubyTerraform::Commands::ForceUnlock do
 
   it_behaves_like 'a command with a flag', [command, :force]
 
-  it_behaves_like 'a command with common options', command
+  it_behaves_like 'a command with global options', command
 end

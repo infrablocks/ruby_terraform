@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../../support/shared/common_options'
+require_relative '../../support/shared/global_options'
 
 describe RubyTerraform::Commands::ProvidersSchema do
   let(:command) { described_class.new(binary: 'terraform') }
@@ -46,13 +46,13 @@ describe RubyTerraform::Commands::ProvidersSchema do
     options: { json: false }
   }
 
-  CommonOptions.each_key do |opt_key|
+  GlobalOptions.each_key do |opt_key|
     switch = "-#{opt_key.to_s.gsub('_', '-')}"
     switch_value = 'option-value'
 
     it_behaves_like 'a valid command line', {
       reason: "adds a #{switch} option if a #{opt_key} is provided",
-      expected_command: "terraform #{command} -json #{switch}=#{switch_value}",
+      expected_command: "terraform #{switch}=#{switch_value} #{command} -json",
       options: { opt_key => switch_value }
     }
 
