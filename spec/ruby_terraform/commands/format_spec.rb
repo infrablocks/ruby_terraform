@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Format do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,46 +13,45 @@ describe RubyTerraform::Commands::Format do
     RubyTerraform.reset!
   end
 
-  command = 'fmt'
   directory = Faker::File.dir
 
   it_behaves_like(
     'a command with an argument',
-    [command, :directory]
+    described_class, 'fmt', :directory
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class, directory]
+    described_class, 'fmt', directory
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [command, :list, directory]
+    described_class, 'fmt', :list, directory
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [command, :write, directory]
+    described_class, 'fmt', :write, directory
   )
 
   it_behaves_like(
     'a command with a flag',
-    [command, :diff, directory]
+    described_class, 'fmt', :diff, directory
   )
 
   it_behaves_like(
     'a command with a flag',
-    [command, :check, directory]
+    described_class, 'fmt', :check, directory
   )
 
   it_behaves_like(
     'a command with a flag',
-    [command, :recursive, directory]
+    described_class, 'fmt', :recursive, directory
   )
 
   it_behaves_like(
     'a command with global options',
-    [command, directory]
+    described_class, 'fmt', directory
   )
 end

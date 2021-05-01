@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::StateMove do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,36 +13,53 @@ describe RubyTerraform::Commands::StateMove do
     RubyTerraform.reset!
   end
 
-  command = 'state mv'
-
-  it_behaves_like 'a command with an argument', [command, :source]
-
-  it_behaves_like 'a command with an argument', [command, :destination]
-
-  it_behaves_like 'a command without a binary supplied',
-                  [command, described_class]
-
   it_behaves_like(
-    'a command with an option', [command, :backup]
+    'a command with an argument',
+    described_class, 'state mv', :source
   )
 
   it_behaves_like(
-    'a command that can disable backup', command
+    'a command with an argument',
+    described_class, 'state mv', :destination
   )
 
   it_behaves_like(
-    'a command with an option', [command, :backup_out]
+    'a command without a binary supplied',
+    described_class, 'state mv'
   )
 
   it_behaves_like(
-    'a command with an option', [command, :state]
+    'a command with an option',
+    described_class, 'state mv', :backup
   )
 
   it_behaves_like(
-    'a command with an option', [command, :state_out]
+    'a command that can disable backup',
+    described_class, 'state mv'
   )
 
-  it_behaves_like 'a command with a flag', [command, :ignore_remote_version]
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'state mv', :backup_out
+  )
 
-  it_behaves_like 'a command with global options', command
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'state mv', :state
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'state mv', :state_out
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'state mv', :ignore_remote_version
+  )
+
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'state mv'
+  )
 end

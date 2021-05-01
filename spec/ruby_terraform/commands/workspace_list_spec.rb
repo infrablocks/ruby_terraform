@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::WorkspaceList do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,27 +13,29 @@ describe RubyTerraform::Commands::WorkspaceList do
     RubyTerraform.reset!
   end
 
-  command = 'workspace list'
   directory = Faker::File.dir
 
   it_behaves_like(
-    'a valid command line', {
-      options: { operation: 'list', workspace: 'qa' },
-      reason: 'should not use workspace option if operation list is provided',
-      expected_command: 'terraform workspace list'
-    }
+    'a valid command line',
+    described_class,
+    binary: 'terraform',
+    options: { operation: 'list', workspace: 'qa' },
+    reason: 'should not use workspace option if operation list is provided',
+    expected: 'terraform workspace list'
   )
 
   it_behaves_like(
-    'a command with an argument', [command, :directory]
+    'a command with an argument',
+    described_class, 'workspace list', :directory
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class, directory]
+    described_class, 'workspace list', directory
   )
 
   it_behaves_like(
-    'a command with global options', [command, directory]
+    'a command with global options',
+    described_class, 'workspace list', directory
   )
 end

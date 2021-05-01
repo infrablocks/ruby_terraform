@@ -165,9 +165,8 @@ describe RubyTerraform::Commands::Base do
 
       begin
         instance.execute
-      rescue RubyTerraform::Errors::ExecutionError => e
+      rescue RubyTerraform::Errors::ExecutionError
         # expected
-        puts e
       end
 
       expect(logger)

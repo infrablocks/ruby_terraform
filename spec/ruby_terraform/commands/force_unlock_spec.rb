@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::ForceUnlock do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,14 +13,23 @@ describe RubyTerraform::Commands::ForceUnlock do
     RubyTerraform.reset!
   end
 
-  command = 'force-unlock'
+  it_behaves_like(
+    'a command with an argument',
+    described_class, 'force-unlock', :lock_id
+  )
 
-  it_behaves_like 'a command with an argument', [command, :lock_id]
+  it_behaves_like(
+    'a command without a binary supplied',
+    described_class, 'force-unlock'
+  )
 
-  it_behaves_like 'a command without a binary supplied',
-                  [command, described_class]
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'force-unlock', :force
+  )
 
-  it_behaves_like 'a command with a flag', [command, :force]
-
-  it_behaves_like 'a command with global options', command
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'force-unlock'
+  )
 end

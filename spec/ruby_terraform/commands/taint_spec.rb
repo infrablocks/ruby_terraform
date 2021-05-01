@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Taint do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,28 +13,58 @@ describe RubyTerraform::Commands::Taint do
     RubyTerraform.reset!
   end
 
-  command = 'taint'
+  it_behaves_like(
+    'a command with an argument',
+    described_class, 'taint', :address
+  )
 
-  it_behaves_like 'a command with an argument', [command, :address]
+  it_behaves_like(
+    'a command without a binary supplied',
+    described_class, 'taint'
+  )
 
-  it_behaves_like 'a command without a binary supplied',
-                  [command, described_class]
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'taint', :allow_missing
+  )
 
-  it_behaves_like 'a command with a flag', [command, :allow_missing]
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'taint', :backup
+  )
 
-  it_behaves_like 'a command with an option', [command, :backup]
+  it_behaves_like(
+    'a command that can disable backup',
+    described_class, 'taint'
+  )
 
-  it_behaves_like 'a command that can disable backup', [command]
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'taint', :lock
+  )
 
-  it_behaves_like 'a command with a boolean option', [command, :lock]
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'taint', :lock_timeout
+  )
 
-  it_behaves_like 'a command with an option', [command, :lock_timeout]
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'taint', :state
+  )
 
-  it_behaves_like 'a command with an option', [command, :state]
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'taint', :state_out
+  )
 
-  it_behaves_like 'a command with an option', [command, :state_out]
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'taint', :ignore_remote_version
+  )
 
-  it_behaves_like 'a command with a flag', [command, :ignore_remote_version]
-
-  it_behaves_like 'a command with global options', command
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'taint'
+  )
 end

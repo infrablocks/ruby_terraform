@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::WorkspaceShow do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,13 +13,13 @@ describe RubyTerraform::Commands::WorkspaceShow do
     RubyTerraform.reset!
   end
 
-  command = 'workspace show'
-
   it_behaves_like(
-    'a command without a binary supplied', [command, described_class]
+    'a command without a binary supplied',
+    described_class, 'workspace show'
   )
 
   it_behaves_like(
-    'a command with global options', command
+    'a command with global options',
+    described_class, 'workspace show'
   )
 end

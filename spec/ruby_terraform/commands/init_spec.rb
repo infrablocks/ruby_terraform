@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Init do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,70 +13,88 @@ describe RubyTerraform::Commands::Init do
     RubyTerraform.reset!
   end
 
-  command = 'init'
-
-  it_behaves_like('a command with an argument', [command, :path])
+  it_behaves_like(
+    'a command with an argument',
+    described_class, 'init', :path
+  )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class]
+    described_class, 'init'
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [command, :backend]
+    described_class, 'init', :backend
   )
 
   it_behaves_like(
     'a command with a map option',
-    [command, :backend_config]
-  )
-
-  it_behaves_like('a command with a flag', [command, :force_copy])
-
-  it_behaves_like(
-    'a command with an option',
-    [command, :from_module]
+    described_class, 'init', :backend_config
   )
 
   it_behaves_like(
-    'a command with a boolean option',
-    [command, :get]
-  )
-
-  it_behaves_like(
-    'a command with a boolean option',
-    [command, :get_plugins]
-  )
-
-  it_behaves_like(
-    'a command with a boolean option',
-    [command, :input]
-  )
-
-  it_behaves_like(
-    'a command with a boolean option',
-    [command, :lock]
+    'a command with a flag',
+    described_class, 'init', :force_copy
   )
 
   it_behaves_like(
     'a command with an option',
-    [command, :lock_timeout]
-  )
-
-  it_behaves_like('a command with a flag', [command, :no_color])
-
-  it_behaves_like('a command with an option', [command, :plugin_dir])
-
-  it_behaves_like('a command with a flag', [command, :reconfigure])
-
-  it_behaves_like(
-    'a command with a boolean option', [command, :upgrade]
+    described_class, 'init', :from_module
   )
 
   it_behaves_like(
-    'a command with a boolean option', [command, :verify_plugins]
+    'a command with a boolean option',
+    described_class, 'init', :get
   )
 
-  it_behaves_like('a command with global options', command)
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'init', :get_plugins
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'init', :input
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'init', :lock
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'init', :lock_timeout
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'init', :no_color
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'init', :plugin_dir
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'init', :reconfigure
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'init', :upgrade
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'init', :verify_plugins
+  )
+
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'init'
+  )
 end

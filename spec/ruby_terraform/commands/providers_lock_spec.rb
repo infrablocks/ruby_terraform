@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::ProvidersLock do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,36 +13,33 @@ describe RubyTerraform::Commands::ProvidersLock do
     RubyTerraform.reset!
   end
 
-  command = 'providers lock'
-
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class]
+    described_class, 'providers lock'
   )
 
   it_behaves_like(
-    'a command with an argument', [command, :providers]
+    'a command with an argument',
+    described_class, 'providers lock', :providers
   )
 
   it_behaves_like(
-    'a command without a binary supplied',
-    [command, described_class]
+    'a command with an option',
+    described_class, 'providers lock', :fs_mirror
   )
 
   it_behaves_like(
-    'a command with an option', [command, :fs_mirror]
-  )
-
-  it_behaves_like(
-    'a command with an option', [command, :net_mirror]
+    'a command with an option',
+    described_class, 'providers lock', :net_mirror
   )
 
   it_behaves_like(
     'a command with an array option',
-    [command, :platforms]
+    described_class, 'providers lock', :platforms
   )
 
   it_behaves_like(
-    'a command with global options', command
+    'a command with global options',
+    described_class, 'providers lock'
   )
 end

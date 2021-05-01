@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Validate do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,30 +13,30 @@ describe RubyTerraform::Commands::Validate do
     RubyTerraform.reset!
   end
 
-  command = 'validate'
   directory = Faker::File.dir
 
   it_behaves_like(
-    'a command with an argument', [command, :directory]
+    'a command with an argument',
+    described_class, 'validate', :directory
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class, directory]
+    described_class, 'validate', directory
   )
 
   it_behaves_like(
     'a command with a flag',
-    [command, :json, directory]
+    described_class, 'validate', :json, directory
   )
 
   it_behaves_like(
     'a command with a flag',
-    [command, :no_color, directory]
+    described_class, 'validate', :no_color, directory
   )
 
   it_behaves_like(
     'a command with global options',
-    [command, directory]
+    described_class, 'validate', directory
   )
 end

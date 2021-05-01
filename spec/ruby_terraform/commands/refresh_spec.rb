@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Refresh do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,85 +13,85 @@ describe RubyTerraform::Commands::Refresh do
     RubyTerraform.reset!
   end
 
-  command = 'refresh'
   directory = Faker::File.dir
 
   it_behaves_like(
-    'a command with an argument', [command, :directory]
+    'a command with an argument',
+    described_class, 'refresh', :directory
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class, directory]
+    described_class, 'refresh', directory
   )
 
   it_behaves_like(
     'a command with an option',
-    [command, :backup, directory]
+    described_class, 'refresh', :backup, directory
   )
 
   it_behaves_like(
     'a command that can disable backup',
-    [command, directory]
+    described_class, 'refresh', directory
   )
 
   it_behaves_like(
     'a command with a flag',
-    [command, :compact_warnings, directory]
+    described_class, 'refresh', :compact_warnings, directory
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [command, :input, directory]
+    described_class, 'refresh', :input, directory
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    [command, :lock, directory]
+    described_class, 'refresh', :lock, directory
   )
 
   it_behaves_like(
     'a command with an option',
-    [command, :lock_timeout, directory]
+    described_class, 'refresh', :lock_timeout, directory
   )
 
   it_behaves_like(
     'a command with a flag',
-    [command, :no_color, directory]
+    described_class, 'refresh', :no_color, directory
   )
 
   it_behaves_like(
     'a command with an option',
-    [command, :parallelism, directory]
+    described_class, 'refresh', :parallelism, directory
   )
 
   it_behaves_like(
     'a command with an option',
-    [command, :state, directory]
+    described_class, 'refresh', :state, directory
   )
 
   it_behaves_like(
     'a command with an option',
-    [command, :state_out, directory]
+    described_class, 'refresh', :state_out, directory
   )
 
   it_behaves_like(
     'a command with an array option',
-    [command, :targets, directory]
+    described_class, 'refresh', :targets, directory
   )
 
   it_behaves_like(
     'a command that accepts vars',
-    [command, directory]
+    described_class, 'refresh', directory
   )
 
   it_behaves_like(
     'a command with an array option',
-    [command, :var_files, directory]
+    described_class, 'refresh', :var_files, directory
   )
 
   it_behaves_like(
     'a command with global options',
-    [command, directory]
+    described_class, 'refresh', directory
   )
 end

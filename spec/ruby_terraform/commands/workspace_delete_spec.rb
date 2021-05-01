@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::WorkspaceDelete do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,41 +13,49 @@ describe RubyTerraform::Commands::WorkspaceDelete do
     RubyTerraform.reset!
   end
 
-  command = 'workspace delete'
   directory = Faker::File.dir
 
-  it_behaves_like 'a valid command line', {
+  it_behaves_like(
+    'a valid command line',
+    described_class,
+    binary: 'terraform',
     options: { operation: 'delete', workspace: 'staging' },
     reason: 'should delete the specified workspace',
-    expected_command: 'terraform workspace delete staging'
-  }
-
-  it_behaves_like(
-    'a command with an argument', [command, :workspace]
+    expected: 'terraform workspace delete staging'
   )
 
   it_behaves_like(
-    'a command with an argument', [command, :directory]
+    'a command with an argument',
+    described_class, 'workspace delete', :workspace
+  )
+
+  it_behaves_like(
+    'a command with an argument',
+    described_class, 'workspace delete', :directory
   )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class, directory]
+    described_class, 'workspace delete', directory
   )
 
   it_behaves_like(
-    'a command with a flag', [command, :force, directory]
+    'a command with a flag',
+    described_class, 'workspace delete', :force, directory
   )
 
   it_behaves_like(
-    'a command with a boolean option', [command, :lock, directory]
+    'a command with a boolean option',
+    described_class, 'workspace delete', :lock, directory
   )
 
   it_behaves_like(
-    'a command with an option', [command, :lock_timeout, directory]
+    'a command with an option',
+    described_class, 'workspace delete', :lock_timeout, directory
   )
 
   it_behaves_like(
-    'a command with global options', [command, directory]
+    'a command with global options',
+    described_class, 'workspace delete', directory
   )
 end

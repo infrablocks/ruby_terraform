@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Login do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,10 +13,13 @@ describe RubyTerraform::Commands::Login do
     RubyTerraform.reset!
   end
 
-  command = 'login'
+  it_behaves_like(
+    'a command with an argument',
+    described_class, 'login', :hostname
+  )
 
-  it_behaves_like 'a command with an argument', [command, :hostname]
-
-  it_behaves_like 'a command without a binary supplied',
-                  [command, described_class]
+  it_behaves_like(
+    'a command without a binary supplied',
+    described_class, 'login'
+  )
 end

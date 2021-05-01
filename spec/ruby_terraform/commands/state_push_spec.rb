@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::StatePush do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,12 +13,18 @@ describe RubyTerraform::Commands::StatePush do
     RubyTerraform.reset!
   end
 
-  command = 'state push'
+  it_behaves_like(
+    'a command without a binary supplied',
+    described_class, 'state push'
+  )
 
-  it_behaves_like 'a command without a binary supplied',
-                  [command, described_class]
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'state push', :ignore_remote_version
+  )
 
-  it_behaves_like 'a command with a flag', [command, :ignore_remote_version]
-
-  it_behaves_like 'a command with global options', command
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'state push'
+  )
 end

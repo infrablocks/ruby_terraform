@@ -4,8 +4,8 @@ require 'spec_helper'
 
 # rubocop:disable RSpec/MultipleMemoizedHelpers
 describe RubyTerraform::Commands::Output do
-  let(:command) { described_class.new(parameters) }
   let(:parameters) { { binary: 'terraform' } }
+  let(:command) { described_class.new(parameters) }
 
   before do
     RubyTerraform.configure do |config|
@@ -16,8 +16,6 @@ describe RubyTerraform::Commands::Output do
   after do
     RubyTerraform.reset!
   end
-
-  output_command = 'output'
 
   shared_examples 'it supports output naming' do
     it 'captures and returns the output of the command directly' do
@@ -81,21 +79,39 @@ describe RubyTerraform::Commands::Output do
     end
   end
 
-  it_behaves_like('a command with an argument', [output_command, :name])
+  it_behaves_like(
+    'a command with an argument',
+    described_class, 'output', :name
+  )
 
   it_behaves_like(
     'a command without a binary supplied',
-    [output_command, described_class]
+    described_class, 'output'
   )
 
-  it_behaves_like('a command with an option', [output_command, :state])
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'output', :state
+  )
 
-  it_behaves_like('a command with a flag', [output_command, :no_color])
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'output', :no_color
+  )
 
-  it_behaves_like('a command with a flag', [output_command, :json])
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'output', :json
+  )
 
-  it_behaves_like('a command with a flag', [output_command, :raw])
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'output', :raw
+  )
 
-  it_behaves_like('a command with global options', output_command)
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'output'
+  )
 end
 # rubocop:enable RSpec/MultipleMemoizedHelpers

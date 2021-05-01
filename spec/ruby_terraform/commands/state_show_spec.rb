@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::StateShow do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,16 +13,23 @@ describe RubyTerraform::Commands::StateShow do
     RubyTerraform.reset!
   end
 
-  command = 'state show'
-
-  it_behaves_like 'a command with an argument', [command, :address]
-
-  it_behaves_like 'a command without a binary supplied',
-                  [command, described_class]
-
   it_behaves_like(
-    'a command with an option', [command, :state]
+    'a command with an argument',
+    described_class, 'state show', :address
   )
 
-  it_behaves_like 'a command with global options', command
+  it_behaves_like(
+    'a command without a binary supplied',
+    described_class, 'state show'
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'state show', :state
+  )
+
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'state show'
+  )
 end

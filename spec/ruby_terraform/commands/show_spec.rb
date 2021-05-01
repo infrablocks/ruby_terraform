@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Show do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,36 +13,42 @@ describe RubyTerraform::Commands::Show do
     RubyTerraform.reset!
   end
 
-  command = 'show'
   directory = Faker::File.dir
 
-  it_behaves_like 'a valid command line', {
+  it_behaves_like(
+    'a valid command line',
+    described_class,
+    binary: 'terraform',
     reason: 'prefers the path if both path and directory provided',
-    expected_command: 'terraform show some/path/to/terraform/plan',
-    options: { directory: Faker::File.dir,
-               path: 'some/path/to/terraform/plan' }
-  }
+    expected: 'terraform show some/path/to/terraform/plan',
+    options: {
+      directory: Faker::File.dir,
+      path: 'some/path/to/terraform/plan'
+    }
+  )
 
   it_behaves_like(
-    'a command with an argument', [command, :directory]
+    'a command with an argument',
+    described_class, 'show', :directory
   )
   it_behaves_like(
-    'a command with an argument', [command, :path]
+    'a command with an argument',
+    described_class, 'show', :path
   )
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class, directory]
+    described_class, 'show', directory
   )
   it_behaves_like(
     'a command with a flag',
-    [command, :no_color, directory]
+    described_class, 'show', :no_color, directory
   )
   it_behaves_like(
     'a command with a flag',
-    [command, :json, directory]
+    described_class, 'show', :json, directory
   )
   it_behaves_like(
     'a command with global options',
-    [command, directory]
+    described_class, 'show', directory
   )
 end

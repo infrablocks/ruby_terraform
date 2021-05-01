@@ -3,8 +3,6 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::ProvidersMirror do
-  let(:command) { described_class.new(binary: 'terraform') }
-
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
@@ -15,28 +13,23 @@ describe RubyTerraform::Commands::ProvidersMirror do
     RubyTerraform.reset!
   end
 
-  command = 'providers mirror'
-
   it_behaves_like(
     'a command without a binary supplied',
-    [command, described_class]
+    described_class, 'providers mirror'
   )
 
   it_behaves_like(
-    'a command with an argument', [command, :directory]
-  )
-
-  it_behaves_like(
-    'a command without a binary supplied',
-    [command, described_class]
+    'a command with an argument',
+    described_class, 'providers mirror', :directory
   )
 
   it_behaves_like(
     'a command with an array option',
-    [command, :platforms]
+    described_class, 'providers mirror', :platforms
   )
 
   it_behaves_like(
-    'a command with global options', command
+    'a command with global options',
+    described_class, 'providers mirror'
   )
 end
