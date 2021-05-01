@@ -12,8 +12,9 @@ module RubyTerraform
     # When executing an instance of {WorkspaceList} via {#execute}, the
     # following options are supported:
     #
-    # * +:directory+: thepath to a directory containing terraform configuration
-    #   (deprecated).
+    # * +:directory+: the path to a directory containing terraform configuration
+    #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
+    #   instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     #

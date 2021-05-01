@@ -17,7 +17,9 @@ module RubyTerraform
     # When executing an instance of {Plan} via {#execute}, the following
     # options are supported:
     #
-    # * +:plan+: the path to output the plan if it should be saved to a file.
+    # * +:directory+: the path to a directory containing terraform
+    #   configuration (deprecated in terraform 0.14, removed in terraform 0.15,
+    #   use +:chdir+ instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:compact_warnings+: when +true+, if terraform produces any warnings
@@ -39,6 +41,7 @@ module RubyTerraform
     #   color; defaults to +false+.
     # * +:parallelism+: the number of parallel resource operations; defaults to
     #   +10+.
+    # * +:plan+: the path to output the plan if it should be saved to a file.
     # * +:refresh+: when +true+, updates state prior to checking for
     #   differences; when +false+ uses locally available state; defaults to
     #   +true+; this has no effect when +:plan+ is provided.

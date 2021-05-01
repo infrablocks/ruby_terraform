@@ -24,7 +24,9 @@ module RubyTerraform
     # When executing an instance of {Init} via {#execute}, the following
     # options are supported:
     #
-    # * +:path+: the path to initialize; defaults to the current directory.
+    # * +:path+: the path to initialize; defaults to the current directory
+    #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
+    #   instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:backend+: whether or not to configure the backend for this

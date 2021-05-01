@@ -36,10 +36,9 @@ module RubyTerraform
     # When executing an instance of {Import} via {#execute}, the following
     # options are supported:
     #
-    # * +:directory+: the path to a directory of terraform configuration files
-    #   to use to configure the provider; defaults to the current directory; if
-    #   no config files are present, they must be provided via the input prompts
-    #   or env vars.
+    # * +:directory+: the path to a directory containing terraform configuration
+    #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
+    #   instead).
     # * +:address+: the address to import the resource to; required.
     # * +:id+: the resource-specific ID identifying the resource being imported;
     #   required.
@@ -122,6 +121,7 @@ module RubyTerraform
       # rubocop:enable Metrics/MethodLength
 
       # @!visibility private
+      # @todo Add directory argument.
       def arguments(parameters)
         [parameters[:address], parameters[:id]]
       end

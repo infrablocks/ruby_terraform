@@ -37,7 +37,8 @@ module RubyTerraform
     # options are supported:
     #
     # * +:directory+: the path to a directory containing terraform configuration
-    #   (deprecated).
+    #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
+    #   instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:json+: whether or not to produce output in a machine-readable JSON

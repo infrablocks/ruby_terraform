@@ -19,7 +19,9 @@ module RubyTerraform
     # When executing an instance of {Apply} via {#execute}, the following
     # options are supported:
     #
-    # * +:directory+: the path to a directory containing terraform configuration.
+    # * +:directory+: the path to a directory containing terraform
+    #   configuration (deprecated in terraform 0.14, removed in terraform 0.15,
+    #   use +:chdir+ instead).
     # * +:plan+: the path to a pre-computed plan to be applied.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.

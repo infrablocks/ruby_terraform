@@ -14,7 +14,8 @@ module RubyTerraform
     #
     # * +:workspace+: the name of the workspace to delete; required.
     # * +:directory+: the path to a directory containing terraform configuration
-    #   (deprecated).
+    #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
+    #   instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:force+: whether or not to remove a non-empty workspace; defaults to

@@ -18,8 +18,9 @@ module RubyTerraform
     # When executing an instance of {Refresh} via {#execute}, the following
     # options are supported:
     #
-    # * +:directory+: the directory containing terraform configuration
-    #   (deprecated, removed in Terraform 0.15).
+    # * +:directory+: the path to a directory containing terraform configuration
+    #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
+    #   instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:backup+: the path to backup the existing state file before modifying;

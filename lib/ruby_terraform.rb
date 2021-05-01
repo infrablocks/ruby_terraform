@@ -36,10 +36,11 @@ module RubyTerraform
     # actions described in that plan without any confirmation prompt.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration; required unless +:plan+ is provided.
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :plan The path to a pre-computed plan to be
-    #   applied; required unless +:directory+ is provided.
+    #   applied.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :auto_approve (false) If +true+, skips
@@ -103,8 +104,9 @@ module RubyTerraform
     # infrastructure.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration; required.
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :auto_approve (false) If +true+, skips
@@ -201,8 +203,9 @@ module RubyTerraform
     # terraform language native syntax; JSON is not supported.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration.
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :list (false) If +true+, lists files whose
@@ -239,8 +242,9 @@ module RubyTerraform
     # separately.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration; required.
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :update (false) If +true+, checks
@@ -320,10 +324,9 @@ module RubyTerraform
     # being imported.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The path to a directory of
-    #   terraform configuration files to use to configure the provider; defaults
-    #   to the current directory; if no config files are present, they must be
-    #   provided via the input prompts or env vars.
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :address The address to import the resource
     #   to; required.
     # @option parameters [String] :id The resource-specific ID identifying the
@@ -400,7 +403,8 @@ module RubyTerraform
     #
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :path The path to initialize; defaults to the
-    #   current directory.
+    #   current directory (deprecated in terraform 0.14, removed in terraform
+    #   0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :backend (true) Whether or not to configure
@@ -523,8 +527,9 @@ module RubyTerraform
     # the {#apply} command to perform exactly the actions described in the plan.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :plan The path to output the plan if it should
-    #   be saved to a file.
+    # @option parameters [String] :plan The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :compact_warnings (false) When +true+, if
@@ -709,8 +714,6 @@ module RubyTerraform
     # configuration.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The path to the directory
-    #   containing the configuration to show provider schemas for.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     #
@@ -731,8 +734,9 @@ module RubyTerraform
     # when you generate a plan or call apply next.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration (deprecated, removed in Terraform 0.15).
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [String] :backup The path to backup the existing state
@@ -1189,8 +1193,9 @@ module RubyTerraform
     # instead, which includes an implied validation check.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration (deprecated).
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :json (false) Whether or not to produce
@@ -1213,8 +1218,9 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :workspace The name of the workspace to
     #   delete; required.
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration (deprecated).
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :force (false) Whether or not to remove a
@@ -1236,8 +1242,9 @@ module RubyTerraform
     # Invokes the +terraform workspace list+ command which lists workspaces.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration (deprecated).
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir the path of a working directory to
     #   switch to before executing the given subcommand.
     #
@@ -1255,8 +1262,9 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :workspace The name of the workspace to
     #   create; required.
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration (deprecated).
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :lock (true) When +true+, locks the state
@@ -1281,8 +1289,9 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :workspace The name of the workspace to
     #   select; required.
-    # @option parameters [String] :directory The directory containing terraform
-    #   configuration (deprecated).
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     #
