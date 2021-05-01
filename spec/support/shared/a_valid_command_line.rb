@@ -2,12 +2,12 @@
 
 shared_examples(
   'a valid command line'
-) do |command_klass, binary: nil, reason: nil, expected: nil, options: nil|
+) do |command_klass, binary: nil, reason: nil, expected: nil, parameters: nil|
   let(:command) { command_klass.new(binary: binary) }
 
   before do
     allow(Open4).to(receive(:spawn))
-    command.execute(options)
+    parameters.nil? ? command.execute : command.execute(parameters)
   end
 
   it reason do

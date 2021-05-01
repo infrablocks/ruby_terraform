@@ -13,8 +13,7 @@ module RubyTerraform
     # When executing an instance of {Destroy} via {#execute}, the following
     # options are supported:
     #
-    # * +:directory+: the directory containing terraform configuration;
-    #   required.
+    # * +:directory+: a path to a directory containing terraform configuration.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:auto_approve+: if +true+, skips interactive approval before

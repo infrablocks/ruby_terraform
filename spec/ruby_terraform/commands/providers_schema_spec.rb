@@ -19,36 +19,34 @@ describe RubyTerraform::Commands::ProvidersSchema do
       'a valid command line',
       described_class,
       reason: 'defaults to the configured binary when none provided',
-      expected: 'path/to/binary providers schema -json',
-      options: {}
+      expected: 'path/to/binary providers schema -json'
     )
   end
 
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
     reason: 'includes the mandatory -json flag when the option is true',
     expected: 'terraform providers schema -json',
-    options: { json: true }
+    binary: 'terraform',
+    parameters: { json: true }
   )
 
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
     reason: 'includes the mandatory -json flag when the option is not set',
     expected: 'terraform providers schema -json',
-    options: {}
+    binary: 'terraform'
   )
 
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
     reason: 'includes the mandatory -json flag when the option is set to false',
     expected: 'terraform providers schema -json',
-    options: { json: false }
+    binary: 'terraform',
+    parameters: { json: false }
   )
 
   GlobalOptions.each_key do |opt_key|
@@ -58,19 +56,18 @@ describe RubyTerraform::Commands::ProvidersSchema do
     it_behaves_like(
       'a valid command line',
       described_class,
-      binary: 'terraform',
       reason: "adds a #{switch} option if a #{opt_key} is provided",
       expected: "terraform #{switch}=#{switch_value} providers schema -json",
-      options: { opt_key => switch_value }
+      binary: 'terraform',
+      parameters: { opt_key => switch_value }
     )
 
     it_behaves_like(
       'a valid command line',
       described_class,
-      binary: 'terraform',
       reason: "does not add a #{switch} option if a #{opt_key} is not provided",
       expected: 'terraform providers schema -json',
-      options: {}
+      binary: 'terraform'
     )
   end
 end

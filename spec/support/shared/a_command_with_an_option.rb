@@ -2,19 +2,17 @@
 
 shared_examples(
   'a command with an option'
-) do |command_klass, subcommand, option, directory = nil, name_override: nil|
+) do |command_klass, subcommand, option, name_override: nil|
   name = name_override.nil? ? "-#{option.to_s.gsub('_', '-')}" : name_override
   value = 'option-value'
-  argument = directory.nil? ? nil : " #{directory}"
 
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason: "adds a #{name} option if a #{option} is provided",
-    expected: "terraform #{subcommand} #{name}=#{value}#{argument}",
-    options: {
-      directory: directory,
+    expected: "terraform #{subcommand} #{name}=#{value}",
+    binary: 'terraform',
+    parameters: {
       option => value
     }
   )
@@ -22,11 +20,8 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason: "does not add a #{name} option if a #{option} is not provided",
-    expected: "terraform #{subcommand}#{argument}",
-    options: {
-      directory: directory
-    }
+    expected: "terraform #{subcommand}",
+    binary: 'terraform'
   )
 end

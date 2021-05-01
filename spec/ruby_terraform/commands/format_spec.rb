@@ -13,8 +13,6 @@ describe RubyTerraform::Commands::Format do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a command with an argument',
     described_class, 'fmt', :directory
@@ -22,36 +20,36 @@ describe RubyTerraform::Commands::Format do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'fmt', directory
+    described_class, 'fmt'
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'fmt', :list, directory
+    described_class, 'fmt', :list
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'fmt', :write, directory
+    described_class, 'fmt', :write
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'fmt', :diff, directory
+    described_class, 'fmt', :diff
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'fmt', :check, directory
+    described_class, 'fmt', :check
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'fmt', :recursive, directory
+    described_class, 'fmt', :recursive
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'fmt', directory
+    described_class, 'fmt'
   )
 end

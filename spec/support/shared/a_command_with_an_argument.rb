@@ -6,12 +6,12 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason:
       "calls the terraform #{subcommand} command passing the supplied " \
         "#{argument} value",
     expected: "terraform #{subcommand} argument-value",
-    options: {
+    binary: 'terraform',
+    parameters: {
       argument => 'argument-value'
     }
   )

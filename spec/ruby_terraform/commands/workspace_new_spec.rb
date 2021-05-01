@@ -13,15 +13,15 @@ describe RubyTerraform::Commands::WorkspaceNew do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
-    options: { operation: 'new', workspace: 'staging' },
     reason: 'should create the specified workspace',
-    expected: 'terraform workspace new staging'
+    expected: 'terraform workspace new staging',
+    binary: 'terraform',
+    parameters: {
+      workspace: 'staging'
+    }
   )
 
   it_behaves_like(
@@ -36,26 +36,26 @@ describe RubyTerraform::Commands::WorkspaceNew do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'workspace new', directory
+    described_class, 'workspace new'
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'workspace new', :lock, directory
+    described_class, 'workspace new', :lock
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'workspace new', :lock_timeout, directory
+    described_class, 'workspace new', :lock_timeout
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'workspace new', :state, directory
+    described_class, 'workspace new', :state
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'workspace new', directory
+    described_class, 'workspace new'
   )
 end

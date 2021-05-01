@@ -8,11 +8,11 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason: "adds a #{name} option for each key/value pair provided",
     expected:
       "terraform #{subcommand} #{name}='thing=blah' #{name}='other=wah'",
-    options: {
+    binary: 'terraform',
+    parameters: {
       option => { thing: 'blah', other: 'wah' }
     }
   )

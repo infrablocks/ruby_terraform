@@ -13,8 +13,6 @@ describe RubyTerraform::Commands::Get do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a command with an argument',
     described_class, 'get', :directory
@@ -22,21 +20,21 @@ describe RubyTerraform::Commands::Get do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'get', directory
+    described_class, 'get'
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'get', :no_color, directory
+    described_class, 'get', :no_color
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'get', :update, directory
+    described_class, 'get', :update
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'get', directory
+    described_class, 'get'
   )
 end

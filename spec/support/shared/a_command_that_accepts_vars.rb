@@ -2,16 +2,14 @@
 
 shared_examples(
   'a command that accepts vars'
-) do |command_klass, subcommand, directory|
+) do |command_klass, subcommand|
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason: 'adds a var option for each supplied var',
-    expected:
-      "terraform #{subcommand} -var 'first=1' -var 'second=two' #{directory}",
-    options: {
-      directory: directory,
+    expected: "terraform #{subcommand} -var 'first=1' -var 'second=two'",
+    binary: 'terraform',
+    parameters: {
       vars: {
         first: 1,
         second: 'two'
@@ -22,12 +20,10 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason: 'correctly serialises list/tuple vars',
-    expected:
-      "terraform #{subcommand} -var 'list=[1,\"two\",3]' #{directory}",
-    options: {
-      directory: directory,
+    expected: "terraform #{subcommand} -var 'list=[1,\"two\",3]'",
+    binary: 'terraform',
+    parameters: {
       vars: {
         list: [1, 'two', 3]
       }
@@ -37,13 +33,11 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason: 'correctly serialises map/object vars',
     expected:
-      "terraform #{subcommand} -var 'map={\"first\":1,\"second\":\"two\"}' " +
-        directory,
-    options: {
-      directory: directory,
+      "terraform #{subcommand} -var 'map={\"first\":1,\"second\":\"two\"}'",
+    binary: 'terraform',
+    parameters: {
       vars: {
         map: {
           first: 1,
@@ -56,13 +50,12 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    binary: 'terraform',
     reason: 'correctly serialises vars with lists/tuples of maps/objects',
     expected:
       "terraform #{subcommand} -var " \
-          "'list_of_maps=[{\"key\":\"val1\"},{\"key\":\"val2\"}]' #{directory}",
-    options: {
-      directory: directory,
+          "'list_of_maps=[{\"key\":\"val1\"},{\"key\":\"val2\"}]'",
+    binary: 'terraform',
+    parameters: {
       vars: {
         list_of_maps: [
           { key: 'val1' },

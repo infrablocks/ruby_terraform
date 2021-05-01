@@ -13,15 +13,15 @@ describe RubyTerraform::Commands::WorkspaceSelect do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
-    options: { operation: 'select', workspace: 'staging' },
     reason: 'should select the specified workspace',
-    expected: 'terraform workspace select staging'
+    expected: 'terraform workspace select staging',
+    binary: 'terraform',
+    parameters: {
+      workspace: 'staging'
+    }
   )
 
   it_behaves_like(
@@ -36,11 +36,11 @@ describe RubyTerraform::Commands::WorkspaceSelect do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'workspace select', directory
+    described_class, 'workspace select'
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'workspace select', directory
+    described_class, 'workspace select'
   )
 end

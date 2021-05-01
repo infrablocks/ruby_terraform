@@ -13,16 +13,14 @@ describe RubyTerraform::Commands::Apply do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
     reason: 'prefers the plan if both plan and directory provided',
     expected: 'terraform apply some/path/to/terraform/plan',
-    options: {
-      directory: directory,
+    binary: 'terraform',
+    parameters: {
+      directory: 'some/configuration/directory',
       plan: 'some/path/to/terraform/plan'
     }
   )
@@ -39,86 +37,86 @@ describe RubyTerraform::Commands::Apply do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'apply', directory
+    described_class, 'apply'
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'apply', :backup, directory
+    described_class, 'apply', :backup
   )
 
   it_behaves_like(
     'a command that can disable backup',
-    described_class, 'apply', directory
+    described_class, 'apply'
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'apply', :compact_warnings, directory
+    described_class, 'apply', :compact_warnings
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'apply', :lock, directory
+    described_class, 'apply', :lock
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'apply', :lock_timeout, directory
+    described_class, 'apply', :lock_timeout
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'apply', :input, directory
+    described_class, 'apply', :input
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'apply', :auto_approve, directory
+    described_class, 'apply', :auto_approve
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'apply', :no_color, directory
+    described_class, 'apply', :no_color
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'apply', :parallelism, directory
+    described_class, 'apply', :parallelism
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'apply', :refresh, directory
+    described_class, 'apply', :refresh
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'apply', :state, directory
+    described_class, 'apply', :state
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'apply', :state_out, directory
+    described_class, 'apply', :state_out
   )
 
   it_behaves_like(
     'a command with an array option',
-    described_class, 'apply', :targets, directory
+    described_class, 'apply', :targets
   )
 
   it_behaves_like(
     'a command that accepts vars',
-    described_class, 'apply', directory
+    described_class, 'apply'
   )
 
   it_behaves_like(
     'a command with an array option',
-    described_class, 'apply', :var_files, directory
+    described_class, 'apply', :var_files
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'apply', directory
+    described_class, 'apply'
   )
 end

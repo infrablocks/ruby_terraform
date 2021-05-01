@@ -13,16 +13,14 @@ describe RubyTerraform::Commands::Show do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
     reason: 'prefers the path if both path and directory provided',
     expected: 'terraform show some/path/to/terraform/plan',
-    options: {
-      directory: Faker::File.dir,
+    binary: 'terraform',
+    parameters: {
+      directory: 'some/configuration/directory',
       path: 'some/path/to/terraform/plan'
     }
   )
@@ -31,24 +29,29 @@ describe RubyTerraform::Commands::Show do
     'a command with an argument',
     described_class, 'show', :directory
   )
+
   it_behaves_like(
     'a command with an argument',
     described_class, 'show', :path
   )
+
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'show', directory
+    described_class, 'show'
   )
+
   it_behaves_like(
     'a command with a flag',
-    described_class, 'show', :no_color, directory
+    described_class, 'show', :no_color
   )
+
   it_behaves_like(
     'a command with a flag',
-    described_class, 'show', :json, directory
+    described_class, 'show', :json
   )
+
   it_behaves_like(
     'a command with global options',
-    described_class, 'show', directory
+    described_class, 'show'
   )
 end

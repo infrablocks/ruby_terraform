@@ -13,15 +13,15 @@ describe RubyTerraform::Commands::WorkspaceList do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
-    options: { operation: 'list', workspace: 'qa' },
     reason: 'should not use workspace option if operation list is provided',
-    expected: 'terraform workspace list'
+    expected: 'terraform workspace list',
+    binary: 'terraform',
+    parameters: {
+      workspace: 'qa'
+    }
   )
 
   it_behaves_like(
@@ -31,11 +31,11 @@ describe RubyTerraform::Commands::WorkspaceList do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'workspace list', directory
+    described_class, 'workspace list'
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'workspace list', directory
+    described_class, 'workspace list'
   )
 end

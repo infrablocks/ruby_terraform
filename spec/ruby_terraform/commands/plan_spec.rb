@@ -14,8 +14,6 @@ describe RubyTerraform::Commands::Plan do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it 'logs the command being executed at debug level using the globally ' \
       'configured logger by default' do
     string_output = StringIO.new
@@ -130,81 +128,81 @@ describe RubyTerraform::Commands::Plan do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'plan', directory
+    described_class, 'plan'
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'plan', :compact_warnings, directory
+    described_class, 'plan', :compact_warnings
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'plan', :destroy, directory
+    described_class, 'plan', :destroy
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'plan', :detailed_exitcode, directory
+    described_class, 'plan', :detailed_exitcode
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'plan', :input, directory
+    described_class, 'plan', :input
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'plan', :lock, directory
+    described_class, 'plan', :lock
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'plan', :lock_timeout, directory
+    described_class, 'plan', :lock_timeout
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'plan', :no_color, directory
+    described_class, 'plan', :no_color
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'plan', :plan, directory, name_override: '-out'
+    described_class, 'plan', :plan, name_override: '-out'
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'plan', :parallelism, directory
+    described_class, 'plan', :parallelism
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'plan', :refresh, directory
+    described_class, 'plan', :refresh
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'plan', :state, directory
+    described_class, 'plan', :state
   )
 
   it_behaves_like(
     'a command with an array option',
-    described_class, 'plan', :targets, directory
+    described_class, 'plan', :targets
   )
 
   it_behaves_like(
     'a command that accepts vars',
-    described_class, 'plan', directory
+    described_class, 'plan'
   )
 
   it_behaves_like(
     'a command with an array option',
-    described_class, 'plan', :var_files, directory
+    described_class, 'plan', :var_files
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'plan', directory
+    described_class, 'plan'
   )
 end

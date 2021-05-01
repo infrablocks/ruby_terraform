@@ -13,15 +13,15 @@ describe RubyTerraform::Commands::WorkspaceDelete do
     RubyTerraform.reset!
   end
 
-  directory = Faker::File.dir
-
   it_behaves_like(
     'a valid command line',
     described_class,
-    binary: 'terraform',
-    options: { operation: 'delete', workspace: 'staging' },
     reason: 'should delete the specified workspace',
-    expected: 'terraform workspace delete staging'
+    expected: 'terraform workspace delete staging',
+    binary: 'terraform',
+    parameters: {
+      workspace: 'staging'
+    }
   )
 
   it_behaves_like(
@@ -36,26 +36,26 @@ describe RubyTerraform::Commands::WorkspaceDelete do
 
   it_behaves_like(
     'a command without a binary supplied',
-    described_class, 'workspace delete', directory
+    described_class, 'workspace delete'
   )
 
   it_behaves_like(
     'a command with a flag',
-    described_class, 'workspace delete', :force, directory
+    described_class, 'workspace delete', :force
   )
 
   it_behaves_like(
     'a command with a boolean option',
-    described_class, 'workspace delete', :lock, directory
+    described_class, 'workspace delete', :lock
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'workspace delete', :lock_timeout, directory
+    described_class, 'workspace delete', :lock_timeout
   )
 
   it_behaves_like(
     'a command with global options',
-    described_class, 'workspace delete', directory
+    described_class, 'workspace delete'
   )
 end
