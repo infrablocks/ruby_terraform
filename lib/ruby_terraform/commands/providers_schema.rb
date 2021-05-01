@@ -14,7 +14,7 @@ module RubyTerraform
     # When executing an instance of {ProvidersSchema} via {#execute}, the
     # following options are supported:
     #
-    # * +:directory+: the path to the directory containing the configuration to
+    # * +:directory+: the path to a directory containing the configuration to
     #   show provider schemas for.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.

@@ -19,8 +19,8 @@ module RubyTerraform
     # When executing an instance of {Apply} via {#execute}, the following
     # options are supported:
     #
-    # * +:directory+: a path to a directory containing terraform configuration.
-    # * +:plan+: a path to a pre-computed plan to be applied.
+    # * +:directory+: the path to a directory containing terraform configuration.
+    # * +:plan+: the path to a pre-computed plan to be applied.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:auto_approve+: if +true+, skips interactive approval of the generated

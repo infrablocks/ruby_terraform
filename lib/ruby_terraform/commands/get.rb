@@ -21,8 +21,8 @@ module RubyTerraform
     # When executing an instance of {Get} via {#execute}, the following options
     # are supported:
     #
-    # * +:directory+: the directory containing terraform configuration;
-    #   required.
+    # * +:directory+: the path to a directory containing terraform
+    #   configuration.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:update+: if +true+, checks already-downloaded modules for available

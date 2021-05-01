@@ -13,7 +13,7 @@ module RubyTerraform
     # following options are supported:
     #
     # * +:workspace+: the name of the workspace to create; required.
-    # * +:directory+: the directory containing terraform configuration
+    # * +:directory+: the path to a directory containing terraform configuration
     #   (deprecated).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.

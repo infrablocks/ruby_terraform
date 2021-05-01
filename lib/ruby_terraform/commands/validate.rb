@@ -36,7 +36,7 @@ module RubyTerraform
     # When executing an instance of {Validate} via {#execute}, the following
     # options are supported:
     #
-    # * +:directory+: the directory containing terraform configuration
+    # * +:directory+: the path to a directory containing terraform configuration
     #   (deprecated).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
