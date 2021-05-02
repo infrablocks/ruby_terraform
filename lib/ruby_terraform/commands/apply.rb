@@ -83,12 +83,12 @@ module RubyTerraform
       # @!visibility private
       def options
         %w[
+          -auto-approve
           -backup
           -compact-warnings
           -lock
           -lock-timeout
           -input
-          -auto-approve
           -no-color
           -parallelism
           -refresh

@@ -28,7 +28,12 @@ module RubyTerraform
     #   resource instance to remove; required.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
+    # * +:dry+run+: when +true+, prints out what would've been removed but
+    #   doesn't actually remove anything; defaults to +false+.
     # * +:backup+: the path where Terraform should write the backup state.
+    # * +:lock+: when +true+, locks the state file when locking is supported;
+    #   when +false+, does not lock the state file; defaults to +true+.
+    # * +:lock_timeout+: the duration to retry a state lock; defaults to +"0s"+.
     # * +:state+: the path to the state file to update; defaults to the current
     #   workspace state.
     # * +:ignore_remote_version+: whether or not to continue even if remote and
@@ -49,10 +54,12 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add dry_run, lock and lock_timeout options.
       def options
         %w[
+          -dry-run
           -backup
+          -lock
+          -lock-timeout
           -state
           -ignore-remote-version
         ] + super
@@ -62,12 +69,6 @@ module RubyTerraform
       # @todo Add addresses arg and flatten
       def arguments(parameters)
         [parameters[:address]]
-      end
-
-      # @!visibility private
-      # @todo Remove no_backup since backup can't be disabled for this command.
-      def parameter_overrides(parameters)
-        { backup: parameters[:no_backup] ? '-' : parameters[:backup] }
       end
     end
   end

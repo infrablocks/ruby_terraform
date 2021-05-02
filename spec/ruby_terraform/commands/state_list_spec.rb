@@ -24,6 +24,16 @@ describe RubyTerraform::Commands::StateList do
   )
 
   it_behaves_like(
+    'a command with an option',
+    described_class, 'state list', :state
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'state list', :id
+  )
+
+  it_behaves_like(
     'a command with global options',
     described_class, 'state list'
   )

@@ -178,6 +178,9 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :lock_id The lock ID output when attempting an
     #   operation that failed due to a lock; required.
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :force (false) If +true+, does not ask for
@@ -217,6 +220,8 @@ module RubyTerraform
     # @option parameters [Boolean] :check (false) If +true+, checks if the input
     #   is formatted; if any input is not properly formatted, an
     #   {RubyTerraform::Errors::ExecutionError} will be thrown.
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
     # @option parameters [Boolean] :recursive (false) If +true+, also processes
     #   files in subdirectories; by default, only the provided +:directory+ is
     #   processed.
@@ -276,6 +281,9 @@ module RubyTerraform
     # passed as an argument.
     #
     # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [String] :plan Render the graph using the specified
@@ -337,6 +345,8 @@ module RubyTerraform
     #   file before modifying; defaults to the +:state_out+ path with
     #   +".backup"+ extension; set +:no_backup+ to +true+ to skip backups
     #   entirely (legacy).
+    # @option parameters [Boolean] :allow_missing_config (false) Whether or not
+    #   to allow import when no resource configuration block exists.
     # @option parameters [Boolean] :input (true) When +false+, will not ask for
     #   input for variables not directly set.
     # @option parameters [Boolean] :lock (true) When +true+, locks the state
@@ -431,7 +441,14 @@ module RubyTerraform
     #   from the command should be in color.
     # @option parameters [String] :plugin_dir The path to a directory containing
     #   plugin binaries; this overrides all default search paths for plugins,
-    #   and prevents the automatic installation of plugins.
+    #   and prevents the automatic installation of plugins; if both
+    #   +:plugin_dir+ and +:plugin_dirs+ are provided, all plugin directories
+    #   will be passed to Terraform.
+    # @option parameters [Array<String>] :plugin_dirs+: An array of paths to
+    #   directories containing plugin binaries; this overrides all default
+    #   search paths for plugins, and prevents the automatic installation of
+    #   plugins; if both +:plugin_dir+ and +:plugin_dirs+ are provided, all
+    #   plugin directories will be passed to Terraform.
     # @option parameters [Boolean] :reconfigure (false) If +true+, reconfigures
     #   the backend, ignoring any saved configuration.
     # @option parameters [Boolean] :upgrade (false) If +true+, when installing
@@ -440,6 +457,8 @@ module RubyTerraform
     # @option parameters [Boolean] :verify_plugins (true) Whether or not to
     #   verify plugins for this configuration (deprecated, removed in terraform
     #   0.15).
+    # @option parameters [String] :lockfile Sets a dependency lockfile mode;
+    #   currently only "readonly" is valid.
     #
     # @example Basic Invocation
     #   RubyTerraform.init(
@@ -595,6 +614,9 @@ module RubyTerraform
     # plugins are needed and why particular versions are selected.
     #
     # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :directory The path to a directory containing
+    #   terraform configuration (deprecated in terraform 0.14, removed in
+    #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     #
@@ -839,6 +861,12 @@ module RubyTerraform
     #   resource address to filter by.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @option parameters [String] :state The path to a Terraform state file to
+    #   use to look up Terraform-managed resources; by default, Terraform will
+    #   consult the state of the currently-selected workspace.
+    # @option parameters [String] :id When provided, filters the results to
+    #   include only instances whose resource types have an attribute named "id"
+    #   whose value equals the given id string.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_list
@@ -873,6 +901,8 @@ module RubyTerraform
     #   the item to; required.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :dry+run (false) When +true+, prints out what
+    #   would've been moved but doesn't actually move anything.
     # @option parameters [String] :backup The path where Terraform should write
     #   the backup for the original state; this can't be disabled; if not set,
     #   Terraform will write it to the same path as the state file with a
@@ -882,6 +912,11 @@ module RubyTerraform
     #   not set, Terraform will write it to the same path as the destination
     #   state file with a +".backup"+ extension; this only needs to be specified
     #   if +:state_out+ is set to a different path than +:state+.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
     # @option parameters [String] :state the path to the source state file;
     #   defaults to the configured backend, or +"terraform.tfstate"+.
     # @option parameters [String] :state_out The path to the destination state
@@ -943,6 +978,13 @@ module RubyTerraform
     #   passed +"-"+ will read state from standard input.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :force (false) When +true+, writes the state
+    #   even if lineages don't match or the remote serial is higher.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
     # @option parameters [Boolean] :ignore_remote_version Whether or not to
     #   continue even if remote and local Terraform versions are incompatible;
     #   this may result in an unusable workspace, and should be used with
@@ -975,8 +1017,15 @@ module RubyTerraform
     #   resource address of the resource instance to remove; required.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @option parameters [Boolean] :dry+run (false) When +true+, prints out what
+    #   would've been removed but doesn't actually remove anything.
     # @option parameters [String] :backup The path where Terraform should
     #   write the backup state.
+    # @option parameters [Boolean] :lock (true) When +true+, locks the state
+    #   file when locking is supported; when +false+, does not lock the state
+    #   file.
+    # @option parameters [String] :lock_timeout ("0s") The duration to retry a
+    #   state lock.
     # @option parameters [String] :state The path to the state file to update;
     #   defaults to the current workspace state.
     # @option parameters [Boolean] :ignore_remote_version (false) Whether or not

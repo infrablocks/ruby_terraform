@@ -35,6 +35,8 @@ module RubyTerraform
     # * +:check+: If +true+, checks if the input is formatted; if any input is
     #   not properly formatted, an {RubyTerraform::Errors::ExecutionError} will
     #   be thrown; defaults to +false+.
+    # * +:no_color+: whether or not the output from the command should be in
+    #   color; defaults to +false+.
     # * +:recursive+: If +true+, also processes files in subdirectories;
     #   defaults to +false+ such that only the provided +:directory+ is
     #   processed.
@@ -51,13 +53,13 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add no_color option.
       def options
         %w[
           -list
           -write
           -diff
           -check
+          -no-color
           -recursive
         ] + super
       end

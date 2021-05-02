@@ -47,6 +47,8 @@ module RubyTerraform
     # * +:backup+: (legacy) the path to backup the existing state file before
     #   modifying; defaults to the +:state_out+ path with +".backup"+ extension;
     #   set +:no_backup+ to +true+ to skip backups entirely.
+    # * +:allow_missing_config+: whether or not to allow import when no resource
+    #   configuration block exists; defaults to +false+.
     # * +:input+: when +false+, will not ask for input for variables not
     #   directly set; defaults to +true+.
     # * +:lock+: when +true+, locks the state file when locking is supported;
@@ -99,10 +101,10 @@ module RubyTerraform
       # rubocop:disable Metrics/MethodLength
 
       # @!visibility private
-      # @todo Add allow_missing_config option.
       def options
         %w[
           -config
+          -allow-missing-config
           -backup
           -input
           -lock
@@ -121,7 +123,6 @@ module RubyTerraform
       # rubocop:enable Metrics/MethodLength
 
       # @!visibility private
-      # @todo Add directory argument.
       def arguments(parameters)
         [parameters[:address], parameters[:id]]
       end

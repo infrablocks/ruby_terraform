@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../../support/shared/global_options'
 
 describe RubyTerraform::Commands::ProvidersSchema do
   before do
@@ -49,23 +48,23 @@ describe RubyTerraform::Commands::ProvidersSchema do
     parameters: { json: false }
   )
 
-  GlobalOptions.each_key do |opt_key|
-    switch = "-#{opt_key.to_s.gsub('_', '-')}"
+  [:chdir].each do |option|
+    switch = "-#{option.to_s.gsub('_', '-')}"
     switch_value = 'option-value'
 
     it_behaves_like(
       'a valid command line',
       described_class,
-      reason: "adds a #{switch} option if a #{opt_key} is provided",
+      reason: "adds a #{switch} option if a #{option} is provided",
       expected: "terraform #{switch}=#{switch_value} providers schema -json",
       binary: 'terraform',
-      parameters: { opt_key => switch_value }
+      parameters: { option => switch_value }
     )
 
     it_behaves_like(
       'a valid command line',
       described_class,
-      reason: "does not add a #{switch} option if a #{opt_key} is not provided",
+      reason: "does not add a #{switch} option if a #{option} is not provided",
       expected: 'terraform providers schema -json',
       binary: 'terraform'
     )

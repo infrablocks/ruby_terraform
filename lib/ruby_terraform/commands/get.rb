@@ -34,6 +34,7 @@ module RubyTerraform
     # @example Basic Invocation
     #   RubyTerraform::Commands::Get.new.execute(
     #     directory: 'infra/networking')
+    #
     class Get < Base
       include RubyTerraform::Options::Global
 

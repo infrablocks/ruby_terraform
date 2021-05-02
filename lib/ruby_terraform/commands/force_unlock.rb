@@ -20,6 +20,9 @@ module RubyTerraform
     #
     # * +:lock_id+: the lock ID output when attempting an operation that failed
     #   due to a lock; required.
+    # * +:directory+: the path to a directory containing terraform
+    #   configuration (deprecated in terraform 0.14, removed in terraform 0.15,
+    #   use +:chdir+ instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:force+: If +true+, does not ask for input for unlock confirmation;
@@ -43,9 +46,8 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add directory option.
       def arguments(parameters)
-        [parameters[:lock_id]]
+        [parameters[:lock_id], parameters[:directory]]
       end
     end
   end

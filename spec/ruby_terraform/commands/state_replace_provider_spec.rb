@@ -41,11 +41,6 @@ describe RubyTerraform::Commands::StateReplaceProvider do
   )
 
   it_behaves_like(
-    'a command that can disable backup',
-    described_class, 'state replace-provider'
-  )
-
-  it_behaves_like(
     'a command with a boolean option',
     described_class, 'state replace-provider', :lock
   )

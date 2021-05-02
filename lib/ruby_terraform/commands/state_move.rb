@@ -33,6 +33,8 @@ module RubyTerraform
     # * +:destination+: the destination address to move the item to; required.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
+    # * +:dry+run+: when +true+, prints out what would've been moved but doesn't
+    #   actually move anything; defaults to +false+.
     # * +:backup+: the path where Terraform should write the backup for the
     #   original state; this can't be disabled; if not set, Terraform will write
     #   it to the same path as the state file with a +".backup"+ extension.
@@ -41,6 +43,9 @@ module RubyTerraform
     #   write it to the same path as the destination state file with a
     #   +".backup"+ extension; this only needs to be specified if +:state_out+
     #   is set to a different path than +:state+.
+    # * +:lock+: when +true+, locks the state file when locking is supported;
+    #   when +false+, does not lock the state file; defaults to +true+.
+    # * +:lock_timeout+: the duration to retry a state lock; defaults to +"0s"+.
     # * +:state+: the path to the source state file; defaults to the configured
     #   backend, or +"terraform.tfstate"+.
     # * +:state_out+: the path to the destination state file to write to; if
@@ -65,11 +70,13 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add dry_run, lock and lock_timout options.
       def options
         %w[
+          -dry-run
           -backup
           -backup-out
+          -lock
+          -lock-timeout
           -state
           -state-out
           -ignore-remote-version
@@ -79,12 +86,6 @@ module RubyTerraform
       # @!visibility private
       def arguments(parameters)
         [parameters[:source], parameters[:destination]]
-      end
-
-      # @!visibility private
-      # @todo Remove no_backup option as not supported for this command.
-      def parameter_overrides(parameters)
-        { backup: parameters[:no_backup] ? '-' : parameters[:backup] }
       end
     end
   end

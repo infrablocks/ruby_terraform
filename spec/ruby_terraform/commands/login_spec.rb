@@ -22,4 +22,9 @@ describe RubyTerraform::Commands::Login do
     'a command without a binary supplied',
     described_class, 'login'
   )
+
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'login'
+  )
 end

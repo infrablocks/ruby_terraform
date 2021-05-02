@@ -41,6 +41,11 @@ describe RubyTerraform::Commands::Apply do
   )
 
   it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'apply', :auto_approve
+  )
+
+  it_behaves_like(
     'a command with an option',
     described_class, 'apply', :backup
   )
@@ -68,11 +73,6 @@ describe RubyTerraform::Commands::Apply do
   it_behaves_like(
     'a command with a boolean option',
     described_class, 'apply', :input
-  )
-
-  it_behaves_like(
-    'a command with a boolean option',
-    described_class, 'apply', :auto_approve
   )
 
   it_behaves_like(

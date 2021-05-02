@@ -42,9 +42,8 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Remove the directory option.
       def arguments(parameters)
-        [parameters[:path] || parameters[:directory]]
+        [parameters[:path]]
       end
     end
   end

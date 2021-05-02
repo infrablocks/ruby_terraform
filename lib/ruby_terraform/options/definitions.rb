@@ -22,7 +22,7 @@ module RubyTerraform
         end,
 
         # string repeatable options
-        %w[-var-file -target -platform].map do |o|
+        %w[-var-file -target -platform -plugin-dir].map do |o|
           definition(
             name: o, option_type: :standard, value_type: :string,
             repeatable: true
@@ -56,6 +56,7 @@ module RubyTerraform
           -detailed-exitcode
           -diff
           -draw-cycles
+          -dry-run
           -force
           -force-copy
           -ignore-remote-version
@@ -75,11 +76,13 @@ module RubyTerraform
           -backup-out
           -from-module
           -fs-mirror
+          -id
           -lock-timeout
+          -lockfile
           -module-depth
           -net-mirror
           -parallelism
-          -plugin-dir
+          -plan
           -provider
           -state
           -state-out

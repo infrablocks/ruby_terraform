@@ -29,18 +29,28 @@ describe RubyTerraform::Commands::StateMove do
   )
 
   it_behaves_like(
+    'a command with a flag',
+    described_class, 'state mv', :dry_run
+  )
+
+  it_behaves_like(
     'a command with an option',
     described_class, 'state mv', :backup
   )
 
   it_behaves_like(
-    'a command that can disable backup',
-    described_class, 'state mv'
+    'a command with an option',
+    described_class, 'state mv', :backup_out
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'state mv', :lock
   )
 
   it_behaves_like(
     'a command with an option',
-    described_class, 'state mv', :backup_out
+    described_class, 'state mv', :lock_timeout
   )
 
   it_behaves_like(

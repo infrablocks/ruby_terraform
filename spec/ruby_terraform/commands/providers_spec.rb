@@ -14,6 +14,11 @@ describe RubyTerraform::Commands::Providers do
   end
 
   it_behaves_like(
+    'a command with an argument',
+    described_class, 'providers', :directory
+  )
+
+  it_behaves_like(
     'a command without a binary supplied',
     described_class, 'providers'
   )

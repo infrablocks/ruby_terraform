@@ -14,8 +14,23 @@ describe RubyTerraform::Commands::Graph do
   end
 
   it_behaves_like(
+    'a command with an argument',
+    described_class, 'graph', :directory
+  )
+
+  it_behaves_like(
     'a command without a binary supplied',
     described_class, 'graph'
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'graph', :plan
+  )
+
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'graph', :draw_cycles
   )
 
   it_behaves_like(
@@ -26,11 +41,6 @@ describe RubyTerraform::Commands::Graph do
   it_behaves_like(
     'a command with an option',
     described_class, 'graph', :module_depth
-  )
-
-  it_behaves_like(
-    'a command with a flag',
-    described_class, 'graph', :draw_cycles
   )
 
   it_behaves_like(

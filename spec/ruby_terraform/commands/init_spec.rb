@@ -74,8 +74,8 @@ describe RubyTerraform::Commands::Init do
   )
 
   it_behaves_like(
-    'a command with an option',
-    described_class, 'init', :plugin_dir
+    'a command with an array option',
+    described_class, 'init', :plugin_dirs
   )
 
   it_behaves_like(
@@ -91,6 +91,11 @@ describe RubyTerraform::Commands::Init do
   it_behaves_like(
     'a command with a boolean option',
     described_class, 'init', :verify_plugins
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'init', :lockfile
   )
 
   it_behaves_like(

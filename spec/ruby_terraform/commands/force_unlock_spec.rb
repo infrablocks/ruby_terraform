@@ -14,8 +14,8 @@ describe RubyTerraform::Commands::ForceUnlock do
   end
 
   it_behaves_like(
-    'a command with an argument',
-    described_class, 'force-unlock', :lock_id
+    'a command with arguments',
+    described_class, 'force-unlock', %i[lock_id directory]
   )
 
   it_behaves_like(

@@ -29,6 +29,11 @@ module RubyTerraform
     #   read state from standard input.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
+    # * +:force+: when +true+, writes the state even if lineages don't match or
+    #   the remote serial is higher; defaults to +false+.
+    # * +:lock+: when +true+, locks the state file when locking is supported;
+    #   when +false+, does not lock the state file; defaults to +true+.
+    # * +:lock_timeout+: the duration to retry a state lock; defaults to +"0s"+.
     # * +:ignore_remote_version+: whether or not to continue even if remote and
     #   local Terraform versions are incompatible; this may result in an
     #   unusable workspace, and should be used with extreme caution; defaults to
@@ -47,9 +52,13 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add force, lock and lock_timeout options.
       def options
-        %w[-ignore-remote-version] + super
+        %w[
+          -force
+          -lock
+          -lock-timeout
+          -ignore-remote-version
+        ] + super
       end
 
       # @!visibility private

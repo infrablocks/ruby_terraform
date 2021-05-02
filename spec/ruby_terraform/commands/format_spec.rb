@@ -45,6 +45,11 @@ describe RubyTerraform::Commands::Format do
 
   it_behaves_like(
     'a command with a flag',
+    described_class, 'fmt', :no_color
+  )
+
+  it_behaves_like(
+    'a command with a flag',
     described_class, 'fmt', :recursive
   )
 

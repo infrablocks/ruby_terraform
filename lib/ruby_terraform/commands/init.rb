@@ -53,7 +53,14 @@ module RubyTerraform
     #   color; defaults to +false+.
     # * +:plugin_dir+: the path to a directory containing plugin binaries; this
     #   overrides all default search paths for plugins, and prevents the
-    #   automatic installation of plugins.
+    #   automatic installation of plugins; if both +:plugin_dir+ and
+    #   +:plugin_dirs+ are provided, all plugin directories will be passed to
+    #   Terraform.
+    # * +:plugin_dirs+: an array of paths to directories containing plugin
+    #   binaries; this overrides all default search paths for plugins, and
+    #   prevents the automatic installation of plugins; if both +:plugin_dir+
+    #   and +:plugin_dirs+ are provided, all plugin directories will be passed
+    #   to Terraform.
     # * +:reconfigure+: if +true+, reconfigures the backend, ignoring any saved
     #   configuration; defaults to +false+.
     # * +:upgrade+: if +true+, when installing modules or plugins, ignores
@@ -62,6 +69,8 @@ module RubyTerraform
     # * +:verify_plugins+: whether or not to verify plugins for this
     #   configuration; defaults to +true+ (deprecated, removed in terraform
     #   0.15).
+    # * +:lockfile+: sets a dependency lockfile mode; currently only "readonly"
+    #   is valid.
     #
     # @example Basic Invocation
     #   RubyTerraform::Commands::Init.new.execute(
@@ -79,8 +88,6 @@ module RubyTerraform
       # rubocop:disable Metrics/MethodLength
 
       # @!visibility private
-      # @todo Add lockfile option.
-      # @todo Make plugin_dir option plural
       def options
         %w[
           -backend
@@ -97,6 +104,7 @@ module RubyTerraform
           -reconfigure
           -upgrade
           -verify-plugins
+          -lockfile
         ] + super
       end
 

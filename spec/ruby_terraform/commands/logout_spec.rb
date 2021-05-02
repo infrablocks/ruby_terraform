@@ -22,4 +22,9 @@ describe RubyTerraform::Commands::Logout do
     'a command without a binary supplied',
     described_class, 'logout'
   )
+
+  it_behaves_like(
+    'a command with global options',
+    described_class, 'logout'
+  )
 end

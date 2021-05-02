@@ -4,6 +4,8 @@ BREAKING CHANGES:
 
 * Removed `RemoteConfig` command since it has not been a part of Terraform since
   version 0.8.
+* Removed `Clean` command since it is not a Terraform command and was included
+  as a utility for `RakeTerraform` which can handle this itself.
 * Removed `:directory` option from `Show` command as it is not a part of the
   command. Use `:path` instead, which is a path to a state file or a plan.
   

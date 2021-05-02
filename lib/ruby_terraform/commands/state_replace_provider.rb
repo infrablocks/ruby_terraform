@@ -63,11 +63,6 @@ module RubyTerraform
       def arguments(parameters)
         [parameters[:from], parameters[:to]]
       end
-
-      # @!visibility private
-      def parameter_overrides(parameters)
-        { backup: parameters[:no_backup] ? '-' : parameters[:backup] }
-      end
     end
   end
 end

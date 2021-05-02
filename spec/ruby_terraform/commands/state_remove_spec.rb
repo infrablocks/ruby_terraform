@@ -24,13 +24,23 @@ describe RubyTerraform::Commands::StateRemove do
   )
 
   it_behaves_like(
+    'a command with a flag',
+    described_class, 'state rm', :dry_run
+  )
+
+  it_behaves_like(
     'a command with an option',
     described_class, 'state rm', :backup
   )
 
   it_behaves_like(
-    'a command that can disable backup',
-    described_class, 'state rm'
+    'a command with a boolean option',
+    described_class, 'state rm', :lock
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'state rm', :lock_timeout
   )
 
   it_behaves_like(

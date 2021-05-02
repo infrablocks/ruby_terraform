@@ -24,6 +24,9 @@ module RubyTerraform
     # When executing an instance of {Graph} via {#execute}, the following
     # options are supported:
     #
+    # * +:directory+: the path to a directory containing terraform
+    #   configuration (deprecated in terraform 0.14, removed in terraform 0.15,
+    #   use +:chdir+ instead).
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:plan+: render the graph using the specified plan file instead of the
@@ -49,16 +52,19 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add plan option.
       def options
         %w[
+          -plan
           -draw-cycles
           -type
           -module-depth
         ] + super
       end
 
-      # @todo Add directory argument.
+      # @!visibility private
+      def arguments(parameters)
+        [parameters[:directory]]
+      end
     end
   end
 end

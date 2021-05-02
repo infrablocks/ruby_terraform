@@ -25,6 +25,11 @@ describe RubyTerraform::Commands::Destroy do
   )
 
   it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'destroy', :auto_approve
+  )
+
+  it_behaves_like(
     'a command with an option',
     described_class, 'destroy', :backup
   )
@@ -52,11 +57,6 @@ describe RubyTerraform::Commands::Destroy do
   it_behaves_like(
     'a command with a boolean option',
     described_class, 'destroy', :input
-  )
-
-  it_behaves_like(
-    'a command with a boolean option',
-    described_class, 'destroy', :auto_approve
   )
 
   it_behaves_like(

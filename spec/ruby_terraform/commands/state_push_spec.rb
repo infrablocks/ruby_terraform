@@ -20,6 +20,21 @@ describe RubyTerraform::Commands::StatePush do
 
   it_behaves_like(
     'a command with a flag',
+    described_class, 'state push', :force
+  )
+
+  it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'state push', :lock
+  )
+
+  it_behaves_like(
+    'a command with an option',
+    described_class, 'state push', :lock_timeout
+  )
+
+  it_behaves_like(
+    'a command with a flag',
     described_class, 'state push', :ignore_remote_version
   )
 
