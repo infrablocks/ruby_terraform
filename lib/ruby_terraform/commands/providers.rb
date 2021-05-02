@@ -39,8 +39,6 @@ module RubyTerraform
       def arguments(parameters)
         [parameters[:directory]]
       end
-
-      # @todo Add directory argument
     end
   end
 end

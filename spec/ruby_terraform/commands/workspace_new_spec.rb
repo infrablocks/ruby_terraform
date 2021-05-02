@@ -20,18 +20,13 @@ describe RubyTerraform::Commands::WorkspaceNew do
     expected: 'terraform workspace new staging',
     binary: 'terraform',
     parameters: {
-      workspace: 'staging'
+      name: 'staging'
     }
   )
 
   it_behaves_like(
-    'a command with an argument',
-    described_class, 'workspace new', :workspace
-  )
-
-  it_behaves_like(
-    'a command with an argument',
-    described_class, 'workspace new', :directory
+    'a command with arguments',
+    described_class, 'workspace new', %i[name directory]
   )
 
   it_behaves_like(

@@ -3,8 +3,6 @@
 require 'spec_helper'
 require 'open4'
 
-O = RubyTerraform::Options
-
 describe RubyTerraform::Commands::Base do
   after do
     RubyTerraform.reset!

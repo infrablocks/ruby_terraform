@@ -20,18 +20,13 @@ describe RubyTerraform::Commands::WorkspaceDelete do
     expected: 'terraform workspace delete staging',
     binary: 'terraform',
     parameters: {
-      workspace: 'staging'
+      name: 'staging'
     }
   )
 
   it_behaves_like(
-    'a command with an argument',
-    described_class, 'workspace delete', :workspace
-  )
-
-  it_behaves_like(
-    'a command with an argument',
-    described_class, 'workspace delete', :directory
+    'a command with arguments',
+    described_class, 'workspace delete', %i[name directory]
   )
 
   it_behaves_like(

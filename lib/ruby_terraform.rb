@@ -649,6 +649,13 @@ module RubyTerraform
     # more provider source addresses on the command line.
     #
     # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :provider The provider source address for
+    #   which the lock file should be updated; if both +:provider+ and
+    #   +:providers+ are provided, all providers will be passed to Terraform.
+    # @option parameters [Array<String>] :providers An array of provider source
+    #   addresses for which the lock file should be updated; if both +:provider+
+    #   and +:providers+ are provided, all providers will be passed to
+    #   Terraform.
     # @option parameters [String] :providers The provider source addresses for
     #   which the lock file should be updated.
     # @option parameters [String] :chdir The path of a working directory to
@@ -684,7 +691,7 @@ module RubyTerraform
     #   RubyTerraform.providers_lock(
     #     fs_mirror: "/usr/local/terraform/providers",
     #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"],
-    #     providers: "tf.example.com/ourcompany/ourplatform")
+    #     provider: "tf.example.com/ourcompany/ourplatform")
     #
     def providers_lock(parameters = {})
       exec(RubyTerraform::Commands::ProvidersLock, parameters)
@@ -858,7 +865,11 @@ module RubyTerraform
     #
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :address The module address or absolute
-    #   resource address to filter by.
+    #   resource address to filter by; if both +:address+ and +:addresses+ are
+    #   provided, all addresses will be passed to Terraform.
+    # @option parameters [Array<String>] :addresses An array of module addresses
+    #   or absolute resource addresses to filter by; if both +:address+ and
+    #   +:addresses+ are provided, all addresses will be passed to Terraform.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [String] :state The path to a Terraform state file to
@@ -901,7 +912,7 @@ module RubyTerraform
     #   the item to; required.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
-    # @option parameters [Boolean] :dry+run (false) When +true+, prints out what
+    # @option parameters [Boolean] :dry_run (false) When +true+, prints out what
     #   would've been moved but doesn't actually move anything.
     # @option parameters [String] :backup The path where Terraform should write
     #   the backup for the original state; this can't be disabled; if not set,
@@ -1014,7 +1025,13 @@ module RubyTerraform
     #
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :address The module address or absolute
-    #   resource address of the resource instance to remove; required.
+    #   resource address of the resource instance to remove; required unless
+    #   +:addresses+ is supplied; if both +:address+ and +:addresses+ are
+    #   provided, all addresses will be passed to Terraform.
+    # @option parameters [Array<String>] :addresses An array of module addresses
+    #   or absolute resource addresses of the resource instances to remove;
+    #   required unless +:address+ is supplied; if both +:address+ and
+    #   +:addresses+ are provided, all addresses will be passed to Terraform.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :dry+run (false) When +true+, prints out what
@@ -1265,8 +1282,8 @@ module RubyTerraform
     # workspace.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :workspace The name of the workspace to
-    #   delete; required.
+    # @option parameters [String] :name The name of the workspace to delete;
+    #   required.
     # @option parameters [String] :directory The path to a directory containing
     #   terraform configuration (deprecated in terraform 0.14, removed in
     #   terraform 0.15, use +:chdir+ instead).
@@ -1282,7 +1299,7 @@ module RubyTerraform
     #
     # @example Basic Invocation
     #   RubyTerraform.workspace_delete(
-    #     workspace: 'example')
+    #     name: 'example')
     #
     def workspace_delete(parameters = {})
       exec(RubyTerraform::Commands::WorkspaceDelete, parameters)
@@ -1309,8 +1326,8 @@ module RubyTerraform
     # workspace.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :workspace The name of the workspace to
-    #   create; required.
+    # @option parameters [String] :name The name of the workspace to create;
+    #   required.
     # @option parameters [String] :directory The path to a directory containing
     #   terraform configuration (deprecated in terraform 0.14, removed in
     #   terraform 0.15, use +:chdir+ instead).
@@ -1326,7 +1343,7 @@ module RubyTerraform
     #
     # @example Basic Invocation
     #   RubyTerraform.workspace_new(
-    #     workspace: 'example')
+    #     name: 'example')
     #
     def workspace_new(parameters = {})
       exec(RubyTerraform::Commands::WorkspaceNew, parameters)
@@ -1336,8 +1353,8 @@ module RubyTerraform
     # workspace.
     #
     # @param parameters The parameters used to invoke the command
-    # @option parameters [String] :workspace The name of the workspace to
-    #   select; required.
+    # @option parameters [String] :name The name of the workspace to select;
+    #   required.
     # @option parameters [String] :directory The path to a directory containing
     #   terraform configuration (deprecated in terraform 0.14, removed in
     #   terraform 0.15, use +:chdir+ instead).
@@ -1346,7 +1363,7 @@ module RubyTerraform
     #
     # @example BasicInvocation
     #   RubyTerraform.workspace_select(
-    #     workspace: 'example')
+    #     name: 'example')
     #
     def workspace_select(parameters = {})
       exec(RubyTerraform::Commands::WorkspaceSelect, parameters)
@@ -1364,10 +1381,6 @@ module RubyTerraform
     #
     def workspace_show(parameters = {})
       exec(RubyTerraform::Commands::WorkspaceShow, parameters)
-    end
-
-    def clean(parameters = {})
-      exec(RubyTerraform::Commands::Clean, parameters)
     end
 
     # rubocop:disable Metrics/MethodLength

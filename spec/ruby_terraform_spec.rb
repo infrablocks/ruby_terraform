@@ -9,10 +9,9 @@ end
 describe RubyTerraform do
   commands = {
     apply: RubyTerraform::Commands::Apply,
-    clean: RubyTerraform::Commands::Clean,
     destroy: RubyTerraform::Commands::Destroy,
-    format: RubyTerraform::Commands::Format,
     force_unlock: RubyTerraform::Commands::ForceUnlock,
+    format: RubyTerraform::Commands::Format,
     get: RubyTerraform::Commands::Get,
     graph: RubyTerraform::Commands::Graph,
     import: RubyTerraform::Commands::Import,
@@ -37,10 +36,10 @@ describe RubyTerraform do
     taint: RubyTerraform::Commands::Taint,
     untaint: RubyTerraform::Commands::Untaint,
     validate: RubyTerraform::Commands::Validate,
-    workspace_list: RubyTerraform::Commands::WorkspaceList,
-    workspace_select: RubyTerraform::Commands::WorkspaceSelect,
-    workspace_new: RubyTerraform::Commands::WorkspaceNew,
     workspace_delete: RubyTerraform::Commands::WorkspaceDelete,
+    workspace_list: RubyTerraform::Commands::WorkspaceList,
+    workspace_new: RubyTerraform::Commands::WorkspaceNew,
+    workspace_select: RubyTerraform::Commands::WorkspaceSelect,
     workspace_show: RubyTerraform::Commands::WorkspaceShow
   }
 

@@ -12,7 +12,7 @@ module RubyTerraform
     # When executing an instance of {WorkspaceSelect} via {#execute}, the
     # following options are supported:
     #
-    # * +:workspace+: the name of the workspace to select; required.
+    # * +:name+: the name of the workspace to select; required.
     # * +:directory+: the path to a directory containing terraform configuration
     #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
     #   instead).
@@ -21,7 +21,7 @@ module RubyTerraform
     #
     # @example BasicInvocation
     #   RubyTerraform::Commands::WorkspaceSelect.new.execute(
-    #     workspace: 'example')
+    #     name: 'example')
     #
     class WorkspaceSelect < Base
       include RubyTerraform::Options::Global
@@ -33,7 +33,7 @@ module RubyTerraform
 
       # @!visibility private
       def arguments(parameters)
-        [parameters[:workspace], parameters[:directory]]
+        [parameters[:name], parameters[:directory]]
       end
     end
   end

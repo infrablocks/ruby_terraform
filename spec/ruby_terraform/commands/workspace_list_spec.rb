@@ -14,17 +14,6 @@ describe RubyTerraform::Commands::WorkspaceList do
   end
 
   it_behaves_like(
-    'a valid command line',
-    described_class,
-    reason: 'should not use workspace option if operation list is provided',
-    expected: 'terraform workspace list',
-    binary: 'terraform',
-    parameters: {
-      workspace: 'qa'
-    }
-  )
-
-  it_behaves_like(
     'a command with an argument',
     described_class, 'workspace list', :directory
   )

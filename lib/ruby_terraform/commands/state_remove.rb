@@ -25,7 +25,13 @@ module RubyTerraform
     # options are supported:
     #
     # * +:address+: the module address or absolute resource address of the
-    #   resource instance to remove; required.
+    #   resource instance to remove; required unless +:addresses+ is supplied;
+    #   if both +:address+ and +:addresses+ are provided, all addresses will be
+    #   passed to Terraform.
+    # * +:addresses+: an array of module addresses or absolute resource
+    #   addresses of the resource instances to remove; required unless
+    #   +:address+ is supplied; if both +:address+ and +:addresses+ are
+    #   provided, all addresses will be passed to Terraform.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:dry+run+: when +true+, prints out what would've been removed but
@@ -66,9 +72,8 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add addresses arg and flatten
       def arguments(parameters)
-        [parameters[:address]]
+        [parameters[:address], parameters[:addresses]]
       end
     end
   end

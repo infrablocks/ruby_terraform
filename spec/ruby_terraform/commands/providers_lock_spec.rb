@@ -14,13 +14,13 @@ describe RubyTerraform::Commands::ProvidersLock do
   end
 
   it_behaves_like(
-    'a command without a binary supplied',
-    described_class, 'providers lock'
+    'a command with a variadic argument',
+    described_class, 'providers lock', :providers
   )
 
   it_behaves_like(
-    'a command with an argument',
-    described_class, 'providers lock', :providers
+    'a command without a binary supplied',
+    described_class, 'providers lock'
   )
 
   it_behaves_like(

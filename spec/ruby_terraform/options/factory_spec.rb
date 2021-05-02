@@ -2,8 +2,6 @@
 
 require 'spec_helper'
 
-O = RubyTerraform::Options
-
 describe RubyTerraform::Options::Factory do
   context 'when boolean' do
     it 'builds a boolean option' do

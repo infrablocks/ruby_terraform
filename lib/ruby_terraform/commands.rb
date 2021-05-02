@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require_relative 'commands/apply'
-require_relative 'commands/clean'
 require_relative 'commands/destroy'
 require_relative 'commands/force_unlock'
 require_relative 'commands/format'

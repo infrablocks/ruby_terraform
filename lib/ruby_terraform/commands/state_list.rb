@@ -29,7 +29,11 @@ module RubyTerraform
     # options are supported:
     #
     # * +:address+: the module address or absolute resource address to filter
-    #   by.
+    #   by; if both +:address+ and +:addresses+ are provided, all addresses will
+    #   be passed to Terraform.
+    # * +:addresses+: an array of module addresses or absolute resource
+    #   addresses to filter by; if both +:address+ and +:addresses+ are
+    #   provided, all addresses will be passed to Terraform.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:state+: the path to a Terraform state file to use to look up
@@ -59,9 +63,8 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Add addresses arg and flatten
       def arguments(parameters)
-        [parameters[:address]]
+        [parameters[:address], parameters[:addresses]]
       end
     end
   end

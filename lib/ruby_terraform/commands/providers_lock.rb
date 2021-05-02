@@ -31,8 +31,12 @@ module RubyTerraform
     # When executing an instance of {ProvidersLock} via {#execute}, the
     # following options are supported:
     #
-    # * +:providers+: the provider source addresses for which the lock file
-    #   should be updated.
+    # * +:provider+: the provider source address for which the lock file
+    #   should be updated; if both +:provider+ and +:providers+ are provided,
+    #   all providers will be passed to Terraform.
+    # * +:providers+: an array of provider source addresses for which the lock
+    #   file should be updated; if both +:provider+ and +:providers+ are
+    #   provided, all providers will be passed to Terraform.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     # * +:fs_mirror+: if provided, consults the given filesystem mirror
@@ -65,7 +69,7 @@ module RubyTerraform
     #   RubyTerraform::Commands::ProvidersLock.new.execute(
     #     fs_mirror: "/usr/local/terraform/providers",
     #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"],
-    #     providers: "tf.example.com/ourcompany/ourplatform")
+    #     provider: "tf.example.com/ourcompany/ourplatform")
     #
     class ProvidersLock < Base
       include RubyTerraform::Options::Global
@@ -85,9 +89,8 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Flatten arguments array to allow array of providers.
       def arguments(parameters)
-        [parameters[:providers]]
+        [parameters[:provider], parameters[:providers]]
       end
     end
   end

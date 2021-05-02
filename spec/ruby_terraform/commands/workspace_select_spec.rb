@@ -20,18 +20,13 @@ describe RubyTerraform::Commands::WorkspaceSelect do
     expected: 'terraform workspace select staging',
     binary: 'terraform',
     parameters: {
-      workspace: 'staging'
+      name: 'staging'
     }
   )
 
   it_behaves_like(
-    'a command with an argument',
-    described_class, 'workspace select', :workspace
-  )
-
-  it_behaves_like(
-    'a command with an argument',
-    described_class, 'workspace select', :directory
+    'a command with arguments',
+    described_class, 'workspace select', %i[name directory]
   )
 
   it_behaves_like(

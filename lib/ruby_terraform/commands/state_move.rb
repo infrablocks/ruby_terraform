@@ -33,7 +33,7 @@ module RubyTerraform
     # * +:destination+: the destination address to move the item to; required.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
-    # * +:dry+run+: when +true+, prints out what would've been moved but doesn't
+    # * +:dry_run+: when +true+, prints out what would've been moved but doesn't
     #   actually move anything; defaults to +false+.
     # * +:backup+: the path where Terraform should write the backup for the
     #   original state; this can't be disabled; if not set, Terraform will write

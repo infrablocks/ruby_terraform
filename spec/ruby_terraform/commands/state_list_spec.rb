@@ -14,8 +14,8 @@ describe RubyTerraform::Commands::StateList do
   end
 
   it_behaves_like(
-    'a command with an argument',
-    described_class, 'state list', :address
+    'a command with a variadic argument',
+    described_class, 'state list', :addresses, singular: :address
   )
 
   it_behaves_like(

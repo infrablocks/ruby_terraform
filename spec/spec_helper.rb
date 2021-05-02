@@ -12,6 +12,8 @@ require 'bundler/setup'
 require 'faker'
 require 'ruby_terraform'
 
+O = RubyTerraform::Options
+
 Dir[File.join(__dir__, 'support', '**', '*.rb')]
   .sort
   .each { |f| require f }

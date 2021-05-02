@@ -8,6 +8,8 @@ BREAKING CHANGES:
   as a utility for `RakeTerraform` which can handle this itself.
 * Removed `:directory` option from `Show` command as it is not a part of the
   command. Use `:path` instead, which is a path to a state file or a plan.
+* Renamed `:workspace` option to `:name` on workspace commands in line with how
+  Terraform refers to it.
   
 IMPROVEMENTS:
 

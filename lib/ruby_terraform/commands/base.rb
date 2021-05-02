@@ -68,7 +68,7 @@ module RubyTerraform
           .with_option_separator('=')
           .with_appliables(@options.resolve(options, parameters))
           .with_subcommands(subcommands)
-          .with_arguments(arguments(parameters)).build
+          .with_arguments(arguments(parameters).compact.flatten).build
       end
 
       def resolve_parameters(parameters)

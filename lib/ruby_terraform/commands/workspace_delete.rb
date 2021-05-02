@@ -12,7 +12,7 @@ module RubyTerraform
     # When executing an instance of {WorkspaceDelete} via {#execute}, the
     # following options are supported:
     #
-    # * +:workspace+: the name of the workspace to delete; required.
+    # * +:name+: the name of the workspace to delete; required.
     # * +:directory+: the path to a directory containing terraform configuration
     #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
     #   instead).
@@ -26,7 +26,7 @@ module RubyTerraform
     #
     # @example Basic Invocation
     #   RubyTerraform::Commands::WorkspaceDelete.new.execute(
-    #     workspace: 'example')
+    #     name: 'example')
     #
     class WorkspaceDelete < Base
       include RubyTerraform::Options::Global
@@ -46,9 +46,8 @@ module RubyTerraform
       end
 
       # @!visibility private
-      # @todo Rename workspace to name.
       def arguments(parameters)
-        [parameters[:workspace], parameters[:directory]]
+        [parameters[:name], parameters[:directory]]
       end
     end
   end

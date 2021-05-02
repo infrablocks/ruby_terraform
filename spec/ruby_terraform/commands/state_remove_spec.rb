@@ -14,8 +14,8 @@ describe RubyTerraform::Commands::StateRemove do
   end
 
   it_behaves_like(
-    'a command with an argument',
-    described_class, 'state rm', :address
+    'a command with a variadic argument',
+    described_class, 'state rm', :addresses, singular: :address
   )
 
   it_behaves_like(

@@ -2,8 +2,6 @@
 
 require 'spec_helper'
 
-O = RubyTerraform::Options
-
 describe RubyTerraform::Options::Types::Standard do
   let(:builder) do
     Lino::CommandLineBuilder
