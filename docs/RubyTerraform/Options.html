@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: RubyTerraform::Options
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "RubyTerraform::Options";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (O)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span>
+     &raquo; 
+    <span class="title">Options</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: RubyTerraform::Options
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/ruby_terraform/options.rb<span class="defines">,<br />
+  lib/ruby_terraform/options/name.rb,<br /> lib/ruby_terraform/options/types.rb,<br /> lib/ruby_terraform/options/global.rb,<br /> lib/ruby_terraform/options/values.rb,<br /> lib/ruby_terraform/options/factory.rb,<br /> lib/ruby_terraform/options/definition.rb,<br /> lib/ruby_terraform/options/types/flag.rb,<br /> lib/ruby_terraform/options/definitions.rb,<br /> lib/ruby_terraform/options/values/base.rb,<br /> lib/ruby_terraform/options/values/string.rb,<br /> lib/ruby_terraform/options/types/standard.rb,<br /> lib/ruby_terraform/options/values/boolean.rb,<br /> lib/ruby_terraform/options/values/complex.rb,<br /> lib/ruby_terraform/options/values/key_value.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Options/Global.html" title="RubyTerraform::Options::Global (module)">Global</a></span>, <span class='object_link'><a href="Options/Types.html" title="RubyTerraform::Options::Types (module)">Types</a></span>, <span class='object_link'><a href="Options/Values.html" title="RubyTerraform::Options::Values (module)">Values</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Options/Definition.html" title="RubyTerraform::Options::Definition (class)">Definition</a></span>, <span class='object_link'><a href="Options/Factory.html" title="RubyTerraform::Options::Factory (class)">Factory</a></span>, <span class='object_link'><a href="Options/Name.html" title="RubyTerraform::Options::Name (class)">Name</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="DEFINITIONS-constant" class="">DEFINITIONS =
+          
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+  <span class='comment'># complex repeatable options with space separator
+</span>  <span class='qwords_beg'>%w[</span><span class='tstring_content'>-var</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
+    <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span>
+      <span class='label'>name:</span> <span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:complex</span><span class='comma'>,</span>
+      <span class='label'>repeatable:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>separator:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='comma'>,</span>
+
+  <span class='comment'># complex repeatable options with default separator
+</span>  <span class='qwords_beg'>%w[</span><span class='tstring_content'>-backend-config</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
+    <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span>
+      <span class='label'>name:</span> <span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:complex</span><span class='comma'>,</span>
+      <span class='label'>repeatable:</span> <span class='kw'>true</span><span class='comma'>,</span>
+      <span class='label'>override_keys:</span> <span class='lbrace'>{</span> <span class='label'>singular:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>plural:</span> <span class='symbol'>:backend_config</span> <span class='rbrace'>}</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='comma'>,</span>
+
+  <span class='comment'># string repeatable options
+</span>  <span class='qwords_beg'>%w[</span><span class='tstring_content'>-var-file</span><span class='words_sep'> </span><span class='tstring_content'>-target</span><span class='words_sep'> </span><span class='tstring_content'>-platform</span><span class='words_sep'> </span><span class='tstring_content'>-plugin-dir</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
+    <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span>
+      <span class='label'>name:</span> <span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:string</span><span class='comma'>,</span>
+      <span class='label'>repeatable:</span> <span class='kw'>true</span>
+    <span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='comma'>,</span>
+
+  <span class='comment'># boolean options
+</span>  <span class='qwords_beg'>%w[</span><span class='words_sep'>
+    </span><span class='tstring_content'>-auto-approve</span><span class='words_sep'>
+    </span><span class='tstring_content'>-backend</span><span class='words_sep'>
+    </span><span class='tstring_content'>-get</span><span class='words_sep'>
+    </span><span class='tstring_content'>-get-plugins</span><span class='words_sep'>
+    </span><span class='tstring_content'>-input</span><span class='words_sep'>
+    </span><span class='tstring_content'>-list</span><span class='words_sep'>
+    </span><span class='tstring_content'>-lock</span><span class='words_sep'>
+    </span><span class='tstring_content'>-refresh</span><span class='words_sep'>
+    </span><span class='tstring_content'>-upgrade</span><span class='words_sep'>
+    </span><span class='tstring_content'>-verify-plugins</span><span class='words_sep'>
+    </span><span class='tstring_content'>-write</span><span class='words_sep'>
+  </span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
+    <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:boolean</span><span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='comma'>,</span>
+
+  <span class='comment'># flag options
+</span>  <span class='qwords_beg'>%w[</span><span class='words_sep'>
+    </span><span class='tstring_content'>-allow-missing</span><span class='words_sep'>
+    </span><span class='tstring_content'>-allow-missing-config</span><span class='words_sep'>
+    </span><span class='tstring_content'>-check</span><span class='words_sep'>
+    </span><span class='tstring_content'>-compact-warnings</span><span class='words_sep'>
+    </span><span class='tstring_content'>-destroy</span><span class='words_sep'>
+    </span><span class='tstring_content'>-detailed-exitcode</span><span class='words_sep'>
+    </span><span class='tstring_content'>-diff</span><span class='words_sep'>
+    </span><span class='tstring_content'>-draw-cycles</span><span class='words_sep'>
+    </span><span class='tstring_content'>-dry-run</span><span class='words_sep'>
+    </span><span class='tstring_content'>-force</span><span class='words_sep'>
+    </span><span class='tstring_content'>-force-copy</span><span class='words_sep'>
+    </span><span class='tstring_content'>-ignore-remote-version</span><span class='words_sep'>
+    </span><span class='tstring_content'>-json</span><span class='words_sep'>
+    </span><span class='tstring_content'>-no-color</span><span class='words_sep'>
+    </span><span class='tstring_content'>-raw</span><span class='words_sep'>
+    </span><span class='tstring_content'>-reconfigure</span><span class='words_sep'>
+    </span><span class='tstring_content'>-recursive</span><span class='words_sep'>
+    </span><span class='tstring_content'>-update</span><span class='words_sep'>
+  </span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
+    <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:flag</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:boolean</span><span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='comma'>,</span>
+
+  <span class='comment'># string options
+</span>  <span class='qwords_beg'>%w[</span><span class='words_sep'>
+    </span><span class='tstring_content'>-backup</span><span class='words_sep'>
+    </span><span class='tstring_content'>-backup-out</span><span class='words_sep'>
+    </span><span class='tstring_content'>-from-module</span><span class='words_sep'>
+    </span><span class='tstring_content'>-fs-mirror</span><span class='words_sep'>
+    </span><span class='tstring_content'>-id</span><span class='words_sep'>
+    </span><span class='tstring_content'>-lock-timeout</span><span class='words_sep'>
+    </span><span class='tstring_content'>-lockfile</span><span class='words_sep'>
+    </span><span class='tstring_content'>-module-depth</span><span class='words_sep'>
+    </span><span class='tstring_content'>-net-mirror</span><span class='words_sep'>
+    </span><span class='tstring_content'>-parallelism</span><span class='words_sep'>
+    </span><span class='tstring_content'>-plan</span><span class='words_sep'>
+    </span><span class='tstring_content'>-provider</span><span class='words_sep'>
+    </span><span class='tstring_content'>-state</span><span class='words_sep'>
+    </span><span class='tstring_content'>-state-out</span><span class='words_sep'>
+    </span><span class='tstring_content'>-type</span><span class='words_sep'>
+  </span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_o'>o</span><span class='op'>|</span>
+    <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span><span class='label'>name:</span> <span class='id identifier rubyid_o'>o</span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:string</span><span class='rparen'>)</span>
+  <span class='kw'>end</span><span class='comma'>,</span>
+
+  <span class='comment'># string options with extra keys
+</span>  <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span>
+    <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-config</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:string</span><span class='comma'>,</span>
+    <span class='label'>extra_keys:</span> <span class='lbrace'>{</span> <span class='label'>singular:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>directory</span><span class='tstring_end'>]</span></span> <span class='rbrace'>}</span>
+  <span class='rparen'>)</span><span class='comma'>,</span>
+  <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span>
+    <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-out</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:string</span><span class='comma'>,</span>
+    <span class='label'>extra_keys:</span> <span class='lbrace'>{</span> <span class='label'>singular:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>plan</span><span class='tstring_end'>]</span></span> <span class='rbrace'>}</span>
+  <span class='rparen'>)</span><span class='comma'>,</span>
+
+  <span class='comment'># global options
+</span>  <span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span>
+    <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-chdir</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>option_type:</span> <span class='symbol'>:standard</span><span class='comma'>,</span> <span class='label'>value_type:</span> <span class='symbol'>:string</span><span class='comma'>,</span>
+    <span class='label'>placement:</span> <span class='symbol'>:after_command</span><span class='comma'>,</span>
+    <span class='label'>extra_keys:</span> <span class='lbrace'>{</span> <span class='label'>singular:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>working_directory</span><span class='tstring_end'>]</span></span> <span class='rbrace'>}</span>
+  <span class='rparen'>)</span>
+<span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#definition-class_method" title="definition (class method)">.<strong>definition</strong>(opts)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#name-class_method" title="name (class method)">.<strong>name</strong>(name)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#types-class_method" title="types (class method)">.<strong>types</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#values-class_method" title="values (class method)">.<strong>values</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="definition-class_method">
+  
+    .<strong>definition</strong>(opts)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+16
+17
+18</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options.rb', line 16</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_definition'>definition</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Options/Definition.html" title="RubyTerraform::Options::Definition (class)">Definition</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Options/Definition.html#initialize-instance_method" title="RubyTerraform::Options::Definition#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="name-class_method">
+  
+    .<strong>name</strong>(name)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+12
+13
+14</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options.rb', line 12</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="Options/Name.html" title="RubyTerraform::Options::Name (class)">Name</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Options/Name.html#initialize-instance_method" title="RubyTerraform::Options::Name#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="types-class_method">
+  
+    .<strong>types</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options.rb', line 20</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_types'>types</span>
+  <span class='const'><span class='object_link'><a href="Options/Types.html" title="RubyTerraform::Options::Types (module)">Types</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="values-class_method">
+  
+    .<strong>values</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options.rb', line 24</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
+  <span class='const'><span class='object_link'><a href="Options/Values.html" title="RubyTerraform::Options::Values (module)">Values</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Mon May  3 14:49:30 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.6.0).
+</div>
+
+    </div>
+  </body>
+</html>

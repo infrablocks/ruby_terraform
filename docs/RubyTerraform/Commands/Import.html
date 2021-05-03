@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: RubyTerraform::Commands::Import
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "RubyTerraform::Commands::Import";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (I)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span>
+     &raquo; 
+    <span class="title">Import</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: RubyTerraform::Commands::Import
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="Base.html" title="RubyTerraform::Commands::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="RubyTerraform::Commands::Base (class)">Base</a></span></li>
+          
+            <li class="next">RubyTerraform::Commands::Import</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../Options/Global.html" title="RubyTerraform::Options::Global (module)">Options::Global</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/ruby_terraform/commands/import.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Wraps the <tt>terraform import</tt> command which imports existing infrastructure into your terraform state.</p>
+
+<p>This will find and import the specified resource into your terraform state, allowing existing infrastructure to come under terraform management without having to be initially created by terraform.</p>
+
+<p>The <code>:address</code> specified is the address to import the resource to. Please see the documentation online for resource addresses. The <code>:id</code> is a resource-specific ID to identify that resource being imported. Please reference the documentation for the resource type you&#39;re importing to determine the ID syntax to use. It typically matches directly to the ID that the provider uses.</p>
+
+<p>The current implementation of terraform import can only import resources into the state. It does not generate configuration. A future version of terraform will also generate configuration.</p>
+
+<p>Because of this, prior to running terraform import it is necessary to write a resource configuration block for the resource manually, to which the imported object will be attached.</p>
+
+<p>This command will not modify your infrastructure, but it will make network requests to inspect parts of your infrastructure relevant to the resource being imported.</p>
+
+<p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
+
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Import (class)">Import</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
+<ul><li>
+<p><code>:directory</code>: the path to a directory containing terraform configuration (deprecated in terraform 0.14, removed in terraform 0.15, use <code>:chdir</code> instead).</p>
+</li><li>
+<p><code>:address</code>: the address to import the resource to; required.</p>
+</li><li>
+<p><code>:id</code>: the resource-specific ID identifying the resource being imported; required.</p>
+</li><li>
+<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
+</li><li>
+<p><code>:backup</code>: (legacy) the path to backup the existing state file before modifying; defaults to the <code>:state_out</code> path with <tt>“.backup”</tt> extension; set <code>:no_backup</code> to <code>true</code> to skip backups entirely.</p>
+</li><li>
+<p><code>:allow_missing_config</code>: whether or not to allow import when no resource configuration block exists; defaults to <code>false</code>.</p>
+</li><li>
+<p><code>:input</code>: when <code>false</code>, will not ask for input for variables not directly set; defaults to <code>true</code>.</p>
+</li><li>
+<p><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported; when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</p>
+</li><li>
+<p><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <tt>“0s”</tt>.</p>
+</li><li>
+<p><code>:no_backup</code>: (legacy) when <code>true</code>, no backup file will be written; defaults to <code>false</code>.</p>
+</li><li>
+<p><code>:no_color</code>: whether or not the output from the command should be in color; defaults to <code>false</code>.</p>
+</li><li>
+<p><code>:parallelism</code>: the number of parallel resource operations; defaults to <code>10</code>.</p>
+</li><li>
+<p><code>:provider</code>: (deprecated) the provider configuration to use when importing the object; by default, terraform uses the provider specified in the configuration for the target resource, and that is the best behavior in most cases.</p>
+</li><li>
+<p><code>:state</code>: (legacy) the path to the state file from which to read state and in which to store state (unless <code>:state_out</code> is specified); defaults to <tt>“terraform.tfstate”</tt>.</p>
+</li><li>
+<p><code>:state_out</code>: (legacy) the path to write state to that is different than <code>:state</code>; this can be used to preserve the old state.</p>
+</li><li>
+<p><code>:vars</code>: a map of variables to be passed to the terraform configuration.</p>
+</li><li>
+<p><code>:var_file</code>: the path to a terraform var file; if both <code>:var_file</code> and <code>:var_files</code> are provided, all var files will be passed to terraform.</p>
+</li><li>
+<p><code>:var_files</code>: an array of paths to terraform var files; if both <code>:var_file</code> and <code>:var_files</code> are provided, all var files will be passed to terraform.</p>
+</li><li>
+<p><code>:ignore_remote_version</code>: If <code>true</code>, when using the enhanced remote backend with Terraform Cloud, continue even if remote and local Terraform versions differ; this may result in an unusable Terraform Cloud workspace, and should be used with extreme caution; defaults to <code>false</code>.</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Basic Invocation</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>Import</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span><span class='lparen'>(</span>
+  <span class='label'>directory:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/networking</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>address:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a.resource.address</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>id:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a-resource-id</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>vars:</span> <span class='lbrace'>{</span>
+    <span class='label'>region:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>eu-central</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">RubyTerraform::Commands::Base</a></span></p>
+  
+</div>
+
+
+</div>
+
+      <div id="footer">
+  Generated on Mon May  3 14:49:30 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.6.0).
+</div>
+
+    </div>
+  </body>
+</html>

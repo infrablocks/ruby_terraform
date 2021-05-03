@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: RubyTerraform::Commands::StateMove
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "RubyTerraform::Commands::StateMove";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span>
+     &raquo; 
+    <span class="title">StateMove</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: RubyTerraform::Commands::StateMove
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="Base.html" title="RubyTerraform::Commands::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="RubyTerraform::Commands::Base (class)">Base</a></span></li>
+          
+            <li class="next">RubyTerraform::Commands::StateMove</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../Options/Global.html" title="RubyTerraform::Options::Global (module)">Options::Global</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/ruby_terraform/commands/state_move.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Wraps the <tt>terraform state mv</tt> command which moves an item in the state.</p>
+
+<p>This command will move an item matched by the address given to the destination address. This command can also move to a destination address in a completely different state file.</p>
+
+<p>This can be used for simple resource renaming, moving items to and from a module, moving entire modules, and more. And because this command can also move data to a completely new state, it can also be used for refactoring one configuration into multiple separately managed Terraform configurations.</p>
+
+<p>This command will output a backup copy of the state prior to saving any changes. The backup cannot be disabled. Due to the destructive nature of this command, backups are required.</p>
+
+<p>If you&#39;re moving an item to a different state file, a backup will be created for each state file.</p>
+
+<p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
+
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::StateMove (class)">StateMove</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
+<ul><li>
+<p><code>:source</code>: the source address of the item to move; required.</p>
+</li><li>
+<p><code>:destination</code>: the destination address to move the item to; required.</p>
+</li><li>
+<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
+</li><li>
+<p><code>:dry_run</code>: when <code>true</code>, prints out what would&#39;ve been moved but doesn&#39;t actually move anything; defaults to <code>false</code>.</p>
+</li><li>
+<p><code>:backup</code>: the path where Terraform should write the backup for the original state; this can&#39;t be disabled; if not set, Terraform will write it to the same path as the state file with a <tt>“.backup”</tt> extension.</p>
+</li><li>
+<p><code>:backup_out</code>: the path where Terraform should write the backup for the destination state; this can&#39;t be disabled; if not set, Terraform will write it to the same path as the destination state file with a <tt>“.backup”</tt> extension; this only needs to be specified if <code>:state_out</code> is set to a different path than <code>:state</code>.</p>
+</li><li>
+<p><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported; when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</p>
+</li><li>
+<p><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <tt>“0s”</tt>.</p>
+</li><li>
+<p><code>:state</code>: the path to the source state file; defaults to the configured backend, or <tt>“terraform.tfstate”</tt>.</p>
+</li><li>
+<p><code>:state_out</code>: the path to the destination state file to write to; if this isn&#39;t specified, the source state file will be used; this can be a new or existing path.</p>
+</li><li>
+<p><code>:ignore_remote_version</code>: whether or not to continue even if remote and local Terraform versions are incompatible; this may result in an unusable workspace, and should be used with extreme caution; defaults to <code>false</code>.</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Basic Invocation</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>StateMove</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span><span class='lparen'>(</span>
+  <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>packet_device.worker</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>destination:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>packet_device.helper</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">RubyTerraform::Commands::Base</a></span></p>
+  
+</div>
+
+
+</div>
+
+      <div id="footer">
+  Generated on Mon May  3 14:49:30 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.6.0).
+</div>
+
+    </div>
+  </body>
+</html>

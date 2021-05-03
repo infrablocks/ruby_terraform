@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: README
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "README";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: README</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="label-RubyTerraform">RubyTerraform</h1>
+
+<p>A simple wrapper around the Terraform binary to allow execution from within a Ruby program, RSpec test or Rakefile.</p>
+
+<h2 id="label-Installation">Installation</h2>
+
+<p>Add this line to your application&#39;s Gemfile:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_gem'>gem</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ruby-terraform</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>And then execute:</p>
+
+<pre class="code ruby"><code class="ruby">$ bundle
+</code></pre>
+
+<p>Or install it yourself as:</p>
+
+<pre class="code ruby"><code class="ruby">$ gem install ruby-terraform
+</code></pre>
+
+<h2 id="label-Usage">Usage</h2>
+
+<p>To require <code>RubyTerraform</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ruby-terraform</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<h3 id="label-Supported+versions+and+commands">Supported versions and commands</h3>
+
+<p><code>RubyTerraform</code> supports all commands and options up to Terraform 0.15, except <code>terraform console</code>, <code>terraform test</code> and <code>terraform version</code>.</p>
+
+<h3 id="label-Getting+started">Getting started</h3>
+
+<p>There are a couple of ways to call Terraform using <code>RubyTerraform</code>.</p>
+
+<p>Firstly, the <code>RubyTerraform</code> module includes class methods for each of the supported Terraform commands. Each class method takes a parameter hash containing options to pass to Terraform.</p>
+
+<p>For example, to save the plan of changes for a Terraform configuration located under <code>infra/network</code> to a file called <code>network.tfplan</code> whilst providing some vars:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_plan'><span class='object_link'><a href="RubyTerraform/ClassMethods.html#plan-instance_method" title="RubyTerraform::ClassMethods#plan (method)">plan</a></span></span><span class='lparen'>(</span>
+  <span class='label'>chdir:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/network</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>out:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>network.tfplan</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>vars:</span> <span class='lbrace'>{</span>
+    <span class='label'>region:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>eu-central</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>var_file:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defaults.tfvars</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+</code></pre>
+
+<p>To apply the generated plan of changes:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RubyTerraform/ClassMethods.html#apply-instance_method" title="RubyTerraform::ClassMethods#apply (method)">apply</a></span></span><span class='lparen'>(</span>
+  <span class='label'>chdir:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/network</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>plan:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>network.tfplan</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>vars:</span> <span class='lbrace'>{</span>
+    <span class='label'>region:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>eu-central</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>var_file:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defaults.tfvars</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+</code></pre>
+
+<p>…and to destroy the resulting resources:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_destroy'><span class='object_link'><a href="RubyTerraform/ClassMethods.html#destroy-instance_method" title="RubyTerraform::ClassMethods#destroy (method)">destroy</a></span></span><span class='lparen'>(</span>
+  <span class='label'>chdir:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/network</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>vars:</span> <span class='lbrace'>{</span>
+    <span class='label'>region:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>eu-central</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>var_file:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defaults.tfvars</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+</code></pre>
+
+<p>Additionally, <code>RubyTerraform</code> allows command instances to be constructed and invoked separately. This is useful when you need to override global configuration on a command by command basis or when you need to pass a command around.</p>
+
+<p>Using the command class approach, the equivalent plan invocation above can be achieved using:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands/Plan.html" title="RubyTerraform::Commands::Plan (class)">Plan</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RubyTerraform/Commands/Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_command'>command</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span>
+  <span class='label'>chdir:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/network</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>out:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>network.tfplan</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>vars:</span> <span class='lbrace'>{</span>
+    <span class='label'>region:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>eu-central</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>var_file:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defaults.tfvars</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+</code></pre>
+
+<p>See the <a href="#">API docs</a> for more details on the supported commands.</p>
+
+<h3 id="label-Parameters">Parameters</h3>
+
+<p>The parameter hash passed to each command, whether via the class methods or the <code>#execute</code> method, supports all the options available on the corresponding Terraform command. There are a few different types of options depending on what Terraform expects to receive:</p>
+<ul><li>
+<p><code>Boolean</code> options, accepting <code>true</code> or <code>false</code>, such as <code>:input</code> or <code>:lock</code>;</p>
+</li><li>
+<p><code>String</code> options, accepting a single string value, such as <code>:state</code> or  <code>:target</code>;</p>
+</li><li>
+<p><code>Array&lt;String&gt;</code> options, accepting an array of strings, such as <code>:var_files</code>  <code>:targets</code>; and</p>
+</li><li>
+<p><code>Hash&lt;String,Object&gt;</code> options, accepting a hash of key value pairs, where the  value might be complex, such as <code>:vars</code> and <code>:backend_config</code>.</p>
+</li></ul>
+
+<p>For all options that allow multiple values, both a singular and a plural option key are supported. For example, to specify multiple var files during a plan:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_plan'><span class='object_link'><a href="RubyTerraform/ClassMethods.html#plan-instance_method" title="RubyTerraform::ClassMethods#plan (method)">plan</a></span></span><span class='lparen'>(</span>
+  <span class='label'>chdir:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/network</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>out:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>network.tfplan</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>var_file:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defaults.tfvars</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>var_files:</span> <span class='qwords_beg'>%w[</span><span class='tstring_content'>environment.tfvars</span><span class='words_sep'> </span><span class='tstring_content'>secrets.tfvars</span><span class='tstring_end'>]</span></span>
+<span class='rparen'>)</span>
+</code></pre>
+
+<p>In this case, all three var files are passed to Terraform.</p>
+
+<p>Some options have aliases. For example, the <code>:out</code> option can also be provided as <code>:plan</code> for symmetry with other terraform commands. However, in such situations only one of the aliases should be used in the provided parameters hash.</p>
+
+<p>See the <a href="#">API docs</a> for a more complete listing of available parameter options.</p>
+
+<h3 id="label-Configuration">Configuration</h3>
+
+<p><code>RubyTerraform</code> uses sensible defaults for all configuration options. However, there are a couple of ways to override the defaults when they are sufficient.</p>
+
+<h4 id="label-Binary">Binary</h4>
+
+<p>By default, <code>RubyTerraform</code> looks for the Terraform binary on the system path. To globally configure a specific binary location:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="RubyTerraform.html#configure-class_method" title="RubyTerraform.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_binary'>binary</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/terraform/bin/terraform</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>To configure the Terraform binary on a command by command basis, for example for the <code>Plan</code> command:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands/Plan.html" title="RubyTerraform::Commands::Plan (class)">Plan</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RubyTerraform/Commands/Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>binary:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vendor/terraform/bin/terraform</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_command'>command</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span>
+  <span class='comment'># ...
+</span><span class='rparen'>)</span>
+</code></pre>
+
+<h4 id="label-Logging">Logging</h4>
+
+<p>By default, <code>RubyTerraform</code> &#39;s own log statements are logged to <code>$stdout</code> with level <code>info</code>.</p>
+
+<p>To globally configure a custom logger:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>logger</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='gvar'>$stdout</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='op'>::</span><span class='const'>DEBUG</span>
+
+<span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="RubyTerraform.html#configure-class_method" title="RubyTerraform.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='id identifier rubyid_logger'>logger</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p><code>RubyTerraform</code> supports logging to multiple different outputs at once, for example:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>logger</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_log_file'>log_file</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='op'>::</span><span class='const'>LogDevice</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/foo/bar.log</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/MultiIO.html" title="RubyTerraform::MultiIO (class)">MultiIO</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RubyTerraform/MultiIO.html#initialize-instance_method" title="RubyTerraform::MultiIO#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='const'>STDOUT</span><span class='comma'>,</span> <span class='id identifier rubyid_log_file'>log_file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>level:</span> <span class='symbol'>:debug</span><span class='rparen'>)</span>
+
+<span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="RubyTerraform.html#configure-class_method" title="RubyTerraform.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_binary'>binary</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/binary/path/terraform</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='id identifier rubyid_logger'>logger</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span> <span class='op'>=</span> <span class='id identifier rubyid_logger'>logger</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_stderr'>stderr</span> <span class='op'>=</span> <span class='id identifier rubyid_logger'>logger</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<blockquote>
+<p>Creating the Logger with a file this way (using <code>Logger::LogDevice</code>), guarantees that the buffer content will be saved/written, as it sets <strong>implicit flushing</strong>.</p>
+</blockquote>
+
+<p>Configured in this way, any logging performed by <code>RubyTerraform</code> will log to both <code>STDOUT</code> and the provided <code>log_file</code>.</p>
+
+<p>To configure the logger on a command by command basis, for example for the <code>Show</code> command:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>logger</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_logger'>logger</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='gvar'>$stdout</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_logger'>logger</span><span class='period'>.</span><span class='id identifier rubyid_level'>level</span> <span class='op'>=</span> <span class='const'>Logger</span><span class='op'>::</span><span class='const'>DEBUG</span>
+
+<span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands/Show.html" title="RubyTerraform::Commands::Show (class)">Show</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RubyTerraform/Commands/Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>logger:</span> <span class='id identifier rubyid_logger'>logger</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_command'>command</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span>
+  <span class='comment'># ...
+</span><span class='rparen'>)</span>
+</code></pre>
+
+<h4 id="label-Standard+streams">Standard streams</h4>
+
+<p>By default, <code>RubyTerraform</code> uses streams <code>$stdin</code>, <code>$stdout</code> and <code>$stderr</code>.</p>
+
+<p>To configure custom output and error streams:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_log_file'>log_file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>path/to/some/ruby_terraform.log</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+<span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="RubyTerraform.html#configure-class_method" title="RubyTerraform.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_stdout'>stdout</span> <span class='op'>=</span> <span class='id identifier rubyid_log_file'>log_file</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_stderr'>stderr</span> <span class='op'>=</span> <span class='id identifier rubyid_log_file'>log_file</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>In this way, both outputs will be redirected to <code>log_file</code>.</p>
+
+<p>Similarly, a custom input stream can be configured:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>stringio</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user\ninput\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+
+<span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configure'><span class='object_link'><a href="RubyTerraform.html#configure-class_method" title="RubyTerraform.configure (method)">configure</a></span></span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
+  <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_stdin'>stdin</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>In this way, terraform can be driven by input from somewhere other than interactive input from the terminal.</p>
+
+<p>To configure the standard streams on a command by command basis, for example for the <code>Init</code> command:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>logger</span><span class='tstring_end'>&#39;</span></span>
+
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='const'>StringIO</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>user\ninput\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_log_file'>log_file</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>path/to/some/ruby_terraform.log</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+
+<span class='id identifier rubyid_command'>command</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="RubyTerraform/Commands/Init.html" title="RubyTerraform::Commands::Init (class)">Init</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RubyTerraform/Commands/Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>stdin:</span> <span class='id identifier rubyid_input'>input</span><span class='comma'>,</span>
+  <span class='label'>stdout:</span> <span class='id identifier rubyid_log_file'>log_file</span><span class='comma'>,</span>
+  <span class='label'>stderr:</span> <span class='id identifier rubyid_log_file'>log_file</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_command'>command</span><span class='period'>.</span><span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span>
+  <span class='comment'># ...
+</span><span class='rparen'>)</span>
+</code></pre>
+
+<h2 id="label-Development">Development</h2>
+
+<p>To install dependencies and run the build, run the pre-commit build:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_script'>script</span>
+<span class='period'>.</span><span class='op'>/</span><span class='id identifier rubyid_go'>go</span>
+</code></pre>
+
+<p>This runs all unit tests and other checks including coverage and code linting / formatting.</p>
+
+<p>To run only the unit tests, including coverage:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_script'>script</span>
+<span class='period'>.</span><span class='op'>/</span><span class='id identifier rubyid_go'>go</span> <span class='label'>test:</span><span class='id identifier rubyid_unit'>unit</span>
+</code></pre>
+
+<p>To attempt to fix any code linting / formatting issues:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_script'>script</span>
+<span class='period'>.</span><span class='op'>/</span><span class='id identifier rubyid_go'>go</span> <span class='label'>library:</span><span class='id identifier rubyid_fix'>fix</span>
+</code></pre>
+
+<p>To check for code linting / formatting issues without fixing:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_script'>script</span>
+<span class='period'>.</span><span class='op'>/</span><span class='id identifier rubyid_go'>go</span> <span class='label'>library:</span><span class='id identifier rubyid_check'>check</span>
+</code></pre>
+
+<p>You can also run <code>bin/console</code> for an interactive prompt that will allow you to experiment.</p>
+
+<h3 id="label-Managing+CircleCI+keys">Managing CircleCI keys</h3>
+
+<p>To encrypt a GPG key for use by CircleCI:</p>
+
+<pre class="code ruby"><code class="ruby">openssl aes-256-cbc \
+  -e \
+  -md sha1 \
+  -in ./config/secrets/ci/gpg.private \
+  -out ./.circleci/gpg.private.enc \
+  -k &quot;&lt;passphrase&gt;&quot;
+</code></pre>
+
+<p>To check decryption is working correctly:</p>
+
+<pre class="code ruby"><code class="ruby">openssl aes-256-cbc \
+  -d \
+  -md sha1 \
+  -in ./.circleci/gpg.private.enc \
+  -k &quot;&lt;passphrase&gt;&quot;
+</code></pre>
+
+<h2 id="label-Contributing">Contributing</h2>
+
+<p>Bug reports and pull requests are welcome on GitHub at <a href="https://github.com/infrablocks/ruby_terraform">github.com/infrablocks/ruby_terraform</a>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the <a href="http://contributor-covenant.org">Contributor Covenant</a> code of conduct.</p>
+
+<h2 id="label-License">License</h2>
+
+<p>The gem is available as open source under the terms of the <a href="http://opensource.org/licenses/MIT">MIT License</a>.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Mon May  3 14:49:29 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.6.0).
+</div>
+
+    </div>
+  </body>
+</html>

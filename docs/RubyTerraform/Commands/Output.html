@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: RubyTerraform::Commands::Output
+  
+    &mdash; Documentation by YARD 0.9.26
+  
+</title>
+
+  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "RubyTerraform::Commands::Output";
+  relpath = '../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../_index.html">Index (O)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span>
+     &raquo; 
+    <span class="title">Output</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: RubyTerraform::Commands::Output
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName"><span class='object_link'><a href="Base.html" title="RubyTerraform::Commands::Base (class)">Base</a></span></span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next"><span class='object_link'><a href="Base.html" title="RubyTerraform::Commands::Base (class)">Base</a></span></li>
+          
+            <li class="next">RubyTerraform::Commands::Output</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../Options/Global.html" title="RubyTerraform::Options::Global (module)">Options::Global</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/ruby_terraform/commands/output.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Wraps the <tt>terraform output</tt> command which reads an output variable from a Terraform state file and prints the value. With no additional arguments, output will display all the outputs for the root module. If <code>:name</code> is not specified, all outputs are printed.</p>
+
+<p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
+
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Output (class)">Output</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
+<ul><li>
+<p><code>:name</code>: The name of the output to read.</p>
+</li><li>
+<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
+</li><li>
+<p><code>:state</code>: the path to the state file to read; defaults to <tt>“terraform.tfstate”</tt>.</p>
+</li><li>
+<p><code>:no_color</code>: whether or not the output from the command should be in color; defaults to <code>false</code>.</p>
+</li><li>
+<p><code>:json</code>: If <code>true</code>, machine readable output will be printed in JSON format; defaults to <code>false</code>.</p>
+</li><li>
+<p><code>:raw</code>: If <code>true</code>, for value types that can be automatically converted to a string, will print the raw string directly, rather than a human-oriented representation of the value.</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'>
+<p>Basic Invocation</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>Output</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span><span class='lparen'>(</span>
+  <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vpc_id</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div>
+
+
+
+
+
+
+
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <p class="notice">This class inherits a constructor from <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">RubyTerraform::Commands::Base</a></span></p>
+  
+</div>
+
+
+</div>
+
+      <div id="footer">
+  Generated on Mon May  3 14:49:30 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.6.0).
+</div>
+
+    </div>
+  </body>
+</html>

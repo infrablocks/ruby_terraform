@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require 'yaml'
+require 'yard'
 require 'rake_circle_ci'
 require 'rake_github'
 require 'rake_ssh'
@@ -46,12 +47,20 @@ end
 
 RuboCop::RakeTask.new
 
+YARD::Rake::YardocTask.new do |t|
+  t.files   = ['lib/**/*.rb']
+  t.options = ['--embed-mixins', '--output-dir', 'docs']
+end
+
 namespace :library do
   desc 'Run all checks of the library'
   task check: [:rubocop]
 
   desc 'Attempt to automatically fix issues with the library'
   task fix: [:'rubocop:auto_correct']
+
+  desc 'Generate documentation'
+  task doc: [:yard]
 end
 
 namespace :test do
