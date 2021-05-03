@@ -102,7 +102,8 @@ command.execute(
 )
 ```
 
-See the [API docs](#) for more details on the supported commands.
+See the [API docs](https://infrablocks.github.io/ruby_terraform/index.html) for
+more details on the supported commands.
 
 ### Parameters
 
@@ -138,8 +139,8 @@ as `:plan` for symmetry with other terraform commands. However, in such
 situations only one of the aliases should be used in the provided parameters
 hash.
 
-See the [API docs](#) for a more complete listing of available parameter
-options.
+See the [API docs](https://infrablocks.github.io/ruby_terraform/index.html) for
+a more complete listing of available parameter options.
 
 ### Configuration
 
@@ -277,6 +278,10 @@ command.execute(
   # ...
 )
 ```
+
+## Documentation
+
+* [API docs](https://infrablocks.github.io/ruby_terraform/index.html)
 
 ## Development
 
