@@ -58,13 +58,25 @@ namespace :library do
 
   desc 'Attempt to automatically fix issues with the library'
   task fix: [:'rubocop:auto_correct']
+end
 
+namespace :documentation do
   desc 'Generate documentation'
-  task doc: [:yard] do
+  task generate: [:yard]
+
+  desc 'Commit documentation'
+  task :commit, [:skip] do |_, args|
+    args.with_defaults(skip: 'true')
+
+    skip_ci = args.skip == 'true'
+
     sh('git', 'commit',
        '-a',
-       '-m', 'Generate latest documentation [ci skip]')
+       '-m', "Generate latest documentation#{skip_ci ? ' [ci skip]' : ''}")
   end
+
+  desc 'Update documentation'
+  task update: %i[generate commit]
 end
 
 namespace :test do
