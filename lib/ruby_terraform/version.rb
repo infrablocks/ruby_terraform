@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module RubyTerraform
-  VERSION = '0.65.0.pre.14'
+  VERSION = '1.0.0.pre.0'
 end
