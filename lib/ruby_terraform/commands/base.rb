@@ -24,6 +24,9 @@ module RubyTerraform
 
       # Executes the command instance.
       #
+      # @param [Hash<String, Object>] parameters The parameters used to
+      #   invoke the command. See subclass documentation for details of
+      #   supported options.
       def execute(parameters = {})
         do_before(parameters)
         build_and_execute_command(parameters)
