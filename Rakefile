@@ -60,7 +60,11 @@ namespace :library do
   task fix: [:'rubocop:auto_correct']
 
   desc 'Generate documentation'
-  task doc: [:yard]
+  task doc: [:yard] do
+    sh('git', 'commit',
+       '-a',
+       '-m', 'Generate latest documentation [ci skip]')
+  end
 end
 
 namespace :test do
