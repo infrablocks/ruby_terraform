@@ -120,7 +120,7 @@ Terraform expects to receive:
 * `String` options, accepting a single string value, such as `:state` or 
   `:target`;
 * `Array<String>` options, accepting an array of strings, such as `:var_files`
-  `:targets`; and
+  or `:targets`; and
 * `Hash<String,Object>` options, accepting a hash of key value pairs, where the
   value might be complex, such as `:vars` and `:backend_config`.
   
