@@ -11,8 +11,8 @@ cd "$PROJECT_DIR"
 
 git pull
 
-./go documentation:update
 ./go version:bump[patch]
+./go documentation:update
 ./go release
 
 git status
