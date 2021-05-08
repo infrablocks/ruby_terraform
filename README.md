@@ -103,6 +103,10 @@ command.execute(
 ```
 
 See the [API docs](https://infrablocks.github.io/ruby_terraform/index.html) for
+the 
+[`RubyTerraform` module](https://infrablocks.github.io/ruby_terraform/RubyTerraform.html)
+or the 
+[`RubyTerraform::Commands` module](https://infrablocks.github.io/ruby_terraform/RubyTerraform/Commands.html)
 more details on the supported commands.
 
 ### Parameters
