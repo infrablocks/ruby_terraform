@@ -49,7 +49,7 @@ RuboCop::RakeTask.new
 
 YARD::Rake::YardocTask.new do |t|
   t.files   = ['lib/**/*.rb']
-  t.options = ['--embed-mixins', '--output-dir', 'docs']
+  t.options = %w[--embed-mixins --output-dir docs]
 end
 
 namespace :library do

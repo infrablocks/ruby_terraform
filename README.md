@@ -198,14 +198,17 @@ for example:
 ```ruby
 require 'logger'
 
-log_file = Logger::LogDevice.new('/foo/bar.log')
-logger = Logger.new(RubyTerraform::MultiIO.new(STDOUT, log_file), level: :debug)
+file_device = Logger::LogDevice.new('/foo/bar.log')
+stdout_device = Logger::LogDevice.new(STDOUT)
+multi_io = RubyTerraform::MultiIO.new(file_device, stdout_device)
+
+logger = Logger.new(multi_io, level: :debug)
 
 RubyTerraform.configure do |config|
   config.binary = '/binary/path/terraform'
   config.logger = logger
-  config.stdout = logger
-  config.stderr = logger
+  config.stdout = multi_io
+  config.stderr = multi_io
 end
 ```
 > Creating the Logger with a file this way (using `Logger::LogDevice`),
@@ -213,7 +216,7 @@ end
 > **implicit flushing**.
 
 Configured in this way, any logging performed by `RubyTerraform` will log to
-both `STDOUT` and the provided `log_file`.
+both `STDOUT` and to the specified file.
 
 To configure the logger on a command by command basis, for example for the 
 `Show` command:

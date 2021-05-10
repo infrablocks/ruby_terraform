@@ -39,7 +39,7 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '>= 2.6'
 
   spec.add_dependency 'immutable-struct', '~> 2.4'
-  spec.add_dependency 'lino', '~> 2.7'
+  spec.add_dependency 'lino', '~> 3.0'
 
   spec.add_development_dependency 'bundler', '~> 2.0'
   spec.add_development_dependency 'faker', '~> 2.17'
