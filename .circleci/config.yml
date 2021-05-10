@@ -1,5 +1,12 @@
 version: 2.1
 jobs:
+  build:
+    working_directory: ~/source
+    docker:
+      - image: ruby:2.6.0
+    steps:
+      - checkout
+      - run: ./scripts/ci/steps/build.sh
   test:
     working_directory: ~/source
     docker:
@@ -34,7 +41,10 @@ workflows:
   version: 2
   pipeline:
     jobs:
-    - test
+    - build
+    - test:
+        requires:
+        - build
     - prerelease:
         requires:
         - test
