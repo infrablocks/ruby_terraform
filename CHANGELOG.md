@@ -1,4 +1,18 @@
-## 0.66.0 (? ? 2021)
+## Unreleased
+
+## 1.2.0 (May 10th 2021)
+
+IMPROVEMENTS:
+
+* Upgraded to latest version of dependencies.
+
+## 1.1.0 (May 8th 2021)
+
+BUG FIXES:
+
+* Fixed version number in published documentation.
+
+## 1.0.0 (May 8th 2021)
 
 BREAKING CHANGES:
 
@@ -13,8 +27,8 @@ BREAKING CHANGES:
   
 IMPROVEMENTS:
 
-* Added support for most outstanding commands
-* Added support for all outstanding options
+* Added support for most outstanding commands.
+* Added support for all outstanding options.
 * Added Terraform 0.15 support.
 
 ## 0.31.0 (September 25th, 2019)
