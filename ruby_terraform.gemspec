@@ -19,8 +19,8 @@ files = %w[
 Gem::Specification.new do |spec|
   spec.name = 'ruby-terraform'
   spec.version = RubyTerraform::VERSION
-  spec.authors = ['Toby Clemson']
-  spec.email = ['tobyclemson@gmail.com']
+  spec.authors = ['InfraBlocks Maintainers']
+  spec.email = ['maintainers@infrablocks.io']
 
   spec.summary = 'A simple Ruby wrapper for invoking Terraform commands.'
   spec.description =
