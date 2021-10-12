@@ -1,5 +1,11 @@
 ## Unreleased
 
+## 1.3.0 (Oct 12th 2021)
+
+IMPROVEMENTS:
+
+* Allow arbitrary parameters to be passed to RubyTerraform::Output::for.
+
 ## 1.2.0 (May 10th 2021)
 
 IMPROVEMENTS:
