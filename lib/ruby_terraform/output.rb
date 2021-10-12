@@ -6,7 +6,7 @@ module RubyTerraform
       def for(parameters)
         Dir.chdir(create_config_directory(parameters)) do
           RubyTerraform.init(backend_config: parameters[:backend_config])
-          RubyTerraform.output(name: parameters[:name])
+          RubyTerraform.output(parameters)
         end
       end
 
