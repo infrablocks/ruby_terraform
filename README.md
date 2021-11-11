@@ -50,6 +50,9 @@ vars:
 RubyTerraform.plan(
   chdir: 'infra/network',
   out: 'network.tfplan',
+  backend_configs: {
+    encrypt: true
+  },
   vars: {
     region: 'eu-central'
   },
@@ -63,6 +66,9 @@ To apply the generated plan of changes:
 RubyTerraform.apply(
   chdir: 'infra/network',
   plan: 'network.tfplan',
+  backend_configs: {
+    encrypt: true
+  },
   vars: {
     region: 'eu-central'
   },
@@ -75,6 +81,9 @@ RubyTerraform.apply(
 ```ruby
 RubyTerraform.destroy(
   chdir: 'infra/network',
+  backend_configs: {
+    encrypt: true
+  },
   vars: {
     region: 'eu-central'
   },
@@ -122,7 +131,7 @@ Terraform expects to receive:
 * `Array<String>` options, accepting an array of strings, such as `:var_files`
   or `:targets`; and
 * `Hash<String,Object>` options, accepting a hash of key value pairs, where the
-  value might be complex, such as `:vars` and `:backend_config`.
+  value might be complex, such as `:vars` and `:backend_configs`.
   
 For all options that allow multiple values, both a singular and a plural option
 key are supported. For example, to specify multiple var files during a plan:
