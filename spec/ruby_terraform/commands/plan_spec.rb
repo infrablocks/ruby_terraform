@@ -15,7 +15,7 @@ describe RubyTerraform::Commands::Plan do
   end
 
   it 'logs the command being executed at debug level using the globally ' \
-      'configured logger by default' do
+     'configured logger by default' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::DEBUG
@@ -40,7 +40,7 @@ describe RubyTerraform::Commands::Plan do
   end
 
   it 'logs the command being executed at debug level using the ' \
-      'provided logger' do
+     'provided logger' do
     string_output = StringIO.new
     logger = Logger.new(string_output)
     logger.level = Logger::DEBUG

@@ -30,7 +30,7 @@ shared_examples(
     reason: "ensures that #{singular} and #{option} options work together",
     expected:
       "terraform #{subcommand} #{name}=option-value " \
-          "#{name}=option-value1 #{name}=option-value2",
+      "#{name}=option-value1 #{name}=option-value2",
     binary: 'terraform',
     parameters: {
       singular_option => 'option-value',
