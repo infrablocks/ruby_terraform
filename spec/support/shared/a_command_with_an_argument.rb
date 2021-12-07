@@ -8,7 +8,7 @@ shared_examples(
     command_klass,
     reason:
       "calls the terraform #{subcommand} command passing the supplied " \
-        "#{argument} value",
+      "#{argument} value",
     expected: "terraform #{subcommand} argument-value",
     binary: 'terraform',
     parameters: {

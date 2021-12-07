@@ -461,7 +461,7 @@ describe RubyTerraform::Options::Factory do
       expect { factory.resolve(names, parameters) }
         .to(raise_error(
               "Multiple values provided for '-option' " \
-                '(with keys [:option, :opt1, :opt2]) and option not repeatable.'
+              '(with keys [:option, :opt1, :opt2]) and option not repeatable.'
             ))
     end
 
@@ -485,7 +485,7 @@ describe RubyTerraform::Options::Factory do
       expect { factory.resolve(names, parameters) }
         .to(raise_error(
               "Multiple values provided for '-option' " \
-                '(with keys [:option, :opt1, :opt2]) and option not repeatable.'
+              '(with keys [:option, :opt1, :opt2]) and option not repeatable.'
             ))
     end
 

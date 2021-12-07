@@ -53,7 +53,7 @@ shared_examples(
     reason: 'correctly serialises vars with lists/tuples of maps/objects',
     expected:
       "terraform #{subcommand} -var " \
-          "'list_of_maps=[{\"key\":\"val1\"},{\"key\":\"val2\"}]'",
+      "'list_of_maps=[{\"key\":\"val1\"},{\"key\":\"val2\"}]'",
     binary: 'terraform',
     parameters: {
       vars: {
