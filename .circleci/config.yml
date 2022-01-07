@@ -50,17 +50,17 @@ workflows:
         - test
         filters:
           branches:
-            only: master
+            only: main
     - hold:
         type: approval
         requires:
         - prerelease
         filters:
           branches:
-            only: master
+            only: main
     - release:
         requires:
         - hold
         filters:
           branches:
-            only: master
+            only: main
