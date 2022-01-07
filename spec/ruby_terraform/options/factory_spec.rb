@@ -364,7 +364,7 @@ describe RubyTerraform::Options::Factory do
             ))
     end
 
-    it 'continues to support default singular key when extras provided ' do
+    it 'continues to support default singular key when extras provided' do
       definitions = [
         O.definition(
           name: '-option',
@@ -516,7 +516,7 @@ describe RubyTerraform::Options::Factory do
             ))
     end
 
-    it 'continues to support default plural key when extras provided ' do
+    it 'continues to support default plural key when extras provided' do
       definitions = [
         O.definition(
           name: '-option',
