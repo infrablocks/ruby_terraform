@@ -19,9 +19,10 @@ namespace :encryption do
   namespace :passphrase do
     desc 'Generate encryption passphrase for CI GPG key'
     task :generate do
-      File.open('config/secrets/ci/encryption.passphrase', 'w') do |f|
-        f.write(SecureRandom.base64(36))
-      end
+      File.write(
+        'config/secrets/ci/encryption.passphrase',
+        SecureRandom.base64(36)
+      )
     end
   end
 end
