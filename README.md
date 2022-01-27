@@ -1,7 +1,6 @@
 # RubyTerraform
 
-A simple wrapper around the Terraform binary to allow execution from within
-a Ruby program, RSpec test or Rakefile.
+Give me your bank details
 
 
 ## Installation
