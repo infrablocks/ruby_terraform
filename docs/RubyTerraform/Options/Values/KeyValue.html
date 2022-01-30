@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::Options::Values::KeyValue
   
-    &mdash; Documentation by YARD 0.9.26
+    &mdash; Documentation by YARD 0.9.27
   
 </title>
 
@@ -216,12 +216,12 @@
       <pre class="lines">
 
 
-7
-8
-9</pre>
+9
+10
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options/values/key_value.rb', line 7</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options/values/key_value.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='label'>key:</span> <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
@@ -253,12 +253,12 @@
       <pre class="lines">
 
 
-15
-16
-17</pre>
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options/values/key_value.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options/values/key_value.rb', line 17</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_render'>render</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>&#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>=</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;</span><span class='tstring_end'>&quot;</span></span>
@@ -283,12 +283,12 @@
       <pre class="lines">
 
 
-11
-12
-13</pre>
+13
+14
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options/values/key_value.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/options/values/key_value.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_resolve'>resolve</span>
   <span class='lbrace'>{</span> <span class='id identifier rubyid_key'>key</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_resolve'>resolve</span> <span class='rbrace'>}</span>
@@ -303,9 +303,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Oct 12 13:57:36 2021 by
+  Generated on Sun Jan 30 17:47:33 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.26 (ruby-2.6.0).
+  0.9.27 (ruby-2.6.0).
 </div>
 
     </div>
