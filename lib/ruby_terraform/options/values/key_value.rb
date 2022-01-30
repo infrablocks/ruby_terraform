@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'immutable-struct'
+
 module RubyTerraform
   module Options
     module Values
