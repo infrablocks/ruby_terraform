@@ -1,5 +1,11 @@
 ## Unreleased
 
+## 1.4.0 (Jan 30th 2022)
+
+BUG FIXES:
+
+* Add missing requires.
+
 ## 1.3.0 (Oct 12th 2021)
 
 IMPROVEMENTS:
