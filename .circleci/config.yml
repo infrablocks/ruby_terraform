@@ -10,57 +10,72 @@ jobs:
   test:
     working_directory: ~/source
     docker:
-    - image: ruby:2.6.0
+      - image: ruby:2.6.0
     steps:
-    - checkout
-    - run: ./scripts/ci/steps/test.sh
+      - checkout
+      - run: ./scripts/ci/steps/test.sh
   prerelease:
     working_directory: ~/source
     docker:
-    - image: ruby:2.6.0
+      - image: ruby:2.6.0
     steps:
-    - checkout
-    - run: ./scripts/ci/common/install-git-crypt.sh
-    - run: ./scripts/ci/common/install-gpg-key.sh
-    - run: ./scripts/ci/common/configure-git.sh
-    - run: ./scripts/ci/common/configure-rubygems.sh
-    - run: ./scripts/ci/steps/prerelease.sh
+      - checkout
+      - run: ./scripts/ci/common/install-git-crypt.sh
+      - run: ./scripts/ci/common/install-gpg-key.sh
+      - run: ./scripts/ci/common/configure-git.sh
+      - run: ./scripts/ci/common/configure-rubygems.sh
+      - run: ./scripts/ci/steps/prerelease.sh
   release:
     working_directory: ~/source
     docker:
-    - image: ruby:2.6.0
+      - image: ruby:2.6.0
     steps:
-    - checkout
-    - run: ./scripts/ci/common/install-git-crypt.sh
-    - run: ./scripts/ci/common/install-gpg-key.sh
-    - run: ./scripts/ci/common/configure-git.sh
-    - run: ./scripts/ci/common/configure-rubygems.sh
-    - run: ./scripts/ci/steps/release.sh
-
+      - checkout
+      - run: ./scripts/ci/common/install-git-crypt.sh
+      - run: ./scripts/ci/common/install-gpg-key.sh
+      - run: ./scripts/ci/common/configure-git.sh
+      - run: ./scripts/ci/common/configure-rubygems.sh
+      - run: ./scripts/ci/steps/release.sh
+  merge_pull_request:
+    working_directory: ~/source
+    docker:
+      - image: ruby:2.6.0
+    steps:
+      - checkout
+      - run: ./scripts/ci/common/install-git-crypt.sh
+      - run: ./scripts/ci/common/install-gpg-key.sh
+      - run: ./scripts/ci/common/configure-git.sh
+      - run: ./scripts/ci/steps/merge-pull-request.sh
 workflows:
   version: 2
   pipeline:
     jobs:
-    - build
-    - test:
-        requires:
-        - build
-    - prerelease:
-        requires:
-        - test
-        filters:
-          branches:
-            only: main
-    - hold:
-        type: approval
-        requires:
-        - prerelease
-        filters:
-          branches:
-            only: main
-    - release:
-        requires:
-        - hold
-        filters:
-          branches:
-            only: main
+      - build
+      - test:
+          requires:
+            - build
+      - merge_pull_request:
+          requires:
+            - test
+          filters:
+            branches:
+              only: /^dependabot.*/
+      - prerelease:
+          requires:
+            - test
+          filters:
+            branches:
+              only: main
+      - hold:
+          type: approval
+          requires:
+            - prerelease
+          filters:
+            branches:
+              only: main
+      - release:
+          requires:
+            - hold
+          filters:
+            branches:
+              only: main
