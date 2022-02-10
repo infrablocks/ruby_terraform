@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    ruby-terraform (1.4.0)
+    ruby-terraform (1.5.0.pre.1)
       immutable-struct (~> 2.4)
       lino (~> 3.0)
 
@@ -197,4 +197,4 @@ DEPENDENCIES
   yard (~> 0.9)
 
 BUNDLED WITH
-   2.3.6
+   2.3.7
