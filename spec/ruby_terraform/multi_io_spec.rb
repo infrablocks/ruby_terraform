@@ -108,7 +108,7 @@ describe RubyTerraform::MultiIO do
       multi_io.reopen('Hello', 'r')
 
       expect([io1.closed?, io2.closed?])
-        .to(all(eq(false)))
+        .to(all(be(false)))
     end
   end
 end

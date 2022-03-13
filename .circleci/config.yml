@@ -3,21 +3,21 @@ jobs:
   build:
     working_directory: ~/source
     docker:
-      - image: ruby:2.6.0
+      - image: ruby:2.7.5
     steps:
       - checkout
       - run: ./scripts/ci/steps/build.sh
   test:
     working_directory: ~/source
     docker:
-      - image: ruby:2.6.0
+      - image: ruby:2.7.5
     steps:
       - checkout
       - run: ./scripts/ci/steps/test.sh
   prerelease:
     working_directory: ~/source
     docker:
-      - image: ruby:2.6.0
+      - image: ruby:2.7.5
     steps:
       - checkout
       - run: ./scripts/ci/common/install-git-crypt.sh
@@ -28,7 +28,7 @@ jobs:
   release:
     working_directory: ~/source
     docker:
-      - image: ruby:2.6.0
+      - image: ruby:2.7.5
     steps:
       - checkout
       - run: ./scripts/ci/common/install-git-crypt.sh
@@ -39,7 +39,7 @@ jobs:
   merge_pull_request:
     working_directory: ~/source
     docker:
-      - image: ruby:2.6.0
+      - image: ruby:2.7.5
     steps:
       - checkout
       - run: ./scripts/ci/common/install-git-crypt.sh
