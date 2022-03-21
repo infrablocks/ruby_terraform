@@ -3,157 +3,130 @@ version: 2.1
 orbs:
   slack: circleci/slack@4.8.3
 
+defaults: &defaults
+  docker:
+    - image: ruby:2.7.5
+
+slack_context: &slack_context
+  context:
+    - slack
+
+only_main: &only_main
+  filters:
+    branches:
+      only:
+        - main
+
+only_dependabot: &only_dependabot
+  filters:
+    branches:
+      only:
+        - /^dependabot.*/
+
+only_main_and_dependabot: &only_main_and_dependabot
+  filters:
+    branches:
+      only:
+        - main
+        - /^dependabot.*/
+
+commands:
+  notify:
+    steps:
+      - slack/notify:
+          event: fail
+          channel: dev
+          template: SLACK_FAILURE_NOTIFICATION
+      - slack/notify:
+          event: pass
+          channel: builds
+          template: SLACK_SUCCESS_NOTIFICATION
+  configure_tools:
+    steps:
+      - run: ./scripts/ci/common/install-orb-deps.sh
+      - run: ./scripts/ci/common/install-git-crypt.sh
+      - run: ./scripts/ci/common/install-gpg-key.sh
+      - run: ./scripts/ci/common/configure-git.sh
+      - run: ./scripts/ci/common/configure-rubygems.sh
+
 jobs:
   build:
-    docker:
-      - image: ruby:2.7.5
+    <<: *defaults
     steps:
       - checkout
-      - run: ./scripts/ci/common/install-orb-deps.sh
+      - configure_tools
       - run: ./scripts/ci/steps/build.sh
-      - slack/notify:
-          event: fail
-          channel: dev
-          template: SLACK_FAILURE_NOTIFICATION
-      - slack/notify:
-          event: pass
-          channel: builds
-          template: SLACK_SUCCESS_NOTIFICATION
+      - notify
 
   test:
-    docker:
-      - image: ruby:2.7.5
+    <<: *defaults
     steps:
       - checkout
-      - run: ./scripts/ci/common/install-orb-deps.sh
+      - configure_tools
       - run: ./scripts/ci/steps/test.sh
-      - slack/notify:
-          event: fail
-          channel: dev
-          template: SLACK_FAILURE_NOTIFICATION
-      - slack/notify:
-          event: pass
-          channel: builds
-          template: SLACK_SUCCESS_NOTIFICATION
+      - notify
 
   prerelease:
-    docker:
-      - image: ruby:2.7.5
+    <<: *defaults
     steps:
       - checkout
-      - run: ./scripts/ci/common/install-git-crypt.sh
-      - run: ./scripts/ci/common/install-gpg-key.sh
-      - run: ./scripts/ci/common/configure-git.sh
-      - run: ./scripts/ci/common/configure-rubygems.sh
-      - run: ./scripts/ci/common/install-orb-deps.sh
+      - configure_tools
       - run: ./scripts/ci/steps/prerelease.sh
-      - slack/notify:
-          event: fail
-          channel: dev
-          template: SLACK_FAILURE_NOTIFICATION
-      - slack/notify:
-          event: pass
-          channel: builds
-          template: SLACK_SUCCESS_NOTIFICATION
+      - notify
 
   release:
-    docker:
-      - image: ruby:2.7.5
+    <<: *defaults
     steps:
       - checkout
-      - run: ./scripts/ci/common/install-git-crypt.sh
-      - run: ./scripts/ci/common/install-gpg-key.sh
-      - run: ./scripts/ci/common/configure-git.sh
-      - run: ./scripts/ci/common/configure-rubygems.sh
-      - run: ./scripts/ci/common/install-orb-deps.sh
+      - configure_tools
       - run: ./scripts/ci/steps/release.sh
-      - slack/notify:
-          event: fail
-          channel: dev
-          template: SLACK_FAILURE_NOTIFICATION
-      - slack/notify:
-          event: pass
-          channel: builds
-          template: SLACK_SUCCESS_NOTIFICATION
+      - notify
 
   merge_pull_request:
-    docker:
-      - image: ruby:2.7.5
+    <<: *defaults
     steps:
       - checkout
-      - run: ./scripts/ci/common/install-git-crypt.sh
-      - run: ./scripts/ci/common/install-gpg-key.sh
-      - run: ./scripts/ci/common/configure-git.sh
-      - run: ./scripts/ci/common/install-orb-deps.sh
+      - configure_tools
       - run: ./scripts/ci/steps/merge-pull-request.sh
-      - slack/notify:
-          event: fail
-          channel: dev
-          template: SLACK_FAILURE_NOTIFICATION
-      - slack/notify:
-          event: pass
-          channel: builds
-          template: SLACK_SUCCESS_NOTIFICATION
+      - notify
 
 workflows:
   version: 2
   pipeline:
     jobs:
-      - build
-          context:
-            - slack
-          filters:
-            branches:
-              only:
-                - main
-                - /^dependabot.*/
+      - build:
+          <<: *only_main_and_dependabot
+          <<: *slack_context
       - test:
-          context:
-            - slack
+          <<: *only_main_and_dependabot
+          <<: *slack_context
           requires:
             - build
-          filters:
-            branches:
-              only:
-                - main
-                - /^dependabot.*/
       - merge_pull_request:
+          <<: *only_dependabot
+          <<: *slack_context
           requires:
             - test
-          filters:
-            branches:
-              only: /^dependabot.*/
       - prerelease:
-          context:
-            - slack
+          <<: *only_main
+          <<: *slack_context
           requires:
             - test
-          filters:
-            branches:
-              only: main
       - slack/on-hold:
-          context:
-            - slack
+          <<: *only_main
+          <<: *slack_context
           requires:
             - prerelease
-          filters:
-            branches:
-              only: main
           channel: dev
           template: SLACK_ON_HOLD_NOTIFICATION
       - hold:
+          <<: *only_main
           type: approval
           requires:
             - prerelease
             - slack/on-hold
-          filters:
-            branches:
-              only: main
       - release:
-          context:
-            - slack
+          <<: *only_main
+          <<: *slack_context
           requires:
             - hold
-          filters:
-            branches:
-              only: main
