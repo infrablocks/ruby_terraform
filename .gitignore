@@ -1,6 +1,7 @@
 ## Standard stuff:
 *.gem
 *.rbc
+/build
 /.config
 /coverage/
 /InstalledFiles
