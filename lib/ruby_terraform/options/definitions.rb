@@ -22,7 +22,7 @@ module RubyTerraform
         end,
 
         # string repeatable options
-        %w[-var-file -target -platform -plugin-dir].map do |o|
+        %w[-var-file -target -platform -plugin-dir -replace].map do |o|
           definition(
             name: o, option_type: :standard, value_type: :string,
             repeatable: true

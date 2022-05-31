@@ -47,6 +47,15 @@ module RubyTerraform
     # * +:refresh+: when +true+, updates state prior to checking for
     #   differences; when +false+ uses locally available state; defaults to
     #   +true+; this has no effect when +:plan+ is provided.
+    #   +replace+: force replacement of a particular resource instance using
+    #   its resource address. If the plan would've normally produced an update
+    #   or no-op action for this instance, Terraform will plan to replace it
+    #   instead.
+    #   +replaces+: an array of resource addresses to replace; if both
+    #   +replace+ and +replaces+ are provided, all resources will be replaced.
+    # * +:state+: the path to the state file from which to read state and in
+    #   which to store state (unless +:state_out+ is specified); defaults to
+    #   +"terraform.tfstate"+.
     # * +:state+: the path to the state file from which to read state and in
     #   which to store state (unless +:state_out+ is specified); defaults to
     #   +"terraform.tfstate"+.
@@ -92,6 +101,7 @@ module RubyTerraform
           -no-color
           -parallelism
           -refresh
+          -replace
           -state
           -state-out
           -target
@@ -109,7 +119,7 @@ module RubyTerraform
 
       # @!visibility private
       def parameter_defaults(_parameters)
-        { vars: {}, var_files: [], targets: [] }
+        { vars: {}, var_files: [], targets: [], replaces: [] }
       end
 
       # @!visibility private
