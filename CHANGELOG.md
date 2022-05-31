@@ -6,6 +6,11 @@ BUG FIXES:
 
 * Add missing requires.
 
+IMPROVEMENTS:
+
+* Add support for `replace` and / or `replaces` options to be passed to `plan` 
+  and `apply` commands. 
+
 ## 1.3.0 (Oct 12th 2021)
 
 IMPROVEMENTS:
