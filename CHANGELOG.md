@@ -1,15 +1,17 @@
 ## Unreleased
 
+## 1.5.0 (May 31st 2022)
+
+IMPROVEMENTS:
+
+* Add support for `replace` and / or `replaces` options to be passed to `plan`
+  and `apply` commands.
+
 ## 1.4.0 (Jan 30th 2022)
 
 BUG FIXES:
 
 * Add missing requires.
-
-IMPROVEMENTS:
-
-* Add support for `replace` and / or `replaces` options to be passed to `plan` 
-  and `apply` commands. 
 
 ## 1.3.0 (Oct 12th 2021)
 
