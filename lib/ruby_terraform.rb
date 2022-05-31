@@ -70,9 +70,9 @@ module RubyTerraform
     #   prior to checking for differences; when +false+ uses locally available
     #   state; this has no effect when +:plan+ is provided.
     # @option parameters [String] :replace Force replacement of a resource
-    #   instance using its resource address. If the plan would've normally
+    #   instance using its resource address. If the apply would've normally
     #   produced an update or no-op action for this instance, Terraform will
-    #   plan to replace it instead.
+    #   replace it instead.
     # @option parameters [Array<String>] :replaces An array of resource
     #   addresses to replace; if both +replace+ and +replaces+ are provided,
     #   all resources will be replaced.
@@ -583,6 +583,13 @@ module RubyTerraform
     # @option parameters [Boolean] :refresh (true) When +true+, updates state
     #   prior to checking for differences; when +false+ uses locally available
     #   state; this has no effect when +:plan+ is provided.
+    # @option parameters [String] :replace Force replacement of a resource
+    #   instance using its resource address. If the plan would've normally
+    #   produced an update or no-op action for this instance, Terraform will
+    #   plan to replace it instead.
+    # @option parameters [Array<String>] :replaces An array of resource
+    #   addresses to replace; if both +replace+ and +replaces+ are provided,
+    #   all resources will be replaced.
     # @option parameters [String] :state ("terraform.tfstate") The path to the
     #   state file from which to read state and in which to store state (unless
     #   +:state_out+ is specified).
