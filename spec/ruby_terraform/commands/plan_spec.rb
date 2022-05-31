@@ -205,7 +205,7 @@ describe RubyTerraform::Commands::Plan do
     'a command with global options',
     described_class, 'plan'
   )
-  
+
   it_behaves_like(
     'a command with an array option',
     described_class, 'plan', :replaces

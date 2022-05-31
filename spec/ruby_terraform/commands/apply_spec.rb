@@ -119,7 +119,7 @@ describe RubyTerraform::Commands::Apply do
     'a command with global options',
     described_class, 'apply'
   )
-  
+
   it_behaves_like(
     'a command with an array option',
     described_class, 'apply', :replaces
