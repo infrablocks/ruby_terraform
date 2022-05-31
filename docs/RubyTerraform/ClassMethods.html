@@ -1207,6 +1207,32 @@
         </li>
       
         <li>
+          <span class="name">:replace</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>Force replacement of a resource instance using its resource address. If the apply would&#39;ve normally produced an update or no-op action for this instance, Terraform will replace it instead.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:replaces</span>
+          <span class="type">(<tt>Array&lt;String&gt;</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>An array of resource addresses to replace; if both <code>replace</code> and <code>replaces</code> are provided, all resources will be replaced.</p>
+</div>
+          
+        </li>
+      
+        <li>
           <span class="name">:state</span>
           <span class="type">(<tt>String</tt>)</span>
           <span class="default">
@@ -1310,12 +1336,12 @@
       <pre class="lines">
 
 
-99
-100
-101</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_apply'>apply</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Apply.html" title="RubyTerraform::Commands::Apply (class)">Apply</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -1675,12 +1701,12 @@
       <pre class="lines">
 
 
-166
-167
-168</pre>
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destroy'>destroy</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Destroy.html" title="RubyTerraform::Commands::Destroy (class)">Destroy</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -1817,12 +1843,12 @@
       <pre class="lines">
 
 
-193
-194
-195</pre>
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 200</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_force_unlock'>force_unlock</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/ForceUnlock.html" title="RubyTerraform::Commands::ForceUnlock (class)">ForceUnlock</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -2032,12 +2058,12 @@
       <pre class="lines">
 
 
-233
-234
-235</pre>
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 240</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_format'>format</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Format.html" title="RubyTerraform::Commands::Format (class)">Format</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -2179,12 +2205,12 @@
       <pre class="lines">
 
 
-265
-266
-267</pre>
+272
+273
+274</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 265</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 272</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get'>get</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Get.html" title="RubyTerraform::Commands::Get (class)">Get</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -2348,12 +2374,12 @@
       <pre class="lines">
 
 
-304
-305
-306</pre>
+311
+312
+313</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 304</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 311</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_graph'>graph</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Graph.html" title="RubyTerraform::Commands::Graph (class)">Graph</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -2722,12 +2748,12 @@
       <pre class="lines">
 
 
-396
-397
-398</pre>
+403
+404
+405</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 396</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 403</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_import'>import</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Import.html" title="RubyTerraform::Commands::Import (class)">Import</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -3079,12 +3105,12 @@
       <pre class="lines">
 
 
-468
-469
-470</pre>
+475
+476
+477</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 468</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 475</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_init'>init</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Init.html" title="RubyTerraform::Commands::Init (class)">Init</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -3183,12 +3209,12 @@
       <pre class="lines">
 
 
-490
-491
-492</pre>
+497
+498
+499</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 490</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 497</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_login'>login</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Login.html" title="RubyTerraform::Commands::Login (class)">Login</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -3284,12 +3310,12 @@
       <pre class="lines">
 
 
-509
-510
-511</pre>
+516
+517
+518</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 509</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 516</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_logout'>logout</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Logout.html" title="RubyTerraform::Commands::Logout (class)">Logout</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -3456,12 +3482,12 @@
       <pre class="lines">
 
 
-536
-537
-538</pre>
+543
+544
+545</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 536</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 543</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_output'>output</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Output.html" title="RubyTerraform::Commands::Output (class)">Output</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -3707,6 +3733,32 @@
         </li>
       
         <li>
+          <span class="name">:replace</span>
+          <span class="type">(<tt>String</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>Force replacement of a resource instance using its resource address. If the plan would&#39;ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.</p>
+</div>
+          
+        </li>
+      
+        <li>
+          <span class="name">:replaces</span>
+          <span class="type">(<tt>Array&lt;String&gt;</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>An array of resource addresses to replace; if both <code>replace</code> and <code>replaces</code> are provided, all resources will be replaced.</p>
+</div>
+          
+        </li>
+      
+        <li>
           <span class="name">:state</span>
           <span class="type">(<tt>String</tt>)</span>
           <span class="default">
@@ -3797,12 +3849,12 @@
       <pre class="lines">
 
 
-604
-605
-606</pre>
+618
+619
+620</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 604</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 618</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_plan'>plan</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Plan.html" title="RubyTerraform::Commands::Plan (class)">Plan</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -3909,12 +3961,12 @@
       <pre class="lines">
 
 
-626
-627
-628</pre>
+640
+641
+642</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 626</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 640</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_providers'>providers</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Providers.html" title="RubyTerraform::Commands::Providers (class)">Providers</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -4108,12 +4160,12 @@
       <pre class="lines">
 
 
-696
-697
-698</pre>
+710
+711
+712</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 696</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 710</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_providers_lock'>providers_lock</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/ProvidersLock.html" title="RubyTerraform::Commands::ProvidersLock (class)">ProvidersLock</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -4250,12 +4302,12 @@
       <pre class="lines">
 
 
-737
-738
-739</pre>
+751
+752
+753</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 737</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 751</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_providers_mirror'>providers_mirror</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/ProvidersMirror.html" title="RubyTerraform::Commands::ProvidersMirror (class)">ProvidersMirror</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -4348,12 +4400,12 @@
       <pre class="lines">
 
 
-753
-754
-755</pre>
+767
+768
+769</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 753</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 767</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_providers_schema'>providers_schema</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/ProvidersSchema.html" title="RubyTerraform::Commands::ProvidersSchema (class)">ProvidersSchema</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -4699,12 +4751,12 @@
       <pre class="lines">
 
 
-823
-824
-825</pre>
+837
+838
+839</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 823</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 837</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_refresh'>refresh</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Refresh.html" title="RubyTerraform::Commands::Refresh (class)">Refresh</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -4841,12 +4893,12 @@
       <pre class="lines">
 
 
-844
-845
-846</pre>
+858
+859
+860</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 844</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 858</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Show.html" title="RubyTerraform::Commands::Show (class)">Show</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -5005,12 +5057,12 @@
       <pre class="lines">
 
 
-885
-886
-887</pre>
+899
+900
+901</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 885</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 899</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state_list'>state_list</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/StateList.html" title="RubyTerraform::Commands::StateList (class)">StateList</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -5258,12 +5310,12 @@
       <pre class="lines">
 
 
-946
-947
-948</pre>
+960
+961
+962</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 946</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 960</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state_move'>state_move</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/StateMove.html" title="RubyTerraform::Commands::StateMove (class)">StateMove</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -5359,12 +5411,12 @@
       <pre class="lines">
 
 
-968
-969
-970</pre>
+982
+983
+984</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 968</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 982</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state_pull'>state_pull</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/StatePull.html" title="RubyTerraform::Commands::StatePull (class)">StatePull</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -5537,12 +5589,12 @@
       <pre class="lines">
 
 
-1008
-1009
-1010</pre>
+1022
+1023
+1024</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1008</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1022</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state_push'>state_push</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/StatePush.html" title="RubyTerraform::Commands::StatePush (class)">StatePush</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -5761,12 +5813,12 @@
       <pre class="lines">
 
 
-1057
-1058
-1059</pre>
+1071
+1072
+1073</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1057</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1071</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state_remove'>state_remove</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/StateRemove.html" title="RubyTerraform::Commands::StateRemove (class)">StateRemove</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -5978,12 +6030,12 @@
       <pre class="lines">
 
 
-1095
-1096
-1097</pre>
+1109
+1110
+1111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1095</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1109</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state_replace_provider'>state_replace_provider</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/StateReplaceProvider.html" title="RubyTerraform::Commands::StateReplaceProvider (class)">StateReplaceProvider</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -6091,12 +6143,12 @@
       <pre class="lines">
 
 
-1116
-1117
-1118</pre>
+1130
+1131
+1132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1116</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_state_show'>state_show</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/StateShow.html" title="RubyTerraform::Commands::StateShow (class)">StateShow</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -6338,12 +6390,12 @@
       <pre class="lines">
 
 
-1177
-1178
-1179</pre>
+1191
+1192
+1193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1177</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1191</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_taint'>taint</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Taint.html" title="RubyTerraform::Commands::Taint (class)">Taint</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -6587,12 +6639,12 @@
       <pre class="lines">
 
 
-1231
-1232
-1233</pre>
+1245
+1246
+1247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1231</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_untaint'>untaint</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Untaint.html" title="RubyTerraform::Commands::Untaint (class)">Untaint</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -6740,12 +6792,12 @@
       <pre class="lines">
 
 
-1277
-1278
-1279</pre>
+1291
+1292
+1293</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1277</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1291</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_validate'>validate</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/Validate.html" title="RubyTerraform::Commands::Validate (class)">Validate</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -6781,27 +6833,27 @@
       <pre class="lines">
 
 
-1388
-1389
-1390
-1391
-1392
-1393
-1394
-1395
-1396
-1397
-1398
-1399
-1400
-1401
 1402
 1403
 1404
-1405</pre>
+1405
+1406
+1407
+1408
+1409
+1410
+1411
+1412
+1413
+1414
+1415
+1416
+1417
+1418
+1419</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1388</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1402</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace'>workspace</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='lbracket'>[</span><span class='symbol'>:operation</span><span class='rbracket'>]</span>
@@ -6983,12 +7035,12 @@
       <pre class="lines">
 
 
-1304
-1305
-1306</pre>
+1318
+1319
+1320</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1304</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1318</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace_delete'>workspace_delete</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/WorkspaceDelete.html" title="RubyTerraform::Commands::WorkspaceDelete (class)">WorkspaceDelete</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -7094,12 +7146,12 @@
       <pre class="lines">
 
 
-1321
-1322
-1323</pre>
+1335
+1336
+1337</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1321</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1335</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace_list'>workspace_list</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/WorkspaceList.html" title="RubyTerraform::Commands::WorkspaceList (class)">WorkspaceList</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -7263,12 +7315,12 @@
       <pre class="lines">
 
 
-1348
-1349
-1350</pre>
+1362
+1363
+1364</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1348</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1362</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace_new'>workspace_new</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/WorkspaceNew.html" title="RubyTerraform::Commands::WorkspaceNew (class)">WorkspaceNew</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -7387,12 +7439,12 @@
       <pre class="lines">
 
 
-1368
-1369
-1370</pre>
+1382
+1383
+1384</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1368</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1382</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace_select'>workspace_select</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/WorkspaceSelect.html" title="RubyTerraform::Commands::WorkspaceSelect (class)">WorkspaceSelect</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -7484,12 +7536,12 @@
       <pre class="lines">
 
 
-1382
-1383
-1384</pre>
+1396
+1397
+1398</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1382</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1396</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace_show'>workspace_show</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/WorkspaceShow.html" title="RubyTerraform::Commands::WorkspaceShow (class)">WorkspaceShow</a></span></span><span class='comma'>,</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
@@ -7504,9 +7556,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Jan 30 17:47:33 2022 by
+  Generated on Tue May 31 17:20:56 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.6.0).
+  0.9.27 (ruby-2.7.5).
 </div>
 
     </div>

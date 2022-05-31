@@ -141,6 +141,10 @@
 </li><li>
 <p><code>:refresh</code>: when <code>true</code>, updates state prior to checking for differences; when <code>false</code> uses locally available state; defaults to <code>true</code>; this has no effect when <code>:plan</code> is provided.</p>
 </li><li>
+<p><code>replace</code>: force replacement of a particular resource instance using its resource address. If the plan would&#39;ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.</p>
+</li><li>
+<p><code>replaces</code>: an array of resource addresses to replace; if both <code>replace</code> and <code>replaces</code> are provided, all resources will be replaced.</p>
+</li><li>
 <p><code>:state</code>: the path to the state file from which to read state and in which to store state (unless <code>:state_out</code> is specified); defaults to <tt>“terraform.tfstate”</tt>.</p>
 </li><li>
 <p><code>:target</code>: the address of a resource to target; if both <code>:target</code> and <code>:targets</code> are provided, all targets will be passed to terraform.</p>
@@ -198,9 +202,9 @@
 </div>
 
       <div id="footer">
-  Generated on Sun Jan 30 17:47:33 2022 by
+  Generated on Tue May 31 17:20:56 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.6.0).
+  0.9.27 (ruby-2.7.5).
 </div>
 
     </div>
