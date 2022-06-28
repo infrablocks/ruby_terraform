@@ -23,7 +23,7 @@ describe RubyTerraform::Commands::Base do
               .with(/#{binary}/, any_args))
     end
 
-    it 'has no arguments, subcommands or options' do
+    it 'has no environment variables, arguments, subcommands or options' do
       binary = RubyTerraform.configuration.binary
       klass = Class.new(described_class)
       instance = klass.new
@@ -39,6 +39,27 @@ describe RubyTerraform::Commands::Base do
   end
 
   describe 'when building commands' do
+    it 'includes all environment variables' do
+      binary = RubyTerraform.configuration.binary
+      klass = Class.new(RubyTerraform::Commands::Base)
+      instance = klass.new
+
+      allow(Open4).to(receive(:spawn))
+
+      instance.execute(
+        {},
+        {
+          environment: {
+            'SOME_THING' => 'some-value'
+          }
+        }
+      )
+
+      expect(Open4)
+        .to(have_received(:spawn)
+              .with(/^SOME_THING="some-value" #{binary}/, any_args))
+    end
+
     it 'includes all subcommands' do
       binary = RubyTerraform.configuration.binary
       klass = Class.new(RubyTerraform::Commands::Base) do

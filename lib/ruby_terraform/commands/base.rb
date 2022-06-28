@@ -27,9 +27,9 @@ module RubyTerraform
       # @param [Hash<String, Object>] parameters The parameters used to
       #   invoke the command. See subclass documentation for details of
       #   supported options.
-      def execute(parameters = {})
+      def execute(parameters = {}, invocation_options = {})
         do_before(parameters)
-        build_and_execute_command(parameters)
+        build_and_execute_command(parameters, invocation_options)
         do_after(parameters)
       rescue Open4::SpawnError
         message = "Failed while running '#{command_name}'."
@@ -41,8 +41,8 @@ module RubyTerraform
 
       attr_reader :binary, :logger, :stdin, :stdout, :stderr
 
-      def build_and_execute_command(parameters)
-        command = build_command(parameters)
+      def build_and_execute_command(parameters, invocation_options)
+        command = build_command(parameters, invocation_options)
 
         logger.debug("Running '#{command}'.")
         command.execute(
@@ -62,11 +62,13 @@ module RubyTerraform
 
       private
 
-      def build_command(parameters)
+      def build_command(parameters, invocation_options)
         parameters = resolve_parameters(parameters)
+        environment = invocation_options[:environment] || {}
 
         Lino::CommandLineBuilder
           .for_command(@binary)
+          .with_environment_variables(environment)
           .with_options_after_subcommands
           .with_option_separator('=')
           .with_appliables(@options.resolve(options, parameters))
