@@ -27,6 +27,10 @@ module RubyTerraform
       # @param [Hash<String, Object>] parameters The parameters used to
       #   invoke the command. See subclass documentation for details of
       #   supported options.
+      # @param [Hash<String, Object>] invocation_options Additional options
+      #   controlling the invocation of the command.
+      # @option invocation_options [Hash<String, String>] :environment A map
+      #   of environment variables to expose at command invocation time.
       def execute(parameters = {}, invocation_options = {})
         do_before(parameters)
         build_and_execute_command(parameters, invocation_options)
