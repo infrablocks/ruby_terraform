@@ -2,6 +2,7 @@
 
 require 'spec_helper'
 require 'open4'
+require 'logger'
 
 describe RubyTerraform::Commands::Base do
   after do
@@ -41,7 +42,7 @@ describe RubyTerraform::Commands::Base do
   describe 'when building commands' do
     it 'includes all environment variables' do
       binary = RubyTerraform.configuration.binary
-      klass = Class.new(RubyTerraform::Commands::Base)
+      klass = Class.new(described_class)
       instance = klass.new
 
       allow(Open4).to(receive(:spawn))
@@ -168,8 +169,11 @@ describe RubyTerraform::Commands::Base do
 
   describe 'when executing commands' do
     it 'logs an error to the globally defined logger when the command fails' do
+      # rubocop:disable RSpec/VerifiedDoubleReference
       exitstatus = instance_double('exit status').as_null_object
-      logger = instance_double('Logger')
+      # rubocop:enable RSpec/VerifiedDoubleReference
+      logger = instance_double(Logger)
+
       RubyTerraform.configure { |c| c.logger = logger }
 
       klass = Class.new(described_class)
