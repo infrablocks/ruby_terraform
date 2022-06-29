@@ -6,7 +6,7 @@
 <title>
   File: README
   
-    &mdash; Documentation by YARD 0.9.27
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -131,6 +131,27 @@
 <span class='rparen'>)</span>
 </code></pre>
 
+<p>Each class method also accepts a second hash argument of invocation options to use at command invocation time. Currently, the only supported option is <code>:environment</code> which allows environment variables to be exposed to Terraform.</p>
+
+<p>For example, to apply a configuration with trace level logging:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_apply'><span class='object_link'><a href="RubyTerraform/ClassMethods.html#apply-instance_method" title="RubyTerraform::ClassMethods#apply (method)">apply</a></span></span><span class='lparen'>(</span>
+  <span class='lbrace'>{</span>
+    <span class='label'>chdir:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/network</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>plan:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>network.tfplan</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>vars:</span> <span class='lbrace'>{</span>
+      <span class='label'>region:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>eu-central</span><span class='tstring_end'>&#39;</span></span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>var_file:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defaults.tfvars</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span>
+    <span class='label'>environment:</span> <span class='lbrace'>{</span>
+      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TF_LOG</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>trace</span><span class='tstring_end'>&#39;</span></span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+<span class='rparen'>)</span>
+</code></pre>
+
 <p>Additionally, <code>RubyTerraform</code> allows command instances to be constructed and invoked separately. This is useful when you need to override global configuration on a command by command basis or when you need to pass a command around.</p>
 
 <p>Using the command class approach, the equivalent plan invocation above can be achieved using:</p>
@@ -145,6 +166,8 @@
   <span class='label'>var_file:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>defaults.tfvars</span><span class='tstring_end'>&#39;</span></span>
 <span class='rparen'>)</span>
 </code></pre>
+
+<p>As with the class methods, the <code>#execute</code> method accepts a second hash argument of invocation options allowing an environment to be specified.</p>
 
 <p>See the <a href="https://infrablocks.github.io/ruby_terraform/index.html">API docs</a> for the <a href="https://infrablocks.github.io/ruby_terraform/RubyTerraform.html">RubyTerraform module</a> or the <a href="https://infrablocks.github.io/ruby_terraform/RubyTerraform/Commands.html">RubyTerraform::Commands module</a> more details on the supported commands.</p>
 
@@ -367,9 +390,9 @@
 </div></div>
 
       <div id="footer">
-  Generated on Tue May 31 17:20:56 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.7.5).
+  Generated on Wed Jun 29 12:13:41 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-2.7.5).
 </div>
 
     </div>

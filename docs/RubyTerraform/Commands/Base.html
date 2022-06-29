@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::Commands::Base
   
-    &mdash; Documentation by YARD 0.9.27
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -121,7 +121,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#execute-instance_method" title="#execute (instance method)">#<strong>execute</strong>(parameters = {})  &#x21d2; Object </a>
+      <a href="#execute-instance_method" title="#execute (instance method)">#<strong>execute</strong>(parameters = {}, invocation_options = {})  &#x21d2; Object </a>
     
 
     
@@ -235,7 +235,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="execute-instance_method">
   
-    #<strong>execute</strong>(parameters = {})  &#x21d2; <tt>Object</tt> 
+    #<strong>execute</strong>(parameters = {}, invocation_options = {})  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -271,7 +271,49 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>invocation_options</span>
+      
+      
+        <span class='type'>(<tt>Hash&lt;String, Object&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Additional options controlling the invocation of the command.</p>
+</div>
+      
+    </li>
+  
 </ul>
+
+  
+    
+    
+    
+    
+    <p class="tag_title">Options Hash (<tt>invocation_options</tt>):</p>
+    <ul class="option">
+      
+        <li>
+          <span class="name">:environment</span>
+          <span class="type">(<tt>Hash&lt;String, String&gt;</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>A map of environment variables to expose at command invocation time.</p>
+</div>
+          
+        </li>
+      
+    </ul>
+  
 
 
 </div><table class="source_code">
@@ -280,22 +322,22 @@
       <pre class="lines">
 
 
-30
-31
-32
-33
 34
 35
 36
 37
-38</pre>
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/commands/base.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform/commands/base.rb', line 34</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_execute'>execute</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_invocation_options'>invocation_options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_do_before'>do_before</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_build_and_execute_command'>build_and_execute_command</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_build_and_execute_command'>build_and_execute_command</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span><span class='comma'>,</span> <span class='id identifier rubyid_invocation_options'>invocation_options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_do_after'>do_after</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span><span class='rparen'>)</span>
 <span class='kw'>rescue</span> <span class='const'>Open4</span><span class='op'>::</span><span class='const'>SpawnError</span>
   <span class='id identifier rubyid_message'>message</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Failed while running &#39;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_command_name'>command_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>&#39;.</span><span class='tstring_end'>&quot;</span></span>
@@ -312,9 +354,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue May 31 17:20:56 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.7.5).
+  Generated on Wed Jun 29 12:13:42 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-2.7.5).
 </div>
 
     </div>

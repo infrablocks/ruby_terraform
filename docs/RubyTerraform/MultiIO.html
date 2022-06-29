@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::MultiIO
   
-    &mdash; Documentation by YARD 0.9.27
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -238,12 +238,12 @@
       <pre class="lines">
 
 
-1462
-1463
-1464</pre>
+1625
+1626
+1627</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1462</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1625</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_targets'>targets</span><span class='rparen'>)</span>
   <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span>
@@ -275,12 +275,12 @@
       <pre class="lines">
 
 
-1470
-1471
-1472</pre>
+1633
+1634
+1635</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1470</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1633</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@targets</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:close</span><span class='rparen'>)</span>
@@ -305,12 +305,12 @@
       <pre class="lines">
 
 
-1474
-1475
-1476</pre>
+1637
+1638
+1639</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1474</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1637</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reopen'>reopen</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@targets</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_reopen'>reopen</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -335,12 +335,12 @@
       <pre class="lines">
 
 
-1466
-1467
-1468</pre>
+1629
+1630
+1631</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1466</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1629</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@targets</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -355,9 +355,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue May 31 17:20:56 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.7.5).
+  Generated on Wed Jun 29 12:13:42 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-2.7.5).
 </div>
 
     </div>

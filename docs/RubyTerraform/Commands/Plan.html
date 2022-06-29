@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::Commands::Plan
   
-    &mdash; Documentation by YARD 0.9.27
+    &mdash; Documentation by YARD 0.9.28
   
 </title>
 
@@ -141,9 +141,9 @@
 </li><li>
 <p><code>:refresh</code>: when <code>true</code>, updates state prior to checking for differences; when <code>false</code> uses locally available state; defaults to <code>true</code>; this has no effect when <code>:plan</code> is provided.</p>
 </li><li>
-<p><code>replace</code>: force replacement of a particular resource instance using its resource address. If the plan would&#39;ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.</p>
+<p><code>:replace</code>: force replacement of a particular resource instance using its resource address. If the plan would&#39;ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.</p>
 </li><li>
-<p><code>replaces</code>: an array of resource addresses to replace; if both <code>replace</code> and <code>replaces</code> are provided, all resources will be replaced.</p>
+<p><code>:replaces</code>: an array of resource addresses to replace; if both <code>replace</code> and <code>replaces</code> are provided, all resources will be replaced.</p>
 </li><li>
 <p><code>:state</code>: the path to the state file from which to read state and in which to store state (unless <code>:state_out</code> is specified); defaults to <tt>“terraform.tfstate”</tt>.</p>
 </li><li>
@@ -157,6 +157,8 @@
 </li><li>
 <p><code>:var_files</code>: an array of paths to terraform var files; if both <code>:var_file</code> and <code>:var_files</code> are provided, all var files will be passed to terraform.</p>
 </li></ul>
+
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
 
 
   </div>
@@ -202,9 +204,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue May 31 17:20:56 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.7.5).
+  Generated on Wed Jun 29 12:13:42 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-2.7.5).
 </div>
 
     </div>
