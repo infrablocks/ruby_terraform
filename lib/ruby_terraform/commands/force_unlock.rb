@@ -28,6 +28,11 @@ module RubyTerraform
     # * +:force+: If +true+, does not ask for input for unlock confirmation;
     #   defaults to +false+.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::ForceUnlock.new.execute(
     #     lock_id: '50e844a7-ebb0-fcfd-da85-5cce5bd1ec90')

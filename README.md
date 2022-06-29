@@ -3,7 +3,6 @@
 A simple wrapper around the Terraform binary to allow execution from within
 a Ruby program, RSpec test or Rakefile.
 
-
 ## Installation
 
 Add this line to your application's Gemfile:
@@ -19,7 +18,6 @@ And then execute:
 Or install it yourself as:
 
     $ gem install ruby-terraform
-
 
 ## Usage
 
@@ -82,6 +80,30 @@ RubyTerraform.destroy(
 )
 ```
 
+Each class method also accepts a second hash argument of invocation options to
+use at command invocation time. Currently, the only supported option is
+`:environment` which allows environment variables to be exposed to Terraform.
+
+For example, to apply a configuration with trace level logging:
+
+```ruby
+RubyTerraform.apply(
+  {
+    chdir: 'infra/network',
+    plan: 'network.tfplan',
+    vars: {
+      region: 'eu-central'
+    },
+    var_file: 'defaults.tfvars'
+  },
+  {
+    environment: {
+      'TF_LOG' => 'trace'
+    }
+  }
+)
+```
+
 Additionally, `RubyTerraform` allows command instances to be constructed and
 invoked separately. This is useful when you need to override global
 configuration on a command by command basis or when you need to pass a command
@@ -102,28 +124,31 @@ command.execute(
 )
 ```
 
+As with the class methods, the `#execute` method accepts a second hash argument
+of invocation options allowing an environment to be specified.
+
 See the [API docs](https://infrablocks.github.io/ruby_terraform/index.html) for
-the 
+the
 [`RubyTerraform` module](https://infrablocks.github.io/ruby_terraform/RubyTerraform.html)
-or the 
+or the
 [`RubyTerraform::Commands` module](https://infrablocks.github.io/ruby_terraform/RubyTerraform/Commands.html)
 more details on the supported commands.
 
 ### Parameters
 
 The parameter hash passed to each command, whether via the class methods or the
-`#execute` method, supports all the options available on the corresponding 
+`#execute` method, supports all the options available on the corresponding
 Terraform command. There are a few different types of options depending on what
 Terraform expects to receive:
 
 * `Boolean` options, accepting `true` or `false`, such as `:input` or `:lock`;
-* `String` options, accepting a single string value, such as `:state` or 
+* `String` options, accepting a single string value, such as `:state` or
   `:target`;
 * `Array<String>` options, accepting an array of strings, such as `:var_files`
   or `:targets`; and
 * `Hash<String,Object>` options, accepting a hash of key value pairs, where the
   value might be complex, such as `:vars` and `:backend_config`.
-  
+
 For all options that allow multiple values, both a singular and a plural option
 key are supported. For example, to specify multiple var files during a plan:
 
@@ -211,6 +236,7 @@ RubyTerraform.configure do |config|
   config.stderr = multi_io
 end
 ```
+
 > Creating the Logger with a file this way (using `Logger::LogDevice`),
 > guarantees that the buffer content will be saved/written, as it sets
 > **implicit flushing**.
@@ -218,7 +244,7 @@ end
 Configured in this way, any logging performed by `RubyTerraform` will log to
 both `STDOUT` and to the specified file.
 
-To configure the logger on a command by command basis, for example for the 
+To configure the logger on a command by command basis, for example for the
 `Show` command:
 
 ```ruby
@@ -298,7 +324,7 @@ To install dependencies and run the build, run the pre-commit build:
 ./go
 ```
 
-This runs all unit tests and other checks including coverage and code linting / 
+This runs all unit tests and other checks including coverage and code linting /
 formatting.
 
 To run only the unit tests, including coverage:
@@ -319,7 +345,7 @@ To check for code linting / formatting issues without fixing:
 ./go library:check
 ```
 
-You can also run `bin/console` for an interactive prompt that will allow you to 
+You can also run `bin/console` for an interactive prompt that will allow you to
 experiment.
 
 ### Managing CircleCI keys
@@ -351,7 +377,6 @@ Bug reports and pull requests are welcome on GitHub at
 https://github.com/infrablocks/ruby_terraform. This project is intended to be a
 safe, welcoming space for collaboration, and contributors are expected to adhere
 to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
-
 
 ## License
 

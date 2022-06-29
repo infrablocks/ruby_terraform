@@ -81,6 +81,11 @@ module RubyTerraform
     #   Cloud workspace, and should be used with extreme caution; defaults to
     #   +false+.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::Import.new.execute(
     #     directory: 'infra/networking',

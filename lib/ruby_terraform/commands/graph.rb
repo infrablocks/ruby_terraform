@@ -40,6 +40,11 @@ module RubyTerraform
     # * +:module_depth+: (deprecated) in prior versions of terraform, specified
     #   the depth of modules to show in the output.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::Graph.new.execute
     #

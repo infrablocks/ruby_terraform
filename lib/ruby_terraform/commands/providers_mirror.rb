@@ -39,6 +39,11 @@ module RubyTerraform
     #   see +:platform+ for more details; if both +:platform+ and +:platforms+
     #   are provided, all platforms will be passed to Terraform.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::ProvidersMirror.new.execute(
     #     directory: './plugins',

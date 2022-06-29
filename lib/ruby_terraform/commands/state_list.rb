@@ -43,6 +43,11 @@ module RubyTerraform
     #   whose resource types have an attribute named "id" whose value equals the
     #   given id string.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::StateList.new.execute
     #

@@ -23,6 +23,11 @@ module RubyTerraform
     # * +:lock_timeout+: the duration to retry a state lock; defaults to +"0s"+.
     # * +:state+: the path to a state file to copy into the new workspace.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::WorkspaceNew.new.execute(
     #     name: 'example')

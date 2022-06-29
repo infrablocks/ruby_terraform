@@ -24,6 +24,11 @@ module RubyTerraform
     #   when +false+, does not lock the state file; defaults to +true+.
     # * +:lock_timeout+: the duration to retry a state lock; defaults to +"0s"+.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::WorkspaceDelete.new.execute(
     #     name: 'example')

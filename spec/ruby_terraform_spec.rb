@@ -147,18 +147,23 @@ describe RubyTerraform do
   describe 'terraform commands' do
     commands.each do |method, command_class|
       describe ".#{method}" do
-        let(:options) { { user: 'options' } }
+        let(:parameters) { { user: 'parameters' } }
+        let(:invocation_options) do
+          { environment: { 'SOME_ENV' => 'SOME_VALUE' } }
+        end
         let(:instance) { instance_double(command_class, execute: nil) }
 
         before do
           allow(Open4).to receive(:spawn)
           allow(command_class).to receive(:new).and_return(instance)
-          described_class.send(method, options)
+          described_class.send(method, parameters, invocation_options)
         end
 
         it "creates an instance of the #{command_class} class and calls " \
            'its execute method' do
-          expect(instance).to have_received(:execute).with(options)
+          expect(instance)
+            .to(have_received(:execute)
+                  .with(parameters, invocation_options))
         end
       end
     end
@@ -175,28 +180,36 @@ describe RubyTerraform do
         operation = subcommand.eql?(:workspace) ? nil : subcommand.to_s
 
         describe "when the workspace operation is #{operation}" do
-          let(:options) { { operation: operation } }
+          let(:parameters) { { operation: operation } }
+          let(:invocation_options) do
+            { environment: { 'SOME_ENV' => 'SOME_VALUE' } }
+          end
           let(:instance) { instance_double(command_class, execute: nil) }
 
           before do
             allow(Open4).to receive(:spawn)
             allow(command_class).to receive(:new).and_return(instance)
-            described_class.send(:workspace, options)
+            described_class.send(:workspace, parameters, invocation_options)
           end
 
           it "creates an instance of the #{command_class} class and calls " \
              'its execute method' do
             expect(instance)
-              .to(have_received(:execute).with(options))
+              .to(have_received(:execute).with(parameters, invocation_options))
           end
         end
       end
 
       describe 'when an unknown operation is provided' do
-        let(:options) { { operation: 'unknown' } }
+        let(:parameters) { { operation: 'unknown' } }
+        let(:invocation_options) do
+          { environment: { 'SOME_ENV' => 'SOME_VALUE' } }
+        end
 
         it 'raises an error including the invalid operation' do
-          expect { described_class.send(:workspace, options) }
+          expect do
+            described_class.send(:workspace, parameters, invocation_options)
+          end
             .to(raise_error(
                   StandardError,
                   "Invalid operation 'unknown' supplied to workspace"

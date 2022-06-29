@@ -72,6 +72,11 @@ module RubyTerraform
     # * +:lockfile+: sets a dependency lockfile mode; currently only "readonly"
     #   is valid.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::Init.new.execute(
     #     from_module: 'some/module/path',

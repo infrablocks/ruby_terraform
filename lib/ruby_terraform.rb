@@ -95,6 +95,10 @@ module RubyTerraform
     # @option parameters [Array<String>] :var_files An array of paths to
     #   terraform var files; if both +:var_file+ and +:var_files+ are provided,
     #   all var files will be passed to terraform.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.apply(
@@ -103,8 +107,8 @@ module RubyTerraform
     #       region: 'eu-central'
     #     })
     #
-    def apply(parameters = {})
-      exec(RubyTerraform::Commands::Apply, parameters)
+    def apply(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Apply, parameters, invocation_options)
     end
 
     # Invokes the +terraform destroy+ command which destroys terraform managed
@@ -170,8 +174,9 @@ module RubyTerraform
     #       region: 'eu-central'
     #     })
     #
-    def destroy(parameters = {})
-      exec(RubyTerraform::Commands::Destroy, parameters)
+    def destroy(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Destroy,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform force-unlock+ command which manually unlocks the
@@ -192,13 +197,18 @@ module RubyTerraform
     #   switch to before executing the given subcommand.
     # @option parameters [Boolean] :force (false) If +true+, does not ask for
     #   input for unlock confirmation.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.force_unlock(
     #     lock_id: '50e844a7-ebb0-fcfd-da85-5cce5bd1ec90')
     #
-    def force_unlock(parameters = {})
-      exec(RubyTerraform::Commands::ForceUnlock, parameters)
+    def force_unlock(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::ForceUnlock,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform fmt+ command which rewrites all terraform
@@ -232,13 +242,18 @@ module RubyTerraform
     # @option parameters [Boolean] :recursive (false) If +true+, also processes
     #   files in subdirectories; by default, only the provided +:directory+ is
     #   processed.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.format(
     #     directory: 'infra/networking')
     #
-    def format(parameters = {})
-      exec(RubyTerraform::Commands::Format, parameters)
+    def format(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Format,
+           parameters, invocation_options)
     end
     alias fmt format
 
@@ -264,13 +279,18 @@ module RubyTerraform
     #   newest versions available.
     # @option parameters [Boolean] :no_color (false) Whether or not the output
     #   from the command should be in color.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.get(
     #     directory: 'infra/networking')
     #
-    def get(parameters = {})
-      exec(RubyTerraform::Commands::Get, parameters)
+    def get(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Get,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform graph+ command which outputs the visual execution
@@ -304,12 +324,17 @@ module RubyTerraform
     #   otherwise.
     # @option parameters [Integer] :module_depth In prior versions of terraform,
     #   specified the depth of modules to show in the output (deprecated).
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.graph
     #
-    def graph(parameters = {})
-      exec(RubyTerraform::Commands::Graph, parameters)
+    def graph(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Graph,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform import+ command which imports existing
@@ -390,6 +415,10 @@ module RubyTerraform
     #   even if remote and local Terraform versions differ; this may result in
     #   an unusable Terraform Cloud workspace, and should be used with extreme
     #   caution.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.import(
@@ -400,8 +429,9 @@ module RubyTerraform
     #       region: 'eu-central'
     #     })
     #
-    def import(parameters = {})
-      exec(RubyTerraform::Commands::Import, parameters)
+    def import(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Import,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform init+ command which initializes a new or existing
@@ -466,14 +496,19 @@ module RubyTerraform
     #   0.15).
     # @option parameters [String] :lockfile Sets a dependency lockfile mode;
     #   currently only "readonly" is valid.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.init(
     #     from_module: 'some/module/path',
     #     path: 'infra/module')
     #
-    def init(parameters = {})
-      exec(RubyTerraform::Commands::Init, parameters)
+    def init(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Init,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform login+ command which retrieves an authentication
@@ -490,12 +525,17 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.login
     #
-    def login(parameters = {})
-      exec(RubyTerraform::Commands::Login, parameters)
+    def login(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Login,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform logout+ command which removes locally-stored
@@ -509,12 +549,17 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.logout
     #
-    def logout(parameters = {})
-      exec(RubyTerraform::Commands::Logout, parameters)
+    def logout(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Logout,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform output+ command which reads an output variable from
@@ -535,13 +580,18 @@ module RubyTerraform
     # @option parameters [Boolean] :raw (false) If +true+, for value types that
     #   can be automatically converted to a string, will print the raw string
     #   directly, rather than a human-oriented representation of the value.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.output(
     #     name: 'vpc_id')
     #
-    def output(parameters = {})
-      exec(RubyTerraform::Commands::Output, parameters)
+    def output(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Output,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform plan+ command which generates a speculative
@@ -607,6 +657,10 @@ module RubyTerraform
     # @option parameters [Array<String>] :var_files An array of paths to
     #   terraform var files; if both +:var_file+ and +:var_files+ are provided,
     #   all var files will be passed to terraform.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.plan(
@@ -615,8 +669,8 @@ module RubyTerraform
     #       region: 'eu-central'
     #     })
     #
-    def plan(parameters = {})
-      exec(RubyTerraform::Commands::Plan, parameters)
+    def plan(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Plan, parameters, invocation_options)
     end
 
     # Invokes the +terraform providers+ command which prints out a tree of
@@ -633,12 +687,17 @@ module RubyTerraform
     #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.providers
     #
-    def providers(parameters = {})
-      exec(RubyTerraform::Commands::Providers, parameters)
+    def providers(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Providers,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform providers lock+ command which writes out dependency
@@ -700,6 +759,10 @@ module RubyTerraform
     #   to request package checksums for; see +:platform+ for more details; if
     #   both +:platform+ and +:platforms+ are provided, all platforms will be
     #   passed to Terraform.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.providers_lock(
@@ -707,8 +770,9 @@ module RubyTerraform
     #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"],
     #     provider: "tf.example.com/ourcompany/ourplatform")
     #
-    def providers_lock(parameters = {})
-      exec(RubyTerraform::Commands::ProvidersLock, parameters)
+    def providers_lock(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::ProvidersLock,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform providers mirror+ command which saves local copies
@@ -742,14 +806,19 @@ module RubyTerraform
     #   to build a mirror for for; see +:platform+ for more details; if both
     #   +:platform+ and +:platforms+ are provided, all platforms will be passed
     #   to Terraform.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.providers_mirror(
     #     directory: './plugins',
     #     platforms: ["windows_amd64", "darwin_amd64", "linux_amd64"])
     #
-    def providers_mirror(parameters = {})
-      exec(RubyTerraform::Commands::ProvidersMirror, parameters)
+    def providers_mirror(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::ProvidersMirror,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform providers schema+ command which prints out a json
@@ -759,13 +828,18 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.providers_schema(
     #     directory: 'infra/networking')
     #
-    def providers_schema(parameters = {})
-      exec(RubyTerraform::Commands::ProvidersSchema, parameters)
+    def providers_schema(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::ProvidersSchema,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform refresh+ command which updates the state file of
@@ -826,6 +900,10 @@ module RubyTerraform
     # @option parameters [Array<String>] :var_files An array of paths to
     #   terraform var files; if both +:var_file+ and +:var_files+ are provided,
     #   all var files will be passed to terraform.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.refresh(
@@ -834,8 +912,8 @@ module RubyTerraform
     #       region: 'eu-central'
     #     })
     #
-    def refresh(parameters = {})
-      exec(RubyTerraform::Commands::Refresh, parameters)
+    def refresh(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Refresh, parameters, invocation_options)
     end
 
     # Invokes the +terraform show+ command which reads and outputs a Terraform
@@ -851,12 +929,17 @@ module RubyTerraform
     #   from the command should be in color.
     # @option parameters [Boolean] :json (false) If +true+, outputs the
     #   Terraform plan or state in a machine-readable form.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.show
     #
-    def show(parameters = {})
-      exec(RubyTerraform::Commands::Show, parameters)
+    def show(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Show,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform state list+ command which lists resources in the
@@ -892,12 +975,17 @@ module RubyTerraform
     # @option parameters [String] :id When provided, filters the results to
     #   include only instances whose resource types have an attribute named "id"
     #   whose value equals the given id string.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_list
     #
-    def state_list(parameters = {})
-      exec(RubyTerraform::Commands::StateList, parameters)
+    def state_list(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::StateList,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform state mv+ command which moves an item in the state.
@@ -951,14 +1039,19 @@ module RubyTerraform
     #   to continue even if remote and local Terraform versions are
     #   incompatible; this may result in an unusable workspace, and should be
     #   used with extreme caution.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_move(
     #     source: 'packet_device.worker',
     #     destination: 'packet_device.helper')
     #
-    def state_move(parameters = {})
-      exec(RubyTerraform::Commands::StateMove, parameters)
+    def state_move(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::StateMove,
+           parameters, invocation_options)
     end
     alias state_mv state_move
 
@@ -975,12 +1068,17 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_pull
     #
-    def state_pull(parameters = {})
-      exec(RubyTerraform::Commands::StatePull, parameters)
+    def state_pull(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::StatePull,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform state push+ command which updates remote state from
@@ -1014,13 +1112,18 @@ module RubyTerraform
     #   continue even if remote and local Terraform versions are incompatible;
     #   this may result in an unusable workspace, and should be used with
     #   extreme caution.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_push(
     #     path: 'some/statefile.tfstate')
     #
-    def state_push(parameters = {})
-      exec(RubyTerraform::Commands::StatePush, parameters)
+    def state_push(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::StatePush,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform state rm+ command which removes one or more items
@@ -1063,13 +1166,18 @@ module RubyTerraform
     #   to continue even if remote and local Terraform versions are
     #   incompatible; this may result in an unusable workspace, and should be
     #   used with extreme caution.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_remove(
     #     address: 'packet_device.worker')
     #
-    def state_remove(parameters = {})
-      exec(RubyTerraform::Commands::StateRemove, parameters)
+    def state_remove(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::StateRemove,
+           parameters, invocation_options)
     end
     alias state_rm state_remove
 
@@ -1100,14 +1208,19 @@ module RubyTerraform
     #   to continue even if remote and local Terraform versions are
     #   incompatible; this may result in an unusable workspace, and should be
     #   used with extreme caution.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_replace_provider(
     #     from: 'hashicorp/aws',
     #     to: 'registry.acme.corp/acme/aws')
     #
-    def state_replace_provider(parameters = {})
-      exec(RubyTerraform::Commands::StateReplaceProvider, parameters)
+    def state_replace_provider(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::StateReplaceProvider,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform state show+ command which shows the attributes of a
@@ -1122,13 +1235,18 @@ module RubyTerraform
     #   resource address of the resource instance to show; required.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.state_show(
     #     address: 'packet_device.worker')
     #
-    def state_show(parameters = {})
-      exec(RubyTerraform::Commands::StateShow, parameters)
+    def state_show(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::StateShow,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform taint+ command which marks a resource instance as
@@ -1183,13 +1301,18 @@ module RubyTerraform
     #   to continue even if remote and local Terraform versions are
     #   incompatible; this may result in an unusable workspace, and should be
     #   used with extreme caution.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.taint(
     #     address: 'aws_security_group.allow_all')
     #
-    def taint(parameters = {})
-      exec(RubyTerraform::Commands::Taint, parameters)
+    def taint(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Taint,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform untaint+ command which removes the 'tainted' state
@@ -1237,13 +1360,18 @@ module RubyTerraform
     #   to continue even if remote and local Terraform versions are
     #   incompatible; this may result in an unusable workspace, and should be
     #   used with extreme caution.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.untaint(
     #     name: 'aws_security_group.allow_all')
     #
-    def untaint(parameters = {})
-      exec(RubyTerraform::Commands::Untaint, parameters)
+    def untaint(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Untaint,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform validate+ command which checks whether a
@@ -1283,13 +1411,18 @@ module RubyTerraform
     #   editor integrations and other automated systems; always disables color.
     # @option parameters [Boolean] :no_color (false) Whether or not the output
     #   from the command should be in color.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.validate(
     #     directory: 'infra/networking')
     #
-    def validate(parameters = {})
-      exec(RubyTerraform::Commands::Validate, parameters)
+    def validate(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Validate,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform workspace delete+ command which deletes a
@@ -1310,13 +1443,18 @@ module RubyTerraform
     #   file.
     # @option parameters [String] :lock_timeout ("0s") The duration to retry a
     #   state lock.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.workspace_delete(
     #     name: 'example')
     #
-    def workspace_delete(parameters = {})
-      exec(RubyTerraform::Commands::WorkspaceDelete, parameters)
+    def workspace_delete(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::WorkspaceDelete,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform workspace list+ command which lists workspaces.
@@ -1327,13 +1465,18 @@ module RubyTerraform
     #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir the path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.workspace_list(
     #     directory: 'infra/networking')
     #
-    def workspace_list(parameters = {})
-      exec(RubyTerraform::Commands::WorkspaceList, parameters)
+    def workspace_list(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::WorkspaceList,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform workspace new+ command which creates a new
@@ -1354,13 +1497,18 @@ module RubyTerraform
     #   state lock.
     # @option parameters [String] :state The path to a state file to copy into
     #   the new workspace.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.workspace_new(
     #     name: 'example')
     #
-    def workspace_new(parameters = {})
-      exec(RubyTerraform::Commands::WorkspaceNew, parameters)
+    def workspace_new(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::WorkspaceNew,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform workspace select+ command which selects a
@@ -1374,13 +1522,18 @@ module RubyTerraform
     #   terraform 0.15, use +:chdir+ instead).
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example BasicInvocation
     #   RubyTerraform.workspace_select(
     #     name: 'example')
     #
-    def workspace_select(parameters = {})
-      exec(RubyTerraform::Commands::WorkspaceSelect, parameters)
+    def workspace_select(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::WorkspaceSelect,
+           parameters, invocation_options)
     end
 
     # Invokes the +terraform workspace show+ command which shows the name of the
@@ -1389,28 +1542,38 @@ module RubyTerraform
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
     #
     # @example Basic Invocation
     #   RubyTerraform.workspace_show
     #
-    def workspace_show(parameters = {})
-      exec(RubyTerraform::Commands::WorkspaceShow, parameters)
+    def workspace_show(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::WorkspaceShow,
+           parameters, invocation_options)
     end
 
     # rubocop:disable Metrics/MethodLength
 
-    def workspace(parameters = {})
+    def workspace(parameters = {}, invocation_options = {})
       case parameters[:operation]
       when nil, 'list'
-        exec(RubyTerraform::Commands::WorkspaceList, parameters)
+        exec(RubyTerraform::Commands::WorkspaceList,
+             parameters, invocation_options)
       when 'select'
-        exec(RubyTerraform::Commands::WorkspaceSelect, parameters)
+        exec(RubyTerraform::Commands::WorkspaceSelect,
+             parameters, invocation_options)
       when 'new'
-        exec(RubyTerraform::Commands::WorkspaceNew, parameters)
+        exec(RubyTerraform::Commands::WorkspaceNew,
+             parameters, invocation_options)
       when 'delete'
-        exec(RubyTerraform::Commands::WorkspaceDelete, parameters)
+        exec(RubyTerraform::Commands::WorkspaceDelete,
+             parameters, invocation_options)
       when 'show'
-        exec(RubyTerraform::Commands::WorkspaceShow, parameters)
+        exec(RubyTerraform::Commands::WorkspaceShow,
+             parameters, invocation_options)
       else
         raise(
           "Invalid operation '#{parameters[:operation]}' supplied to workspace"
@@ -1422,8 +1585,8 @@ module RubyTerraform
 
     private
 
-    def exec(command_class, parameters)
-      command_class.new.execute(parameters)
+    def exec(command_class, parameters, invocation_options)
+      command_class.new.execute(parameters, invocation_options)
     end
   end
 

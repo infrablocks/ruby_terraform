@@ -29,6 +29,11 @@ module RubyTerraform
     #   to a string, will print the raw string directly, rather than a
     #   human-oriented representation of the value.
     #
+    # The {#execute} method accepts an optional second parameter which is a map
+    # of invocation options. Currently, the only supported option is
+    # +:environment+ which is a map of environment variables to expose during
+    # invocation of the command.
+    #
     # @example Basic Invocation
     #   RubyTerraform::Commands::Output.new.execute(
     #     name: 'vpc_id')
