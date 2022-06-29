@@ -1,5 +1,13 @@
 ## Unreleased
 
+## 1.6.0 (June 30th 2022)
+
+IMPROVEMENTS:
+
+* Add support for exposing environment variables to Terraform via a second hash
+  of invocation options in command class methods and on the command `#execute`
+  method.
+
 ## 1.5.0 (May 31st 2022)
 
 IMPROVEMENTS:
