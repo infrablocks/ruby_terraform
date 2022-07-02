@@ -13,6 +13,8 @@ require 'faker'
 require 'ruby_terraform'
 
 O = RubyTerraform::Options
+M = RubyTerraform::Models
+V = M::Values
 
 Dir[File.join(__dir__, 'support', '**', '*.rb')]
   .sort
