@@ -10,8 +10,8 @@ module RubyTerraform
         # rubocop:disable Style/RedundantAssignment
         def box(object, unknown: nil, sensitive: nil)
           initial = boxed_empty_by_value(object)
-          unknown = unknown || native_empty_by_value(object)
-          sensitive = sensitive || native_empty_by_value(object)
+          unknown ||= native_empty_by_value(object)
+          sensitive ||= native_empty_by_value(object)
 
           return Values.unknown(sensitive: sensitive) if unknown == true
 
@@ -56,6 +56,7 @@ module RubyTerraform
 
         private
 
+        # rubocop:disable Metrics/MethodLength
         def box_unknown(unknown, sensitive: {}, initial: Values.empty_map)
           unknown_paths = paths(unknown)
           if root_path(unknown_paths)
@@ -63,8 +64,7 @@ module RubyTerraform
           end
 
           unknown_values = unknown_values(
-            unknown_paths,
-            unknown: unknown, sensitive: sensitive
+            unknown_paths, unknown: unknown, sensitive: sensitive
           )
 
           object(
@@ -72,7 +72,9 @@ module RubyTerraform
             sensitive: sensitive, initial: initial
           )
         end
+        # rubocop:enable Metrics/MethodLength
 
+        # rubocop:disable Metrics/MethodLength
         def box_known(object, sensitive: {}, initial: Values.empty_map)
           object_paths = paths(object)
           if root_path(object_paths)
@@ -80,8 +82,7 @@ module RubyTerraform
           end
 
           object_values = known_values(
-            object_paths,
-            object: object, sensitive: sensitive
+            object_paths, object: object, sensitive: sensitive
           )
 
           object(
@@ -89,6 +90,7 @@ module RubyTerraform
             sensitive: sensitive, initial: initial
           )
         end
+        # rubocop:enable Metrics/MethodLength
 
         def object(paths, values, sensitive: {}, initial: Values.empty_map)
           paths
@@ -110,6 +112,7 @@ module RubyTerraform
           object
         end
 
+        # rubocop:disable Metrics/MethodLength
         def update_object_for_step(object, pointer, value, sensitive: {})
           seen, step, remaining = pointer
 
@@ -126,6 +129,7 @@ module RubyTerraform
 
           parent[step] ||= resolved
         end
+        # rubocop:enable Metrics/MethodLength
 
         def update_context_for_step(pointer)
           seen, step, remaining = pointer
@@ -151,25 +155,24 @@ module RubyTerraform
 
         def boxed_empty_by_value(value, sensitive: false)
           case value
-            when Array then Values.empty_list(sensitive: sensitive)
-            when Hash then Values.empty_map(sensitive: sensitive)
-            else nil
+          when Array then Values.empty_list(sensitive: sensitive)
+          when Hash then Values.empty_map(sensitive: sensitive)
           end
         end
 
         def native_empty_by_value(value)
           case value
-            when Array then []
-            when Hash then {}
-            else false
+          when Array then []
+          when Hash then {}
+          else false
           end
         end
 
         def normalise(object)
           case object
-            when Array then object.each_with_index.to_a
-            when Hash then object.to_a.map { |e| [e[1], e[0]] }
-            else object
+          when Array then object.each_with_index.to_a
+          when Hash then object.to_a.map { |e| [e[1], e[0]] }
+          else object
           end
         end
 

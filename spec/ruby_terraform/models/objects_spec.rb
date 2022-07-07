@@ -94,12 +94,12 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.known('value1'),
-            attribute2: V.known(false),
-            attribute3: V.known(300)
-          }
-        )))
+                 {
+                   attribute1: V.known('value1'),
+                   attribute2: V.known(false),
+                   attribute3: V.known(300)
+                 }
+               )))
     end
 
     it 'boxes map with standard list attribute values' do
@@ -113,23 +113,23 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.list(
-              [
-                V.known('value1'),
-                V.known('value2'),
-                V.known('value3')
-              ]
-            ),
-            attribute2: V.list(
-              [
-                V.known(true),
-                V.known(false),
-                V.known(true)
-              ]
-            )
-          }
-        )))
+                 {
+                   attribute1: V.list(
+                     [
+                       V.known('value1'),
+                       V.known('value2'),
+                       V.known('value3')
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.known(true),
+                       V.known(false),
+                       V.known(true)
+                     ]
+                   )
+                 }
+               )))
     end
 
     it 'boxes map with standard map attribute values' do
@@ -143,21 +143,21 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.map(
-              {
-                key1: V.known('value1'),
-                key2: V.known(false),
-                key3: V.known(450)
-              }
-            ),
-            attribute2: V.map(
-              {
-                key4: V.known('value2')
-              }
-            )
-          }
-        )))
+                 {
+                   attribute1: V.map(
+                     {
+                       key1: V.known('value1'),
+                       key2: V.known(false),
+                       key3: V.known(450)
+                     }
+                   ),
+                   attribute2: V.map(
+                     {
+                       key4: V.known('value2')
+                     }
+                   )
+                 }
+               )))
     end
 
     it 'boxes map with standard complex nested attribute values' do
@@ -215,12 +215,12 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.known('value1', sensitive: true),
-            attribute2: V.known(false, sensitive: true),
-            attribute3: V.known(500, sensitive: true)
-          }
-        )))
+                 {
+                   attribute1: V.known('value1', sensitive: true),
+                   attribute2: V.known(false, sensitive: true),
+                   attribute3: V.known(500, sensitive: true)
+                 }
+               )))
     end
 
     it 'boxes map with sensitive list attribute values' do
@@ -268,21 +268,21 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.map(
-              {
-                key1: V.known('value1', sensitive: true),
-                key2: V.known(false),
-                key3: V.known(450)
-              }
-            ),
-            attribute2: V.map(
-              {
-                key4: V.known('value2', sensitive: true)
-              }
-            )
-          }
-        )))
+                 {
+                   attribute1: V.map(
+                     {
+                       key1: V.known('value1', sensitive: true),
+                       key2: V.known(false),
+                       key3: V.known(450)
+                     }
+                   ),
+                   attribute2: V.map(
+                     {
+                       key4: V.known('value2', sensitive: true)
+                     }
+                   )
+                 }
+               )))
     end
 
     it 'boxes map with sensitive complex nested attribute values' do
@@ -345,25 +345,25 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.list(
-              [
-                V.known('value1'),
-                V.known('value2'),
-                V.known('value3')
-              ],
-              sensitive: true
-            ),
-            attribute2: V.list(
-              [
-                V.known(true),
-                V.known(false),
-                V.known(true)
-              ],
-              sensitive: true
-            )
-          }
-        )))
+                 {
+                   attribute1: V.list(
+                     [
+                       V.known('value1'),
+                       V.known('value2'),
+                       V.known('value3')
+                     ],
+                     sensitive: true
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.known(true),
+                       V.known(false),
+                       V.known(true)
+                     ],
+                     sensitive: true
+                   )
+                 }
+               )))
     end
 
     it 'boxes map with sensitive map attribute' do
@@ -380,23 +380,23 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.map(
-              {
-                key1: V.known('value1'),
-                key2: V.known(false),
-                key3: V.known(450)
-              },
-              sensitive: true
-            ),
-            attribute2: V.map(
-              {
-                key4: V.known('value2')
-              },
-              sensitive: true
-            )
-          }
-        )))
+                 {
+                   attribute1: V.map(
+                     {
+                       key1: V.known('value1'),
+                       key2: V.known(false),
+                       key3: V.known(450)
+                     },
+                     sensitive: true
+                   ),
+                   attribute2: V.map(
+                     {
+                       key4: V.known('value2')
+                     },
+                     sensitive: true
+                   )
+                 }
+               )))
     end
 
     it 'boxes map with sensitive complex nested attributes' do
@@ -459,11 +459,11 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.unknown,
-            attribute2: V.unknown
-          }
-        )))
+                 {
+                   attribute1: V.unknown,
+                   attribute2: V.unknown
+                 }
+               )))
     end
 
     it 'boxes map with sensitive unknown scalar attribute values' do
@@ -483,11 +483,11 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.map(
-          {
-            attribute1: V.unknown(sensitive: true),
-            attribute2: V.unknown(sensitive: true)
-          }
-        )))
+                 {
+                   attribute1: V.unknown(sensitive: true),
+                   attribute2: V.unknown(sensitive: true)
+                 }
+               )))
     end
 
     it 'boxes list with standard scalar item values' do
@@ -498,12 +498,12 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.known('value1'),
-            V.known(false),
-            V.known(300)
-          ]
-        )))
+                 [
+                   V.known('value1'),
+                   V.known(false),
+                   V.known(300)
+                 ]
+               )))
     end
 
     it 'boxes list with standard list item values' do
@@ -514,11 +514,11 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.list([V.known(1), V.known(2), V.known(3)]),
-            V.list([V.known(4), V.known(5), V.known(6)])
-          ]
-        )))
+                 [
+                   V.list([V.known(1), V.known(2), V.known(3)]),
+                   V.list([V.known(4), V.known(5), V.known(6)])
+                 ]
+               )))
     end
 
     it 'boxes list with standard map item values' do
@@ -529,19 +529,19 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.map(
-              {
-                attribute: V.known('value1')
-              }
-            ),
-            V.map(
-              {
-                attribute: V.known('value2')
-              }
-            ),
-          ]
-        )))
+                 [
+                   V.map(
+                     {
+                       attribute: V.known('value1')
+                     }
+                   ),
+                   V.map(
+                     {
+                       attribute: V.known('value2')
+                     }
+                   )
+                 ]
+               )))
     end
 
     it 'boxes list with standard complex nested item values' do
@@ -552,31 +552,31 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.map(
-              {
-                attribute: V.list(
-                  [
-                    V.known(1),
-                    V.known(2),
-                    V.known(3)
-                  ]
-                ),
-              }
-            ),
-            V.map(
-              {
-                attribute: V.list(
-                  [
-                    V.known(4),
-                    V.known(5),
-                    V.known(6)
-                  ]
-                )
-              }
-            ),
-          ]
-        )))
+                 [
+                   V.map(
+                     {
+                       attribute: V.list(
+                         [
+                           V.known(1),
+                           V.known(2),
+                           V.known(3)
+                         ]
+                       )
+                     }
+                   ),
+                   V.map(
+                     {
+                       attribute: V.list(
+                         [
+                           V.known(4),
+                           V.known(5),
+                           V.known(6)
+                         ]
+                       )
+                     }
+                   )
+                 ]
+               )))
     end
 
     it 'boxes list with sensitive scalar item values' do
@@ -587,12 +587,12 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.known('value1', sensitive: true),
-            V.known(false, sensitive: true),
-            V.known(300, sensitive: true)
-          ]
-        )))
+                 [
+                   V.known('value1', sensitive: true),
+                   V.known(false, sensitive: true),
+                   V.known(300, sensitive: true)
+                 ]
+               )))
     end
 
     it 'boxes list with sensitive list item values' do
@@ -603,19 +603,19 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.list([
-                     V.known(1, sensitive: true),
-                     V.known(2, sensitive: true),
-                     V.known(3, sensitive: true)
-                   ]),
-            V.list([
-                     V.known(4, sensitive: true),
-                     V.known(5, sensitive: true),
-                     V.known(6, sensitive: true)
-                   ])
-          ]
-        )))
+                 [
+                   V.list([
+                            V.known(1, sensitive: true),
+                            V.known(2, sensitive: true),
+                            V.known(3, sensitive: true)
+                          ]),
+                   V.list([
+                            V.known(4, sensitive: true),
+                            V.known(5, sensitive: true),
+                            V.known(6, sensitive: true)
+                          ])
+                 ]
+               )))
     end
 
     it 'boxes list with sensitive map item values' do
@@ -626,19 +626,19 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.map(
-              {
-                attribute: V.known('value1', sensitive: true)
-              }
-            ),
-            V.map(
-              {
-                attribute: V.known('value2', sensitive: true)
-              }
-            ),
-          ]
-        )))
+                 [
+                   V.map(
+                     {
+                       attribute: V.known('value1', sensitive: true)
+                     }
+                   ),
+                   V.map(
+                     {
+                       attribute: V.known('value2', sensitive: true)
+                     }
+                   )
+                 ]
+               )))
     end
 
     it 'boxes list with sensitive complex nested item values' do
@@ -650,31 +650,31 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.map(
-              {
-                attribute: V.list(
-                  [
-                    V.known(1, sensitive: true),
-                    V.known(2),
-                    V.known(3, sensitive: true)
-                  ]
-                ),
-              }
-            ),
-            V.map(
-              {
-                attribute: V.list(
-                  [
-                    V.known(4),
-                    V.known(5, sensitive: true),
-                    V.known(6)
-                  ]
-                )
-              }
-            ),
-          ]
-        )))
+                 [
+                   V.map(
+                     {
+                       attribute: V.list(
+                         [
+                           V.known(1, sensitive: true),
+                           V.known(2),
+                           V.known(3, sensitive: true)
+                         ]
+                       )
+                     }
+                   ),
+                   V.map(
+                     {
+                       attribute: V.list(
+                         [
+                           V.known(4),
+                           V.known(5, sensitive: true),
+                           V.known(6)
+                         ]
+                       )
+                     }
+                   )
+                 ]
+               )))
     end
 
     it 'boxes list with sensitive list items' do
@@ -685,21 +685,21 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.list([
-                     V.known(1),
-                     V.known(2),
-                     V.known(3)
-                   ],
-                   sensitive: true),
-            V.list([
-                     V.known(4),
-                     V.known(5),
-                     V.known(6)
-                   ],
-                   sensitive: true)
-          ]
-        )))
+                 [
+                   V.list([
+                            V.known(1),
+                            V.known(2),
+                            V.known(3)
+                          ],
+                          sensitive: true),
+                   V.list([
+                            V.known(4),
+                            V.known(5),
+                            V.known(6)
+                          ],
+                          sensitive: true)
+                 ]
+               )))
     end
 
     it 'boxes list with sensitive map items' do
@@ -710,21 +710,21 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.map(
-              {
-                attribute: V.known('value1')
-              },
-              sensitive: true
-            ),
-            V.map(
-              {
-                attribute: V.known('value2')
-              },
-              sensitive: true
-            ),
-          ]
-        )))
+                 [
+                   V.map(
+                     {
+                       attribute: V.known('value1')
+                     },
+                     sensitive: true
+                   ),
+                   V.map(
+                     {
+                       attribute: V.known('value2')
+                     },
+                     sensitive: true
+                   )
+                 ]
+               )))
     end
 
     it 'boxes list with sensitive complex nested items' do
@@ -735,33 +735,33 @@ describe RubyTerraform::Models::Objects do
 
       expect(boxed)
         .to(eq(V.list(
-          [
-            V.map(
-              {
-                attribute: V.list(
-                  [
-                    V.known(1),
-                    V.known(2),
-                    V.known(3)
-                  ]
-                ),
-              },
-              sensitive: true
-            ),
-            V.map(
-              {
-                attribute: V.list(
-                  [
-                    V.known(4),
-                    V.known(5),
-                    V.known(6)
-                  ],
-                  sensitive: true
-                )
-              }
-            ),
-          ]
-        )))
+                 [
+                   V.map(
+                     {
+                       attribute: V.list(
+                         [
+                           V.known(1),
+                           V.known(2),
+                           V.known(3)
+                         ]
+                       )
+                     },
+                     sensitive: true
+                   ),
+                   V.map(
+                     {
+                       attribute: V.list(
+                         [
+                           V.known(4),
+                           V.known(5),
+                           V.known(6)
+                         ],
+                         sensitive: true
+                       )
+                     }
+                   )
+                 ]
+               )))
     end
 
     it 'boxes list with standard unknown scalar item values' do
@@ -814,13 +814,13 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'boxes standard string scalar value' do
-      object = "value"
+      object = 'value'
       sensitive = false
 
       boxed = described_class.box(object, sensitive: sensitive)
 
       expect(boxed)
-        .to(eq(V.known("value")))
+        .to(eq(V.known('value')))
     end
 
     it 'boxes sensitive boolean scalar value' do
@@ -844,13 +844,13 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'boxes sensitive string scalar value' do
-      object = "value"
+      object = 'value'
       sensitive = true
 
       boxed = described_class.box(object, sensitive: sensitive)
 
       expect(boxed)
-        .to(eq(V.known("value", sensitive: true)))
+        .to(eq(V.known('value', sensitive: true)))
     end
 
     it 'boxes standard unknown value' do
