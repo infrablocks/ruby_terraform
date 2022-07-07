@@ -8,14 +8,21 @@ module RubyTerraform
     module Objects
       class << self
         # rubocop:disable Style/RedundantAssignment
-        def box(object, unknown: {}, sensitive: {})
+        def box(object, unknown: nil, sensitive: nil)
+          initial = boxed_empty_by_value(object)
+          unknown = unknown || native_empty_by_value(object)
+          sensitive = sensitive || native_empty_by_value(object)
+
+          return Values.unknown(sensitive: sensitive) if unknown == true
+
           boxed_unknown =
-            box_unknown(unknown, sensitive: sensitive)
+            box_unknown(unknown, sensitive: sensitive, initial: initial)
           boxed_object =
             box_known(object, sensitive: sensitive, initial: boxed_unknown)
 
           boxed_object
         end
+
         # rubocop:enable Style/RedundantAssignment
 
         def paths(object, current = [], accumulator = [])
@@ -51,6 +58,10 @@ module RubyTerraform
 
         def box_unknown(unknown, sensitive: {}, initial: Values.empty_map)
           unknown_paths = paths(unknown)
+          if root_path(unknown_paths)
+            return Values.unknown(sensitive: sensitive)
+          end
+
           unknown_values = unknown_values(
             unknown_paths,
             unknown: unknown, sensitive: sensitive
@@ -64,6 +75,10 @@ module RubyTerraform
 
         def box_known(object, sensitive: {}, initial: Values.empty_map)
           object_paths = paths(object)
+          if root_path(object_paths)
+            return Values.known(object, sensitive: sensitive)
+          end
+
           object_values = known_values(
             object_paths,
             object: object, sensitive: sensitive
@@ -102,11 +117,12 @@ module RubyTerraform
           upcoming = remaining.first
 
           resolved_sensitive = try_dig(sensitive, seen + [step]) == true
-          resolved = if remaining.empty?
-                       value
-                     else
-                       empty_by_type(upcoming, sensitive: resolved_sensitive)
-                     end
+          resolved =
+            if remaining.empty?
+              value
+            else
+              boxed_empty_by_key(upcoming, sensitive: resolved_sensitive)
+            end
 
           parent[step] ||= resolved
         end
@@ -125,20 +141,40 @@ module RubyTerraform
           default
         end
 
-        def empty_by_type(value, sensitive: false)
-          if value.is_a?(Numeric)
+        def boxed_empty_by_key(key, sensitive: false)
+          if key.is_a?(Numeric)
             Values.empty_list(sensitive: sensitive)
           else
             Values.empty_map(sensitive: sensitive)
           end
         end
 
+        def boxed_empty_by_value(value, sensitive: false)
+          case value
+            when Array then Values.empty_list(sensitive: sensitive)
+            when Hash then Values.empty_map(sensitive: sensitive)
+            else nil
+          end
+        end
+
+        def native_empty_by_value(value)
+          case value
+            when Array then []
+            when Hash then {}
+            else false
+          end
+        end
+
         def normalise(object)
           case object
-          when Array then object.each_with_index.to_a
-          when Hash then object.to_a.map { |e| [e[1], e[0]] }
-          else object
+            when Array then object.each_with_index.to_a
+            when Hash then object.to_a.map { |e| [e[1], e[0]] }
+            else object
           end
+        end
+
+        def root_path(paths)
+          paths.count == 1 && paths[0].empty?
         end
       end
     end
