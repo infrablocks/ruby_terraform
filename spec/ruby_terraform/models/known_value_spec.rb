@@ -3,6 +3,22 @@
 require 'spec_helper'
 
 describe RubyTerraform::Models::KnownValue do
+  describe '#value' do
+    it 'returns the underlying value' do
+      known_value = described_class.new('some-value')
+
+      expect(known_value.value).to(eq('some-value'))
+    end
+  end
+
+  describe '#unbox' do
+    it 'returns the underlying value' do
+      known_value = described_class.new('some-value')
+
+      expect(known_value.unbox).to(eq('some-value'))
+    end
+  end
+
   describe '#known?' do
     it 'returns true' do
       known_value = described_class.new('some-value')

@@ -3,6 +3,22 @@
 require 'spec_helper'
 
 describe RubyTerraform::Models::UnknownValue do
+  describe '#value' do
+    it 'returns nil' do
+      known_value = described_class.new
+
+      expect(known_value.value).to(be_nil)
+    end
+  end
+
+  describe '#unbox' do
+    it 'returns nil' do
+      known_value = described_class.new
+
+      expect(known_value.unbox).to(be_nil)
+    end
+  end
+
   describe '#known?' do
     it 'returns false' do
       unknown_value = described_class.new

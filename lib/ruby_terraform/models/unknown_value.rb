@@ -11,6 +11,11 @@ module RubyTerraform
         @sensitive = sensitive
       end
 
+      def value
+        nil
+      end
+      alias unbox value
+
       def known?
         false
       end

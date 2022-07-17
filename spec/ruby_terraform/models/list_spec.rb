@@ -3,6 +3,70 @@
 require 'spec_helper'
 
 describe RubyTerraform::Models::List do
+  describe '#value' do
+    it 'returns the underlying array with values still boxed' do
+      value = [V.known(1), V.known(2), V.known(3)]
+      list = described_class.new(
+        value,
+        sensitive: true
+      )
+
+      expect(list.value).to(eq(value))
+    end
+  end
+
+  describe '#unbox' do
+    it 'returns underlying array after unboxing scalar items' do
+      list = described_class.new(
+        [V.known(1), V.known(2), V.known(3)],
+        sensitive: true
+      )
+
+      expect(list.unbox).to(eq([1, 2, 3]))
+    end
+
+    it 'returns underlying array after unboxing list items' do
+      list = described_class.new(
+        [V.list([V.known(1), V.known(2)]), V.list([V.known(3)])],
+        sensitive: true
+      )
+
+      expect(list.unbox).to(eq([[1, 2], [3]]))
+    end
+
+    it 'returns underlying array after unboxing map items' do
+      list = described_class.new(
+        [
+          V.map(
+            {
+              first: V.known(1),
+              second: V.known(2)
+            }
+          ),
+          V.map(
+            {
+              third: V.known(3)
+            }
+          )
+        ],
+        sensitive: true
+      )
+
+      expect(list.unbox).to(eq([{ first: 1, second: 2 }, { third: 3 }]))
+    end
+  end
+
+  describe '#known?' do
+    it 'returns true' do
+      list = described_class.new(
+        [V.known(1), V.known(2), V.known(3)],
+        sensitive: true
+      )
+
+      expect(list).to(be_known)
+    end
+  end
+
   describe '#sensitive?' do
     it 'returns true when sensitive' do
       list = described_class.new(

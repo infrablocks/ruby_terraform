@@ -13,6 +13,7 @@ module RubyTerraform
       end
 
       attr_reader :value
+      alias unbox value
 
       def known?
         true

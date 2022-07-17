@@ -39,6 +39,14 @@ module RubyTerraform
 
       attr_reader :value
 
+      def unbox
+        value.map(&:unbox)
+      end
+
+      def known?
+        true
+      end
+
       def sensitive?
         @sensitive
       end
