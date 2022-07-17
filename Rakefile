@@ -58,7 +58,7 @@ namespace :library do
   task check: [:rubocop]
 
   desc 'Attempt to automatically fix issues with the library'
-  task fix: [:'rubocop:autocorrect']
+  task fix: [:'rubocop:autocorrect_all']
 end
 
 namespace :documentation do
