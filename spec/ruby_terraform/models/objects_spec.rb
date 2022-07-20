@@ -79,6 +79,45 @@ describe RubyTerraform::Models::Objects do
                  %i[a f]
                ]))
     end
+
+    it 'converts string path segments into symbols when object of objects' do
+      object = {
+        'first' => {
+          'a' => 1,
+          'b' => 2
+        },
+        'second' => {
+          'c' => 3,
+          'd' => 4
+        }
+      }
+      paths = described_class.paths(object)
+
+      expect(paths)
+        .to(eq([
+                 %i[first a],
+                 %i[first b],
+                 %i[second c],
+                 %i[second d]
+               ]))
+    end
+
+    it 'converts string path segments into symbols when object of lists' do
+      object = {
+        'first' => [1, 2, 3],
+        'second' => %w[value1 value2]
+      }
+      paths = described_class.paths(object)
+
+      expect(paths)
+        .to(eq([
+                 [:first, 0],
+                 [:first, 1],
+                 [:first, 2],
+                 [:second, 0],
+                 [:second, 1]
+               ]))
+    end
   end
 
   describe '.box' do
@@ -486,6 +525,34 @@ describe RubyTerraform::Models::Objects do
                  {
                    attribute1: V.unknown(sensitive: true),
                    attribute2: V.unknown(sensitive: true)
+                 }
+               )))
+    end
+
+    it 'symbolises map keys when strings' do
+      object = {
+        'attribute1' => { 'key1' => 'value1', 'key2' => false, 'key3' => 450 },
+        'attribute2' => { 'key4' => 'value2' }
+      }
+      sensitive = {}
+
+      boxed = described_class.box(object, sensitive: sensitive)
+
+      expect(boxed)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.map(
+                     {
+                       key1: V.known('value1'),
+                       key2: V.known(false),
+                       key3: V.known(450)
+                     }
+                   ),
+                   attribute2: V.map(
+                     {
+                       key4: V.known('value2')
+                     }
+                   )
                  }
                )))
     end

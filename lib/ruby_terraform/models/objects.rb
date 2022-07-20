@@ -10,8 +10,9 @@ module RubyTerraform
         # rubocop:disable Style/RedundantAssignment
         def box(object, unknown: nil, sensitive: nil)
           initial = boxed_empty_by_value(object)
-          unknown ||= native_empty_by_value(object)
-          sensitive ||= native_empty_by_value(object)
+          object = symbolise(object)
+          unknown = symbolised_or_native_empty(unknown, object)
+          sensitive = symbolised_or_native_empty(sensitive, object)
 
           return Values.unknown(sensitive: sensitive) if unknown == true
 
@@ -171,9 +172,24 @@ module RubyTerraform
         def normalise(object)
           case object
           when Array then object.each_with_index.to_a
-          when Hash then object.to_a.map { |e| [e[1], e[0]] }
+          when Hash
+            object.to_a.map do |e|
+              [e[1], e[0].to_sym]
+            end
           else object
           end
+        end
+
+        def symbolise(object)
+          case object
+          when Hash
+            object.to_h { |key, value| [key.to_sym, symbolise(value)] }
+          else object
+          end
+        end
+
+        def symbolised_or_native_empty(object, target)
+          object ? symbolise(object) : native_empty_by_value(target)
         end
 
         def root_path(paths)

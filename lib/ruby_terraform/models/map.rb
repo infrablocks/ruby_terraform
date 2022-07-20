@@ -29,7 +29,7 @@ module RubyTerraform
       )
 
       def initialize(value, sensitive: false)
-        @value = value
+        @value = value.transform_keys(&:to_sym)
         @sensitive = sensitive
       end
 
