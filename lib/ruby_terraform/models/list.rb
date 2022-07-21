@@ -51,6 +51,19 @@ module RubyTerraform
         @sensitive
       end
 
+      def render(level: 0, indent: '  ')
+        return '[]' if empty?
+
+        opts = { level: level + 1, indent: indent }
+        extra = level.times.collect { |_| indent }.join
+        lines =
+          value
+          .collect { |i| "#{extra}#{indent}#{i.render(opts)}" }
+          .join(",\n")
+
+        "[\n#{lines}\n#{extra}]"
+      end
+
       def state
         [@value, @sensitive]
       end
@@ -59,6 +72,7 @@ module RubyTerraform
         sensitive = sensitive? ? 'sensitive' : 'non-sensitive'
         "#{value.inspect} (#{sensitive})"
       end
+
       alias to_s inspect
     end
   end

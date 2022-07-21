@@ -23,6 +23,10 @@ module RubyTerraform
         @sensitive
       end
 
+      def render(**_)
+        @value.nil? ? 'null' : @value.inspect
+      end
+
       def state
         [@value, @sensitive]
       end

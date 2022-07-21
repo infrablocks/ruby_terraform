@@ -47,6 +47,21 @@ module RubyTerraform
         @sensitive
       end
 
+      def render(bare: false, level: 0, indent: '  ')
+        return '{}' if empty?
+
+        next_level = bare ? level : level + 1
+        self_indent = bare ? '' : indent
+        opts = { level: next_level, indent: indent }
+        extra = level.times.collect { |_| indent }.join
+        lines =
+          value
+          .collect { |k, v| "#{extra}#{self_indent}#{k} = #{v.render(opts)}" }
+          .join("\n")
+
+        bare ? lines : "{\n#{lines}\n#{extra}}"
+      end
+
       def state
         [@value, @sensitive]
       end

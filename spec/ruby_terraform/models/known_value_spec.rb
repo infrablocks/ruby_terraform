@@ -47,6 +47,38 @@ describe RubyTerraform::Models::KnownValue do
     end
   end
 
+  describe '#render' do
+    it 'returns a quoted string when value is a string' do
+      known_value = described_class.new('some-value')
+
+      expect(known_value.render).to(eq('"some-value"'))
+    end
+
+    it 'returns a number as a string when value is a number' do
+      known_value = described_class.new(10)
+
+      expect(known_value.render).to(eq('10'))
+    end
+
+    it 'returns true as a string when value is true' do
+      known_value = described_class.new(true)
+
+      expect(known_value.render).to(eq('true'))
+    end
+
+    it 'returns false as a string when value is false' do
+      known_value = described_class.new(false)
+
+      expect(known_value.render).to(eq('false'))
+    end
+
+    it 'returns null as a string when value is nil' do
+      known_value = described_class.new(nil)
+
+      expect(known_value.render).to(eq('null'))
+    end
+  end
+
   describe '#==' do
     it 'returns true when the state and class are the same' do
       value1 = described_class.new('some-value')

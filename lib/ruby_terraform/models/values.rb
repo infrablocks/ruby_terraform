@@ -4,6 +4,7 @@ require_relative './list'
 require_relative './map'
 require_relative './known_value'
 require_relative './unknown_value'
+require_relative './omitted_value'
 
 module RubyTerraform
   module Models
@@ -15,6 +16,10 @@ module RubyTerraform
 
         def unknown(sensitive: false)
           UnknownValue.new(sensitive: sensitive)
+        end
+
+        def omitted(sensitive: false)
+          OmittedValue.new(sensitive: sensitive)
         end
 
         def list(value, sensitive: false)

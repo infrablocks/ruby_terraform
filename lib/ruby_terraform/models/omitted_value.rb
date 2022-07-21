@@ -4,7 +4,7 @@ require_relative '../value_equality'
 
 module RubyTerraform
   module Models
-    class UnknownValue
+    class OmittedValue
       include ValueEquality
 
       def initialize(sensitive: false)
@@ -25,7 +25,7 @@ module RubyTerraform
       end
 
       def render(**_)
-        '(known after apply)'
+        '...'
       end
 
       def state
@@ -34,7 +34,7 @@ module RubyTerraform
 
       def inspect
         sensitive = sensitive? ? 'sensitive' : 'non-sensitive'
-        "? (unknown, #{sensitive})"
+        "... (unknown, #{sensitive})"
       end
     end
   end
