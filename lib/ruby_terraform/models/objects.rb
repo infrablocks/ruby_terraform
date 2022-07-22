@@ -55,6 +55,15 @@ module RubyTerraform
           end
         end
 
+        def object(paths, values, sensitive: {}, initial: Values.empty_map)
+          paths
+            .zip(values)
+            .each_with_object(initial) do |path_value, object|
+            path, value = path_value
+            update_in(object, path, value, sensitive: sensitive)
+          end
+        end
+
         private
 
         # rubocop:disable Metrics/MethodLength
@@ -93,15 +102,6 @@ module RubyTerraform
         end
         # rubocop:enable Metrics/MethodLength
 
-        def object(paths, values, sensitive: {}, initial: Values.empty_map)
-          paths
-            .zip(values)
-            .each_with_object(initial) do |path_value, object|
-            path, value = path_value
-            update_in(object, path, value, sensitive: sensitive)
-          end
-        end
-
         def update_in(object, path, value, sensitive: {})
           path.inject([[], path.drop(1)]) do |context, step|
             seen, remaining = context
@@ -114,6 +114,7 @@ module RubyTerraform
         end
 
         # rubocop:disable Metrics/MethodLength
+        # rubocop:disable Metrics/AbcSize
         def update_object_for_step(object, pointer, value, sensitive: {})
           seen, step, remaining = pointer
 
@@ -128,13 +129,28 @@ module RubyTerraform
               boxed_empty_by_key(upcoming, sensitive: resolved_sensitive)
             end
 
-          parent[step] ||= resolved
+          if step.is_a?(Numeric) && highest_index(parent) < step
+            add_omitted_items_if_needed(parent, step)
+          end
+
+          if parent[step].is_a?(OmittedValue)
+            parent[step] = resolved
+          else
+            parent[step] ||= resolved
+          end
         end
+        # rubocop:enable Metrics/AbcSize
         # rubocop:enable Metrics/MethodLength
 
         def update_context_for_step(pointer)
           seen, step, remaining = pointer
           [seen + [step], remaining.drop(1)]
+        end
+
+        def add_omitted_items_if_needed(parent, step)
+          (0...step).each do |i|
+            parent[i] = Values.omitted if parent[i].nil?
+          end
         end
 
         def try_dig(object, path, default: nil)
@@ -194,6 +210,13 @@ module RubyTerraform
 
         def root_path(paths)
           paths.count == 1 && paths[0].empty?
+        end
+
+        def highest_index(array)
+          element_indices = array.each_with_index.to_a
+          return -1 if element_indices.empty?
+
+          element_indices.last.last
         end
       end
     end

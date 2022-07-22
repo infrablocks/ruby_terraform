@@ -1047,4 +1047,149 @@ describe RubyTerraform::Models::Objects do
                 V.unknown(sensitive: false)]))
     end
   end
+
+  describe '.object' do
+    it 'creates a boxed object from simple paths and boxed values' do
+      paths = [
+        %i[attribute1 key1],
+        %i[attribute1 key2],
+        %i[attribute2 key1]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.map(
+                     {
+                       key1: V.known('value-1'),
+                       key2: V.known('value-2')
+                     }
+                   ),
+                   attribute2: V.map(
+                     {
+                       key1: V.known('value-3')
+                     }
+                   )
+                 }
+               )))
+    end
+
+    it 'creates a boxed object from complex paths and boxed values' do
+      paths = [
+        [:attribute1, 0, :key1],
+        [:attribute1, 0, :key2],
+        [:attribute1, 1, :key1],
+        [:attribute1, 1, :key2],
+        [:attribute2, 0, :key1]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3'),
+        V.known('value-4'),
+        V.known('value-5')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.list(
+                     [
+                       V.map({ key1: V.known('value-1'),
+                               key2: V.known('value-2') }),
+                       V.map({ key1: V.known('value-3'),
+                               key2: V.known('value-4') })
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.map({ key1: V.known('value-5') })
+                     ]
+                   )
+                 }
+               )))
+    end
+
+    it 'uses an omitted value when some paths are unspecified for list items' do
+      paths = [
+        [:attribute1, 2, :key1],
+        [:attribute1, 2, :key2],
+        [:attribute2, 0, :key1]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.list(
+                     [
+                       V.omitted,
+                       V.omitted,
+                       V.map({ key1: V.known('value-1'),
+                               key2: V.known('value-2') })
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.map({ key1: V.known('value-3') })
+                     ]
+                   )
+                 }
+               )))
+    end
+
+    it 'allows list item paths to be out of order' do
+      paths = [
+        [:attribute1, 2, :key1],
+        [:attribute1, 2, :key2],
+        [:attribute1, 0, :key1],
+        [:attribute1, 0, :key2],
+        [:attribute2, 0, :key1]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3'),
+        V.known('value-4'),
+        V.known('value-5')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.list(
+                     [
+                       V.map({ key1: V.known('value-3'),
+                               key2: V.known('value-4') }),
+                       V.omitted,
+                       V.map({ key1: V.known('value-1'),
+                               key2: V.known('value-2') })
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.map({ key1: V.known('value-5') })
+                     ]
+                   )
+                 }
+               )))
+    end
+  end
 end
