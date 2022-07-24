@@ -1119,7 +1119,42 @@ describe RubyTerraform::Models::Objects do
                )))
     end
 
-    it 'uses an omitted value when some paths are unspecified for list items' do
+    it 'uses an omitted value when a single path is unspecified for ' \
+       'single-level deep list items' do
+      paths = [
+        [:attribute1, 1, :key1],
+        [:attribute1, 1, :key2],
+        [:attribute2, 0, :key1]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.list(
+                     [
+                       V.omitted,
+                       V.map({ key1: V.known('value-1'),
+                               key2: V.known('value-2') })
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.map({ key1: V.known('value-3') })
+                     ]
+                   )
+                 }
+               )))
+    end
+
+    it 'uses omitted values when multiple paths are unspecified for ' \
+       'single-level deep list items' do
       paths = [
         [:attribute1, 2, :key1],
         [:attribute1, 2, :key2],
@@ -1153,7 +1188,88 @@ describe RubyTerraform::Models::Objects do
                )))
     end
 
-    it 'allows list item paths to be out of order' do
+    it 'uses omitted values when single path is unspecified for ' \
+       'multi-level deep list items' do
+      paths = [
+        [:attribute1, 2, :key1, 1],
+        [:attribute1, 2, :key1, 2],
+        [:attribute2, 0, :key1]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.list(
+                     [
+                       V.omitted,
+                       V.omitted,
+                       V.map({ key1: V.list([
+                                              V.omitted,
+                                              V.known('value-1'),
+                                              V.known('value-2')
+                                            ]) })
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.map({ key1: V.known('value-3') })
+                     ]
+                   )
+                 }
+               )))
+    end
+
+    it 'uses omitted values when multiple paths is unspecified for ' \
+       'multi-level deep list items' do
+      paths = [
+        [:attribute1, 2, :key1, 1],
+        [:attribute1, 2, :key1, 3],
+        [:attribute1, 4, :key1, 0],
+        [:attribute2, 0, :key1]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3'),
+        V.known('value-4')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.list(
+                     [
+                       V.omitted,
+                       V.omitted,
+                       V.map({ key1: V.list([
+                                              V.omitted,
+                                              V.known('value-1'),
+                                              V.omitted,
+                                              V.known('value-2')
+                                            ]) }),
+                       V.omitted,
+                       V.map({ key1: V.list([V.known('value-3')]) })
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.map({ key1: V.known('value-4') })
+                     ]
+                   )
+                 }
+               )))
+    end
+
+    it 'allows single-level deep list item paths to be out of order' do
       paths = [
         [:attribute1, 2, :key1],
         [:attribute1, 2, :key2],
@@ -1186,6 +1302,51 @@ describe RubyTerraform::Models::Objects do
                    attribute2: V.list(
                      [
                        V.map({ key1: V.known('value-5') })
+                     ]
+                   )
+                 }
+               )))
+    end
+
+    it 'allows multi-level deep list item paths to be out of order' do
+      paths = [
+        [:attribute1, 2, :key1, 2],
+        [:attribute1, 2, :key2, 0],
+        [:attribute1, 2, :key2, 2],
+        [:attribute1, 0, :key1, 3],
+        [:attribute1, 0, :key2, 1],
+        [:attribute2, 0, :key1, 2]
+      ]
+      values = [
+        V.known('value-1'),
+        V.known('value-2'),
+        V.known('value-3'),
+        V.known('value-4'),
+        V.known('value-5'),
+        V.known('value-6')
+      ]
+
+      result = described_class.object(paths, values)
+
+      expect(result)
+        .to(eq(V.map(
+                 {
+                   attribute1: V.list(
+                     [
+                       V.map({ key1: V.list([V.omitted, V.omitted,
+                                             V.omitted, V.known('value-4')]),
+                               key2: V.list([V.omitted, V.known('value-5')]) }),
+                       V.omitted,
+                       V.map({ key1: V.list([V.omitted, V.omitted,
+                                             V.known('value-1')]),
+                               key2: V.list([V.known('value-2'), V.omitted,
+                                             V.known('value-3')]) })
+                     ]
+                   ),
+                   attribute2: V.list(
+                     [
+                       V.map({ key1: V.list([V.omitted, V.omitted,
+                                             V.known('value-6')]) })
                      ]
                    )
                  }

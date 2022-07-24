@@ -55,13 +55,15 @@ module RubyTerraform
           end
         end
 
-        def object(paths, values, sensitive: {}, initial: Values.empty_map)
-          paths
-            .zip(values)
-            .each_with_object(initial) do |path_value, object|
-            path, value = path_value
-            update_in(object, path, value, sensitive: sensitive)
-          end
+        def object(paths, values,
+                   sensitive: {},
+                   initial: Values.empty_map,
+                   filler: Values.omitted)
+          path_values = paths.zip(values)
+          path_values = sort_by_path(path_values)
+          path_values = fill_gaps(path_values, filler)
+
+          update_all(initial, path_values, sensitive)
         end
 
         private
@@ -82,11 +84,15 @@ module RubyTerraform
             sensitive: sensitive, initial: initial
           )
         end
+
         # rubocop:enable Metrics/MethodLength
 
         # rubocop:disable Metrics/MethodLength
         def box_known(object, sensitive: {}, initial: Values.empty_map)
           object_paths = paths(object)
+          require 'pp'
+          pp object_paths
+
           if root_path(object_paths)
             return Values.known(object, sensitive: sensitive)
           end
@@ -100,7 +106,15 @@ module RubyTerraform
             sensitive: sensitive, initial: initial
           )
         end
+
         # rubocop:enable Metrics/MethodLength
+
+        def update_all(object, path_values, sensitive = {})
+          path_values.each_with_object(object) do |path_value, obj|
+            path, value = path_value
+            update_in(obj, path, value, sensitive: sensitive)
+          end
+        end
 
         def update_in(object, path, value, sensitive: {})
           path.inject([[], path.drop(1)]) do |context, step|
@@ -114,7 +128,6 @@ module RubyTerraform
         end
 
         # rubocop:disable Metrics/MethodLength
-        # rubocop:disable Metrics/AbcSize
         def update_object_for_step(object, pointer, value, sensitive: {})
           seen, step, remaining = pointer
 
@@ -129,28 +142,14 @@ module RubyTerraform
               boxed_empty_by_key(upcoming, sensitive: resolved_sensitive)
             end
 
-          if step.is_a?(Numeric) && highest_index(parent) < step
-            add_omitted_items_if_needed(parent, step)
-          end
-
-          if parent[step].is_a?(OmittedValue)
-            parent[step] = resolved
-          else
-            parent[step] ||= resolved
-          end
+          parent[step] ||= resolved
         end
-        # rubocop:enable Metrics/AbcSize
+
         # rubocop:enable Metrics/MethodLength
 
         def update_context_for_step(pointer)
           seen, step, remaining = pointer
           [seen + [step], remaining.drop(1)]
-        end
-
-        def add_omitted_items_if_needed(parent, step)
-          (0...step).each do |i|
-            parent[i] = Values.omitted if parent[i].nil?
-          end
         end
 
         def try_dig(object, path, default: nil)
@@ -192,7 +191,8 @@ module RubyTerraform
             object.to_a.map do |e|
               [e[1], e[0].to_sym]
             end
-          else object
+          else
+            object
           end
         end
 
@@ -200,7 +200,8 @@ module RubyTerraform
           case object
           when Hash
             object.to_h { |key, value| [key.to_sym, symbolise(value)] }
-          else object
+          else
+            object
           end
         end
 
@@ -212,11 +213,147 @@ module RubyTerraform
           paths.count == 1 && paths[0].empty?
         end
 
-        def highest_index(array)
-          element_indices = array.each_with_index.to_a
-          return -1 if element_indices.empty?
+        def sort_by_path(path_values)
+          path_values.sort do |a, b|
+            Path.new(a[0]) <=> Path.new(b[0])
+          end
+        end
 
-          element_indices.last.last
+        # rubocop:disable Metrics/MethodLength
+        def fill_gaps(path_values, filler)
+          result = path_values
+                   .inject({ last: nil, filled: [] }) do |acc, path_value|
+            puts '-------------------'
+            current_path = Path.new(path_value[0])
+            last_path = acc[:last]
+
+            require 'pp'
+            puts 'Current path:'
+            pp current_path
+            puts 'Last path:'
+            pp last_path
+
+            last_indices = resolve_list_indices_between(last_path, current_path)
+            current_indices = resolve_list_indices_in(current_path)
+
+            puts 'Current indices:'
+            pp current_indices
+            puts 'Last indices:'
+            pp last_indices
+
+            extra_path_values =
+              determine_extra_path_values(
+                last_indices, current_indices, current_path, filler
+              )
+
+            puts 'Extra path values'
+            pp extra_path_values
+
+            {
+              last: current_path,
+              filled: acc[:filled] + extra_path_values + [path_value]
+            }
+          end
+
+          result[:filled]
+        end
+
+        # rubocop:enable Metrics/MethodLength
+
+        def resolve_list_indices_between(last, current)
+          last_indices = last ? last.list_indices : []
+          current_indices = current.list_indices
+          puts 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+          puts 'Last indices:'
+          pp last_indices
+          puts 'Current indices:'
+          pp current_indices
+
+          thing = current_indices.inject([]) do |acc, current_entry|
+            current_location, current_element = current_entry
+            last_entry =
+              last_indices
+              .find(-> { [current_location, nil] }) do |last_index|
+                last_index[0] == current_location
+              end
+            _, last_element = last_entry
+
+            if (last_element && current_element < last_element) ||
+               (last && !current.up_to_index(current_location)
+                                .same_parent_collection?(
+                                  last.up_to_index(current_location)
+                                ))
+              acc + [[current_location, nil]]
+            else
+              acc + [last_entry]
+            end
+          end
+
+          puts 'Result:'
+          pp thing
+          puts 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'
+
+          thing
+        end
+
+        def resolve_list_indices_in(path)
+          path.references_any_lists? ? path.list_indices : []
+        end
+
+        # rubocop:disable Metrics/MethodLength
+        def determine_extra_path_values(
+          last_indices, current_indices, current_path, filler
+        )
+          result = current_indices.each_with_index.inject([]) do |acc, entry|
+            require 'pp'
+            puts '++++++++++++++++++++'
+
+            current_index, i = entry
+            last_index = last_indices[i] || [nil, nil]
+            last_element = last_index[1]
+            current_location, current_element = current_index
+
+            puts 'Current index:'
+            pp current_index
+            puts 'Last index:'
+            pp last_index
+
+            unless current_element.positive?
+              puts 'Skipping as first in list'
+              next(acc)
+            end
+
+            puts 'Continuing as need to check against last element'
+            start_element = last_element.nil? ? 0 : last_element + 1
+
+            if start_element == current_element
+              puts 'Skipping as no gap found'
+              next(acc)
+            end
+
+            puts 'Filling gap'
+            acc += create_filler_path_values(
+              start_element, current_element, current_path, current_location,
+              filler
+            )
+
+            acc
+          end
+
+          puts '++++++++++++++++++++'
+
+          result
+        end
+
+        # rubocop:enable Metrics/MethodLength
+
+        def create_filler_path_values(from, to, path, location, filler)
+          (from...to)
+            .inject([]) do |pvs, list_element|
+            new_path = path.up_to_index(location - 1)
+                           .append(list_element)
+            pvs + [[new_path.elements, filler]]
+          end
         end
       end
     end

@@ -10,7 +10,12 @@ end
 
 require 'bundler/setup'
 require 'faker'
+
+# default "exported" things
 require 'ruby_terraform'
+
+# not currently "exported" by the library
+require_relative '../lib/ruby_terraform/models/path'
 
 O = RubyTerraform::Options
 M = RubyTerraform::Models
