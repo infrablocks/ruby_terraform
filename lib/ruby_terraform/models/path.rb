@@ -5,21 +5,17 @@ require_relative '../value_equality'
 module RubyTerraform
   module Models
     class Path
+      extend Forwardable
+
       include Comparable
       include ValueEquality
 
-      attr_reader :elements
+      def_delegators(:@elements, :first, :last, :length, :empty?)
+
+      attr_reader(:elements)
 
       def initialize(elements)
         @elements = elements.compact
-      end
-
-      def length
-        elements.count
-      end
-
-      def empty?
-        length.zero?
       end
 
       def references_any_lists?
@@ -42,14 +38,6 @@ module RubyTerraform
           element, index = element_index
           element.is_a?(Numeric) ? acc + [[index, element]] : acc
         end
-      end
-
-      def first
-        elements.first
-      end
-
-      def last
-        elements.last
       end
 
       def up_to_index(index)
@@ -107,20 +95,18 @@ module RubyTerraform
         [elements]
       end
 
+      def inspect
+        elements.map(&:to_s).join(', ')
+      end
+
       private
 
       def initial_walk_context
-        {
-          seen: self.class.new([]),
-          remaining: drop(1)
-        }
+        { seen: self.class.new([]), remaining: drop(1) }
       end
 
       def next_walk_context(seen, step, remaining)
-        {
-          seen: seen.append(step),
-          remaining: remaining.drop(1)
-        }
+        { seen: seen.append(step), remaining: remaining.drop(1) }
       end
 
       def compare_numbers_before_symbols(left, right)

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative './values'
+require_relative './path_set'
 
 module RubyTerraform
   module Models
@@ -16,8 +17,13 @@ module RubyTerraform
 
           return Values.unknown(sensitive: sensitive) if unknown == true
 
+          unless object.is_a?(Hash) || object.is_a?(Array)
+            return Values.known(object, sensitive: sensitive)
+          end
+
           boxed_unknown =
             box_unknown(unknown, sensitive: sensitive, initial: initial)
+
           boxed_object =
             box_known(object, sensitive: sensitive, initial: boxed_unknown)
 
@@ -26,19 +32,12 @@ module RubyTerraform
 
         # rubocop:enable Style/RedundantAssignment
 
-        def paths(object, current = Path.new([]), accumulator = [])
-          normalised = normalise(object)
-          if normalised.is_a?(Enumerable)
-            normalised.inject(accumulator) do |a, e|
-              paths(e[0], current.append(e[1]), a)
-            end
-          else
-            accumulator + [current]
-          end
+        def paths(object)
+          PathSet.extract_from(object)
         end
 
-        def known_values(paths, object: {}, sensitive: {})
-          paths.map do |path|
+        def known_values(path_set, object: {}, sensitive: {})
+          path_set.paths.map do |path|
             resolved = path.read(object)
             resolved_sensitive = path.read(sensitive) == true
 
@@ -46,8 +45,8 @@ module RubyTerraform
           end
         end
 
-        def unknown_values(paths, unknown: {}, sensitive: {})
-          paths.map do |path|
+        def unknown_values(path_set, unknown: {}, sensitive: {})
+          path_set.paths.map do |path|
             resolved = path.read(unknown)
             resolved_sensitive = path.read(sensitive) == true
 
@@ -55,11 +54,13 @@ module RubyTerraform
           end
         end
 
-        def object(paths, values,
+        def object(path_set, values,
                    sensitive: {},
                    initial: Values.empty_map,
                    filler: Values.omitted)
-          path_values = paths.zip(values)
+          puts path_set.inspect
+
+          path_values = path_set.paths.zip(values)
           path_values = sort_by_path(path_values)
           path_values = fill_gaps(path_values, filler)
 
@@ -68,46 +69,25 @@ module RubyTerraform
 
         private
 
-        # rubocop:disable Metrics/MethodLength
         def box_unknown(unknown, sensitive: {}, initial: Values.empty_map)
-          unknown_paths = paths(unknown)
-          if root_path(unknown_paths)
-            return Values.unknown(sensitive: sensitive)
-          end
-
+          path_set = paths(unknown)
           unknown_values = unknown_values(
-            unknown_paths, unknown: unknown, sensitive: sensitive
+            path_set, unknown: unknown, sensitive: sensitive
           )
-
           object(
-            unknown_paths, unknown_values,
-            sensitive: sensitive, initial: initial
+            path_set, unknown_values, sensitive: sensitive, initial: initial
           )
         end
 
-        # rubocop:enable Metrics/MethodLength
-
-        # rubocop:disable Metrics/MethodLength
         def box_known(object, sensitive: {}, initial: Values.empty_map)
-          object_paths = paths(object)
-          require 'pp'
-          pp object_paths
-
-          if root_path(object_paths)
-            return Values.known(object, sensitive: sensitive)
-          end
-
+          path_set = paths(object)
           object_values = known_values(
-            object_paths, object: object, sensitive: sensitive
+            path_set, object: object, sensitive: sensitive
           )
-
           object(
-            object_paths, object_values,
-            sensitive: sensitive, initial: initial
+            path_set, object_values, sensitive: sensitive, initial: initial
           )
         end
-
-        # rubocop:enable Metrics/MethodLength
 
         def update_all(object, path_values, sensitive = {})
           path_values.each_with_object(object) do |path_value, obj|
@@ -167,18 +147,6 @@ module RubyTerraform
           end
         end
 
-        def normalise(object)
-          case object
-          when Array then object.each_with_index.to_a
-          when Hash
-            object.to_a.map do |e|
-              [e[1], e[0].to_sym]
-            end
-          else
-            object
-          end
-        end
-
         def symbolise(object)
           case object
           when Hash
@@ -190,10 +158,6 @@ module RubyTerraform
 
         def symbolised_or_native_empty(object, target)
           object ? symbolise(object) : native_empty_by_value(target)
-        end
-
-        def root_path(paths)
-          paths.count == 1 && paths[0].empty?
         end
 
         def sort_by_path(path_values)

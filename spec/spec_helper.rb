@@ -16,6 +16,7 @@ require 'ruby_terraform'
 
 # not currently "exported" by the library
 require_relative '../lib/ruby_terraform/models/path'
+require_relative '../lib/ruby_terraform/models/path_set'
 
 O = RubyTerraform::Options
 M = RubyTerraform::Models
