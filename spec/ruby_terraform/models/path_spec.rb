@@ -409,6 +409,118 @@ describe RubyTerraform::Models::Path do
     end
   end
 
+  describe '#walk' do
+    it 'iterates through path elements, exposing seen elements, ' \
+       'the current element and remaining elements' do
+      path = described_class.new([:key1, 0, :key2, 1])
+
+      def factory(vals)
+        described_class.new(vals)
+      end
+
+      values = []
+      path.walk do |seen, step, remaining|
+        values << [seen, step, remaining]
+      end
+
+      expect(values)
+        .to(eq([[factory([]), :key1, factory([0, :key2, 1])],
+                [factory([:key1]), 0, factory([:key2, 1])],
+                [factory([:key1, 0]), :key2, factory([1])],
+                [factory([:key1, 0, :key2]), 1, factory([])]]))
+    end
+  end
+
+  describe '#read' do
+    it 'returns the value represented by itself in the provided object ' \
+       'when available' do
+      path = described_class.new([:a, 0, :b])
+      object = { a: [{ b: 5 }] }
+
+      value = path.read(object)
+
+      expect(value).to(eq(5))
+    end
+
+    it 'returns nil when the provided object has a nil value at the path ' \
+       'represented by itself' do
+      path = described_class.new([:a, 0, :b])
+      object = { a: [{ b: nil }] }
+
+      value = path.read(object)
+
+      expect(value).to(be_nil)
+    end
+
+    it 'returns nil when the provided object does not contain a value for ' \
+       'the path at the end of the path' do
+      path = described_class.new([:a, 0, :b])
+      object = { a: [{ c: 5 }] }
+
+      value = path.read(object)
+
+      expect(value).to(be_nil)
+    end
+
+    it 'returns nil when the provided object does not contain a value for ' \
+       'the path in the middle of the path' do
+      path = described_class.new([:a, 0, :b])
+      object = { a: 'spinach' }
+
+      value = path.read(object)
+
+      expect(value).to(be_nil)
+    end
+
+    it 'returns nil when the path is empty' do
+      path = described_class.new([])
+      object = { a: 'spinach' }
+
+      value = path.read(object)
+
+      expect(value).to(be_nil)
+    end
+
+    it 'returns the provided default when the provided object has a ' \
+       'nil value at the path represented by itself' do
+      path = described_class.new([:a, 0, :b])
+      object = { a: [{ b: nil }] }
+
+      value = path.read(object, default: 10)
+
+      expect(value).to(eq(10))
+    end
+
+    it 'returns the provided default when the provided object does not ' \
+       'contain a value for the path at the end of the path' do
+      path = described_class.new([:a, 0, :b])
+      object = { a: [{ c: 5 }] }
+
+      value = path.read(object, default: 10)
+
+      expect(value).to(eq(10))
+    end
+
+    it 'returns the provided default when the provided object does not ' \
+       'contain a value for the path in the middle of the path' do
+      path = described_class.new([:a, 0, :b])
+      object = { a: 'spinach' }
+
+      value = path.read(object, default: 10)
+
+      expect(value).to(eq(10))
+    end
+
+    it 'returns the provided default when the path is empty' do
+      path = described_class.new([])
+      object = { a: 'spinach' }
+
+      value = path.read(object, default: 10)
+
+      expect(value).to(eq(10))
+    end
+  end
+
   describe '#<=>' do
     it 'compares identical simple paths as equal' do
       path1 = described_class.new(%i[a b c])

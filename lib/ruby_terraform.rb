@@ -601,7 +601,7 @@ module RubyTerraform
     # actions.
     #
     # You can optionally save the plan to a file, which you can then pass to
-    # the {#apply} command to perform exactly the actions described in the plan.
+    # the {#read} command to perform exactly the actions described in the plan.
     #
     # @param parameters The parameters used to invoke the command
     # @option parameters [String] :plan The path to a directory containing

@@ -26,11 +26,11 @@ module RubyTerraform
 
         # rubocop:enable Style/RedundantAssignment
 
-        def paths(object, current = [], accumulator = [])
+        def paths(object, current = Path.new([]), accumulator = [])
           normalised = normalise(object)
           if normalised.is_a?(Enumerable)
             normalised.inject(accumulator) do |a, e|
-              paths(e[0], current + [e[1]], a)
+              paths(e[0], current.append(e[1]), a)
             end
           else
             accumulator + [current]
@@ -39,8 +39,8 @@ module RubyTerraform
 
         def known_values(paths, object: {}, sensitive: {})
           paths.map do |path|
-            resolved = try_dig(object, path)
-            resolved_sensitive = try_dig(sensitive, path) == true
+            resolved = path.read(object)
+            resolved_sensitive = path.read(sensitive) == true
 
             Values.known(resolved, sensitive: resolved_sensitive)
           end
@@ -48,8 +48,8 @@ module RubyTerraform
 
         def unknown_values(paths, unknown: {}, sensitive: {})
           paths.map do |path|
-            resolved = try_dig(unknown, path)
-            resolved_sensitive = try_dig(sensitive, path) == true
+            resolved = path.read(unknown)
+            resolved_sensitive = path.read(sensitive) == true
 
             resolved ? Values.unknown(sensitive: resolved_sensitive) : nil
           end
@@ -117,12 +117,9 @@ module RubyTerraform
         end
 
         def update_in(object, path, value, sensitive: {})
-          path.inject([[], path.drop(1)]) do |context, step|
-            seen, remaining = context
+          path.walk do |seen, step, remaining|
             pointer = [seen, step, remaining]
-
             update_object_for_step(object, pointer, value, sensitive: sensitive)
-            update_context_for_step(pointer)
           end
           object
         end
@@ -131,10 +128,11 @@ module RubyTerraform
         def update_object_for_step(object, pointer, value, sensitive: {})
           seen, step, remaining = pointer
 
-          parent = try_dig(object, seen, default: object)
+          parent = seen.read(object, default: object)
           upcoming = remaining.first
 
-          resolved_sensitive = try_dig(sensitive, seen + [step]) == true
+          found_sensitive = seen.append(step).read(sensitive)
+          resolved_sensitive = found_sensitive == true
           resolved =
             if remaining.empty?
               value
@@ -144,22 +142,7 @@ module RubyTerraform
 
           parent[step] ||= resolved
         end
-
         # rubocop:enable Metrics/MethodLength
-
-        def update_context_for_step(pointer)
-          seen, step, remaining = pointer
-          [seen + [step], remaining.drop(1)]
-        end
-
-        def try_dig(object, path, default: nil)
-          return default if path.empty?
-
-          result = object.dig(*path)
-          result.nil? ? default : result
-        rescue NoMethodError, TypeError
-          default
-        end
 
         def boxed_empty_by_key(key, sensitive: false)
           if key.is_a?(Numeric)
@@ -214,9 +197,7 @@ module RubyTerraform
         end
 
         def sort_by_path(path_values)
-          path_values.sort do |a, b|
-            Path.new(a[0]) <=> Path.new(b[0])
-          end
+          path_values.sort { |a, b| a[0] <=> b[0] }
         end
 
         # rubocop:disable Metrics/MethodLength
@@ -224,7 +205,7 @@ module RubyTerraform
           result = path_values
                    .inject({ last: nil, filled: [] }) do |acc, path_value|
             puts '-------------------'
-            current_path = Path.new(path_value[0])
+            current_path = path_value[0]
             last_path = acc[:last]
 
             require 'pp'
@@ -352,7 +333,7 @@ module RubyTerraform
             .inject([]) do |pvs, list_element|
             new_path = path.up_to_index(location - 1)
                            .append(list_element)
-            pvs + [[new_path.elements, filler]]
+            pvs + [[new_path, filler]]
           end
         end
       end

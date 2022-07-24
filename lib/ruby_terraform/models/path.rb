@@ -60,12 +60,37 @@ module RubyTerraform
         self.class.new(elements + [element])
       end
 
+      def drop(count = 1)
+        self.class.new(elements.drop(count))
+      end
+
       def diff(other)
         left, right = match_lengths(elements, other.elements)
         pairwise = left.zip(right)
         difference = pairwise.drop_while { |e| e[0] == e[1] }
         difference = difference.empty? ? [[], []] : difference.transpose
         difference.map { |e| self.class.new(e) }
+      end
+
+      def walk(&block)
+        elements.inject(initial_walk_context) do |context, step|
+          seen = context[:seen]
+          remaining = context[:remaining]
+          pointer = [seen, step, remaining]
+
+          block.call(*pointer)
+
+          next_walk_context(seen, step, remaining)
+        end
+      end
+
+      def read(object, default: nil)
+        return default if empty?
+
+        result = object.dig(*elements)
+        result.nil? ? default : result
+      rescue NoMethodError, TypeError
+        default
       end
 
       def <=>(other)
@@ -84,6 +109,20 @@ module RubyTerraform
 
       private
 
+      def initial_walk_context
+        {
+          seen: self.class.new([]),
+          remaining: drop(1)
+        }
+      end
+
+      def next_walk_context(seen, step, remaining)
+        {
+          seen: seen.append(step),
+          remaining: remaining.drop(1)
+        }
+      end
+
       def compare_numbers_before_symbols(left, right)
         return -1 if left.is_a?(Numeric) && right.is_a?(Symbol)
         return 1 if left.is_a?(Symbol) && right.is_a?(Numeric)
@@ -100,7 +139,7 @@ module RubyTerraform
       end
 
       def pad_to_length(array, target_length)
-        array.fill(nil, array.count, target_length - array.count)
+        array.clone.fill(nil, array.count, target_length - array.count)
       end
     end
   end

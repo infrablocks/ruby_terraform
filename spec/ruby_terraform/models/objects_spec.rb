@@ -12,7 +12,12 @@ describe RubyTerraform::Models::Objects do
       }
       paths = described_class.paths(object)
 
-      expect(paths).to(eq([[:first], [:second], [:third]]))
+      expect(paths)
+        .to(eq([
+                 M::Path.new([:first]),
+                 M::Path.new([:second]),
+                 M::Path.new([:third])
+               ]))
     end
 
     it 'returns the paths for an object of lists' do
@@ -24,11 +29,11 @@ describe RubyTerraform::Models::Objects do
 
       expect(paths)
         .to(eq([
-                 [:first, 0],
-                 [:first, 1],
-                 [:first, 2],
-                 [:second, 0],
-                 [:second, 1]
+                 M::Path.new([:first, 0]),
+                 M::Path.new([:first, 1]),
+                 M::Path.new([:first, 2]),
+                 M::Path.new([:second, 0]),
+                 M::Path.new([:second, 1])
                ]))
     end
 
@@ -47,10 +52,10 @@ describe RubyTerraform::Models::Objects do
 
       expect(paths)
         .to(eq([
-                 %i[first a],
-                 %i[first b],
-                 %i[second c],
-                 %i[second d]
+                 M::Path.new(%i[first a]),
+                 M::Path.new(%i[first b]),
+                 M::Path.new(%i[second c]),
+                 M::Path.new(%i[second d])
                ]))
     end
 
@@ -69,14 +74,14 @@ describe RubyTerraform::Models::Objects do
 
       expect(paths)
         .to(eq([
-                 [:a, :b, 0],
-                 [:a, :b, 1],
-                 [:a, :b, 2],
-                 [:a, :c, 0, :d],
-                 [:a, :c, 0, :e],
-                 [:a, :c, 1, :d],
-                 [:a, :c, 1, :e],
-                 %i[a f]
+                 M::Path.new([:a, :b, 0]),
+                 M::Path.new([:a, :b, 1]),
+                 M::Path.new([:a, :b, 2]),
+                 M::Path.new([:a, :c, 0, :d]),
+                 M::Path.new([:a, :c, 0, :e]),
+                 M::Path.new([:a, :c, 1, :d]),
+                 M::Path.new([:a, :c, 1, :e]),
+                 M::Path.new(%i[a f])
                ]))
     end
 
@@ -95,10 +100,10 @@ describe RubyTerraform::Models::Objects do
 
       expect(paths)
         .to(eq([
-                 %i[first a],
-                 %i[first b],
-                 %i[second c],
-                 %i[second d]
+                 M::Path.new(%i[first a]),
+                 M::Path.new(%i[first b]),
+                 M::Path.new(%i[second c]),
+                 M::Path.new(%i[second d])
                ]))
     end
 
@@ -111,11 +116,11 @@ describe RubyTerraform::Models::Objects do
 
       expect(paths)
         .to(eq([
-                 [:first, 0],
-                 [:first, 1],
-                 [:first, 2],
-                 [:second, 0],
-                 [:second, 1]
+                 M::Path.new([:first, 0]),
+                 M::Path.new([:first, 1]),
+                 M::Path.new([:first, 2]),
+                 M::Path.new([:second, 0]),
+                 M::Path.new([:second, 1])
                ]))
     end
   end
@@ -953,7 +958,8 @@ describe RubyTerraform::Models::Objects do
 
   describe '.known_values' do
     it 'boxes the value for each path' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       object = { key: [10, 20] }
 
       values = described_class.known_values(paths, object: object)
@@ -963,7 +969,8 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'boxes the value as sensitive when sensitive' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       object = { key: [10, 20] }
       sensitive = { key: [true, true] }
 
@@ -977,7 +984,8 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'boxes the value as non-sensitive when not sensitive' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       object = { key: [10, 20] }
       sensitive = {}
 
@@ -993,7 +1001,8 @@ describe RubyTerraform::Models::Objects do
 
   describe '.unknown_values' do
     it 'boxes the value for each path' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       unknown = { key: [true, true] }
 
       values = described_class.unknown_values(paths, unknown: unknown)
@@ -1002,7 +1011,8 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'returns nil when unknown is false at the path' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       unknown = { key: [false, false] }
 
       values = described_class.unknown_values(paths, unknown: unknown)
@@ -1011,7 +1021,8 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'returns nil when unknown is missing at the path' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       unknown = {}
 
       values = described_class.unknown_values(paths, unknown: unknown)
@@ -1020,7 +1031,8 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'boxes the value as sensitive when sensitive' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       unknown = { key: [true, true] }
       sensitive = { key: [true, true] }
 
@@ -1034,7 +1046,8 @@ describe RubyTerraform::Models::Objects do
     end
 
     it 'boxes the value as non-sensitive when not sensitive' do
-      paths = [[:key, 0], [:key, 1]]
+      paths = [M::Path.new([:key, 0]),
+               M::Path.new([:key, 1])]
       unknown = { key: [true, true] }
       sensitive = {}
 
@@ -1051,9 +1064,9 @@ describe RubyTerraform::Models::Objects do
   describe '.object' do
     it 'creates a boxed object from simple paths and boxed values' do
       paths = [
-        %i[attribute1 key1],
-        %i[attribute1 key2],
-        %i[attribute2 key1]
+        M::Path.new(%i[attribute1 key1]),
+        M::Path.new(%i[attribute1 key2]),
+        M::Path.new(%i[attribute2 key1])
       ]
       values = [
         V.known('value-1'),
@@ -1083,11 +1096,11 @@ describe RubyTerraform::Models::Objects do
 
     it 'creates a boxed object from complex paths and boxed values' do
       paths = [
-        [:attribute1, 0, :key1],
-        [:attribute1, 0, :key2],
-        [:attribute1, 1, :key1],
-        [:attribute1, 1, :key2],
-        [:attribute2, 0, :key1]
+        M::Path.new([:attribute1, 0, :key1]),
+        M::Path.new([:attribute1, 0, :key2]),
+        M::Path.new([:attribute1, 1, :key1]),
+        M::Path.new([:attribute1, 1, :key2]),
+        M::Path.new([:attribute2, 0, :key1])
       ]
       values = [
         V.known('value-1'),
@@ -1122,9 +1135,9 @@ describe RubyTerraform::Models::Objects do
     it 'uses an omitted value when a single path is unspecified for ' \
        'single-level deep list items' do
       paths = [
-        [:attribute1, 1, :key1],
-        [:attribute1, 1, :key2],
-        [:attribute2, 0, :key1]
+        M::Path.new([:attribute1, 1, :key1]),
+        M::Path.new([:attribute1, 1, :key2]),
+        M::Path.new([:attribute2, 0, :key1])
       ]
       values = [
         V.known('value-1'),
@@ -1156,9 +1169,9 @@ describe RubyTerraform::Models::Objects do
     it 'uses omitted values when multiple paths are unspecified for ' \
        'single-level deep list items' do
       paths = [
-        [:attribute1, 2, :key1],
-        [:attribute1, 2, :key2],
-        [:attribute2, 0, :key1]
+        M::Path.new([:attribute1, 2, :key1]),
+        M::Path.new([:attribute1, 2, :key2]),
+        M::Path.new([:attribute2, 0, :key1])
       ]
       values = [
         V.known('value-1'),
@@ -1191,9 +1204,9 @@ describe RubyTerraform::Models::Objects do
     it 'uses omitted values when single path is unspecified for ' \
        'multi-level deep list items' do
       paths = [
-        [:attribute1, 2, :key1, 1],
-        [:attribute1, 2, :key1, 2],
-        [:attribute2, 0, :key1]
+        M::Path.new([:attribute1, 2, :key1, 1]),
+        M::Path.new([:attribute1, 2, :key1, 2]),
+        M::Path.new([:attribute2, 0, :key1])
       ]
       values = [
         V.known('value-1'),
@@ -1229,10 +1242,10 @@ describe RubyTerraform::Models::Objects do
     it 'uses omitted values when multiple paths is unspecified for ' \
        'multi-level deep list items' do
       paths = [
-        [:attribute1, 2, :key1, 1],
-        [:attribute1, 2, :key1, 3],
-        [:attribute1, 4, :key1, 0],
-        [:attribute2, 0, :key1]
+        M::Path.new([:attribute1, 2, :key1, 1]),
+        M::Path.new([:attribute1, 2, :key1, 3]),
+        M::Path.new([:attribute1, 4, :key1, 0]),
+        M::Path.new([:attribute2, 0, :key1])
       ]
       values = [
         V.known('value-1'),
@@ -1271,11 +1284,11 @@ describe RubyTerraform::Models::Objects do
 
     it 'allows single-level deep list item paths to be out of order' do
       paths = [
-        [:attribute1, 2, :key1],
-        [:attribute1, 2, :key2],
-        [:attribute1, 0, :key1],
-        [:attribute1, 0, :key2],
-        [:attribute2, 0, :key1]
+        M::Path.new([:attribute1, 2, :key1]),
+        M::Path.new([:attribute1, 2, :key2]),
+        M::Path.new([:attribute1, 0, :key1]),
+        M::Path.new([:attribute1, 0, :key2]),
+        M::Path.new([:attribute2, 0, :key1])
       ]
       values = [
         V.known('value-1'),
@@ -1310,12 +1323,12 @@ describe RubyTerraform::Models::Objects do
 
     it 'allows multi-level deep list item paths to be out of order' do
       paths = [
-        [:attribute1, 2, :key1, 2],
-        [:attribute1, 2, :key2, 0],
-        [:attribute1, 2, :key2, 2],
-        [:attribute1, 0, :key1, 3],
-        [:attribute1, 0, :key2, 1],
-        [:attribute2, 0, :key1, 2]
+        M::Path.new([:attribute1, 2, :key1, 2]),
+        M::Path.new([:attribute1, 2, :key2, 0]),
+        M::Path.new([:attribute1, 2, :key2, 2]),
+        M::Path.new([:attribute1, 0, :key1, 3]),
+        M::Path.new([:attribute1, 0, :key2, 1]),
+        M::Path.new([:attribute2, 0, :key1, 2])
       ]
       values = [
         V.known('value-1'),
