@@ -286,38 +286,90 @@ describe RubyTerraform::Models::Path do
     end
   end
 
-  describe '#up_to_index' do
-    it 'returns the path up to the specified index when the path contains ' \
-       'more elements than the specified index' do
+  describe '#to_location' do
+    it 'returns an empty path if the location is negative' do
       path = described_class.new(
         %i[some_attribute other_attribute some_key]
       )
 
-      expect(path.up_to_index(1))
+      expect(path.to_location(-1))
+        .to(eq(described_class.new([])))
+    end
+
+    it 'returns the path up to and including the specified location when the ' \
+       'path contains more elements than the specified location' do
+      path = described_class.new(
+        %i[some_attribute other_attribute some_key]
+      )
+
+      expect(path.to_location(1))
         .to(eq(described_class.new(
                  %i[some_attribute other_attribute]
                )))
     end
 
     it 'returns the whole path when the path contains ' \
-       'the same number of elements as the specified index' do
+       'the same number of elements as the specified location' do
       path = described_class.new(
         %i[some_attribute other_attribute some_key]
       )
 
-      expect(path.up_to_index(2))
+      expect(path.to_location(2))
         .to(eq(described_class.new(
                  %i[some_attribute other_attribute some_key]
                )))
     end
 
     it 'returns the whole path when the path contains ' \
-       'less elements as the specified index' do
+       'less elements than the specified location' do
       path = described_class.new(
         %i[some_attribute other_attribute some_key]
       )
 
-      expect(path.up_to_index(4))
+      expect(path.to_location(4))
+        .to(eq(described_class.new(
+                 %i[some_attribute other_attribute some_key]
+               )))
+    end
+  end
+
+  describe '#before_location' do
+    it 'returns an empty path if the location is negative' do
+      path = described_class.new(
+        %i[some_attribute other_attribute some_key]
+      )
+
+      expect(path.before_location(-1))
+        .to(eq(described_class.new([])))
+    end
+
+    it 'returns the path up to but excluding the specified location when the ' \
+       'path contains more elements than the specified location' do
+      path = described_class.new(
+        %i[some_attribute other_attribute some_key]
+      )
+
+      expect(path.before_location(1))
+        .to(eq(described_class.new(%i[some_attribute])))
+    end
+
+    it 'returns the path up to but excluding the specified location when the ' \
+       'path contains the same number of elements as the specified location' do
+      path = described_class.new(
+        %i[some_attribute other_attribute some_key]
+      )
+
+      expect(path.before_location(2))
+        .to(eq(described_class.new(%i[some_attribute other_attribute])))
+    end
+
+    it 'returns the whole path when the path contains ' \
+       'less elements than the specified location' do
+      path = described_class.new(
+        %i[some_attribute other_attribute some_key]
+      )
+
+      expect(path.before_location(4))
         .to(eq(described_class.new(
                  %i[some_attribute other_attribute some_key]
                )))

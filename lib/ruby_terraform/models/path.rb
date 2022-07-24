@@ -40,8 +40,16 @@ module RubyTerraform
         end
       end
 
-      def up_to_index(index)
+      def to_location(index)
+        return self.class.new([]) if index.negative?
+
         self.class.new(elements[0..index])
+      end
+
+      def before_location(index)
+        return self.class.new([]) if index.negative?
+
+        self.class.new(elements[0...index])
       end
 
       def append(element)
@@ -93,10 +101,6 @@ module RubyTerraform
 
       def state
         [elements]
-      end
-
-      def inspect
-        elements.map(&:to_s).join(', ')
       end
 
       private

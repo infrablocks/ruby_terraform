@@ -97,7 +97,7 @@ describe RubyTerraform::Models::PathSet do
       hash = {}
       path_set = described_class.extract_from(hash)
 
-      expect(path_set).to(eq(M::PathSet.new([])))
+      expect(path_set).to(eq(M::PathSet.empty))
     end
 
     it 'extracts all paths from an array of scalars' do
@@ -176,6 +176,13 @@ describe RubyTerraform::Models::PathSet do
                )))
     end
 
+    it 'extracts no paths from an empty array' do
+      array = []
+      path_set = described_class.extract_from(array)
+
+      expect(path_set).to(eq(M::PathSet.empty))
+    end
+
     it 'converts string path segments into symbols when object of objects' do
       object = {
         'first' => {
@@ -239,6 +246,730 @@ describe RubyTerraform::Models::PathSet do
       path_set = described_class.new([M::Path.new(%i[a b])])
 
       expect(path_set.empty?).to(be(false))
+    end
+  end
+
+  describe '#gaps' do
+    it 'returns an empty path set when there are no gaps in a top-level ' \
+       'array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([0]),
+          M::Path.new([1]),
+          M::Path.new([2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.empty
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first item in a ' \
+       'top-level array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([1]),
+          M::Path.new([2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([0])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle item in a ' \
+       'top-level array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([0]),
+          M::Path.new([2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first items in a ' \
+       'top-level array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([2]),
+          M::Path.new([3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([0]),
+          M::Path.new([1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle items in a ' \
+       'top-level array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([0]),
+          M::Path.new([3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([1]),
+          M::Path.new([2])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns an empty path set when there are no gaps in an ' \
+       'array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.empty
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first item in an ' \
+       'array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle item in an ' \
+       'array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first items in an ' \
+       'array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 2]),
+          M::Path.new([:attribute, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle items in an ' \
+       'array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns an empty path set when there are no gaps in a' \
+       'nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 0, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.empty
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first item in a ' \
+       'nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 0, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle item in a ' \
+       'nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first items in a ' \
+       'nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 2]),
+          M::Path.new([:attribute, 0, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle items in a ' \
+       'nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 0, 2])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns an empty path set when there are no gaps in multiple' \
+       'nested arrays within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 0, 2]),
+          M::Path.new([:attribute, 1, 0]),
+          M::Path.new([:attribute, 1, 1]),
+          M::Path.new([:attribute, 1, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.empty
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first item in multiple ' \
+       'nested arrays within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 1, 1])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 1, 0])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle item in multiple ' \
+       'nested arrays within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 2]),
+          M::Path.new([:attribute, 1, 0]),
+          M::Path.new([:attribute, 1, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 1, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first items in multiple ' \
+       'nested arrays within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 2]),
+          M::Path.new([:attribute, 1, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 1, 0]),
+          M::Path.new([:attribute, 1, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle items in multiple ' \
+       'nested arrays within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 3]),
+          M::Path.new([:attribute, 1, 0]),
+          M::Path.new([:attribute, 1, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 0, 2]),
+          M::Path.new([:attribute, 1, 1]),
+          M::Path.new([:attribute, 1, 2])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns an empty path set when there are no gaps in a' \
+       'multi-level nested array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([0]),
+          M::Path.new([1]),
+          M::Path.new([2, 0]),
+          M::Path.new([2, 1])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.empty
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first item at multiple ' \
+       'levels within a nested array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([1, 1]),
+          M::Path.new([2, 1])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([0]),
+          M::Path.new([1, 0]),
+          M::Path.new([2, 0])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle item at multiple ' \
+       'levels within a nested array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([0, 0]),
+          M::Path.new([0, 2]),
+          M::Path.new([2, 0]),
+          M::Path.new([2, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([0, 1]),
+          M::Path.new([1]),
+          M::Path.new([2, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first items at multiple ' \
+       'levels within a nested array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([2, 2]),
+          M::Path.new([3, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([0]),
+          M::Path.new([1]),
+          M::Path.new([2, 0]),
+          M::Path.new([2, 1]),
+          M::Path.new([3, 0]),
+          M::Path.new([3, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle items at multiple ' \
+       'levels within a nested array' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([0, 0]),
+          M::Path.new([0, 3]),
+          M::Path.new([3, 0]),
+          M::Path.new([3, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([0, 1]),
+          M::Path.new([0, 2]),
+          M::Path.new([1]),
+          M::Path.new([2]),
+          M::Path.new([3, 1]),
+          M::Path.new([3, 2])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns an empty path set when there are no gaps at any level ' \
+       'within a nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2, 0]),
+          M::Path.new([:attribute, 2, 1])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.empty
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first item at multiple ' \
+       'levels within a nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 1, 1]),
+          M::Path.new([:attribute, 2, 1])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 1, 0]),
+          M::Path.new([:attribute, 2, 0])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle item at multiple ' \
+       'levels within a nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 2]),
+          M::Path.new([:attribute, 2, 0]),
+          M::Path.new([:attribute, 2, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first items at multiple ' \
+       'levels within a nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 2, 2]),
+          M::Path.new([:attribute, 3, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2, 0]),
+          M::Path.new([:attribute, 2, 1]),
+          M::Path.new([:attribute, 3, 0]),
+          M::Path.new([:attribute, 3, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle items at multiple ' \
+       'levels within a nested array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 0]),
+          M::Path.new([:attribute, 0, 3]),
+          M::Path.new([:attribute, 3, 0]),
+          M::Path.new([:attribute, 3, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, 1]),
+          M::Path.new([:attribute, 0, 2]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2]),
+          M::Path.new([:attribute, 3, 1]),
+          M::Path.new([:attribute, 3, 2])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns an empty path set when there are no gaps in an' \
+       'array within a hash within an array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, :key, 0]),
+          M::Path.new([:attribute, 0, :key, 1]),
+          M::Path.new([:attribute, 0, :key, 2]),
+          M::Path.new([:attribute, 1, :key, 0]),
+          M::Path.new([:attribute, 1, :key, 1]),
+          M::Path.new([:attribute, 1, :key, 2]),
+          M::Path.new([:attribute, 2, :key, 0]),
+          M::Path.new([:attribute, 2, :key, 1]),
+          M::Path.new([:attribute, 2, :key, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.empty
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first item in an array ' \
+       'within a hash within an array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 1, :key, 1])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 1, :key, 0])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle item in an array ' \
+       'within a hash within an array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, :key, 0]),
+          M::Path.new([:attribute, 0, :key, 2]),
+          M::Path.new([:attribute, 2, :key, 0]),
+          M::Path.new([:attribute, 2, :key, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, :key, 1]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2, :key, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing first items in array ' \
+       'within a hash within an array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 2, :key, 2])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2, :key, 0]),
+          M::Path.new([:attribute, 2, :key, 1])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
+    end
+
+    it 'returns a path set representing the missing middle items in an array ' \
+       'within a hash within an array within a hash' do
+      initial_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, :key, 0]),
+          M::Path.new([:attribute, 0, :key, 3]),
+          M::Path.new([:attribute, 3, :key, 0]),
+          M::Path.new([:attribute, 3, :key, 3])
+        ]
+      )
+      actual_gaps_path_set = initial_path_set.gaps
+
+      expected_gaps_path_set = described_class.new(
+        [
+          M::Path.new([:attribute, 0, :key, 1]),
+          M::Path.new([:attribute, 0, :key, 2]),
+          M::Path.new([:attribute, 1]),
+          M::Path.new([:attribute, 2]),
+          M::Path.new([:attribute, 3, :key, 1]),
+          M::Path.new([:attribute, 3, :key, 2])
+        ]
+      )
+
+      expect(actual_gaps_path_set).to(eq(expected_gaps_path_set))
     end
   end
 end
