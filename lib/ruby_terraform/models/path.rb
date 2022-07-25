@@ -4,7 +4,14 @@ require_relative '../value_equality'
 
 module RubyTerraform
   module Models
+    # rubocop:disable Metrics/ClassLength
     class Path
+      class << self
+        def empty
+          new([])
+        end
+      end
+
       extend Forwardable
 
       include Comparable
@@ -68,16 +75,14 @@ module RubyTerraform
         difference.map { |e| self.class.new(e) }
       end
 
-      def walk(&block)
-        elements.inject(initial_walk_context) do |context, step|
-          seen = context[:seen]
-          remaining = context[:remaining]
-          pointer = [seen, step, remaining]
-
-          block.call(*pointer)
-
-          next_walk_context(seen, step, remaining)
+      def traverse(initial, &block)
+        initial_context = initial_traversal_context(initial)
+        final_context = elements.inject(initial_context) do |context, element|
+          state = block.call(context[:state], context[:step])
+          next_traversal_context(state, context[:step], element)
         end
+
+        final_context[:state]
       end
 
       def read(object, default: nil)
@@ -105,12 +110,30 @@ module RubyTerraform
 
       private
 
-      def initial_walk_context
-        { seen: self.class.new([]), remaining: drop(1) }
+      class TraversalStep
+        attr_reader(:seen, :element, :remaining)
+
+        def initialize(seen, element, remaining)
+          @seen = seen
+          @element = element
+          @remaining = remaining
+        end
       end
 
-      def next_walk_context(seen, step, remaining)
-        { seen: seen.append(step), remaining: remaining.drop(1) }
+      def initial_traversal_context(state)
+        {
+          state: state,
+          step: TraversalStep.new(self.class.empty, first, drop(1))
+        }
+      end
+
+      def next_traversal_context(state, position, step)
+        {
+          state: state,
+          step: TraversalStep.new(position.seen.append(step),
+                                  position.remaining.first,
+                                  position.remaining.drop(1))
+        }
       end
 
       def compare_numbers_before_symbols(left, right)
@@ -132,5 +155,6 @@ module RubyTerraform
         array.clone.fill(nil, array.count, target_length - array.count)
       end
     end
+    # rubocop:enable Metrics/ClassLength
   end
 end

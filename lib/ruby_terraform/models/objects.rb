@@ -98,30 +98,30 @@ module RubyTerraform
         end
 
         def update_in(object, path, value, sensitive: {})
-          path.walk do |seen, step, remaining|
-            pointer = [seen, step, remaining]
-            update_object_for_step(object, pointer, value, sensitive: sensitive)
+          path.traverse(object) do |obj, step|
+            update_object_for_step(
+              obj, step, value, sensitive: sensitive
+            )
           end
-          object
         end
 
         # rubocop:disable Metrics/MethodLength
-        def update_object_for_step(object, pointer, value, sensitive: {})
-          seen, step, remaining = pointer
+        def update_object_for_step(object, step, value, sensitive: {})
+          parent = step.seen.read(object, default: object)
+          upcoming = step.remaining.first
 
-          parent = seen.read(object, default: object)
-          upcoming = remaining.first
-
-          found_sensitive = seen.append(step).read(sensitive)
+          found_sensitive = step.seen.append(step.element).read(sensitive)
           resolved_sensitive = found_sensitive == true
           resolved =
-            if remaining.empty?
+            if step.remaining.empty?
               value
             else
               boxed_empty_by_key(upcoming, sensitive: resolved_sensitive)
             end
 
-          parent[step] ||= resolved
+          parent[step.element] ||= resolved
+
+          object
         end
         # rubocop:enable Metrics/MethodLength
 

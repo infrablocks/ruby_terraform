@@ -461,21 +461,20 @@ describe RubyTerraform::Models::Path do
     end
   end
 
-  describe '#walk' do
+  describe '#traverse' do
     it 'iterates through path elements, exposing seen elements, ' \
-       'the current element and remaining elements' do
+       'the current element and remaining elements and collecting state' do
       path = described_class.new([:key1, 0, :key2, 1])
 
       def factory(vals)
         described_class.new(vals)
       end
 
-      values = []
-      path.walk do |seen, step, remaining|
-        values << [seen, step, remaining]
+      result = path.traverse([]) do |state, step|
+        state + [[step.seen, step.element, step.remaining]]
       end
 
-      expect(values)
+      expect(result)
         .to(eq([[factory([]), :key1, factory([0, :key2, 1])],
                 [factory([:key1]), 0, factory([:key2, 1])],
                 [factory([:key1, 0]), :key2, factory([1])],
