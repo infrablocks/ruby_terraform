@@ -24,7 +24,7 @@ module RubyTerraform
         @sensitive
       end
 
-      def render(**_)
+      def render(_ = {})
         '...'
       end
 

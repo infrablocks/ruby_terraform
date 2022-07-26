@@ -58,7 +58,7 @@ module RubyTerraform
         extra = level.times.collect { |_| indent }.join
         lines =
           value
-          .collect { |i| "#{extra}#{indent}#{i.render(opts)}" }
+          .collect { |i| "#{extra}#{indent}#{i.render(**opts)}" }
           .join(",\n")
 
         "[\n#{lines}\n#{extra}]"
