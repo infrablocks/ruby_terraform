@@ -76,12 +76,38 @@ describe RubyTerraform::Models::Plan do
       )
 
       expect(plan.resource_changes)
-        .to(eq([
-                 RubyTerraform::Models::ResourceChange
-                   .new(resource_change_content1),
-                 RubyTerraform::Models::ResourceChange
-                   .new(resource_change_content2)
-               ]))
+        .to(contain_exactly(
+              RubyTerraform::Models::ResourceChange
+                .new(resource_change_content1),
+              RubyTerraform::Models::ResourceChange
+                .new(resource_change_content2)
+            ))
+    end
+  end
+
+  describe '#output_changes' do
+    it 'returns an output change model for each of the output changes' do
+      output_name1 = Support::Random.output_name
+      output_name2 = Support::Random.output_name
+      output_change_content1 = Support::Build.output_change_content
+      output_change_content2 = Support::Build.output_change_content
+
+      plan = described_class.new(
+        Support::Build.plan_content(
+          output_changes: {
+            output_name1 => output_change_content1,
+            output_name2 => output_change_content2
+          }
+        )
+      )
+
+      expect(plan.output_changes)
+        .to(contain_exactly(
+              RubyTerraform::Models::OutputChange
+                .new(output_name1, output_change_content1),
+              RubyTerraform::Models::OutputChange
+                .new(output_name2, output_change_content2)
+            ))
     end
   end
 

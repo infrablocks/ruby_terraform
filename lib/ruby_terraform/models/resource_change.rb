@@ -7,6 +7,7 @@ module RubyTerraform
   module Models
     class ResourceChange
       include ValueEquality
+
       def initialize(content)
         @content = content
       end

@@ -40,6 +40,10 @@ module Support
       def provider_name
         alphanumeric_string(length: 10)
       end
+
+      def output_name
+        alphanumeric_string(length: 10)
+      end
     end
   end
 end

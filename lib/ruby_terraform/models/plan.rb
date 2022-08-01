@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative 'resource_change'
+require_relative 'output_change'
 
 module RubyTerraform
   module Models
@@ -36,6 +37,12 @@ module RubyTerraform
           definition.all? do |method, value|
             resource_change.send(method) == value
           end
+        end
+      end
+
+      def output_changes
+        @content[:output_changes].map do |output_name, output_change|
+          OutputChange.new(output_name, output_change)
         end
       end
 
