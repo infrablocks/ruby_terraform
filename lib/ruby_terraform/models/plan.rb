@@ -46,6 +46,14 @@ module RubyTerraform
         end
       end
 
+      def output_changes_matching(definition)
+        output_changes.filter do |output_change|
+          definition.all? do |method, value|
+            output_change.send(method) == value
+          end
+        end
+      end
+
       def inspect
         @content.inspect
       end

@@ -130,6 +130,76 @@ describe RubyTerraform::Models::OutputChange do
     end
   end
 
+  describe '#present_before?' do
+    {
+      'update' => Support::Build.update_change_content(
+        {}, { type: :output }
+      ),
+      'delete' => Support::Build.delete_change_content(
+        {}, { type: :output }
+      )
+    }.each do |entry|
+      it "returns true if the change represents a #{entry[0]}" do
+        output_change_content = entry[1]
+        output_change = described_class.new(
+          Support::Random.output_name,
+          output_change_content
+        )
+
+        expect(output_change.present_before?)
+          .to(be(true))
+      end
+    end
+
+    it 'returns false if the change represents a create' do
+      output_change_content = Support::Build.create_change_content(
+        {}, { type: :output }
+      )
+      output_change = described_class.new(
+        Support::Random.output_name,
+        output_change_content
+      )
+
+      expect(output_change.present_before?)
+        .to(be(false))
+    end
+  end
+
+  describe '#present_after?' do
+    {
+      'create' => Support::Build.create_change_content(
+        {}, { type: :output }
+      ),
+      'update' => Support::Build.update_change_content(
+        {}, { type: :output }
+      )
+    }.each do |entry|
+      it "returns true if the change represents a #{entry[0]}" do
+        output_change_content = entry[1]
+        output_change = described_class.new(
+          Support::Random.output_name,
+          output_change_content
+        )
+
+        expect(output_change.present_after?)
+          .to(be(true))
+      end
+    end
+
+    it 'returns false if the change represents a delete' do
+      output_change_content = Support::Build.delete_change_content(
+        {}, { type: :output }
+      )
+      output_change = described_class.new(
+        Support::Random.output_name,
+        output_change_content
+      )
+
+      expect(output_change.present_after?)
+        .to(be(false))
+    end
+  end
+
   describe '#==' do
     it 'returns true when the state and class are the same' do
       name = Support::Random.output_name

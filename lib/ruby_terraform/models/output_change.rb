@@ -31,6 +31,14 @@ module RubyTerraform
         change.delete?
       end
 
+      def present_before?
+        update? || delete?
+      end
+
+      def present_after?
+        create? || update?
+      end
+
       def inspect
         to_h.inspect
       end
