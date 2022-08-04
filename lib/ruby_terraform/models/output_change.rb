@@ -19,6 +19,10 @@ module RubyTerraform
         Change.new(@content)
       end
 
+      def no_op?
+        change.no_op?
+      end
+
       def create?
         change.create?
       end
@@ -32,11 +36,11 @@ module RubyTerraform
       end
 
       def present_before?
-        update? || delete?
+        no_op? || update? || delete?
       end
 
       def present_after?
-        create? || update?
+        no_op? || create? || update?
       end
 
       def inspect

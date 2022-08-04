@@ -25,6 +25,44 @@ describe RubyTerraform::Models::OutputChange do
     end
   end
 
+  describe '#no_op?' do
+    it 'returns true if the change represents no change' do
+      output_change_content = Support::Build.no_op_change_content(
+        {}, { type: :output }
+      )
+      output_change = described_class.new(
+        Support::Random.output_name,
+        output_change_content
+      )
+
+      expect(output_change.no_op?)
+        .to(be(true))
+    end
+
+    {
+      'create' => Support::Build.create_change_content(
+        {}, { type: :output }
+      ),
+      'update' => Support::Build.update_change_content(
+        {}, { type: :output }
+      ),
+      'delete' => Support::Build.delete_change_content(
+        {}, { type: :output }
+      )
+    }.each do |entry|
+      it "returns false if the change represents a #{entry[0]}" do
+        output_change_content = entry[1]
+        output_change = described_class.new(
+          Support::Random.output_name,
+          output_change_content
+        )
+
+        expect(output_change.no_op?)
+          .to(be(false))
+      end
+    end
+  end
+
   describe '#create?' do
     it 'returns true if the change represents a create' do
       output_change_content = Support::Build.create_change_content(
@@ -40,6 +78,9 @@ describe RubyTerraform::Models::OutputChange do
     end
 
     {
+      'no-op' => Support::Build.no_op_change_content(
+        {}, { type: :output }
+      ),
       'update' => Support::Build.update_change_content(
         {}, { type: :output }
       ),
@@ -75,6 +116,9 @@ describe RubyTerraform::Models::OutputChange do
     end
 
     {
+      'no-op' => Support::Build.no_op_change_content(
+        {}, { type: :output }
+      ),
       'create' => Support::Build.create_change_content(
         {}, { type: :output }
       ),
@@ -110,6 +154,9 @@ describe RubyTerraform::Models::OutputChange do
     end
 
     {
+      'no-op' => Support::Build.no_op_change_content(
+        {}, { type: :output }
+      ),
       'create' => Support::Build.create_change_content(
         {}, { type: :output }
       ),
@@ -132,6 +179,9 @@ describe RubyTerraform::Models::OutputChange do
 
   describe '#present_before?' do
     {
+      'no-op' => Support::Build.no_op_change_content(
+        {}, { type: :output }
+      ),
       'update' => Support::Build.update_change_content(
         {}, { type: :output }
       ),
@@ -167,6 +217,9 @@ describe RubyTerraform::Models::OutputChange do
 
   describe '#present_after?' do
     {
+      'no-op' => Support::Build.no_op_change_content(
+        {}, { type: :output }
+      ),
       'create' => Support::Build.create_change_content(
         {}, { type: :output }
       ),

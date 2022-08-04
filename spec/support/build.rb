@@ -35,8 +35,8 @@ module Support
         end
       end
 
-      def no_op_change_content(overrides = {})
-        change_content(overrides.merge(actions: ['no-op']))
+      def no_op_change_content(overrides = {}, opts = {})
+        change_content(overrides.merge(actions: ['no-op']), opts)
       end
 
       def create_change_content(overrides = {}, opts = {})
