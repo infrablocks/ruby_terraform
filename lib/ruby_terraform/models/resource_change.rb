@@ -76,6 +76,14 @@ module RubyTerraform
         change.delete?
       end
 
+      def present_before?
+        no_op? || read? || update? || replace? || delete?
+      end
+
+      def present_after?
+        no_op? || read? || create? || update? || replace?
+      end
+
       def inspect
         @content.inspect
       end

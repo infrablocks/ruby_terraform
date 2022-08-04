@@ -394,6 +394,132 @@ describe RubyTerraform::Models::ResourceChange do
     end
   end
 
+  describe '#present_before?' do
+    {
+      'no-op' => Support::Build.no_op_change_content,
+      'read' => Support::Build.read_change_content,
+      'update' => Support::Build.update_change_content,
+      'replace (delete before create)' =>
+        Support::Build.replace_delete_before_create_change_content,
+      'replace (create before delete)' =>
+        Support::Build.replace_create_before_delete_change_content,
+      'delete' => Support::Build.delete_change_content
+    }.each do |entry|
+      it "returns true if the change represents a #{entry[0]}" do
+        change = entry[1]
+        resource_change = described_class.new(
+          Support::Build.resource_change_content({ change: change })
+        )
+
+        expect(resource_change.present_before?)
+          .to(be(true))
+      end
+    end
+
+    it 'returns false if the change represents a create' do
+      change = Support::Build.create_change_content
+      resource_change = described_class.new(
+        Support::Build.resource_change_content({ change: change })
+      )
+
+      expect(resource_change.present_before?)
+        .to(be(false))
+    end
+  end
+
+  describe '#present_after?' do
+    {
+      'no-op' => Support::Build.no_op_change_content,
+      'read' => Support::Build.read_change_content,
+      'create' => Support::Build.create_change_content,
+      'update' => Support::Build.update_change_content,
+      'replace (delete before create)' =>
+        Support::Build.replace_delete_before_create_change_content,
+      'replace (create before delete)' =>
+        Support::Build.replace_create_before_delete_change_content
+    }.each do |entry|
+      it "returns true if the change represents a #{entry[0]}" do
+        change = entry[1]
+        resource_change = described_class.new(
+          Support::Build.resource_change_content({ change: change })
+        )
+
+        expect(resource_change.present_after?)
+          .to(be(true))
+      end
+    end
+
+    it 'returns false if the change represents a delete' do
+      change = Support::Build.delete_change_content
+      resource_change = described_class.new(
+        Support::Build.resource_change_content({ change: change })
+      )
+
+      expect(resource_change.present_after?)
+        .to(be(false))
+    end
+  end
+
+  describe '#==' do
+    it 'returns true when the state and class are the same' do
+      content = Support::Build.resource_change_content
+
+      value1 = described_class.new(content)
+      value2 = described_class.new(content)
+
+      expect(value1).to(eq(value2))
+    end
+
+    it 'returns false when the state is different' do
+      content1 = Support::Build.resource_change_content
+      content2 = Support::Build.resource_change_content
+
+      value1 = described_class.new(content1)
+      value2 = described_class.new(content2)
+
+      expect(value1).not_to(eq(value2))
+    end
+
+    it 'returns false when the classes are different' do
+      content = Support::Build.resource_change_content
+
+      value1 = described_class.new(content)
+      value2 = Class.new(described_class).new(content)
+
+      expect(value1).not_to(eq(value2))
+    end
+  end
+
+  describe '#hash' do
+    it 'has the same result when the state and class are the same' do
+      content = Support::Build.resource_change_content
+
+      value1 = described_class.new(content)
+      value2 = described_class.new(content)
+
+      expect(value1.hash).to(eq(value2.hash))
+    end
+
+    it 'has a different result when the state is different' do
+      content1 = Support::Build.resource_change_content
+      content2 = Support::Build.resource_change_content
+
+      value1 = described_class.new(content1)
+      value2 = described_class.new(content2)
+
+      expect(value1.hash).not_to(eq(value2.hash))
+    end
+
+    it 'has a different result when the classes are different' do
+      content = Support::Build.resource_change_content
+
+      value1 = described_class.new(content)
+      value2 = Class.new(described_class).new(content)
+
+      expect(value1.hash).not_to(eq(value2.hash))
+    end
+  end
+
   describe '#inspect' do
     it 'inspects the underlying content' do
       resource_change_content = Support::Build.resource_change_content
