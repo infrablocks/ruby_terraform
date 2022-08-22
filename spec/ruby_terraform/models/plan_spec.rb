@@ -548,6 +548,66 @@ describe RubyTerraform::Models::Plan do
     end
   end
 
+  describe '#==' do
+    it 'returns true when the content and class are the same' do
+      content = Support::Build.plan_content
+
+      value1 = described_class.new(content)
+      value2 = described_class.new(content)
+
+      expect(value1).to(eq(value2))
+    end
+
+    it 'returns false when the content is different' do
+      content1 = Support::Build.plan_content
+      content2 = Support::Build.plan_content
+
+      value1 = described_class.new(content1)
+      value2 = described_class.new(content2)
+
+      expect(value1).not_to(eq(value2))
+    end
+
+    it 'returns false when the classes are different' do
+      content = Support::Build.plan_content
+
+      value1 = described_class.new(content)
+      value2 = Class.new(described_class).new(content)
+
+      expect(value1).not_to(eq(value2))
+    end
+  end
+
+  describe '#hash' do
+    it 'has the same result when the content and class are the same' do
+      content = Support::Build.plan_content
+
+      value1 = described_class.new(content)
+      value2 = described_class.new(content)
+
+      expect(value1.hash).to(eq(value2.hash))
+    end
+
+    it 'has a different result when the content is different' do
+      content1 = Support::Build.plan_content
+      content2 = Support::Build.plan_content
+
+      value1 = described_class.new(content1)
+      value2 = described_class.new(content2)
+
+      expect(value1.hash).not_to(eq(value2.hash))
+    end
+
+    it 'has a different result when the classes are different' do
+      content = Support::Build.plan_content
+
+      value1 = described_class.new(content)
+      value2 = Class.new(described_class).new(content)
+
+      expect(value1.hash).not_to(eq(value2.hash))
+    end
+  end
+
   describe '#inspect' do
     it 'inspects the underlying content' do
       plan_content = Support::Build.plan_content
