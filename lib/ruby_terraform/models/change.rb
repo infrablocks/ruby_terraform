@@ -9,7 +9,7 @@ module RubyTerraform
       include ValueEquality
 
       def initialize(content)
-        @content = content
+        @content = symbolise_keys(content)
       end
 
       def actions
@@ -98,6 +98,16 @@ module RubyTerraform
 
       def state
         [@content]
+      end
+
+      private
+
+      def symbolise_keys(object)
+        if object.is_a?(Hash)
+          object.to_h { |k, v| [k.to_sym, symbolise_keys(v)] }
+        else
+          object
+        end
       end
     end
   end

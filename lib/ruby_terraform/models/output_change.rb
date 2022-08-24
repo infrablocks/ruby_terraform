@@ -8,11 +8,13 @@ module RubyTerraform
     class OutputChange
       include ValueEquality
 
-      attr_reader(:name)
-
       def initialize(name, content)
-        @name = name
-        @content = content
+        @name = name.to_sym
+        @content = symbolise_keys(content)
+      end
+
+      def name
+        @name.to_s
       end
 
       def change
@@ -53,6 +55,16 @@ module RubyTerraform
 
       def state
         [@name, @content]
+      end
+
+      private
+
+      def symbolise_keys(object)
+        if object.is_a?(Hash)
+          object.to_h { |k, v| [k.to_sym, symbolise_keys(v)] }
+        else
+          object
+        end
       end
     end
   end

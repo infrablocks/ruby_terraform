@@ -9,7 +9,7 @@ Layout/LineLength:
   Max: 80
 
 Metrics/BlockLength:
-  IgnoredMethods:
+  AllowedMethods:
     - describe
     - context
     - shared_examples

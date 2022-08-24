@@ -142,7 +142,6 @@ module Support
           }
         }.merge(overrides)
       end
-
       # rubocop:enable Metrics/MethodLength
     end
   end
