@@ -11,7 +11,7 @@ module RubyTerraform
 
       # Constructs an instance of the command.
       #
-      def initialize(**opts)
+      def initialize(opts = {})
         @binary  = opts[:binary]  || RubyTerraform.configuration.binary
         @logger  = opts[:logger]  || RubyTerraform.configuration.logger
         @options = opts[:options] || RubyTerraform.configuration.options
