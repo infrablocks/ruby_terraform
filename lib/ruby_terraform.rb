@@ -1628,15 +1628,22 @@ module RubyTerraform
     end
 
     def write(*args)
-      @targets.each { |t| t.write(*args) }
+      @targets.collect { |t| t.write(*args) }.max
+    end
+
+    def <<(obj)
+      write(obj)
+      self
     end
 
     def close
       @targets.each(&:close)
+      nil
     end
 
     def reopen(*args)
-      @targets.each { |t| t.reopen(*args) }
+      @targets = @targets.collect { |t| t.reopen(*args) }
+      self
     end
   end
 end
