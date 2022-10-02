@@ -47,7 +47,7 @@ describe RubyTerraform::Models::Plan do
   end
 
   describe '#variables' do
-    it 'return the variables when content uses symbol keys' do
+    it 'returns the variables when content uses symbol keys' do
       variables = {
         var1: Support::Build.variable_content(value: 'val1'),
         var2: Support::Build.variable_content(value: 'val1')
@@ -59,7 +59,7 @@ describe RubyTerraform::Models::Plan do
       expect(plan.variables).to(eq(variables))
     end
 
-    it 'return the variables when content uses string keys' do
+    it 'returns the variables when content uses string keys' do
       variables = {
         var1: Support::Build.variable_content(value: 'val1'),
         var2: Support::Build.variable_content(value: 'val1')
@@ -69,6 +69,15 @@ describe RubyTerraform::Models::Plan do
       plan = described_class.new(content)
 
       expect(plan.variables).to(eq(variables))
+    end
+
+    it 'returns an empty map when no variables' do
+      content = Support::Build.plan_content
+      content = Support::Transform.symbolise_keys(content)
+      content = content.tap { |c| c.delete(:variables) }
+      plan = described_class.new(content)
+
+      expect(plan.variables).to(eq({}))
     end
   end
 
@@ -156,6 +165,15 @@ describe RubyTerraform::Models::Plan do
                 .new(resource_change_content2)
             ))
     end
+
+    it 'returns an empty array when no resource changes' do
+      content = Support::Build.plan_content
+      content = Support::Transform.symbolise_keys(content)
+      content = content.tap { |c| c.delete(:resource_changes) }
+      plan = described_class.new(content)
+
+      expect(plan.resource_changes).to(eq([]))
+    end
   end
 
   describe '#output_changes' do
@@ -207,6 +225,15 @@ describe RubyTerraform::Models::Plan do
               RubyTerraform::Models::OutputChange
                 .new(output_name2, output_change_content2)
             ))
+    end
+
+    it 'returns an empty array when no output changes' do
+      content = Support::Build.plan_content
+      content = Support::Transform.symbolise_keys(content)
+      content = content.tap { |c| c.delete(:output_changes) }
+      plan = described_class.new(content)
+
+      expect(plan.output_changes).to(eq([]))
     end
   end
 
