@@ -51,6 +51,8 @@ describe RubyTerraform do
     allow(Open4).to(receive(:spawn))
 
     described_class.apply(directory: 'some/path/to/terraform/configuration')
+
+    expect(Open4).to(have_received(:spawn))
   end
 
   describe 'configuration' do

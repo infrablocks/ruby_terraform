@@ -15,7 +15,7 @@ module RubyTerraform
         end
 
         def render
-          resolve.nil? ? nil : resolve.to_s
+          resolve&.to_s
         end
 
         private
