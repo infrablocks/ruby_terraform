@@ -1,5 +1,18 @@
 ## Unreleased
 
+## 1.7.0 (December 27th 2022)
+
+IMPROVEMENTS:
+
+* The `RubyTerraform::MultiIO` class now more closely implements the `IO`
+  contract. The `#<<` method has been added and the existing methods now return
+  the expected values.
+* Preliminary support has been added for modelling Terraform plans in Ruby
+  types. The new `RubyTerraform::Models` namespace contains classes and factory
+  functions to parse and wrap a generated plan, retrieved using the `show`
+  command. The plan representation is currently incomplete and these type
+  classes should be considered alpha quality for the time being.
+
 ## 1.6.0 (June 30th 2022)
 
 IMPROVEMENTS:
