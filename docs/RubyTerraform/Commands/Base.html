@@ -145,7 +145,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(**opts)  &#x21d2; Base </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(opts = {})  &#x21d2; Base </a>
     
 
     
@@ -177,7 +177,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(**opts)  &#x21d2; <tt><span class='object_link'><a href="" title="RubyTerraform::Commands::Base (class)">Base</a></span></tt> 
+    #<strong>initialize</strong>(opts = {})  &#x21d2; <tt><span class='object_link'><a href="" title="RubyTerraform::Commands::Base (class)">Base</a></span></tt> 
   
 
   
@@ -212,7 +212,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/ruby_terraform/commands/base.rb', line 14</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='ivar'>@binary</span>  <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:binary</span><span class='rbracket'>]</span>  <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configuration'><span class='object_link'><a href="../../RubyTerraform.html#configuration-class_method" title="RubyTerraform.configuration (method)">configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_binary'>binary</span>
   <span class='ivar'>@logger</span>  <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:logger</span><span class='rbracket'>]</span>  <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configuration'><span class='object_link'><a href="../../RubyTerraform.html#configuration-class_method" title="RubyTerraform.configuration (method)">configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_logger'>logger</span>
   <span class='ivar'>@options</span> <span class='op'>=</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:options</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='period'>.</span><span class='id identifier rubyid_configuration'><span class='object_link'><a href="../../RubyTerraform.html#configuration-class_method" title="RubyTerraform.configuration (method)">configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_options'>options</span>
@@ -354,7 +354,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jun 29 12:13:42 2022 by
+  Generated on Tue Dec 27 12:38:08 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.5).
 </div>

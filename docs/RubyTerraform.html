@@ -84,7 +84,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/ruby_terraform.rb<span class="defines">,<br />
-  lib/ruby_terraform/errors.rb,<br /> lib/ruby_terraform/output.rb,<br /> lib/ruby_terraform/options.rb,<br /> lib/ruby_terraform/version.rb,<br /> lib/ruby_terraform/commands.rb,<br /> lib/ruby_terraform/commands/get.rb,<br /> lib/ruby_terraform/options/name.rb,<br /> lib/ruby_terraform/commands/base.rb,<br /> lib/ruby_terraform/commands/init.rb,<br /> lib/ruby_terraform/commands/plan.rb,<br /> lib/ruby_terraform/commands/show.rb,<br /> lib/ruby_terraform/options/types.rb,<br /> lib/ruby_terraform/commands/apply.rb,<br /> lib/ruby_terraform/commands/graph.rb,<br /> lib/ruby_terraform/commands/login.rb,<br /> lib/ruby_terraform/commands/taint.rb,<br /> lib/ruby_terraform/options/global.rb,<br /> lib/ruby_terraform/options/values.rb,<br /> lib/ruby_terraform/commands/format.rb,<br /> lib/ruby_terraform/commands/import.rb,<br /> lib/ruby_terraform/commands/logout.rb,<br /> lib/ruby_terraform/commands/output.rb,<br /> lib/ruby_terraform/options/factory.rb,<br /> lib/ruby_terraform/commands/destroy.rb,<br /> lib/ruby_terraform/commands/refresh.rb,<br /> lib/ruby_terraform/commands/untaint.rb,<br /> lib/ruby_terraform/commands/validate.rb,<br /> lib/ruby_terraform/commands/providers.rb,<br /> lib/ruby_terraform/options/definition.rb,<br /> lib/ruby_terraform/options/types/flag.rb,<br /> lib/ruby_terraform/commands/state_list.rb,<br /> lib/ruby_terraform/commands/state_move.rb,<br /> lib/ruby_terraform/commands/state_pull.rb,<br /> lib/ruby_terraform/commands/state_push.rb,<br /> lib/ruby_terraform/commands/state_show.rb,<br /> lib/ruby_terraform/options/definitions.rb,<br /> lib/ruby_terraform/options/values/base.rb,<br /> lib/ruby_terraform/commands/force_unlock.rb,<br /> lib/ruby_terraform/commands/state_remove.rb,<br /> lib/ruby_terraform/options/values/string.rb,<br /> lib/ruby_terraform/commands/workspace_new.rb,<br /> lib/ruby_terraform/errors/execution_error.rb,<br /> lib/ruby_terraform/options/types/standard.rb,<br /> lib/ruby_terraform/options/values/boolean.rb,<br /> lib/ruby_terraform/options/values/complex.rb,<br /> lib/ruby_terraform/commands/providers_lock.rb,<br /> lib/ruby_terraform/commands/workspace_list.rb,<br /> lib/ruby_terraform/commands/workspace_show.rb,<br /> lib/ruby_terraform/options/values/key_value.rb,<br /> lib/ruby_terraform/commands/providers_mirror.rb,<br /> lib/ruby_terraform/commands/providers_schema.rb,<br /> lib/ruby_terraform/commands/workspace_delete.rb,<br /> lib/ruby_terraform/commands/workspace_select.rb,<br /> lib/ruby_terraform/commands/state_replace_provider.rb</span>
+  lib/ruby_terraform/errors.rb,<br /> lib/ruby_terraform/output.rb,<br /> lib/ruby_terraform/options.rb,<br /> lib/ruby_terraform/version.rb,<br /> lib/ruby_terraform/commands.rb,<br /> lib/ruby_terraform/models/map.rb,<br /> lib/ruby_terraform/models/list.rb,<br /> lib/ruby_terraform/models/path.rb,<br /> lib/ruby_terraform/models/plan.rb,<br /> lib/ruby_terraform/commands/get.rb,<br /> lib/ruby_terraform/options/name.rb,<br /> lib/ruby_terraform/commands/base.rb,<br /> lib/ruby_terraform/commands/init.rb,<br /> lib/ruby_terraform/commands/plan.rb,<br /> lib/ruby_terraform/commands/show.rb,<br /> lib/ruby_terraform/models/change.rb,<br /> lib/ruby_terraform/models/values.rb,<br /> lib/ruby_terraform/options/types.rb,<br /> lib/ruby_terraform/commands/apply.rb,<br /> lib/ruby_terraform/commands/graph.rb,<br /> lib/ruby_terraform/commands/login.rb,<br /> lib/ruby_terraform/commands/taint.rb,<br /> lib/ruby_terraform/models/objects.rb,<br /> lib/ruby_terraform/options/global.rb,<br /> lib/ruby_terraform/options/values.rb,<br /> lib/ruby_terraform/value_equality.rb,<br /> lib/ruby_terraform/commands/format.rb,<br /> lib/ruby_terraform/commands/import.rb,<br /> lib/ruby_terraform/commands/logout.rb,<br /> lib/ruby_terraform/commands/output.rb,<br /> lib/ruby_terraform/models/path_set.rb,<br /> lib/ruby_terraform/options/factory.rb,<br /> lib/ruby_terraform/commands/destroy.rb,<br /> lib/ruby_terraform/commands/refresh.rb,<br /> lib/ruby_terraform/commands/untaint.rb,<br /> lib/ruby_terraform/commands/validate.rb,<br /> lib/ruby_terraform/commands/providers.rb,<br /> lib/ruby_terraform/models/known_value.rb,<br /> lib/ruby_terraform/options/definition.rb,<br /> lib/ruby_terraform/options/types/flag.rb,<br /> lib/ruby_terraform/commands/state_list.rb,<br /> lib/ruby_terraform/commands/state_move.rb,<br /> lib/ruby_terraform/commands/state_pull.rb,<br /> lib/ruby_terraform/commands/state_push.rb,<br /> lib/ruby_terraform/commands/state_show.rb,<br /> lib/ruby_terraform/options/definitions.rb,<br /> lib/ruby_terraform/options/values/base.rb,<br /> lib/ruby_terraform/models/omitted_value.rb,<br /> lib/ruby_terraform/models/output_change.rb,<br /> lib/ruby_terraform/models/unknown_value.rb,<br /> lib/ruby_terraform/commands/force_unlock.rb,<br /> lib/ruby_terraform/commands/state_remove.rb,<br /> lib/ruby_terraform/options/values/string.rb,<br /> lib/ruby_terraform/commands/workspace_new.rb,<br /> lib/ruby_terraform/errors/execution_error.rb,<br /> lib/ruby_terraform/models/resource_change.rb,<br /> lib/ruby_terraform/options/types/standard.rb,<br /> lib/ruby_terraform/options/values/boolean.rb,<br /> lib/ruby_terraform/options/values/complex.rb,<br /> lib/ruby_terraform/commands/providers_lock.rb,<br /> lib/ruby_terraform/commands/workspace_list.rb,<br /> lib/ruby_terraform/commands/workspace_show.rb,<br /> lib/ruby_terraform/options/values/key_value.rb,<br /> lib/ruby_terraform/commands/providers_mirror.rb,<br /> lib/ruby_terraform/commands/providers_schema.rb,<br /> lib/ruby_terraform/commands/workspace_delete.rb,<br /> lib/ruby_terraform/commands/workspace_select.rb,<br /> lib/ruby_terraform/commands/state_replace_provider.rb</span>
 </dd>
   </dl>
   
@@ -94,7 +94,7 @@
 <p class="children">
   
     
-      <strong class="modules">Modules:</strong> <span class='object_link'><a href="RubyTerraform/ClassMethods.html" title="RubyTerraform::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="RubyTerraform/Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span>, <span class='object_link'><a href="RubyTerraform/Errors.html" title="RubyTerraform::Errors (module)">Errors</a></span>, <span class='object_link'><a href="RubyTerraform/Options.html" title="RubyTerraform::Options (module)">Options</a></span>
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="RubyTerraform/ClassMethods.html" title="RubyTerraform::ClassMethods (module)">ClassMethods</a></span>, <span class='object_link'><a href="RubyTerraform/Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span>, <span class='object_link'><a href="RubyTerraform/Errors.html" title="RubyTerraform::Errors (module)">Errors</a></span>, <span class='object_link'><a href="RubyTerraform/Models.html" title="RubyTerraform::Models (module)">Models</a></span>, <span class='object_link'><a href="RubyTerraform/Options.html" title="RubyTerraform::Options (module)">Options</a></span>, <span class='object_link'><a href="RubyTerraform/ValueEquality.html" title="RubyTerraform::ValueEquality (module)">ValueEquality</a></span>
     
   
     
@@ -114,7 +114,7 @@
         <dt id="VERSION-constant" class="">VERSION =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.6.0</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.7.0</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
     </dl>
   
@@ -1247,12 +1247,12 @@
       <pre class="lines">
 
 
-13
 14
-15</pre>
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 14</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_configuration'>configuration</span>
   <span class='ivar'>@configuration</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="RubyTerraform/Configuration.html" title="RubyTerraform::Configuration (class)">Configuration</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RubyTerraform/Configuration.html#initialize-instance_method" title="RubyTerraform::Configuration#initialize (method)">new</a></span></span>
@@ -1737,12 +1737,12 @@
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_configure'>configure</span>
   <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_configuration'>configuration</span><span class='rparen'>)</span>
@@ -3293,12 +3293,12 @@
       <pre class="lines">
 
 
-1597
 1598
-1599</pre>
+1599
+1600</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1597</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1598</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_included'>included</span><span class='lparen'>(</span><span class='id identifier rubyid_other'>other</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_other'>other</span><span class='period'>.</span><span class='id identifier rubyid_extend'>extend</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="RubyTerraform/ClassMethods.html" title="RubyTerraform::ClassMethods (module)">ClassMethods</a></span></span><span class='rparen'>)</span>
@@ -4161,7 +4161,7 @@
     
 <p>Invokes the <tt>terraform plan</tt> command which generates a speculative execution plan, showing what actions Terraform would take to apply the current configuration. This command will not actually perform the planned actions.</p>
 
-<p>You can optionally save the plan to a file, which you can then pass to the <span class='object_link'><a href="RubyTerraform/ClassMethods.html#apply-instance_method" title="RubyTerraform::ClassMethods#apply (method)">#apply</a></span> command to perform exactly the actions described in the plan.</p>
+<p>You can optionally save the plan to a file, which you can then pass to the #read command to perform exactly the actions described in the plan.</p>
 
 
   </div>
@@ -5576,12 +5576,12 @@
       <pre class="lines">
 
 
-21
 22
-23</pre>
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reset!'>reset!</span>
   <span class='ivar'>@configuration</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -8738,7 +8738,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jun 29 12:13:42 2022 by
+  Generated on Tue Dec 27 12:38:08 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.5).
 </div>
