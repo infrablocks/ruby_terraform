@@ -61,6 +61,7 @@ module RubyTerraform
           -force-copy
           -ignore-remote-version
           -json
+          -migrate-state
           -no-color
           -raw
           -reconfigure

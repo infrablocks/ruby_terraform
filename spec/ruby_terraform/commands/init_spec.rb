@@ -70,6 +70,11 @@ describe RubyTerraform::Commands::Init do
 
   it_behaves_like(
     'a command with a flag',
+    described_class, 'init', :migrate_state
+  )
+
+  it_behaves_like(
+    'a command with a flag',
     described_class, 'init', :no_color
   )
 

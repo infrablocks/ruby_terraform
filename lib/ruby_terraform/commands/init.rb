@@ -49,6 +49,8 @@ module RubyTerraform
     #   (deprecated, removed in terraform 0.15).
     # * +:lock_timeout+: the duration to retry a state lock; defaults to +"0s"+;
     #   (deprecated, removed in terraform 0.15).
+    # * +:migrate_state+: if set, attempts to reconfigure a backend and attempt
+    #   to migrate any existing state
     # * +:no_color+: whether or not the output from the command should be in
     #   color; defaults to +false+.
     # * +:plugin_dir+: the path to a directory containing plugin binaries; this
@@ -104,6 +106,7 @@ module RubyTerraform
           -input
           -lock
           -lock-timeout
+          -migrate-state
           -no-color
           -plugin-dir
           -reconfigure
