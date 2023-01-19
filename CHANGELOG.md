@@ -1,5 +1,9 @@
 ## Unreleased
 
+IMPROVEMENTS:
+
+* Add support for `-migrate-state` flag to `RubyTerraform::Commands::Init`
+
 ## 1.7.0 (December 27th 2022)
 
 IMPROVEMENTS:
