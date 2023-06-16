@@ -63,6 +63,7 @@ module RubyTerraform
           -json
           -migrate-state
           -no-color
+          -or-create
           -raw
           -reconfigure
           -recursive

@@ -37,6 +37,13 @@ module RubyTerraform
       end
 
       # @!visibility private
+      def options
+        %w[
+          -or-create
+        ] + super
+      end
+
+      # @!visibility private
       def arguments(parameters)
         [parameters[:name], parameters[:directory]]
       end
