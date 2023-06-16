@@ -38,4 +38,9 @@ describe RubyTerraform::Commands::WorkspaceSelect do
     'a command with global options',
     described_class, 'workspace select'
   )
+
+  it_behaves_like(
+    'a command with a flag',
+    described_class, 'workspace select', :or_create
+  )
 end
