@@ -3,6 +3,7 @@
 IMPROVEMENTS:
 
 * Add support for `-migrate-state` flag to `RubyTerraform::Commands::Init`
+* Add support for `-or-create` flag to `RubyTerraform::Commands::WorkspaceSelect`
 
 ## 1.7.0 (December 27th 2022)
 
