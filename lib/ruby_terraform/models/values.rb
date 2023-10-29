@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative './list'
-require_relative './map'
-require_relative './known_value'
-require_relative './unknown_value'
-require_relative './omitted_value'
+require_relative 'list'
+require_relative 'map'
+require_relative 'known_value'
+require_relative 'unknown_value'
+require_relative 'omitted_value'
 
 module RubyTerraform
   module Models

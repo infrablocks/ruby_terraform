@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../value_equality'
-require_relative './objects'
+require_relative 'objects'
 
 module RubyTerraform
   module Models

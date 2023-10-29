@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
-require_relative './values'
-require_relative './path_set'
+require_relative 'values'
+require_relative 'path_set'
 
 module RubyTerraform
   module Models
     # rubocop:disable Metrics/ModuleLength
     module Objects
+      # rubocop:disable Metrics/ClassLength
       class << self
         # rubocop:disable Style/RedundantAssignment
         # rubocop:disable Metrics/MethodLength
@@ -165,6 +166,7 @@ module RubyTerraform
           path_values.sort { |a, b| a[0] <=> b[0] }
         end
       end
+      # rubocop:enable Metrics/ClassLength
     end
     # rubocop:enable Metrics/ModuleLength
   end
