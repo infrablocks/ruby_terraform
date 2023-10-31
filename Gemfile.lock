@@ -107,7 +107,7 @@ GEM
       colored2 (~> 3.1)
       git (~> 1.13, >= 1.13.2)
       rake_factory (= 0.32.0.pre.2)
-    rake_git_crypt (0.1.0.pre.27)
+    rake_git_crypt (0.1.0.pre.28)
       colored2 (~> 3.1)
       rake_factory (= 0.32.0.pre.2)
       ruby_git_crypt (= 0.1.0.pre.2)
