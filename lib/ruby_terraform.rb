@@ -1521,6 +1521,8 @@ module RubyTerraform
     # @option parameters [String] :directory The path to a directory containing
     #   terraform configuration (deprecated in terraform 0.14, removed in
     #   terraform 0.15, use +:chdir+ instead).
+    # @option parameters [Boolean] :or_create Whether to create the workspace if
+    #   it does not exist.
     # @option parameters [String] :chdir The path of a working directory to
     #   switch to before executing the given subcommand.
     # @param [Hash<String, Object>] invocation_options Additional options

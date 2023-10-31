@@ -16,6 +16,7 @@ module RubyTerraform
     # * +:directory+: the path to a directory containing terraform configuration
     #   (deprecated in terraform 0.14, removed in terraform 0.15, use +:chdir+
     #   instead).
+    # * +:or_create+: whether to create the workspace if it does not exist.
     # * +:chdir+: the path of a working directory to switch to before executing
     #   the given subcommand.
     #
