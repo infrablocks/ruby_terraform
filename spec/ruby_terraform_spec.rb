@@ -136,8 +136,8 @@ describe RubyTerraform do
       expect(described_class.configuration.stderr).to eq(stderr)
     end
 
-    it 'uses empty string for stdin by default' do
-      expect(described_class.configuration.stdin).to eq('')
+    it 'uses nil string for stdin by default' do
+      expect(described_class.configuration.stdin).to(be_nil)
     end
 
     it 'allows stdin stream to be overridden' do

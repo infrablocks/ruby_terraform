@@ -1618,7 +1618,7 @@ module RubyTerraform
       @binary = 'terraform'
       @logger = default_logger
       @options = default_options
-      @stdin = ''
+      @stdin = nil
       @stdout = $stdout
       @stderr = $stderr
     end
