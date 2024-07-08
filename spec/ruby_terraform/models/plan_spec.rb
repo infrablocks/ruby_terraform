@@ -7,7 +7,7 @@ describe RubyTerraform::Models::Plan do
   describe '#format_version' do
     it 'returns the format version when content uses symbol keys' do
       format_version = '1.0'
-      content = Support::Build.plan_content(format_version: format_version)
+      content = Support::Build.plan_content(format_version:)
       content = Support::Transform.symbolise_keys(content)
       plan = described_class.new(content)
 
@@ -16,7 +16,7 @@ describe RubyTerraform::Models::Plan do
 
     it 'returns the format version when content uses string keys' do
       format_version = '1.0'
-      content = Support::Build.plan_content(format_version: format_version)
+      content = Support::Build.plan_content(format_version:)
       content = Support::Transform.stringify_keys(content)
       plan = described_class.new(content)
 
@@ -28,7 +28,7 @@ describe RubyTerraform::Models::Plan do
     it 'returns the Terraform version when content uses symbol keys' do
       terraform_version = '1.1.9'
       content =
-        Support::Build.plan_content(terraform_version: terraform_version)
+        Support::Build.plan_content(terraform_version:)
       content = Support::Transform.symbolise_keys(content)
       plan = described_class.new(content)
 
@@ -38,7 +38,7 @@ describe RubyTerraform::Models::Plan do
     it 'returns the Terraform version when content uses string keys' do
       terraform_version = '1.1.9'
       content =
-        Support::Build.plan_content(terraform_version: terraform_version)
+        Support::Build.plan_content(terraform_version:)
       content = Support::Transform.stringify_keys(content)
       plan = described_class.new(content)
 
@@ -52,7 +52,7 @@ describe RubyTerraform::Models::Plan do
         var1: Support::Build.variable_content(value: 'val1'),
         var2: Support::Build.variable_content(value: 'val1')
       }
-      content = Support::Build.plan_content(variables: variables)
+      content = Support::Build.plan_content(variables:)
       content = Support::Transform.symbolise_keys(content)
       plan = described_class.new(content)
 
@@ -64,7 +64,7 @@ describe RubyTerraform::Models::Plan do
         var1: Support::Build.variable_content(value: 'val1'),
         var2: Support::Build.variable_content(value: 'val1')
       }
-      content = Support::Build.plan_content(variables: variables)
+      content = Support::Build.plan_content(variables:)
       content = Support::Transform.stringify_keys(content)
       plan = described_class.new(content)
 
@@ -87,7 +87,7 @@ describe RubyTerraform::Models::Plan do
         var1: Support::Build.variable_content(value: 'val1'),
         var2: Support::Build.variable_content(value: 'val2')
       }
-      content = Support::Build.plan_content(variables: variables)
+      content = Support::Build.plan_content(variables:)
       content = Support::Transform.symbolise_keys(content)
       plan = described_class.new(content)
 
@@ -103,7 +103,7 @@ describe RubyTerraform::Models::Plan do
         var1: Support::Build.variable_content(value: 'val1'),
         var2: Support::Build.variable_content(value: 'val2')
       }
-      content = Support::Build.plan_content(variables: variables)
+      content = Support::Build.plan_content(variables:)
       content = Support::Transform.stringify_keys(content)
       plan = described_class.new(content)
 

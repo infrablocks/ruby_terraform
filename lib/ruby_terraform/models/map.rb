@@ -52,7 +52,7 @@ module RubyTerraform
 
         next_level = bare ? level : level + 1
         self_indent = bare ? '' : indent
-        opts = { level: next_level, indent: indent }
+        opts = { level: next_level, indent: }
         extra = level.times.collect { |_| indent }.join
         lines =
           value

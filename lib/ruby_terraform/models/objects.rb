@@ -17,17 +17,17 @@ module RubyTerraform
           unknown = symbolised_or_native_empty(unknown, object)
           sensitive = symbolised_or_native_empty(sensitive, object)
 
-          return Values.unknown(sensitive: sensitive) if unknown == true
+          return Values.unknown(sensitive:) if unknown == true
 
           unless object.is_a?(Hash) || object.is_a?(Array)
-            return Values.known(object, sensitive: sensitive)
+            return Values.known(object, sensitive:)
           end
 
           boxed_unknown =
-            box_unknown(unknown, sensitive: sensitive, initial: initial)
+            box_unknown(unknown, sensitive:, initial:)
 
           boxed_object =
-            box_known(object, sensitive: sensitive, initial: boxed_unknown)
+            box_known(object, sensitive:, initial: boxed_unknown)
 
           boxed_object
         end
@@ -74,34 +74,34 @@ module RubyTerraform
         def box_unknown(unknown, sensitive: {}, initial: Values.empty_map)
           path_set = paths(unknown)
           unknown_values = unknown_values(
-            path_set, unknown: unknown, sensitive: sensitive
+            path_set, unknown:, sensitive:
           )
           object(
-            path_set, unknown_values, sensitive: sensitive, initial: initial
+            path_set, unknown_values, sensitive:, initial:
           )
         end
 
         def box_known(object, sensitive: {}, initial: Values.empty_map)
           path_set = paths(object)
           object_values = known_values(
-            path_set, object: object, sensitive: sensitive
+            path_set, object:, sensitive:
           )
           object(
-            path_set, object_values, sensitive: sensitive, initial: initial
+            path_set, object_values, sensitive:, initial:
           )
         end
 
         def update_all(object, path_values, sensitive = {})
           path_values.each_with_object(object) do |path_value, obj|
             path, value = path_value
-            update_in(obj, path, value, sensitive: sensitive)
+            update_in(obj, path, value, sensitive:)
           end
         end
 
         def update_in(object, path, value, sensitive: {})
           path.traverse(object) do |obj, step|
             update_object_for_step(
-              obj, step, value, sensitive: sensitive
+              obj, step, value, sensitive:
             )
           end
         end
@@ -128,16 +128,16 @@ module RubyTerraform
 
         def boxed_empty_by_key(key, sensitive: false)
           if key.is_a?(Numeric)
-            Values.empty_list(sensitive: sensitive)
+            Values.empty_list(sensitive:)
           else
-            Values.empty_map(sensitive: sensitive)
+            Values.empty_map(sensitive:)
           end
         end
 
         def boxed_empty_by_value(value, sensitive: false)
           case value
-          when Array then Values.empty_list(sensitive: sensitive)
-          when Hash then Values.empty_map(sensitive: sensitive)
+          when Array then Values.empty_list(sensitive:)
+          when Hash then Values.empty_map(sensitive:)
           end
         end
 

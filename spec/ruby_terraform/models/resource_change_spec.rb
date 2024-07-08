@@ -42,7 +42,7 @@ describe RubyTerraform::Models::ResourceChange do
       it 'returns the module address when a module resource change' do
         module_address = 'module.some_module'
         content = Support::Build.resource_change_content(
-          { module_address: module_address },
+          { module_address: },
           { module_resource: true }
         )
         content = Support::Transform.symbolise_keys(content)
@@ -66,7 +66,7 @@ describe RubyTerraform::Models::ResourceChange do
       it 'returns the module address when a module resource change' do
         module_address = 'module.some_module'
         content = Support::Build.resource_change_content(
-          { module_address: module_address },
+          { module_address: },
           { module_resource: true }
         )
         content = Support::Transform.stringify_keys(content)
@@ -80,7 +80,7 @@ describe RubyTerraform::Models::ResourceChange do
   describe '#mode' do
     it 'returns the mode of the resource when content has symbol keys' do
       mode = 'managed'
-      content = Support::Build.resource_change_content({ mode: mode })
+      content = Support::Build.resource_change_content({ mode: })
       content = Support::Transform.symbolise_keys(content)
       resource_change = described_class.new(content)
 
@@ -89,7 +89,7 @@ describe RubyTerraform::Models::ResourceChange do
 
     it 'returns the mode of the resource when content has string keys' do
       mode = 'managed'
-      content = Support::Build.resource_change_content({ mode: mode })
+      content = Support::Build.resource_change_content({ mode: })
       content = Support::Transform.stringify_keys(content)
       resource_change = described_class.new(content)
 
@@ -100,7 +100,7 @@ describe RubyTerraform::Models::ResourceChange do
   describe '#type' do
     it 'returns the type of the resource when content has symbol keys' do
       type = 'some_resource'
-      content = Support::Build.resource_change_content({ type: type })
+      content = Support::Build.resource_change_content({ type: })
       content = Support::Transform.symbolise_keys(content)
       resource_change = described_class.new(content)
 
@@ -109,7 +109,7 @@ describe RubyTerraform::Models::ResourceChange do
 
     it 'returns the type of the resource when content has string keys' do
       type = 'some_resource'
-      content = Support::Build.resource_change_content({ type: type })
+      content = Support::Build.resource_change_content({ type: })
       content = Support::Transform.stringify_keys(content)
       resource_change = described_class.new(content)
 
@@ -120,7 +120,7 @@ describe RubyTerraform::Models::ResourceChange do
   describe '#name' do
     it 'returns the name of the resource when content has symbol keys' do
       name = 'name'
-      content = Support::Build.resource_change_content({ name: name })
+      content = Support::Build.resource_change_content({ name: })
       content = Support::Transform.symbolise_keys(content)
       resource_change = described_class.new(content)
 
@@ -129,7 +129,7 @@ describe RubyTerraform::Models::ResourceChange do
 
     it 'returns the name of the resource when content has string keys' do
       name = 'name'
-      content = Support::Build.resource_change_content({ name: name })
+      content = Support::Build.resource_change_content({ name: })
       content = Support::Transform.stringify_keys(content)
       resource_change = described_class.new(content)
 
@@ -155,7 +155,7 @@ describe RubyTerraform::Models::ResourceChange do
          'resource' do
         index = 2
         content = Support::Build.resource_change_content(
-          { index: index },
+          { index: },
           { multi_instance_resource: true }
         )
         content = Support::Transform.symbolise_keys(content)
@@ -182,7 +182,7 @@ describe RubyTerraform::Models::ResourceChange do
          'resource' do
         index = 2
         content = Support::Build.resource_change_content(
-          { index: index },
+          { index: },
           { multi_instance_resource: true }
         )
         content = Support::Transform.stringify_keys(content)
@@ -198,7 +198,7 @@ describe RubyTerraform::Models::ResourceChange do
        'has symbol keys' do
       provider_name = 'some_provider'
       content = Support::Build.resource_change_content(
-        { provider_name: provider_name }
+        { provider_name: }
       )
       content = Support::Transform.symbolise_keys(content)
       resource_change = described_class.new(content)
@@ -210,7 +210,7 @@ describe RubyTerraform::Models::ResourceChange do
        'has string keys' do
       provider_name = 'some_provider'
       content = Support::Build.resource_change_content(
-        { provider_name: provider_name }
+        { provider_name: }
       )
       content = Support::Transform.stringify_keys(content)
       resource_change = described_class.new(content)
@@ -224,7 +224,7 @@ describe RubyTerraform::Models::ResourceChange do
        'when content has symbol keys' do
       change = Support::Build.change_content
       content = Support::Build.resource_change_content(
-        { change: change }
+        { change: }
       )
       content = Support::Transform.symbolise_keys(content)
       resource_change = described_class.new(content)
@@ -237,7 +237,7 @@ describe RubyTerraform::Models::ResourceChange do
        'when content has string keys' do
       change = Support::Build.change_content
       content = Support::Build.resource_change_content(
-        { change: change }
+        { change: }
       )
       content = Support::Transform.stringify_keys(content)
       resource_change = described_class.new(content)
@@ -251,7 +251,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has symbol keys' do
       it 'returns true if the change represents a no-op' do
         change = Support::Build.no_op_change_content
-        content = Support::Build.resource_change_content({ change: change })
+        content = Support::Build.resource_change_content({ change: })
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -271,7 +271,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content({ change: change })
+          content = Support::Build.resource_change_content({ change: })
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -284,7 +284,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has string keys' do
       it 'returns true if the change represents a no-op' do
         change = Support::Build.no_op_change_content
-        content = Support::Build.resource_change_content({ change: change })
+        content = Support::Build.resource_change_content({ change: })
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 
@@ -304,7 +304,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content({ change: change })
+          content = Support::Build.resource_change_content({ change: })
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -319,7 +319,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has symbol keys' do
       it 'returns true if the change represents a create' do
         change = Support::Build.create_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -339,7 +339,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(
             content
@@ -354,7 +354,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has string keys' do
       it 'returns true if the change represents a create' do
         change = Support::Build.create_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 
@@ -374,7 +374,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(
             content
@@ -391,7 +391,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has symbol keys' do
       it 'returns true if the change represents a read' do
         change = Support::Build.read_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -411,7 +411,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(
             content
@@ -426,7 +426,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has string keys' do
       it 'returns true if the change represents a read' do
         change = Support::Build.read_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 
@@ -446,7 +446,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(
             content
@@ -463,7 +463,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has symbol keys' do
       it 'returns true if the change represents an update' do
         change = Support::Build.update_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -483,7 +483,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -496,7 +496,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has string keys' do
       it 'returns true if the change represents an update' do
         change = Support::Build.update_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 
@@ -516,7 +516,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -532,7 +532,7 @@ describe RubyTerraform::Models::ResourceChange do
       it 'returns true if the change represents a replace ' \
          '(delete before create)' do
         change = Support::Build.replace_delete_before_create_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -551,7 +551,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -565,7 +565,7 @@ describe RubyTerraform::Models::ResourceChange do
       it 'returns true if the change represents a replace ' \
          '(delete before create)' do
         change = Support::Build.replace_delete_before_create_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 
@@ -584,7 +584,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -600,7 +600,7 @@ describe RubyTerraform::Models::ResourceChange do
       it 'returns true if the change represents a replace ' \
          '(create before delete)' do
         change = Support::Build.replace_create_before_delete_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -619,7 +619,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -633,7 +633,7 @@ describe RubyTerraform::Models::ResourceChange do
       it 'returns true if the change represents a replace ' \
          '(create before delete)' do
         change = Support::Build.replace_create_before_delete_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 
@@ -652,7 +652,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -673,7 +673,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns true if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -691,7 +691,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(
             content
@@ -712,7 +712,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns true if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -730,7 +730,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(
             content
@@ -747,7 +747,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has symbol keys' do
       it 'returns true if the change represents a delete' do
         change = Support::Build.delete_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(
           content
@@ -769,7 +769,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -782,7 +782,7 @@ describe RubyTerraform::Models::ResourceChange do
     context 'when content has string keys' do
       it 'returns true if the change represents a delete' do
         change = Support::Build.delete_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(
           content
@@ -804,7 +804,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns false if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -829,7 +829,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns true if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -840,7 +840,7 @@ describe RubyTerraform::Models::ResourceChange do
 
       it 'returns false if the change represents a create' do
         change = Support::Build.create_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -862,7 +862,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns true if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -873,7 +873,7 @@ describe RubyTerraform::Models::ResourceChange do
 
       it 'returns false if the change represents a create' do
         change = Support::Build.create_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 
@@ -897,7 +897,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns true if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.symbolise_keys(content)
           resource_change = described_class.new(content)
 
@@ -908,7 +908,7 @@ describe RubyTerraform::Models::ResourceChange do
 
       it 'returns false if the change represents a delete' do
         change = Support::Build.delete_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.symbolise_keys(content)
         resource_change = described_class.new(content)
 
@@ -930,7 +930,7 @@ describe RubyTerraform::Models::ResourceChange do
       }.each do |entry|
         it "returns true if the change represents a #{entry[0]}" do
           change = entry[1]
-          content = Support::Build.resource_change_content(change: change)
+          content = Support::Build.resource_change_content(change:)
           content = Support::Transform.stringify_keys(content)
           resource_change = described_class.new(content)
 
@@ -941,7 +941,7 @@ describe RubyTerraform::Models::ResourceChange do
 
       it 'returns false if the change represents a delete' do
         change = Support::Build.delete_change_content
-        content = Support::Build.resource_change_content(change: change)
+        content = Support::Build.resource_change_content(change:)
         content = Support::Transform.stringify_keys(content)
         resource_change = described_class.new(content)
 

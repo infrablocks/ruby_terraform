@@ -146,7 +146,7 @@ describe RubyTerraform::Models::Objects do
       }
       sensitive = {}
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -165,7 +165,7 @@ describe RubyTerraform::Models::Objects do
       }
       sensitive = {}
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -195,7 +195,7 @@ describe RubyTerraform::Models::Objects do
       }
       sensitive = {}
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -226,7 +226,7 @@ describe RubyTerraform::Models::Objects do
       }
       sensitive = {}
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expected_key1 = V.list(
         [
@@ -267,7 +267,7 @@ describe RubyTerraform::Models::Objects do
         attribute3: true
       }
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -289,7 +289,7 @@ describe RubyTerraform::Models::Objects do
         attribute2: [false, false, true]
       }
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map({
@@ -320,7 +320,7 @@ describe RubyTerraform::Models::Objects do
         attribute2: { key4: true }
       }
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -356,7 +356,7 @@ describe RubyTerraform::Models::Objects do
         }
       }
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expected_key1 = V.list(
         [
@@ -397,7 +397,7 @@ describe RubyTerraform::Models::Objects do
         attribute2: true
       }
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -432,7 +432,7 @@ describe RubyTerraform::Models::Objects do
         attribute2: true
       }
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -470,7 +470,7 @@ describe RubyTerraform::Models::Objects do
         }
       }
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expected_key1 = V.list(
         [
@@ -510,7 +510,7 @@ describe RubyTerraform::Models::Objects do
       }
 
       boxed = described_class.box(
-        object, sensitive: sensitive, unknown: unknown
+        object, sensitive:, unknown:
       )
 
       expect(boxed)
@@ -534,7 +534,7 @@ describe RubyTerraform::Models::Objects do
       }
 
       boxed = described_class.box(
-        object, sensitive: sensitive, unknown: unknown
+        object, sensitive:, unknown:
       )
 
       expect(boxed)
@@ -553,7 +553,7 @@ describe RubyTerraform::Models::Objects do
       }
       sensitive = {}
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.map(
@@ -578,7 +578,7 @@ describe RubyTerraform::Models::Objects do
       object = ['value1', false, 300]
       sensitive = []
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -594,7 +594,7 @@ describe RubyTerraform::Models::Objects do
       object = [[1, 2, 3], [4, 5, 6]]
       sensitive = []
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -609,7 +609,7 @@ describe RubyTerraform::Models::Objects do
       object = [{ attribute: 'value1' }, { attribute: 'value2' }]
       sensitive = []
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -632,7 +632,7 @@ describe RubyTerraform::Models::Objects do
       object = [{ attribute: [1, 2, 3] }, { attribute: [4, 5, 6] }]
       sensitive = []
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -667,7 +667,7 @@ describe RubyTerraform::Models::Objects do
       object = ['value1', false, 300]
       sensitive = [true, true, true]
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -683,7 +683,7 @@ describe RubyTerraform::Models::Objects do
       object = [[1, 2, 3], [4, 5, 6]]
       sensitive = [[true, true, true], [true, true, true]]
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -706,7 +706,7 @@ describe RubyTerraform::Models::Objects do
       object = [{ attribute: 'value1' }, { attribute: 'value2' }]
       sensitive = [{ attribute: true }, { attribute: true }]
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -730,7 +730,7 @@ describe RubyTerraform::Models::Objects do
       sensitive = [{ attribute: [true, false, true] },
                    { attribute: [false, true, false] }]
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -765,7 +765,7 @@ describe RubyTerraform::Models::Objects do
       object = [[1, 2, 3], [4, 5, 6]]
       sensitive = [true, true]
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -790,7 +790,7 @@ describe RubyTerraform::Models::Objects do
       object = [{ attribute: 'value1' }, { attribute: 'value2' }]
       sensitive = [true, true]
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -815,7 +815,7 @@ describe RubyTerraform::Models::Objects do
       object = [{ attribute: [1, 2, 3] }, { attribute: [4, 5, 6] }]
       sensitive = [true, { attribute: true }]
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.list(
@@ -854,7 +854,7 @@ describe RubyTerraform::Models::Objects do
       unknown = [true, true]
 
       boxed = described_class.box(
-        object, sensitive: sensitive, unknown: unknown
+        object, sensitive:, unknown:
       )
 
       expect(boxed)
@@ -867,7 +867,7 @@ describe RubyTerraform::Models::Objects do
       unknown = [true, true]
 
       boxed = described_class.box(
-        object, sensitive: sensitive, unknown: unknown
+        object, sensitive:, unknown:
       )
 
       expect(boxed)
@@ -881,7 +881,7 @@ describe RubyTerraform::Models::Objects do
       object = true
       sensitive = false
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.known(true)))
@@ -891,7 +891,7 @@ describe RubyTerraform::Models::Objects do
       object = 10
       sensitive = false
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.known(10)))
@@ -901,7 +901,7 @@ describe RubyTerraform::Models::Objects do
       object = 'value'
       sensitive = false
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.known('value')))
@@ -911,7 +911,7 @@ describe RubyTerraform::Models::Objects do
       object = true
       sensitive = true
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.known(true, sensitive: true)))
@@ -921,7 +921,7 @@ describe RubyTerraform::Models::Objects do
       object = 10
       sensitive = true
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.known(10, sensitive: true)))
@@ -931,7 +931,7 @@ describe RubyTerraform::Models::Objects do
       object = 'value'
       sensitive = true
 
-      boxed = described_class.box(object, sensitive: sensitive)
+      boxed = described_class.box(object, sensitive:)
 
       expect(boxed)
         .to(eq(V.known('value', sensitive: true)))
@@ -941,7 +941,7 @@ describe RubyTerraform::Models::Objects do
       object = nil
       unknown = true
 
-      boxed = described_class.box(object, unknown: unknown)
+      boxed = described_class.box(object, unknown:)
 
       expect(boxed).to(eq(V.unknown))
     end
@@ -953,8 +953,8 @@ describe RubyTerraform::Models::Objects do
 
       boxed = described_class.box(
         object,
-        unknown: unknown,
-        sensitive: sensitive
+        unknown:,
+        sensitive:
       )
 
       expect(boxed).to(eq(V.unknown(sensitive: true)))
@@ -978,7 +978,7 @@ describe RubyTerraform::Models::Objects do
       )
       object = { key: [10, 20] }
 
-      values = described_class.known_values(paths, object: object)
+      values = described_class.known_values(paths, object:)
 
       expect(values)
         .to(eq([V.known(10), V.known(20)]))
@@ -995,7 +995,7 @@ describe RubyTerraform::Models::Objects do
       sensitive = { key: [true, true] }
 
       values = described_class.known_values(
-        paths, object: object, sensitive: sensitive
+        paths, object:, sensitive:
       )
 
       expect(values)
@@ -1014,7 +1014,7 @@ describe RubyTerraform::Models::Objects do
       sensitive = {}
 
       values = described_class.known_values(
-        paths, object: object, sensitive: sensitive
+        paths, object:, sensitive:
       )
 
       expect(values)
@@ -1033,7 +1033,7 @@ describe RubyTerraform::Models::Objects do
       )
       unknown = { key: [true, true] }
 
-      values = described_class.unknown_values(paths, unknown: unknown)
+      values = described_class.unknown_values(paths, unknown:)
 
       expect(values).to(eq([V.unknown, V.unknown]))
     end
@@ -1047,7 +1047,7 @@ describe RubyTerraform::Models::Objects do
       )
       unknown = { key: [false, false] }
 
-      values = described_class.unknown_values(paths, unknown: unknown)
+      values = described_class.unknown_values(paths, unknown:)
 
       expect(values).to(eq([nil, nil]))
     end
@@ -1061,7 +1061,7 @@ describe RubyTerraform::Models::Objects do
       )
       unknown = {}
 
-      values = described_class.unknown_values(paths, unknown: unknown)
+      values = described_class.unknown_values(paths, unknown:)
 
       expect(values).to(eq([nil, nil]))
     end
@@ -1077,7 +1077,7 @@ describe RubyTerraform::Models::Objects do
       sensitive = { key: [true, true] }
 
       values = described_class.unknown_values(
-        paths, unknown: unknown, sensitive: sensitive
+        paths, unknown:, sensitive:
       )
 
       expect(values)
@@ -1096,7 +1096,7 @@ describe RubyTerraform::Models::Objects do
       sensitive = {}
 
       values = described_class.unknown_values(
-        paths, unknown: unknown, sensitive: sensitive
+        paths, unknown:, sensitive:
       )
 
       expect(values)

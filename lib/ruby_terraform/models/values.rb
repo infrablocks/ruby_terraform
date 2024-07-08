@@ -11,31 +11,31 @@ module RubyTerraform
     module Values
       class << self
         def known(value, sensitive: false)
-          KnownValue.new(value, sensitive: sensitive)
+          KnownValue.new(value, sensitive:)
         end
 
         def unknown(sensitive: false)
-          UnknownValue.new(sensitive: sensitive)
+          UnknownValue.new(sensitive:)
         end
 
         def omitted(sensitive: false)
-          OmittedValue.new(sensitive: sensitive)
+          OmittedValue.new(sensitive:)
         end
 
         def list(value, sensitive: false)
-          List.new(value, sensitive: sensitive)
+          List.new(value, sensitive:)
         end
 
         def empty_list(sensitive: false)
-          list([], sensitive: sensitive)
+          list([], sensitive:)
         end
 
         def map(value, sensitive: false)
-          Map.new(value, sensitive: sensitive)
+          Map.new(value, sensitive:)
         end
 
         def empty_map(sensitive: false)
-          map({}, sensitive: sensitive)
+          map({}, sensitive:)
         end
       end
     end

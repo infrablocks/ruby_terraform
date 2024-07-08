@@ -23,7 +23,6 @@ M = RubyTerraform::Models
 V = M::Values
 
 Dir[File.join(__dir__, 'support', '**', '*.rb')]
-  .sort
   .each { |f| require f }
 
 RSpec.configure do |config|

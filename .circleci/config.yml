@@ -1,11 +1,15 @@
 version: 2.1
 
 orbs:
-  slack: circleci/slack@4.8.3
+  slack: circleci/slack@4.13.2
 
-defaults: &defaults
+base_container: &base_container
+  image: buildpack-deps:buster
+
+build_container: &build_container
+  resource_class: arm.medium
   docker:
-    - image: ruby:2.7.5
+    - <<: *base_container
 
 slack_context: &slack_context
   context:
@@ -61,17 +65,44 @@ commands:
                 event: pass
                 channel: builds
                 template: SLACK_SUCCESS_NOTIFICATION
-  configure_tools:
+
+  configure_build_tools:
     steps:
-      - run: ./scripts/ci/common/install-orb-deps.sh
+      - run: ./scripts/ci/common/install-slack-deps.sh
+      - restore_cache:
+          keys:
+            - asdf-dependencies-{{ arch }}-v2-{{ checksum ".tool-versions" }}
+            - asdf-dependencies-{{ arch }}-v2-
+      - run: ./scripts/ci/common/install-asdf.sh
+      - run: ./scripts/ci/common/configure-asdf.sh
+      - run: ./scripts/ci/common/install-asdf-dependencies.sh
+      - save_cache:
+          key: asdf-dependencies-{{ arch }}-v2-{{ checksum ".tool-versions" }}
+          paths:
+            - ~/.asdf
+
+  configure_secrets_tools:
+    steps:
       - run: ./scripts/ci/common/install-git-crypt.sh
       - run: ./scripts/ci/common/install-gpg-key.sh
       - run: ./scripts/ci/common/configure-git.sh
+
+  configure_release_tools:
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "SHA256:llKoU4DFV189TLH/gucs4eytL2Z1KN7jRN4NmDesD8g"
       - run: ./scripts/ci/common/configure-rubygems.sh
+
+  configure_tools:
+    steps:
+      - configure_build_tools
+      - configure_secrets_tools
+      - configure_release_tools
 
 jobs:
   build:
-    <<: *defaults
+    <<: *build_container
     steps:
       - checkout
       - configure_tools
@@ -79,7 +110,7 @@ jobs:
       - notify
 
   test:
-    <<: *defaults
+    <<: *build_container
     steps:
       - checkout
       - configure_tools
@@ -87,7 +118,7 @@ jobs:
       - notify
 
   prerelease:
-    <<: *defaults
+    <<: *build_container
     steps:
       - checkout
       - configure_tools
@@ -95,7 +126,7 @@ jobs:
       - notify
 
   release:
-    <<: *defaults
+    <<: *build_container
     steps:
       - checkout
       - configure_tools
@@ -103,7 +134,7 @@ jobs:
       - notify
 
   merge_pull_request:
-    <<: *defaults
+    <<: *build_container
     steps:
       - checkout
       - configure_tools

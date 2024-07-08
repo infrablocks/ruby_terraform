@@ -48,11 +48,17 @@ describe RubyTerraform do
   end
 
   it 'allows commands to be run without configure having been called' do
-    allow(Open4).to(receive(:spawn))
+    executor = Lino::Executors::Mock.new
+
+    Lino.configure do |config|
+      config.executor = executor
+    end
 
     described_class.apply(directory: 'some/path/to/terraform/configuration')
 
-    expect(Open4).to(have_received(:spawn))
+    expect(executor.calls.length).to(eq(1))
+  ensure
+    Lino.reset!
   end
 
   describe 'configuration' do
@@ -156,7 +162,6 @@ describe RubyTerraform do
         let(:instance) { instance_double(command_class, execute: nil) }
 
         before do
-          allow(Open4).to receive(:spawn)
           allow(command_class).to receive(:new).and_return(instance)
           described_class.send(method, parameters, invocation_options)
         end
@@ -182,14 +187,13 @@ describe RubyTerraform do
         operation = subcommand.eql?(:workspace) ? nil : subcommand.to_s
 
         describe "when the workspace operation is #{operation}" do
-          let(:parameters) { { operation: operation } }
+          let(:parameters) { { operation: } }
           let(:invocation_options) do
             { environment: { 'SOME_ENV' => 'SOME_VALUE' } }
           end
           let(:instance) { instance_double(command_class, execute: nil) }
 
           before do
-            allow(Open4).to receive(:spawn)
             allow(command_class).to receive(:new).and_return(instance)
             described_class.send(:workspace, parameters, invocation_options)
           end

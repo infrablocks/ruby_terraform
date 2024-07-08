@@ -8,7 +8,7 @@ module RubyTerraform
         :value
       )
         def initialize(name, value, **_opts)
-          super(name: name, value: value)
+          super(name:, value:)
         end
 
         def apply(builder)

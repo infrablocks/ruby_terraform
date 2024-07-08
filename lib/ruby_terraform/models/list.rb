@@ -54,7 +54,7 @@ module RubyTerraform
       def render(level: 0, indent: '  ')
         return '[]' if empty?
 
-        opts = { level: level + 1, indent: indent }
+        opts = { level: level + 1, indent: }
         extra = level.times.collect { |_| indent }.join
         lines =
           value

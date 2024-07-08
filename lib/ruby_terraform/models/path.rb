@@ -122,14 +122,14 @@ module RubyTerraform
 
       def initial_traversal_context(state)
         {
-          state: state,
+          state:,
           step: TraversalStep.new(self.class.empty, first, drop(1))
         }
       end
 
       def next_traversal_context(state, position, step)
         {
-          state: state,
+          state:,
           step: TraversalStep.new(position.seen.append(step),
                                   position.remaining.first,
                                   position.remaining.drop(1))

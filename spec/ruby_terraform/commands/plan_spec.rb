@@ -3,15 +3,21 @@
 require 'spec_helper'
 
 describe RubyTerraform::Commands::Plan do
+  let(:executor) { Lino::Executors::Mock.new }
+
   before do
     RubyTerraform.configure do |config|
       config.binary = 'path/to/binary'
       config.logger = Logger.new(StringIO.new)
     end
+    Lino.configure do |config|
+      config.executor = executor
+    end
   end
 
   after do
     RubyTerraform.reset!
+    Lino.reset!
   end
 
   it 'logs the command being executed at debug level using the globally ' \
@@ -23,8 +29,6 @@ describe RubyTerraform::Commands::Plan do
     RubyTerraform.configure do |config|
       config.logger = logger
     end
-
-    stub_open4_spawn
 
     command = described_class.new(binary: 'terraform')
 
@@ -45,11 +49,9 @@ describe RubyTerraform::Commands::Plan do
     logger = Logger.new(string_output)
     logger.level = Logger::DEBUG
 
-    stub_open4_spawn
-
     command = described_class.new(
       binary: 'terraform',
-      logger: logger
+      logger:
     )
 
     command.execute(directory: 'some/path/to/terraform/configuration')
@@ -72,7 +74,8 @@ describe RubyTerraform::Commands::Plan do
       config.logger = logger
     end
 
-    stub_open4_spawn_raise
+    executor.exit_code = 2
+
     command = described_class.new
 
     begin
@@ -97,28 +100,13 @@ describe RubyTerraform::Commands::Plan do
       config.logger = logger
     end
 
-    stub_open4_spawn_raise
+    executor.exit_code = 2
+
     command = described_class.new
 
     expect do
       command.execute(directory: 'some/path/to/terraform/configuration')
     end.to(raise_error(RubyTerraform::Errors::ExecutionError))
-  end
-
-  def stub_open4_spawn
-    allow(Open4).to(receive(:spawn))
-  end
-
-  def stub_open4_spawn_raise
-    # rubocop:disable RSpec/AnyInstance
-    allow_any_instance_of(Process::Status).to(
-      receive(:exitstatus).and_return(0)
-    )
-    # rubocop:enable RSpec/AnyInstance
-    allow(Open4).to(
-      receive(:spawn)
-        .and_raise(Open4::SpawnError.new('cmd', $CHILD_STATUS), 'message')
-    )
   end
 
   it_behaves_like(

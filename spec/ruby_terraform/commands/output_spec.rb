@@ -34,13 +34,20 @@ describe RubyTerraform::Commands::Output do
   describe 'output handling' do
     let(:string_io) { instance_double(StringIO, string: string_output) }
     let(:string_output) { "  OUTPUT  \n" }
+    let(:executor) { Lino::Executors::Mock.new }
     let(:execute) { command.execute(exec_parameters) }
     let(:exec_parameters) { {} }
 
     before do
+      Lino.configure do |config|
+        config.executor = executor
+      end
       allow(StringIO).to receive(:new).and_return(string_io)
-      allow(Open4).to receive(:spawn)
       execute
+    end
+
+    after do
+      Lino.reset!
     end
 
     context 'when no stdout is supplied' do
@@ -50,9 +57,8 @@ describe RubyTerraform::Commands::Output do
 
       it 'supplies the StringIO instance as the stdout when running ' \
          'the command' do
-        expect(Open4)
-          .to(have_received(:spawn)
-                .with(instance_of(String), hash_including(stdout: string_io)))
+        expect(executor.calls.first)
+          .to(satisfy { |call| call[:opts][:stdout] == string_io })
       end
     end
 
@@ -66,13 +72,10 @@ describe RubyTerraform::Commands::Output do
         expect(StringIO).not_to have_received(:new)
       end
 
-      it 'passes the stdout option as the stdout when running the command' do
-        expect(Open4)
-          .to(have_received(:spawn)
-                .with(
-                  instance_of(String),
-                  hash_including(stdout: dummy_stdout)
-                ))
+      it 'passes the stdout option as the stdout when running ' \
+         'the command' do
+        expect(executor.calls.first)
+          .to(satisfy { |call| call[:opts][:stdout] == dummy_stdout })
       end
 
       it_behaves_like('it supports output naming')

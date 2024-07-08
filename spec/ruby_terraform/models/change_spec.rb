@@ -133,8 +133,8 @@ describe RubyTerraform::Models::Change do
       }
       change_content =
         Support::Build.change_content(
-          before: before,
-          before_sensitive: before_sensitive
+          before:,
+          before_sensitive:
         )
       change_content = Support::Transform.symbolise_keys(change_content)
       change = described_class.new(change_content)
@@ -192,8 +192,8 @@ describe RubyTerraform::Models::Change do
       }
       change_content =
         Support::Build.change_content(
-          before: before,
-          before_sensitive: before_sensitive
+          before:,
+          before_sensitive:
         )
       change_content = Support::Transform.stringify_keys(change_content)
       change = described_class.new(change_content)
@@ -361,9 +361,9 @@ describe RubyTerraform::Models::Change do
       }
       change_content =
         Support::Build.change_content(
-          after: after,
-          after_unknown: after_unknown,
-          after_sensitive: after_sensitive
+          after:,
+          after_unknown:,
+          after_sensitive:
         )
       change_content = Support::Transform.symbolise_keys(change_content)
       change = described_class.new(change_content)
@@ -439,9 +439,9 @@ describe RubyTerraform::Models::Change do
       }
       change_content =
         Support::Build.change_content(
-          after: after,
-          after_unknown: after_unknown,
-          after_sensitive: after_sensitive
+          after:,
+          after_unknown:,
+          after_sensitive:
         )
       change_content = Support::Transform.stringify_keys(change_content)
       change = described_class.new(change_content)

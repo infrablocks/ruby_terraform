@@ -35,7 +35,7 @@ module RubyTerraform
         do_before(parameters)
         build_and_execute_command(parameters, invocation_options)
         do_after(parameters)
-      rescue Open4::SpawnError
+      rescue Lino::Errors::ExecutionError
         message = "Failed while running '#{command_name}'."
         logger.error(message)
         raise Errors::ExecutionError, message
@@ -50,9 +50,9 @@ module RubyTerraform
 
         logger.debug("Running '#{command}'.")
         command.execute(
-          stdin: stdin,
-          stdout: stdout,
-          stderr: stderr
+          stdin:,
+          stdout:,
+          stderr:
         )
       end
 
@@ -68,16 +68,16 @@ module RubyTerraform
 
       def build_command(parameters, invocation_options)
         parameters = resolve_parameters(parameters)
-        environment = invocation_options[:environment] || {}
 
         Lino::CommandLineBuilder
           .for_command(@binary)
-          .with_environment_variables(environment)
+          .with_environment_variables(invocation_options[:environment] || {})
           .with_options_after_subcommands
           .with_option_separator('=')
           .with_appliables(@options.resolve(options, parameters))
           .with_subcommands(subcommands)
-          .with_arguments(arguments(parameters).compact.flatten).build
+          .with_arguments(arguments(parameters).compact.flatten)
+          .build
       end
 
       def resolve_parameters(parameters)

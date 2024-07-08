@@ -22,7 +22,7 @@ module RubyTerraform
       end
 
       def variables
-        (@content[:variables] || {})
+        @content[:variables] || {}
       end
 
       def variable_values

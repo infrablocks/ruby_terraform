@@ -11,7 +11,7 @@ module RubyTerraform
       )
         def initialize(name, value, **opts)
           super(
-            name: name, value: value,
+            name:, value:,
             separator: opts[:separator],
             placement: opts[:placement]
           )
@@ -21,8 +21,8 @@ module RubyTerraform
           builder.with_option(
             name,
             value.render,
-            separator: separator,
-            placement: placement
+            separator:,
+            placement:
           )
         end
       end
