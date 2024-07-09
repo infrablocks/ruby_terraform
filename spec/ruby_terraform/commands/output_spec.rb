@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers
 describe RubyTerraform::Commands::Output do
   let(:parameters) { { binary: 'terraform' } }
   let(:command) { described_class.new(parameters) }
@@ -17,68 +16,33 @@ describe RubyTerraform::Commands::Output do
     RubyTerraform.reset!
   end
 
-  shared_examples 'it supports output naming' do
-    it 'captures and returns the output of the command directly' do
-      expect(execute).to(eq(string_output))
-    end
-
-    context 'when an output name is supplied' do
-      let(:exec_parameters) { { name: 'some_output' } }
-
-      it 'captures, chomps and returns the output of the command' do
-        expect(execute).to(eq('  OUTPUT  '))
-      end
-    end
-  end
-
   describe 'output handling' do
-    let(:string_io) { instance_double(StringIO, string: string_output) }
-    let(:string_output) { "  OUTPUT  \n" }
     let(:executor) { Lino::Executors::Mock.new }
-    let(:execute) { command.execute(exec_parameters) }
-    let(:exec_parameters) { {} }
 
     before do
       Lino.configure do |config|
         config.executor = executor
       end
-      allow(StringIO).to receive(:new).and_return(string_io)
-      execute
     end
 
     after do
       Lino.reset!
     end
 
-    context 'when no stdout is supplied' do
-      it 'creates a new StringIO instance' do
-        expect(StringIO).to have_received(:new)
-      end
+    context 'when no output name is supplied' do
+      it 'captures and returns output' do
+        executor.write_to_stdout("  OUTPUT  \n")
 
-      it 'supplies the StringIO instance as the stdout when running ' \
-         'the command' do
-        expect(executor.calls.first)
-          .to(satisfy { |call| call[:opts][:stdout] == string_io })
+        expect(command.execute).to(eq("  OUTPUT  \n"))
       end
     end
 
-    it_behaves_like('it supports output naming')
+    context 'when an output name is supplied' do
+      it 'captures, chomps and returns the output of the command' do
+        executor.write_to_stdout("  OUTPUT  \n")
 
-    context 'when a stdout option is supplied' do
-      let(:parameters) { { binary: 'terraform', stdout: dummy_stdout } }
-      let(:dummy_stdout) { instance_double(StringIO, string: string_output) }
-
-      it 'does not create a new StringIO instance' do
-        expect(StringIO).not_to have_received(:new)
+        expect(command.execute(name: 'some_output')).to(eq('  OUTPUT  '))
       end
-
-      it 'passes the stdout option as the stdout when running ' \
-         'the command' do
-        expect(executor.calls.first)
-          .to(satisfy { |call| call[:opts][:stdout] == dummy_stdout })
-      end
-
-      it_behaves_like('it supports output naming')
     end
   end
 
@@ -117,4 +81,3 @@ describe RubyTerraform::Commands::Output do
     described_class, 'output'
   )
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers

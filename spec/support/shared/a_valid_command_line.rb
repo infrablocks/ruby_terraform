@@ -18,7 +18,7 @@ shared_examples(
   end
 
   it reason do
-    expect(executor.calls.map { |c| c[:command_line].string })
+    expect(executor.executions.map { |c| c.command_line.string })
       .to(eq([expected]))
   end
 end

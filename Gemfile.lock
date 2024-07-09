@@ -3,7 +3,7 @@ PATH
   specs:
     ruby-terraform (1.8.0.pre.7)
       immutable-struct (~> 2.4)
-      lino (= 3.2.0.pre.7)
+      lino (= 3.2.0.pre.9)
 
 GEM
   remote: https://rubygems.org/
@@ -31,7 +31,7 @@ GEM
     diff-lcs (1.5.1)
     docile (1.4.0)
     drb (2.2.1)
-    excon (0.110.0)
+    excon (0.111.0)
     faker (3.4.1)
       i18n (>= 1.8.11, < 2)
     faraday (2.10.0)
@@ -66,7 +66,7 @@ GEM
     immutable-struct (2.4.1)
     json (2.7.2)
     language_server-protocol (3.17.0.3)
-    lino (3.2.0.pre.7)
+    lino (3.2.0.pre.9)
       childprocess (~> 5.0.0)
       hamster (~> 3.0)
       open4 (~> 1.3)

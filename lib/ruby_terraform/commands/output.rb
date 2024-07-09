@@ -42,8 +42,8 @@ module RubyTerraform
       include RubyTerraform::Options::Global
 
       # @!visibility private
-      def stdout
-        @stdout.respond_to?(:string) ? @stdout : (@stdout = StringIO.new)
+      def invocation_option_defaults(invocation_options)
+        super.merge(capture: [:stdout])
       end
 
       # @!visibility private
@@ -67,9 +67,8 @@ module RubyTerraform
       end
 
       # @!visibility private
-      def do_after(parameters)
-        result = stdout.string
-        parameters[:name] ? result.chomp : result
+      def process_result(result, parameters, _invocation_options)
+        parameters[:name] ? result[:output].chomp : result[:output]
       end
     end
   end

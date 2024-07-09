@@ -56,7 +56,7 @@ describe RubyTerraform do
 
     described_class.apply(directory: 'some/path/to/terraform/configuration')
 
-    expect(executor.calls.length).to(eq(1))
+    expect(executor.executions.length).to(eq(1))
   ensure
     Lino.reset!
   end
@@ -141,7 +141,7 @@ describe RubyTerraform do
     end
 
     it 'allows stdin stream to be overridden' do
-      stdin = StringIO.new("some\nuser\ninput\n")
+      stdin = "some\nuser\ninput\n"
 
       described_class.configure do |config|
         config.stdin = stdin
