@@ -12,10 +12,10 @@ describe RubyTerraform::Options::Values::KeyValue do
   end
 
   describe '#render' do
-    it 'returns quoted key value pair' do
+    it 'returns key value pair' do
       value = RubyTerraform::Options::Values::Complex.new([1, 2, 3])
       expect(described_class.new('a', value).render)
-        .to(eq("'a=[1,2,3]'"))
+        .to(eq('a=[1,2,3]'))
     end
   end
 end

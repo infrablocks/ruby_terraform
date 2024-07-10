@@ -15,7 +15,7 @@ module RubyTerraform
         end
 
         def render
-          "'#{key}=#{value.render}'"
+          "#{key}=#{value.render}"
         end
       end
     end

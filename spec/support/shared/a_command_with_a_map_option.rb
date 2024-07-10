@@ -10,7 +10,7 @@ shared_examples(
     command_klass,
     reason: "adds a #{name} option for each key/value pair provided",
     expected:
-      "terraform #{subcommand} #{name}='thing=blah' #{name}='other=wah'",
+      "terraform #{subcommand} #{name}=thing=blah #{name}=other=wah",
     binary: 'terraform',
     parameters: {
       option => { thing: 'blah', other: 'wah' }

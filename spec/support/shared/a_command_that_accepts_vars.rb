@@ -7,7 +7,7 @@ shared_examples(
     'a valid command line',
     command_klass,
     reason: 'adds a var option for each supplied var',
-    expected: "terraform #{subcommand} -var 'first=1' -var 'second=two'",
+    expected: "terraform #{subcommand} -var first=1 -var second=two",
     binary: 'terraform',
     parameters: {
       vars: {
@@ -21,7 +21,7 @@ shared_examples(
     'a valid command line',
     command_klass,
     reason: 'correctly serialises list/tuple vars',
-    expected: "terraform #{subcommand} -var 'list=[1,\"two\",3]'",
+    expected: "terraform #{subcommand} -var list=[1,\"two\",3]",
     binary: 'terraform',
     parameters: {
       vars: {
@@ -35,7 +35,7 @@ shared_examples(
     command_klass,
     reason: 'correctly serialises map/object vars',
     expected:
-      "terraform #{subcommand} -var 'map={\"first\":1,\"second\":\"two\"}'",
+      "terraform #{subcommand} -var map={\"first\":1,\"second\":\"two\"}",
     binary: 'terraform',
     parameters: {
       vars: {
@@ -53,7 +53,7 @@ shared_examples(
     reason: 'correctly serialises vars with lists/tuples of maps/objects',
     expected:
       "terraform #{subcommand} -var " \
-      "'list_of_maps=[{\"key\":\"val1\"},{\"key\":\"val2\"}]'",
+      'list_of_maps=[{"key":"val1"},{"key":"val2"}]',
     binary: 'terraform',
     parameters: {
       vars: {
