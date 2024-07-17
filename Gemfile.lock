@@ -32,7 +32,7 @@ GEM
     docile (1.4.0)
     drb (2.2.1)
     excon (0.111.0)
-    faker (3.4.1)
+    faker (3.4.2)
       i18n (>= 1.8.11, < 2)
     faraday (2.10.0)
       faraday-net_http (>= 2.0, < 3.2)
@@ -40,6 +40,9 @@ GEM
     faraday-net_http (3.1.0)
       net-http
     ffi (1.17.0)
+    ffi (1.17.0-arm64-darwin)
+    ffi (1.17.0-x86_64-darwin)
+    ffi (1.17.0-x86_64-linux-gnu)
     formatador (1.1.0)
     gem-release (2.2.2)
     git (1.19.1)
