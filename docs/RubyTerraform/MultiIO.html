@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::MultiIO
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -260,12 +260,12 @@
       <pre class="lines">
 
 
-1626
-1627
-1628</pre>
+1628
+1629
+1630</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1626</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1628</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_targets'>targets</span><span class='rparen'>)</span>
   <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span>
@@ -297,13 +297,13 @@
       <pre class="lines">
 
 
-1634
-1635
 1636
-1637</pre>
+1637
+1638
+1639</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1634</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1636</span>
 
 <span class='kw'>def</span> <span class='op'>&lt;&lt;</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_obj'>obj</span><span class='rparen'>)</span>
@@ -329,13 +329,13 @@
       <pre class="lines">
 
 
-1639
-1640
 1641
-1642</pre>
+1642
+1643
+1644</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1639</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1641</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@targets</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:close</span><span class='rparen'>)</span>
@@ -361,13 +361,13 @@
       <pre class="lines">
 
 
-1644
-1645
 1646
-1647</pre>
+1647
+1648
+1649</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1644</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1646</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reopen'>reopen</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='ivar'>@targets</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_reopen'>reopen</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -393,12 +393,12 @@
       <pre class="lines">
 
 
-1630
-1631
-1632</pre>
+1632
+1633
+1634</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1630</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1632</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='ivar'>@targets</span><span class='period'>.</span><span class='id identifier rubyid_collect'>collect</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_t'>t</span><span class='op'>|</span> <span class='id identifier rubyid_t'>t</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_max'>max</span>
@@ -413,9 +413,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec 27 12:38:08 2022 by
+  Generated on Wed Jul 17 17:33:20 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-2.7.5).
+  0.9.36 (ruby-3.1.1).
 </div>
 
     </div>

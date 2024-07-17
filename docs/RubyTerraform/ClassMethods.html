@@ -6,7 +6,7 @@
 <title>
   Module: RubyTerraform::ClassMethods
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -762,7 +762,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>Invokes the <tt>terraform untaint</tt> command which removes the &#39;tainted&#39; state from a resource instance.</p>
+<p>Invokes the <tt>terraform untaint</tt> command which removes the ‘tainted’ state from a resource instance.</p>
 </div></span>
   
 </li>
@@ -1232,7 +1232,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>Force replacement of a resource instance using its resource address. If the apply would&#39;ve normally produced an update or no-op action for this instance, Terraform will replace it instead.</p>
+<p>Force replacement of a resource instance using its resource address. If the apply would’ve normally produced an update or no-op action for this instance, Terraform will replace it instead.</p>
 </div>
           
         </li>
@@ -2607,7 +2607,7 @@
 
 <p>This will find and import the specified resource into your terraform state, allowing existing infrastructure to come under terraform management without having to be initially created by terraform.</p>
 
-<p>The <code>:address</code> specified is the address to import the resource to. Please see the documentation online for resource addresses. The <code>:id</code> is a resource-specific ID to identify that resource being imported. Please reference the documentation for the resource type you&#39;re importing to determine the ID syntax to use. It typically matches directly to the ID that the provider uses.</p>
+<p>The <code>:address</code> specified is the address to import the resource to. Please see the documentation online for resource addresses. The <code>:id</code> is a resource-specific ID to identify that resource being imported. Please reference the documentation for the resource type you’re importing to determine the ID syntax to use. It typically matches directly to the ID that the provider uses.</p>
 
 <p>The current implementation of terraform import can only import resources into the state. It does not generate configuration. A future version of terraform will also generate configuration.</p>
 
@@ -4160,7 +4160,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>Force replacement of a resource instance using its resource address. If the plan would&#39;ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.</p>
+<p>Force replacement of a resource instance using its resource address. If the plan would’ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.</p>
 </div>
           
         </li>
@@ -4470,7 +4470,7 @@
     
 <p>Invokes the <tt>terraform providers lock</tt> command which writes out dependency locks for the configured providers.</p>
 
-<p>Normally the dependency lock file (.terraform.lock.hcl) is updated automatically by “terraform init”, but the information available to the normal provider installer can be constrained when you&#39;re installing providers from filesystem or network mirrors, and so the generated lock file can end up incomplete.</p>
+<p>Normally the dependency lock file (.terraform.lock.hcl) is updated automatically by “terraform init”, but the information available to the normal provider installer can be constrained when you’re installing providers from filesystem or network mirrors, and so the generated lock file can end up incomplete.</p>
 
 <p>The “providers lock” subcommand addresses that by updating the lock file based on the official packages available in the origin registry, ignoring the currently-configured installation strategy.</p>
 
@@ -5814,7 +5814,7 @@
 
 <p>This command will output a backup copy of the state prior to saving any changes. The backup cannot be disabled. Due to the destructive nature of this command, backups are required.</p>
 
-<p>If you&#39;re moving an item to a different state file, a backup will be created for each state file.</p>
+<p>If you’re moving an item to a different state file, a backup will be created for each state file.</p>
 
 
   </div>
@@ -5931,7 +5931,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>When <code>true</code>, prints out what would&#39;ve been moved but doesn&#39;t actually move anything.</p>
+<p>When <code>true</code>, prints out what would’ve been moved but doesn’t actually move anything.</p>
 </div>
           
         </li>
@@ -5944,7 +5944,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>The path where Terraform should write the backup for the original state; this can&#39;t be disabled; if not set, Terraform will write it to the same path as the state file with a <tt>“.backup”</tt> extension.</p>
+<p>The path where Terraform should write the backup for the original state; this can’t be disabled; if not set, Terraform will write it to the same path as the state file with a <tt>“.backup”</tt> extension.</p>
 </div>
           
         </li>
@@ -5957,7 +5957,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>The path where Terraform should write the backup for the destination state; this can&#39;t be disabled; if not set, Terraform will write it to the same path as the destination state file with a <tt>“.backup”</tt> extension; this only needs to be specified if <code>:state_out</code> is set to a different path than <code>:state</code>.</p>
+<p>The path where Terraform should write the backup for the destination state; this can’t be disabled; if not set, Terraform will write it to the same path as the destination state file with a <tt>“.backup”</tt> extension; this only needs to be specified if <code>:state_out</code> is set to a different path than <code>:state</code>.</p>
 </div>
           
         </li>
@@ -6015,7 +6015,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>The path to the destination state file to write to; if this isn&#39;t specified, the source state file will be used; this can be a new or existing path.</p>
+<p>The path to the destination state file to write to; if this isn’t specified, the source state file will be used; this can be a new or existing path.</p>
 </div>
           
         </li>
@@ -6345,7 +6345,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>When <code>true</code>, writes the state even if lineages don&#39;t match or the remote serial is higher.</p>
+<p>When <code>true</code>, writes the state even if lineages don’t match or the remote serial is higher.</p>
 </div>
           
         </li>
@@ -6580,7 +6580,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>When <code>true</code>, prints out what would&#39;ve been removed but doesn&#39;t actually remove anything.</p>
+<p>When <code>true</code>, prints out what would’ve been removed but doesn’t actually remove anything.</p>
 </div>
           
         </li>
@@ -6850,7 +6850,7 @@
           </span>
           
             &mdash; <div class='inline'>
-<p>The path where Terraform should write the backup for the state file; this can&#39;t be disabled; if not set,</p>
+<p>The path where Terraform should write the backup for the state file; this can’t be disabled; if not set,</p>
 </div>
           
         </li>
@@ -7130,7 +7130,7 @@
     
 <p>Invokes the <tt>terraform taint</tt> command which marks a resource instance as not fully functional.</p>
 
-<p>Terraform uses the term “tainted” to describe a resource instance which may not be fully functional, either because its creation partially failed or because you&#39;ve manually marked it as such using this command.</p>
+<p>Terraform uses the term “tainted” to describe a resource instance which may not be fully functional, either because its creation partially failed or because you’ve manually marked it as such using this command.</p>
 
 <p>This will not modify your infrastructure directly, but subsequent Terraform plans will include actions to destroy the remote object and create a new object to replace it.</p>
 
@@ -7145,7 +7145,7 @@
 <p><code>module.foo.module.bar.aws_instance.baz</code></p>
 </li></ul>
 
-<p>Use your shell&#39;s quoting or escaping syntax to ensure that the address will reach Terraform correctly, without any special interpretation.</p>
+<p>Use your shell’s quoting or escaping syntax to ensure that the address will reach Terraform correctly, without any special interpretation.</p>
 
 
   </div>
@@ -7415,9 +7415,9 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Invokes the <tt>terraform untaint</tt> command which removes the &#39;tainted&#39; state from a resource instance.</p>
+<p>Invokes the <tt>terraform untaint</tt> command which removes the ‘tainted’ state from a resource instance.</p>
 
-<p>Terraform uses the term “tainted” to describe a resource instance which may not be fully functional, either because its creation partially failed or because you&#39;ve manually marked it as such using the <span class='object_link'><a href="#taint-instance_method" title="RubyTerraform::ClassMethods#taint (method)">#taint</a></span> command.</p>
+<p>Terraform uses the term “tainted” to describe a resource instance which may not be fully functional, either because its creation partially failed or because you’ve manually marked it as such using the <span class='object_link'><a href="#taint-instance_method" title="RubyTerraform::ClassMethods#taint (method)">#taint</a></span> command.</p>
 
 <p>This command removes that state from a resource instance, causing Terraform to see it as fully-functional and not in need of replacement.</p>
 
@@ -7911,8 +7911,6 @@
       <pre class="lines">
 
 
-1561
-1562
 1563
 1564
 1565
@@ -7933,10 +7931,12 @@
 1580
 1581
 1582
-1583</pre>
+1583
+1584
+1585</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1561</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1563</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace'>workspace</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_invocation_options'>invocation_options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_parameters'>parameters</span><span class='lbracket'>[</span><span class='symbol'>:operation</span><span class='rbracket'>]</span>
@@ -8643,6 +8643,19 @@
         </li>
       
         <li>
+          <span class="name">:or_create</span>
+          <span class="type">(<tt>Boolean</tt>)</span>
+          <span class="default">
+            
+          </span>
+          
+            &mdash; <div class='inline'>
+<p>Whether to create the workspace if it does not exist.</p>
+</div>
+          
+        </li>
+      
+        <li>
           <span class="name">:chdir</span>
           <span class="type">(<tt>String</tt>)</span>
           <span class="default">
@@ -8685,13 +8698,13 @@
       <pre class="lines">
 
 
-1535
-1536
 1537
-1538</pre>
+1538
+1539
+1540</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1535</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1537</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace_select'>workspace_select</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_invocation_options'>invocation_options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/WorkspaceSelect.html" title="RubyTerraform::Commands::WorkspaceSelect (class)">WorkspaceSelect</a></span></span><span class='comma'>,</span>
@@ -8822,13 +8835,13 @@
       <pre class="lines">
 
 
-1554
-1555
 1556
-1557</pre>
+1557
+1558
+1559</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1554</span>
+      <pre class="code"><span class="info file"># File 'lib/ruby_terraform.rb', line 1556</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_workspace_show'>workspace_show</span><span class='lparen'>(</span><span class='id identifier rubyid_parameters'>parameters</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='id identifier rubyid_invocation_options'>invocation_options</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_exec'>exec</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Commands/WorkspaceShow.html" title="RubyTerraform::Commands::WorkspaceShow (class)">WorkspaceShow</a></span></span><span class='comma'>,</span>
@@ -8844,9 +8857,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec 27 12:38:08 2022 by
+  Generated on Wed Jul 17 17:33:19 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-2.7.5).
+  0.9.36 (ruby-3.1.1).
 </div>
 
     </div>

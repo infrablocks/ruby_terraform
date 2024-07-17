@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::Options::Types::Standard
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -207,7 +207,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span>
   <span class='kw'>super</span><span class='lparen'>(</span>
-    <span class='label'>name:</span> <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_value'>value</span><span class='comma'>,</span>
+    <span class='label'>name:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span>
     <span class='label'>separator:</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:separator</span><span class='rbracket'>]</span><span class='comma'>,</span>
     <span class='label'>placement:</span> <span class='id identifier rubyid_opts'>opts</span><span class='lbracket'>[</span><span class='symbol'>:placement</span><span class='rbracket'>]</span>
   <span class='rparen'>)</span>
@@ -255,8 +255,8 @@
   <span class='id identifier rubyid_builder'>builder</span><span class='period'>.</span><span class='id identifier rubyid_with_option'>with_option</span><span class='lparen'>(</span>
     <span class='id identifier rubyid_name'>name</span><span class='comma'>,</span>
     <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_render'>render</span><span class='comma'>,</span>
-    <span class='label'>separator:</span> <span class='id identifier rubyid_separator'>separator</span><span class='comma'>,</span>
-    <span class='label'>placement:</span> <span class='id identifier rubyid_placement'>placement</span>
+    <span class='label'>separator:</span><span class='comma'>,</span>
+    <span class='label'>placement:</span>
   <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -269,9 +269,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec 27 12:38:09 2022 by
+  Generated on Wed Jul 17 17:33:21 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-2.7.5).
+  0.9.36 (ruby-3.1.1).
 </div>
 
     </div>

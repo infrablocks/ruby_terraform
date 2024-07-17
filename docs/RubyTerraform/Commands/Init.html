@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::Commands::Init
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -141,6 +141,8 @@
 </li><li>
 <p><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <tt>“0s”</tt>; (deprecated, removed in terraform 0.15).</p>
 </li><li>
+<p><code>:migrate_state</code>: if set, attempts to reconfigure a backend and attempt to migrate any existing state</p>
+</li><li>
 <p><code>:no_color</code>: whether or not the output from the command should be in color; defaults to <code>false</code>.</p>
 </li><li>
 <p><code>:plugin_dir</code>: the path to a directory containing plugin binaries; this overrides all default search paths for plugins, and prevents the automatic installation of plugins; if both <code>:plugin_dir</code> and <code>:plugin_dirs</code> are provided, all plugin directories will be passed to Terraform.</p>
@@ -200,9 +202,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec 27 12:38:09 2022 by
+  Generated on Wed Jul 17 17:33:20 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-2.7.5).
+  0.9.36 (ruby-3.1.1).
 </div>
 
     </div>

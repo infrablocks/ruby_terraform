@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::Commands::Taint
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -111,7 +111,7 @@
     
 <p>Wraps the <tt>terraform taint</tt> command which marks a resource instance as not fully functional.</p>
 
-<p>Terraform uses the term “tainted” to describe a resource instance which may not be fully functional, either because its creation partially failed or because you&#39;ve manually marked it as such using this command.</p>
+<p>Terraform uses the term “tainted” to describe a resource instance which may not be fully functional, either because its creation partially failed or because you’ve manually marked it as such using this command.</p>
 
 <p>This will not modify your infrastructure directly, but subsequent Terraform plans will include actions to destroy the remote object and create a new object to replace it.</p>
 
@@ -126,7 +126,7 @@
 <p><code>module.foo.module.bar.aws_instance.baz</code></p>
 </li></ul>
 
-<p>Use your shell&#39;s quoting or escaping syntax to ensure that the address will reach Terraform correctly, without any special interpretation.</p>
+<p>Use your shell’s quoting or escaping syntax to ensure that the address will reach Terraform correctly, without any special interpretation.</p>
 
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
 
@@ -196,9 +196,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec 27 12:38:09 2022 by
+  Generated on Wed Jul 17 17:33:20 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-2.7.5).
+  0.9.36 (ruby-3.1.1).
 </div>
 
     </div>

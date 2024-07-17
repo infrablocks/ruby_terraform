@@ -6,7 +6,7 @@
 <title>
   Class: RubyTerraform::Commands::StateMove
   
-    &mdash; Documentation by YARD 0.9.28
+    &mdash; Documentation by YARD 0.9.36
   
 </title>
 
@@ -117,7 +117,7 @@
 
 <p>This command will output a backup copy of the state prior to saving any changes. The backup cannot be disabled. Due to the destructive nature of this command, backups are required.</p>
 
-<p>If you&#39;re moving an item to a different state file, a backup will be created for each state file.</p>
+<p>If you’re moving an item to a different state file, a backup will be created for each state file.</p>
 
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
 
@@ -129,11 +129,11 @@
 </li><li>
 <p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
 </li><li>
-<p><code>:dry_run</code>: when <code>true</code>, prints out what would&#39;ve been moved but doesn&#39;t actually move anything; defaults to <code>false</code>.</p>
+<p><code>:dry_run</code>: when <code>true</code>, prints out what would’ve been moved but doesn’t actually move anything; defaults to <code>false</code>.</p>
 </li><li>
-<p><code>:backup</code>: the path where Terraform should write the backup for the original state; this can&#39;t be disabled; if not set, Terraform will write it to the same path as the state file with a <tt>“.backup”</tt> extension.</p>
+<p><code>:backup</code>: the path where Terraform should write the backup for the original state; this can’t be disabled; if not set, Terraform will write it to the same path as the state file with a <tt>“.backup”</tt> extension.</p>
 </li><li>
-<p><code>:backup_out</code>: the path where Terraform should write the backup for the destination state; this can&#39;t be disabled; if not set, Terraform will write it to the same path as the destination state file with a <tt>“.backup”</tt> extension; this only needs to be specified if <code>:state_out</code> is set to a different path than <code>:state</code>.</p>
+<p><code>:backup_out</code>: the path where Terraform should write the backup for the destination state; this can’t be disabled; if not set, Terraform will write it to the same path as the destination state file with a <tt>“.backup”</tt> extension; this only needs to be specified if <code>:state_out</code> is set to a different path than <code>:state</code>.</p>
 </li><li>
 <p><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported; when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</p>
 </li><li>
@@ -141,7 +141,7 @@
 </li><li>
 <p><code>:state</code>: the path to the source state file; defaults to the configured backend, or <tt>“terraform.tfstate”</tt>.</p>
 </li><li>
-<p><code>:state_out</code>: the path to the destination state file to write to; if this isn&#39;t specified, the source state file will be used; this can be a new or existing path.</p>
+<p><code>:state_out</code>: the path to the destination state file to write to; if this isn’t specified, the source state file will be used; this can be a new or existing path.</p>
 </li><li>
 <p><code>:ignore_remote_version</code>: whether or not to continue even if remote and local Terraform versions are incompatible; this may result in an unusable workspace, and should be used with extreme caution; defaults to <code>false</code>.</p>
 </li></ul>
@@ -190,9 +190,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Dec 27 12:38:09 2022 by
+  Generated on Wed Jul 17 17:33:20 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.28 (ruby-2.7.5).
+  0.9.36 (ruby-3.1.1).
 </div>
 
     </div>
