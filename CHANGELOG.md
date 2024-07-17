@@ -1,9 +1,14 @@
 ## Unreleased
 
+## 1.8.0 (July 17th 2024)
+
 IMPROVEMENTS:
 
-* Add support for `-migrate-state` flag to `RubyTerraform::Commands::Init`
-* Add support for `-or-create` flag to `RubyTerraform::Commands::WorkspaceSelect`
+* The underlying `lino` library has been upgraded which means `ruby_terraform`
+  can now spawn processes on Microsoft Windows in addition to unixes.
+* Add support for `-migrate-state` flag to `RubyTerraform::Commands::Init`.
+* Add support for `-or-create` flag to 
+  `RubyTerraform::Commands::WorkspaceSelect`.
 
 ## 1.7.0 (December 27th 2022)
 
