@@ -42,7 +42,7 @@ GEM
     ffi (1.17.0)
     ffi (1.17.0-arm64-darwin)
     ffi (1.17.0-x86_64-darwin)
-    ffi (1.17.0-x86_64-linux-gnu)
+    ffi (1.17.0-x86_64-linux)
     formatador (1.1.0)
     gem-release (2.2.2)
     git (1.19.1)
@@ -99,7 +99,7 @@ GEM
     pry (0.14.2)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    public_suffix (6.0.0)
+    public_suffix (6.0.1)
     racc (1.8.0)
     rainbow (3.1.1)
     rake (13.2.1)
@@ -225,4 +225,4 @@ DEPENDENCIES
   yard
 
 BUNDLED WITH
-   2.4.17
+   2.5.15
