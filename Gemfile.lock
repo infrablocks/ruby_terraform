@@ -188,7 +188,7 @@ GEM
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.5.0)
     uri (0.13.0)
-    yard (0.9.36)
+    yard (0.9.37)
 
 PLATFORMS
   arm64-darwin-21
