@@ -164,7 +164,7 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-rake (0.6.0)
       rubocop (~> 1.0)
-    rubocop-rspec (3.2.0)
+    rubocop-rspec (3.3.0)
       rubocop (~> 1.61)
     ruby-progressbar (1.13.0)
     ruby_git_crypt (0.1.0)
