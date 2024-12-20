@@ -44,7 +44,7 @@ GEM
     ffi (1.17.0-x86_64-darwin)
     ffi (1.17.0-x86_64-linux-gnu)
     formatador (1.1.0)
-    gem-release (2.2.2)
+    gem-release (2.2.3)
     git (1.19.1)
       addressable (~> 2.8)
       rchardet (~> 1.8)
