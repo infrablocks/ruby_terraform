@@ -29,7 +29,7 @@ require 'ruby-terraform'
 
 ### Supported versions and commands
 
-`RubyTerraform` supports all commands and options up to Terraform 0.15, except
+`RubyTerraform` supports all commands and options up to Terraform 1.5.7, except
 `terraform console`, `terraform test` and `terraform version`.
 
 ### Getting started
