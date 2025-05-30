@@ -107,7 +107,7 @@ GEM
     public_suffix (6.0.1)
     racc (1.8.1)
     rainbow (3.1.1)
-    rake (13.2.1)
+    rake (13.3.0)
     rake_circle_ci (0.13.0)
       colored2 (~> 3.1)
       excon (~> 0.72)
