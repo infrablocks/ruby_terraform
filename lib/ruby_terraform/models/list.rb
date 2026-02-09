@@ -29,7 +29,7 @@ module RubyTerraform
         :repeated_permutation, :repeated_combination,
         :product, :take, :take_while, :drop, :drop_while,
         :bsearch, :bsearch_index, :any?, :all?, :none?, :one?, :dig, :sum,
-        :deconstruct, :append, :prepend, :shuffle!, :shuffle, :sample, :pack
+        :deconstruct, :prepend, :shuffle!, :shuffle, :sample, :pack
       )
 
       def initialize(value, sensitive: false)
