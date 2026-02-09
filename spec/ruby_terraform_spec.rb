@@ -184,10 +184,13 @@ describe RubyTerraform do
         delete: RubyTerraform::Commands::WorkspaceDelete,
         show: RubyTerraform::Commands::WorkspaceShow
       }.each do |subcommand, command_class|
+        # rubocop:disable RSpec/LeakyLocalVariable
         operation = subcommand.eql?(:workspace) ? nil : subcommand.to_s
+        # rubocop:enable RSpec/LeakyLocalVariable
 
-        describe "when the workspace operation is #{operation}" do
+        describe "when the workspace operation is #{operation || 'nil'}" do
           let(:parameters) { { operation: } }
+
           let(:invocation_options) do
             { environment: { 'SOME_ENV' => 'SOME_VALUE' } }
           end

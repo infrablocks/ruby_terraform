@@ -48,25 +48,8 @@ describe RubyTerraform::Commands::ProvidersSchema do
     parameters: { json: false }
   )
 
-  [:chdir].each do |option|
-    switch = "-#{option.to_s.gsub('_', '-')}"
-    switch_value = 'option-value'
-
-    it_behaves_like(
-      'a valid command line',
-      described_class,
-      reason: "adds a #{switch} option if a #{option} is provided",
-      expected: "terraform #{switch}=#{switch_value} providers schema -json",
-      binary: 'terraform',
-      parameters: { option => switch_value }
-    )
-
-    it_behaves_like(
-      'a valid command line',
-      described_class,
-      reason: "does not add a #{switch} option if a #{option} is not provided",
-      expected: 'terraform providers schema -json',
-      binary: 'terraform'
-    )
-  end
+  it_behaves_like(
+    'a command with a global option',
+    described_class, 'providers schema -json', :chdir
+  )
 end

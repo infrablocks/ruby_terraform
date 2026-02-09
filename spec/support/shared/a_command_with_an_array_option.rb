@@ -3,9 +3,11 @@
 shared_examples(
   'a command with an array option'
 ) do |command_klass, subcommand, option|
+  # rubocop:disable RSpec/LeakyLocalVariable
   singular = option.to_s.chop
   singular_option = singular.to_sym
-  name = "-#{singular.sub('_', '-')}"
+  option_name = "-#{singular.sub('_', '-')}"
+  # rubocop:enable RSpec/LeakyLocalVariable
 
   it_behaves_like(
     'a command with an option',
@@ -15,9 +17,11 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    reason: "adds a #{name} option for each element of the #{option} array",
-    expected:
-      "terraform #{subcommand} #{name}=option-value1 #{name}=option-value2",
+    reason: "adds a #{option_name} option " \
+            "for each element of the #{option} array",
+    expected: "terraform #{subcommand} " \
+              "#{option_name}=option-value1 " \
+              "#{option_name}=option-value2",
     binary: 'terraform',
     parameters: {
       option => %w[option-value1 option-value2]
@@ -27,10 +31,12 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    reason: "ensures that #{singular} and #{option} options work together",
-    expected:
-      "terraform #{subcommand} #{name}=option-value " \
-      "#{name}=option-value1 #{name}=option-value2",
+    reason: "ensures that #{singular} and #{option} " \
+            'options work together',
+    expected: "terraform #{subcommand} " \
+              "#{option_name}=option-value " \
+              "#{option_name}=option-value1 " \
+              "#{option_name}=option-value2",
     binary: 'terraform',
     parameters: {
       singular_option => 'option-value',

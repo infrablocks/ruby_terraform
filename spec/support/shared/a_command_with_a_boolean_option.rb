@@ -3,13 +3,15 @@
 shared_examples(
   'a command with a boolean option'
 ) do |command_klass, subcommand, option|
-  name = "-#{option.to_s.gsub('_', '-')}"
+  # rubocop:disable RSpec/LeakyLocalVariable
+  option_name = "-#{option.to_s.gsub('_', '-')}"
+  # rubocop:enable RSpec/LeakyLocalVariable
 
   it_behaves_like(
     'a valid command line',
     command_klass,
-    reason: "includes #{name}=true when the #{option} option is true",
-    expected: "terraform #{subcommand} #{name}=true",
+    reason: "includes #{option_name}=true when the #{option} option is true",
+    expected: "terraform #{subcommand} #{option_name}=true",
     binary: 'terraform',
     parameters: {
       option => true
@@ -19,8 +21,8 @@ shared_examples(
   it_behaves_like(
     'a valid command line',
     command_klass,
-    reason: "includes #{name}=false when the #{option} option is false",
-    expected: "terraform #{subcommand} #{name}=false",
+    reason: "includes #{option_name}=false when the #{option} option is false",
+    expected: "terraform #{subcommand} #{option_name}=false",
     binary: 'terraform',
     parameters: {
       option => false
