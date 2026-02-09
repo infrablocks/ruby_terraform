@@ -198,7 +198,7 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    uri (0.13.2)
+    uri (0.13.3)
     yard (0.9.37)
 
 PLATFORMS
