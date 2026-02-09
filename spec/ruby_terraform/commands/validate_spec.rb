@@ -13,7 +13,9 @@ describe RubyTerraform::Commands::Validate do
     RubyTerraform.reset!
   end
 
+  # rubocop:disable RSpec/LeakyLocalVariable
   directory = Faker::File.dir
+  # rubocop:enable RSpec/LeakyLocalVariable
 
   it_behaves_like(
     'a command with an argument',
