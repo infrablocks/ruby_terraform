@@ -32,7 +32,7 @@ module RubyTerraform
       def resource_changes
         (@content[:resource_changes] || [])
           .map do |resource_change|
-          ResourceChange.new(resource_change)
+            ResourceChange.new(resource_change)
         end
       end
 
@@ -47,7 +47,7 @@ module RubyTerraform
       def output_changes
         (@content[:output_changes] || [])
           .map do |output_name, output_change|
-          OutputChange.new(output_name, output_change)
+            OutputChange.new(output_name, output_change)
         end
       end
 

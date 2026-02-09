@@ -135,7 +135,7 @@ namespace :documentation do
 
     sh('git', 'commit',
        '-a',
-       '-m', "Generate latest documentation#{skip_ci ? ' [ci skip]' : ''}")
+       '-m', "Generate latest documentation#{' [ci skip]' if skip_ci}")
   end
 
   desc 'Update documentation'
@@ -157,7 +157,7 @@ RakeCircleCI.define_project_tasks(
   t.environment_variables = {
     ENCRYPTION_PASSPHRASE:
         File.read('config/secrets/ci/encryption.passphrase')
-            .chomp
+        .chomp
   }
   t.checkout_keys = []
   t.ssh_keys = [
