@@ -4,7 +4,7 @@ orbs:
   slack: circleci/slack@4.13.2
 
 base_container: &base_container
-  image: buildpack-deps:buster
+  image: buildpack-deps:bookworm
 
 build_container: &build_container
   resource_class: arm.medium
