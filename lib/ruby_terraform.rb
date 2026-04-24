@@ -1316,6 +1316,56 @@ module RubyTerraform
            parameters, invocation_options)
     end
 
+    # Invokes the +terraform test+ command which executes integration tests
+    # defined in +.tftest.hcl+ files.
+    #
+    # Terraform discovers test files in the configured test directory (by
+    # default +tests+) and in the root module, then runs each +run+ block in
+    # turn, reporting on the outcome of the assertions.
+    #
+    # @param parameters The parameters used to invoke the command
+    # @option parameters [String] :chdir The path of a working directory to
+    #   switch to before executing the given subcommand.
+    # @option parameters [String] :cloud_run If set, executes the tests
+    #   remotely using the given Terraform Cloud/Enterprise module source
+    #   address rather than running them locally.
+    # @option parameters [String] :filter Restrict which test files are
+    #   executed; if both +:filter+ and +:filters+ are provided, all filters
+    #   will be passed to terraform.
+    # @option parameters [Array<String>] :filters An array of test file paths
+    #   to restrict which test files are executed; if both +:filter+ and
+    #   +:filters+ are provided, all filters will be passed to terraform.
+    # @option parameters [Boolean] :json (false) Whether or not to produce
+    #   output in a machine-readable JSON format.
+    # @option parameters [Boolean] :no_color (false) Whether or not the output
+    #   from the command should be in color.
+    # @option parameters [String] :test_directory The directory containing
+    #   test files; defaults to +"tests"+.
+    # @option parameters [Hash<String, Object>] :vars A map of variables to
+    #   be passed to the terraform configuration.
+    # @option parameters [String] :var_file The path to a terraform var file;
+    #   if both +:var_file+ and +:var_files+ are provided, all var files will
+    #   be passed to terraform.
+    # @option parameters [Array<String>] :var_files An array of paths to
+    #   terraform var files; if both +:var_file+ and +:var_files+ are
+    #   provided, all var files will be passed to terraform.
+    # @option parameters [Boolean] :verbose (false) When +true+, prints the
+    #   plan or state for each test run block as it executes.
+    # @param [Hash<String, Object>] invocation_options Additional options
+    #   controlling the invocation of the command.
+    # @option invocation_options [Hash<String, String>] :environment A map
+    #   of environment variables to expose at command invocation time.
+    #
+    # @example Basic Invocation
+    #   RubyTerraform.test(
+    #     filters: ['tests/network.tftest.hcl'],
+    #     verbose: true)
+    #
+    def test(parameters = {}, invocation_options = {})
+      exec(RubyTerraform::Commands::Test,
+           parameters, invocation_options)
+    end
+
     # Invokes the +terraform untaint+ command which removes the 'tainted' state
     # from a resource instance.
     #

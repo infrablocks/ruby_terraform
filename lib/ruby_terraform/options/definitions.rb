@@ -22,7 +22,7 @@ module RubyTerraform
         end,
 
         # string repeatable options
-        %w[-var-file -target -platform -plugin-dir -replace].map do |o|
+        %w[-var-file -target -platform -plugin-dir -replace -filter].map do |o|
           definition(
             name: o, option_type: :standard, value_type: :string,
             repeatable: true
@@ -68,6 +68,7 @@ module RubyTerraform
           -reconfigure
           -recursive
           -update
+          -verbose
         ].map do |o|
           definition(name: o, option_type: :flag, value_type: :boolean)
         end,
@@ -76,6 +77,7 @@ module RubyTerraform
         %w[
           -backup
           -backup-out
+          -cloud-run
           -from-module
           -fs-mirror
           -id
@@ -88,6 +90,7 @@ module RubyTerraform
           -provider
           -state
           -state-out
+          -test-directory
           -type
         ].map do |o|
           definition(name: o, option_type: :standard, value_type: :string)
