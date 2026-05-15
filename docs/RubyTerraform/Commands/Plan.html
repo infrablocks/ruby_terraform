@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::Plan
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::Plan";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -101,77 +103,85 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/plan.rb</dd>
+    <dd>lib/ruby_terraform/commands/plan.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps the <tt>terraform plan</tt> command which generates a speculative execution plan, showing what actions Terraform would take to apply the current configuration. This command will not actually perform the planned actions.</p>
-
-<p>You can optionally save the plan to a file, which you can then pass to the <span class='object_link'><a href="Apply.html" title="RubyTerraform::Commands::Apply (class)">Apply</a></span> command to perform exactly the actions described in the plan.</p>
-
+    <p>Wraps the <code>terraform plan</code> command which generates a speculative execution
+plan, showing what actions Terraform would take to apply the current
+configuration. This command will not actually perform the planned actions.</p>
+<p>You can optionally save the plan to a file, which you can then pass to
+the <span class='object_link'><a href="Apply.html" title="RubyTerraform::Commands::Apply (class)">Apply</a></span> command to perform exactly the actions described in the plan.</p>
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
-
-<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Plan (class)">Plan</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
-<ul><li>
-<p><code>:directory</code>: the path to a directory containing terraform configuration (deprecated in terraform 0.14, removed in terraform 0.15, use <code>:chdir</code> instead).</p>
-</li><li>
-<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
-</li><li>
-<p><code>:compact_warnings</code>: when <code>true</code>, if terraform produces any warnings that are not accompanied by errors, they are shown in a more compact form that includes only the summary messages; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:destroy</code>: when <code>true</code>, a plan will be generated to destroy all resources managed by the given configuration and state; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:detailed_exitcode</code>: whether or not to return detailed exit codes when the command exits; this will change the meaning of exit codes to: 0 - Succeeded, diff is empty (no changes); 1 - Errored; 2 - Succeeded, there is a diff; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:input</code>: when <code>false</code>, will not ask for input for variables not directly set; defaults to <code>true</code>.</p>
-</li><li>
-<p><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported; when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</p>
-</li><li>
-<p><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <tt>“0s”</tt>.</p>
-</li><li>
-<p><code>:no_color</code>: whether or not the output from the command should be in color; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:parallelism</code>: the number of parallel resource operations; defaults to <code>10</code>.</p>
-</li><li>
-<p><code>:plan</code>: the path to output the plan if it should be saved to a file.</p>
-</li><li>
-<p><code>:refresh</code>: when <code>true</code>, updates state prior to checking for differences; when <code>false</code> uses locally available state; defaults to <code>true</code>; this has no effect when <code>:plan</code> is provided.</p>
-</li><li>
-<p><code>:replace</code>: force replacement of a particular resource instance using its resource address. If the plan would’ve normally produced an update or no-op action for this instance, Terraform will plan to replace it instead.</p>
-</li><li>
-<p><code>:replaces</code>: an array of resource addresses to replace; if both <code>replace</code> and <code>replaces</code> are provided, all resources will be replaced.</p>
-</li><li>
-<p><code>:state</code>: the path to the state file from which to read state and in which to store state (unless <code>:state_out</code> is specified); defaults to <tt>“terraform.tfstate”</tt>.</p>
-</li><li>
-<p><code>:target</code>: the address of a resource to target; if both <code>:target</code> and <code>:targets</code> are provided, all targets will be passed to terraform.</p>
-</li><li>
-<p><code>:targets</code>: an array of resource addresses to target; if both <code>:target</code> and <code>:targets</code> are provided, all targets will be passed to terraform.</p>
-</li><li>
-<p><code>:vars</code>: a map of variables to be passed to the terraform configuration.</p>
-</li><li>
-<p><code>:var_file</code>: the path to a terraform var file; if both <code>:var_file</code> and <code>:var_files</code> are provided, all var files will be passed to terraform.</p>
-</li><li>
-<p><code>:var_files</code>: an array of paths to terraform var files; if both <code>:var_file</code> and <code>:var_files</code> are provided, all var files will be passed to terraform.</p>
-</li></ul>
-
-<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
-
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Plan (class)">Plan</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following
+options are supported:</p>
+<ul>
+<li><code>:directory</code>: the path to a directory containing terraform
+configuration (deprecated in terraform 0.14, removed in terraform 0.15,
+use <code>:chdir</code> instead).</li>
+<li><code>:chdir</code>: the path of a working directory to switch to before executing
+the given subcommand.</li>
+<li><code>:compact_warnings</code>: when <code>true</code>, if terraform produces any warnings
+that are not accompanied by errors, they are shown in a more compact
+form that includes only the summary messages; defaults to <code>false</code>.</li>
+<li><code>:destroy</code>: when <code>true</code>, a plan will be generated to destroy all
+resources managed by the given configuration and state; defaults to
+<code>false</code>.</li>
+<li><code>:detailed_exitcode</code>: whether or not to return detailed exit codes when
+the command exits; this will change the meaning of exit codes to:
+0 - Succeeded, diff is empty (no changes); 1 - Errored; 2 - Succeeded,
+there is a diff; defaults to <code>false</code>.</li>
+<li><code>:input</code>: when <code>false</code>, will not ask for input for variables not
+directly set; defaults to <code>true</code>.</li>
+<li><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported;
+when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</li>
+<li><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <code>&quot;0s&quot;</code>.</li>
+<li><code>:no_color</code>: whether or not the output from the command should be in
+color; defaults to <code>false</code>.</li>
+<li><code>:parallelism</code>: the number of parallel resource operations; defaults to
+<code>10</code>.</li>
+<li><code>:plan</code>: the path to output the plan if it should be saved to a file.</li>
+<li><code>:refresh</code>: when <code>true</code>, updates state prior to checking for
+differences; when <code>false</code> uses locally available state; defaults to
+<code>true</code>; this has no effect when <code>:plan</code> is provided.</li>
+<li><code>:replace</code>: force replacement of a particular resource instance using
+its resource address. If the plan would've normally produced an update
+or no-op action for this instance, Terraform will plan to replace it
+instead.</li>
+<li><code>:replaces</code>: an array of resource addresses to replace; if both
+<code>replace</code> and <code>replaces</code> are provided, all resources will be replaced.</li>
+<li><code>:state</code>: the path to the state file from which to read state and in
+which to store state (unless <code>:state_out</code> is specified); defaults to
+<code>&quot;terraform.tfstate&quot;</code>.</li>
+<li><code>:target</code>: the address of a resource to target; if both <code>:target</code> and
+<code>:targets</code> are provided, all targets will be passed to terraform.</li>
+<li><code>:targets</code>: an array of resource addresses to target; if both <code>:target</code>
+and <code>:targets</code> are provided, all targets will be passed to terraform.</li>
+<li><code>:vars</code>: a map of variables to be passed to the terraform configuration.</li>
+<li><code>:var_file</code>: the path to a terraform var file; if both <code>:var_file</code> and
+<code>:var_files</code> are provided, all var files will be passed to terraform.</li>
+<li><code>:var_files</code>: an array of paths to terraform var files; if both
+<code>:var_file</code> and <code>:var_files</code> are provided, all var files will be passed
+to terraform.</li>
+</ul>
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map
+of invocation options. Currently, the only supported option is
+<code>:environment</code> which is a map of environment variables to expose during
+invocation of the command.</p>
 
   </div>
 </div>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Basic Invocation</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Basic Invocation</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>Plan</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span><span class='lparen'>(</span>
   <span class='label'>directory:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>infra/networking</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
@@ -204,9 +214,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:41 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>

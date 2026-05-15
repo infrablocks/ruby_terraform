@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::StateMove
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::StateMove";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -101,65 +103,73 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/state_move.rb</dd>
+    <dd>lib/ruby_terraform/commands/state_move.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps the <tt>terraform state mv</tt> command which moves an item in the state.</p>
-
-<p>This command will move an item matched by the address given to the destination address. This command can also move to a destination address in a completely different state file.</p>
-
-<p>This can be used for simple resource renaming, moving items to and from a module, moving entire modules, and more. And because this command can also move data to a completely new state, it can also be used for refactoring one configuration into multiple separately managed Terraform configurations.</p>
-
-<p>This command will output a backup copy of the state prior to saving any changes. The backup cannot be disabled. Due to the destructive nature of this command, backups are required.</p>
-
-<p>If you’re moving an item to a different state file, a backup will be created for each state file.</p>
-
+    <p>Wraps the <code>terraform state mv</code> command which moves an item in the state.</p>
+<p>This command will move an item matched by the address given to the
+destination address. This command can also move to a destination address
+in a completely different state file.</p>
+<p>This can be used for simple resource renaming, moving items to and from
+a module, moving entire modules, and more. And because this command can
+also move data to a completely new state, it can also be used for
+refactoring one configuration into multiple separately managed Terraform
+configurations.</p>
+<p>This command will output a backup copy of the state prior to saving any
+changes. The backup cannot be disabled. Due to the destructive nature
+of this command, backups are required.</p>
+<p>If you're moving an item to a different state file, a backup will be
+created for each state file.</p>
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
-
-<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::StateMove (class)">StateMove</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
-<ul><li>
-<p><code>:source</code>: the source address of the item to move; required.</p>
-</li><li>
-<p><code>:destination</code>: the destination address to move the item to; required.</p>
-</li><li>
-<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
-</li><li>
-<p><code>:dry_run</code>: when <code>true</code>, prints out what would’ve been moved but doesn’t actually move anything; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:backup</code>: the path where Terraform should write the backup for the original state; this can’t be disabled; if not set, Terraform will write it to the same path as the state file with a <tt>“.backup”</tt> extension.</p>
-</li><li>
-<p><code>:backup_out</code>: the path where Terraform should write the backup for the destination state; this can’t be disabled; if not set, Terraform will write it to the same path as the destination state file with a <tt>“.backup”</tt> extension; this only needs to be specified if <code>:state_out</code> is set to a different path than <code>:state</code>.</p>
-</li><li>
-<p><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported; when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</p>
-</li><li>
-<p><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <tt>“0s”</tt>.</p>
-</li><li>
-<p><code>:state</code>: the path to the source state file; defaults to the configured backend, or <tt>“terraform.tfstate”</tt>.</p>
-</li><li>
-<p><code>:state_out</code>: the path to the destination state file to write to; if this isn’t specified, the source state file will be used; this can be a new or existing path.</p>
-</li><li>
-<p><code>:ignore_remote_version</code>: whether or not to continue even if remote and local Terraform versions are incompatible; this may result in an unusable workspace, and should be used with extreme caution; defaults to <code>false</code>.</p>
-</li></ul>
-
-<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
-
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::StateMove (class)">StateMove</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following
+options are supported:</p>
+<ul>
+<li><code>:source</code>: the source address of the item to move; required.</li>
+<li><code>:destination</code>: the destination address to move the item to; required.</li>
+<li><code>:chdir</code>: the path of a working directory to switch to before executing
+the given subcommand.</li>
+<li><code>:dry_run</code>: when <code>true</code>, prints out what would've been moved but doesn't
+actually move anything; defaults to <code>false</code>.</li>
+<li><code>:backup</code>: the path where Terraform should write the backup for the
+original state; this can't be disabled; if not set, Terraform will write
+it to the same path as the state file with a <code>&quot;.backup&quot;</code> extension.</li>
+<li><code>:backup_out</code>: the path where Terraform should write the backup for the
+destination state; this can't be disabled; if not set, Terraform will
+write it to the same path as the destination state file with a
+<code>&quot;.backup&quot;</code> extension; this only needs to be specified if <code>:state_out</code>
+is set to a different path than <code>:state</code>.</li>
+<li><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported;
+when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</li>
+<li><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <code>&quot;0s&quot;</code>.</li>
+<li><code>:state</code>: the path to the source state file; defaults to the configured
+backend, or <code>&quot;terraform.tfstate&quot;</code>.</li>
+<li><code>:state_out</code>: the path to the destination state file to write to; if
+this isn't specified, the source state file will be used; this can be a
+new or existing path.</li>
+<li><code>:ignore_remote_version</code>: whether or not to continue even if remote and
+local Terraform versions are incompatible; this may result in an
+unusable workspace, and should be used with extreme caution; defaults to
+<code>false</code>.</li>
+</ul>
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map
+of invocation options. Currently, the only supported option is
+<code>:environment</code> which is a map of environment variables to expose during
+invocation of the command.</p>
 
   </div>
 </div>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Basic Invocation</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Basic Invocation</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>StateMove</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span><span class='lparen'>(</span>
   <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>packet_device.worker</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
@@ -190,9 +200,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:42 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>

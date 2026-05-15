@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::Base
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::Base";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -94,14 +96,15 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/base.rb</dd>
+    <dd>lib/ruby_terraform/commands/base.rb
+</dd>
   </dl>
   
 </div>
 
 <div id="subclasses">
   <h2>Direct Known Subclasses</h2>
-  <p class="children"><span class='object_link'><a href="Apply.html" title="RubyTerraform::Commands::Apply (class)">Apply</a></span>, <span class='object_link'><a href="Destroy.html" title="RubyTerraform::Commands::Destroy (class)">Destroy</a></span>, <span class='object_link'><a href="ForceUnlock.html" title="RubyTerraform::Commands::ForceUnlock (class)">ForceUnlock</a></span>, <span class='object_link'><a href="Format.html" title="RubyTerraform::Commands::Format (class)">Format</a></span>, <span class='object_link'><a href="Get.html" title="RubyTerraform::Commands::Get (class)">Get</a></span>, <span class='object_link'><a href="Graph.html" title="RubyTerraform::Commands::Graph (class)">Graph</a></span>, <span class='object_link'><a href="Import.html" title="RubyTerraform::Commands::Import (class)">Import</a></span>, <span class='object_link'><a href="Init.html" title="RubyTerraform::Commands::Init (class)">Init</a></span>, <span class='object_link'><a href="Login.html" title="RubyTerraform::Commands::Login (class)">Login</a></span>, <span class='object_link'><a href="Logout.html" title="RubyTerraform::Commands::Logout (class)">Logout</a></span>, <span class='object_link'><a href="Output.html" title="RubyTerraform::Commands::Output (class)">Output</a></span>, <span class='object_link'><a href="Plan.html" title="RubyTerraform::Commands::Plan (class)">Plan</a></span>, <span class='object_link'><a href="Providers.html" title="RubyTerraform::Commands::Providers (class)">Providers</a></span>, <span class='object_link'><a href="ProvidersLock.html" title="RubyTerraform::Commands::ProvidersLock (class)">ProvidersLock</a></span>, <span class='object_link'><a href="ProvidersMirror.html" title="RubyTerraform::Commands::ProvidersMirror (class)">ProvidersMirror</a></span>, <span class='object_link'><a href="ProvidersSchema.html" title="RubyTerraform::Commands::ProvidersSchema (class)">ProvidersSchema</a></span>, <span class='object_link'><a href="Refresh.html" title="RubyTerraform::Commands::Refresh (class)">Refresh</a></span>, <span class='object_link'><a href="Show.html" title="RubyTerraform::Commands::Show (class)">Show</a></span>, <span class='object_link'><a href="StateList.html" title="RubyTerraform::Commands::StateList (class)">StateList</a></span>, <span class='object_link'><a href="StateMove.html" title="RubyTerraform::Commands::StateMove (class)">StateMove</a></span>, <span class='object_link'><a href="StatePull.html" title="RubyTerraform::Commands::StatePull (class)">StatePull</a></span>, <span class='object_link'><a href="StatePush.html" title="RubyTerraform::Commands::StatePush (class)">StatePush</a></span>, <span class='object_link'><a href="StateRemove.html" title="RubyTerraform::Commands::StateRemove (class)">StateRemove</a></span>, <span class='object_link'><a href="StateReplaceProvider.html" title="RubyTerraform::Commands::StateReplaceProvider (class)">StateReplaceProvider</a></span>, <span class='object_link'><a href="StateShow.html" title="RubyTerraform::Commands::StateShow (class)">StateShow</a></span>, <span class='object_link'><a href="Taint.html" title="RubyTerraform::Commands::Taint (class)">Taint</a></span>, <span class='object_link'><a href="Untaint.html" title="RubyTerraform::Commands::Untaint (class)">Untaint</a></span>, <span class='object_link'><a href="Validate.html" title="RubyTerraform::Commands::Validate (class)">Validate</a></span>, <span class='object_link'><a href="WorkspaceDelete.html" title="RubyTerraform::Commands::WorkspaceDelete (class)">WorkspaceDelete</a></span>, <span class='object_link'><a href="WorkspaceList.html" title="RubyTerraform::Commands::WorkspaceList (class)">WorkspaceList</a></span>, <span class='object_link'><a href="WorkspaceNew.html" title="RubyTerraform::Commands::WorkspaceNew (class)">WorkspaceNew</a></span>, <span class='object_link'><a href="WorkspaceSelect.html" title="RubyTerraform::Commands::WorkspaceSelect (class)">WorkspaceSelect</a></span>, <span class='object_link'><a href="WorkspaceShow.html" title="RubyTerraform::Commands::WorkspaceShow (class)">WorkspaceShow</a></span></p>
+  <p class="children"><span class='object_link'><a href="Apply.html" title="RubyTerraform::Commands::Apply (class)">Apply</a></span>, <span class='object_link'><a href="Destroy.html" title="RubyTerraform::Commands::Destroy (class)">Destroy</a></span>, <span class='object_link'><a href="ForceUnlock.html" title="RubyTerraform::Commands::ForceUnlock (class)">ForceUnlock</a></span>, <span class='object_link'><a href="Format.html" title="RubyTerraform::Commands::Format (class)">Format</a></span>, <span class='object_link'><a href="Get.html" title="RubyTerraform::Commands::Get (class)">Get</a></span>, <span class='object_link'><a href="Graph.html" title="RubyTerraform::Commands::Graph (class)">Graph</a></span>, <span class='object_link'><a href="Import.html" title="RubyTerraform::Commands::Import (class)">Import</a></span>, <span class='object_link'><a href="Init.html" title="RubyTerraform::Commands::Init (class)">Init</a></span>, <span class='object_link'><a href="Login.html" title="RubyTerraform::Commands::Login (class)">Login</a></span>, <span class='object_link'><a href="Logout.html" title="RubyTerraform::Commands::Logout (class)">Logout</a></span>, <span class='object_link'><a href="Output.html" title="RubyTerraform::Commands::Output (class)">Output</a></span>, <span class='object_link'><a href="Plan.html" title="RubyTerraform::Commands::Plan (class)">Plan</a></span>, <span class='object_link'><a href="Providers.html" title="RubyTerraform::Commands::Providers (class)">Providers</a></span>, <span class='object_link'><a href="ProvidersLock.html" title="RubyTerraform::Commands::ProvidersLock (class)">ProvidersLock</a></span>, <span class='object_link'><a href="ProvidersMirror.html" title="RubyTerraform::Commands::ProvidersMirror (class)">ProvidersMirror</a></span>, <span class='object_link'><a href="ProvidersSchema.html" title="RubyTerraform::Commands::ProvidersSchema (class)">ProvidersSchema</a></span>, <span class='object_link'><a href="Refresh.html" title="RubyTerraform::Commands::Refresh (class)">Refresh</a></span>, <span class='object_link'><a href="Show.html" title="RubyTerraform::Commands::Show (class)">Show</a></span>, <span class='object_link'><a href="StateList.html" title="RubyTerraform::Commands::StateList (class)">StateList</a></span>, <span class='object_link'><a href="StateMove.html" title="RubyTerraform::Commands::StateMove (class)">StateMove</a></span>, <span class='object_link'><a href="StatePull.html" title="RubyTerraform::Commands::StatePull (class)">StatePull</a></span>, <span class='object_link'><a href="StatePush.html" title="RubyTerraform::Commands::StatePush (class)">StatePush</a></span>, <span class='object_link'><a href="StateRemove.html" title="RubyTerraform::Commands::StateRemove (class)">StateRemove</a></span>, <span class='object_link'><a href="StateReplaceProvider.html" title="RubyTerraform::Commands::StateReplaceProvider (class)">StateReplaceProvider</a></span>, <span class='object_link'><a href="StateShow.html" title="RubyTerraform::Commands::StateShow (class)">StateShow</a></span>, <span class='object_link'><a href="Taint.html" title="RubyTerraform::Commands::Taint (class)">Taint</a></span>, <span class='object_link'><a href="Test.html" title="RubyTerraform::Commands::Test (class)">Test</a></span>, <span class='object_link'><a href="Untaint.html" title="RubyTerraform::Commands::Untaint (class)">Untaint</a></span>, <span class='object_link'><a href="Validate.html" title="RubyTerraform::Commands::Validate (class)">Validate</a></span>, <span class='object_link'><a href="WorkspaceDelete.html" title="RubyTerraform::Commands::WorkspaceDelete (class)">WorkspaceDelete</a></span>, <span class='object_link'><a href="WorkspaceList.html" title="RubyTerraform::Commands::WorkspaceList (class)">WorkspaceList</a></span>, <span class='object_link'><a href="WorkspaceNew.html" title="RubyTerraform::Commands::WorkspaceNew (class)">WorkspaceNew</a></span>, <span class='object_link'><a href="WorkspaceSelect.html" title="RubyTerraform::Commands::WorkspaceSelect (class)">WorkspaceSelect</a></span>, <span class='object_link'><a href="WorkspaceShow.html" title="RubyTerraform::Commands::WorkspaceShow (class)">WorkspaceShow</a></span></p>
 </div>
 
 
@@ -135,9 +138,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Executes the command instance.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Executes the command instance.</p></div></span>
   
 </li>
 
@@ -161,14 +162,13 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>Constructs an instance of the command.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'><p>Constructs an instance of the command.</p></div></span>
   
 </li>
 
       
     </ul>
+    
   
 
 <div id="constructor_details" class="method_details_list">
@@ -185,9 +185,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Constructs an instance of the command.</p>
-
+    <p>Constructs an instance of the command.</p>
 
   </div>
 </div>
@@ -243,9 +241,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>Executes the command instance.</p>
-
+    <p>Executes the command instance.</p>
 
   </div>
 </div>
@@ -265,9 +261,9 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>The parameters used to invoke the command. See subclass documentation for details of supported options.</p>
-</div>
+        <div class='inline'><p>The parameters used to
+invoke the command. See subclass documentation for details of
+supported options.</p></div>
       
     </li>
   
@@ -283,9 +279,8 @@
       
       
         &mdash;
-        <div class='inline'>
-<p>Additional options controlling the invocation of the command.</p>
-</div>
+        <div class='inline'><p>Additional options
+controlling the invocation of the command.</p></div>
       
     </li>
   
@@ -306,9 +301,8 @@
             
           </span>
           
-            &mdash; <div class='inline'>
-<p>A map of environment variables to expose at command invocation time.</p>
-</div>
+            &mdash; <div class='inline'><p>A map
+of environment variables to expose at command invocation time.</p></div>
           
         </li>
       
@@ -364,9 +358,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:41 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>

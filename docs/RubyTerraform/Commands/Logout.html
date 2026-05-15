@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::Logout
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::Logout";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -101,41 +103,40 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/logout.rb</dd>
+    <dd>lib/ruby_terraform/commands/logout.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps the <tt>terraform logout</tt> command which removes locally-stored credentials for specified hostname.</p>
-
-<p>Note: the API token is only removed from local storage, not destroyed on the remote server, so it will remain valid until manually revoked.</p>
-
+    <p>Wraps the <code>terraform logout</code> command which removes locally-stored
+credentials for specified hostname.</p>
+<p>Note: the API token is only removed from local storage, not destroyed on
+the remote server, so it will remain valid until manually revoked.</p>
 <p>If no hostname is provided, the default hostname is app.terraform.io.</p>
-
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
-
-<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Logout (class)">Logout</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
-<ul><li>
-<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
-</li></ul>
-
-<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
-
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Logout (class)">Logout</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following
+options are supported:</p>
+<ul>
+<li><code>:chdir</code>: the path of a working directory to switch to before executing
+the given subcommand.</li>
+</ul>
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map
+of invocation options. Currently, the only supported option is
+<code>:environment</code> which is a map of environment variables to expose during
+invocation of the command.</p>
 
   </div>
 </div>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Basic Invocation</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Basic Invocation</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>Logout</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span></code></pre>
     
@@ -164,9 +165,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:42 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>

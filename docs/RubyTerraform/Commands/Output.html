@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::Output
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::Output";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -101,47 +103,49 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/output.rb</dd>
+    <dd>lib/ruby_terraform/commands/output.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps the <tt>terraform output</tt> command which reads an output variable from a Terraform state file and prints the value. With no additional arguments, output will display all the outputs for the root module. If <code>:name</code> is not specified, all outputs are printed.</p>
-
+    <p>Wraps the <code>terraform output</code> command which reads an output variable from a
+Terraform state file and prints the value. With no additional arguments,
+output will display all the outputs for the root module. If <code>:name</code> is not
+specified, all outputs are printed.</p>
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
-
-<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Output (class)">Output</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
-<ul><li>
-<p><code>:name</code>: The name of the output to read.</p>
-</li><li>
-<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
-</li><li>
-<p><code>:state</code>: the path to the state file to read; defaults to <tt>“terraform.tfstate”</tt>.</p>
-</li><li>
-<p><code>:no_color</code>: whether or not the output from the command should be in color; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:json</code>: If <code>true</code>, machine readable output will be printed in JSON format; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:raw</code>: If <code>true</code>, for value types that can be automatically converted to a string, will print the raw string directly, rather than a human-oriented representation of the value.</p>
-</li></ul>
-
-<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
-
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Output (class)">Output</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following
+options are supported:</p>
+<ul>
+<li><code>:name</code>: The name of the output to read.</li>
+<li><code>:chdir</code>: the path of a working directory to switch to before executing
+the given subcommand.</li>
+<li><code>:state</code>: the path to the state file to read; defaults to
+<code>&quot;terraform.tfstate&quot;</code>.</li>
+<li><code>:no_color</code>: whether or not the output from the command should be in
+color; defaults to <code>false</code>.</li>
+<li><code>:json</code>: If <code>true</code>, machine readable output will be printed in JSON
+format; defaults to <code>false</code>.</li>
+<li><code>:raw</code>: If <code>true</code>, for value types that can be automatically converted
+to a string, will print the raw string directly, rather than a
+human-oriented representation of the value.</li>
+</ul>
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map
+of invocation options. Currently, the only supported option is
+<code>:environment</code> which is a map of environment variables to expose during
+invocation of the command.</p>
 
   </div>
 </div>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Basic Invocation</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Basic Invocation</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>Output</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span><span class='lparen'>(</span>
   <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>vpc_id</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
@@ -171,9 +175,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:42 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>

@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::StateList
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::StateList";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -101,60 +103,62 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/state_list.rb</dd>
+    <dd>lib/ruby_terraform/commands/state_list.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps the <tt>terraform state list</tt> command which lists resources in the Terraform state.</p>
-
-<p>This command lists resource instances in the Terraform state. The address option can be used to filter the instances by resource or module. If no pattern is given, all resource instances are listed.</p>
-
-<p>The addresses must either be module addresses or absolute resource addresses, such as:</p>
-<ul><li>
-<p><code>aws_instance.example</code></p>
-</li><li>
-<p><code>module.example</code></p>
-</li><li>
-<p><code>module.example.module.child</code></p>
-</li><li>
-<p><code>module.example.aws_instance.example</code></p>
-</li></ul>
-
-<p>An <span class='object_link'><a href="../Errors/ExecutionError.html" title="RubyTerraform::Errors::ExecutionError (class)">Errors::ExecutionError</a></span> will be raised if any of the resources or modules given as filter addresses do not exist in the state.</p>
-
+    <p>Wraps the <code>terraform state list</code> command which lists resources in the
+Terraform state.</p>
+<p>This command lists resource instances in the Terraform state. The address
+option can be used to filter the instances by resource or module. If no
+pattern is given, all resource instances are listed.</p>
+<p>The addresses must either be module addresses or absolute resource
+addresses, such as:</p>
+<ul>
+<li><code>aws_instance.example</code></li>
+<li><code>module.example</code></li>
+<li><code>module.example.module.child</code></li>
+<li><code>module.example.aws_instance.example</code></li>
+</ul>
+<p>An <span class='object_link'><a href="../Errors/ExecutionError.html" title="RubyTerraform::Errors::ExecutionError (class)">Errors::ExecutionError</a></span> will be raised if any of the
+resources or modules given as filter addresses do not exist in the state.</p>
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
-
-<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::StateList (class)">StateList</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
-<ul><li>
-<p><code>:address</code>: the module address or absolute resource address to filter by; if both <code>:address</code> and <code>:addresses</code> are provided, all addresses will be passed to Terraform.</p>
-</li><li>
-<p><code>:addresses</code>: an array of module addresses or absolute resource addresses to filter by; if both <code>:address</code> and <code>:addresses</code> are provided, all addresses will be passed to Terraform.</p>
-</li><li>
-<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
-</li><li>
-<p><code>:state</code>: the path to a Terraform state file to use to look up Terraform-managed resources; by default, Terraform will consult the state of the currently-selected workspace.</p>
-</li><li>
-<p><code>:id</code>: when provided, filters the results to include only instances whose resource types have an attribute named “id” whose value equals the given id string.</p>
-</li></ul>
-
-<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
-
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::StateList (class)">StateList</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following
+options are supported:</p>
+<ul>
+<li><code>:address</code>: the module address or absolute resource address to filter
+by; if both <code>:address</code> and <code>:addresses</code> are provided, all addresses will
+be passed to Terraform.</li>
+<li><code>:addresses</code>: an array of module addresses or absolute resource
+addresses to filter by; if both <code>:address</code> and <code>:addresses</code> are
+provided, all addresses will be passed to Terraform.</li>
+<li><code>:chdir</code>: the path of a working directory to switch to before executing
+the given subcommand.</li>
+<li><code>:state</code>: the path to a Terraform state file to use to look up
+Terraform-managed resources; by default, Terraform will consult the
+state of the currently-selected workspace.</li>
+<li><code>:id</code>: when provided, filters the results to include only instances
+whose resource types have an attribute named &quot;id&quot; whose value equals the
+given id string.</li>
+</ul>
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map
+of invocation options. Currently, the only supported option is
+<code>:environment</code> which is a map of environment variables to expose during
+invocation of the command.</p>
 
   </div>
 </div>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Basic Invocation</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Basic Invocation</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>StateList</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span></code></pre>
     
@@ -183,9 +187,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:42 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>

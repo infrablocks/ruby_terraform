@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::Graph
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::Graph";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -101,51 +103,59 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/graph.rb</dd>
+    <dd>lib/ruby_terraform/commands/graph.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps the <tt>terraform graph</tt> command which outputs the visual execution graph of terraform resources according to either the current configuration or an execution plan.</p>
-
-<p>The graph is outputted in DOT format. The typical program that can read this format is GraphViz, but many web services are also available to read this format.</p>
-
-<p>The <code>:type</code> option can be used to control the type of graph shown. Terraform creates different graphs for different operations. See the options below for the list of types supported. The default type is <tt>“plan”</tt> if a configuration is given, and <tt>“apply”</tt> if a plan file is passed as an argument.</p>
-
+    <p>Wraps the <code>terraform graph</code> command which outputs the visual execution
+graph of terraform resources according to either the current configuration
+or an execution plan.</p>
+<p>The graph is outputted in DOT format. The typical program that can
+read this format is GraphViz, but many web services are also available to
+read this format.</p>
+<p>The <code>:type</code> option can be used to control the type of graph shown.
+Terraform creates different graphs for different operations. See the
+options below for the list of types supported. The default type is
+<code>&quot;plan&quot;</code> if a configuration is given, and <code>&quot;apply&quot;</code> if a plan file is
+passed as an argument.</p>
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
-
-<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Graph (class)">Graph</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
-<ul><li>
-<p><code>:directory</code>: the path to a directory containing terraform configuration (deprecated in terraform 0.14, removed in terraform 0.15, use <code>:chdir</code> instead).</p>
-</li><li>
-<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
-</li><li>
-<p><code>:plan</code>: render the graph using the specified plan file instead of the configuration in the current directory.</p>
-</li><li>
-<p><code>:draw_cycles</code>: if <code>true</code>, highlights any cycles in the graph with colored edges; this helps when diagnosing cycle errors; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:type</code>: the type of graph to output; can be: <tt>“plan”</tt>, <tt>“plan-destroy”</tt>, <tt>“apply”</tt>, <tt>“validate”</tt>, <tt>“input”</tt>, <tt>“refresh”</tt>; defaults to <tt>“apply”</tt> if <code>:plan</code> is provided, <tt>“plan”</tt> otherwise.</p>
-</li><li>
-<p><code>:module_depth</code>: (deprecated) in prior versions of terraform, specified the depth of modules to show in the output.</p>
-</li></ul>
-
-<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
-
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Graph (class)">Graph</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following
+options are supported:</p>
+<ul>
+<li><code>:directory</code>: the path to a directory containing terraform
+configuration (deprecated in terraform 0.14, removed in terraform 0.15,
+use <code>:chdir</code> instead).</li>
+<li><code>:chdir</code>: the path of a working directory to switch to before executing
+the given subcommand.</li>
+<li><code>:plan</code>: render the graph using the specified plan file instead of the
+configuration in the current directory.</li>
+<li><code>:draw_cycles</code>: if <code>true</code>, highlights any cycles in the graph with
+colored edges; this helps when diagnosing cycle errors; defaults to
+<code>false</code>.</li>
+<li><code>:type</code>: the type of graph to output; can be: <code>&quot;plan&quot;</code>,
+<code>&quot;plan-destroy&quot;</code>, <code>&quot;apply&quot;</code>, <code>&quot;validate&quot;</code>, <code>&quot;input&quot;</code>, <code>&quot;refresh&quot;</code>;
+defaults to <code>&quot;apply&quot;</code> if <code>:plan</code> is provided, <code>&quot;plan&quot;</code> otherwise.</li>
+<li><code>:module_depth</code>: (deprecated) in prior versions of terraform, specified
+the depth of modules to show in the output.</li>
+</ul>
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map
+of invocation options. Currently, the only supported option is
+<code>:environment</code> which is a map of environment variables to expose during
+invocation of the command.</p>
 
   </div>
 </div>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Basic Invocation</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Basic Invocation</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>Graph</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span></code></pre>
     
@@ -174,9 +184,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:42 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>

@@ -6,13 +6,13 @@
 <title>
   Class: RubyTerraform::Commands::Untaint
   
-    &mdash; Documentation by YARD 0.9.36
+    &mdash; Documentation by YARD 0.9.43
   
 </title>
 
-  <link rel="stylesheet" href="../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "RubyTerraform::Commands::Untaint";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -101,63 +103,68 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/ruby_terraform/commands/untaint.rb</dd>
+    <dd>lib/ruby_terraform/commands/untaint.rb
+</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-<p>Wraps the <tt>terraform untaint</tt> command which removes the ‘tainted’ state from a resource instance.</p>
-
-<p>Terraform uses the term “tainted” to describe a resource instance which may not be fully functional, either because its creation partially failed or because you’ve manually marked it as such using the <span class='object_link'><a href="Taint.html" title="RubyTerraform::Commands::Taint (class)">Taint</a></span> command.</p>
-
-<p>This command removes that state from a resource instance, causing Terraform to see it as fully-functional and not in need of replacement.</p>
-
-<p>This will not modify your infrastructure directly. It only avoids Terraform planning to replace a tainted instance in a future operation.</p>
-
+    <p>Wraps the <code>terraform untaint</code> command which removes the 'tainted' state
+from a resource instance.</p>
+<p>Terraform uses the term &quot;tainted&quot; to describe a resource instance
+which may not be fully functional, either because its creation partially
+failed or because you've manually marked it as such using the <span class='object_link'><a href="Taint.html" title="RubyTerraform::Commands::Taint (class)">Taint</a></span>
+command.</p>
+<p>This command removes that state from a resource instance, causing
+Terraform to see it as fully-functional and not in need of replacement.</p>
+<p>This will not modify your infrastructure directly. It only avoids
+Terraform planning to replace a tainted instance in a future operation.</p>
 <p>For options accepted on construction, see <span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">Base#initialize</a></span>.</p>
-
-<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Untaint (class)">Untaint</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following options are supported:</p>
-<ul><li>
-<p><code>:name</code>: the name of the resource instance to untaint; required.</p>
-</li><li>
-<p><code>:chdir</code>: the path of a working directory to switch to before executing the given subcommand.</p>
-</li><li>
-<p><code>:allow_missing</code>: if <code>true</code>, the command will succeed (i.e., will not throw an <span class='object_link'><a href="../Errors/ExecutionError.html" title="RubyTerraform::Errors::ExecutionError (class)">Errors::ExecutionError</a></span>) even if the resource is missing; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:backup</code>: the path to backup the existing state file before modifying; defaults to the <code>:state_out</code> path with <tt>“.backup”</tt> extension; set <code>:no_backup</code> to <code>true</code> to skip backups entirely.</p>
-</li><li>
-<p><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported; when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</p>
-</li><li>
-<p><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <tt>“0s”</tt>.</p>
-</li><li>
-<p><code>:no_backup</code>: when <code>true</code>, no backup file will be written; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:no_color</code>: whether or not the output from the command should be in color; defaults to <code>false</code>.</p>
-</li><li>
-<p><code>:state</code>: the path to the state file from which to read state and in which to store state (unless <code>:state_out</code> is specified); defaults to <tt>“terraform.tfstate”</tt>.</p>
-</li><li>
-<p><code>:state_out</code>: the path to write state to that is different than <code>:state</code>; this can be used to preserve the old state.</p>
-</li><li>
-<p><code>:ignore_remote_version</code>: whether or not to continue even if remote and local Terraform versions are incompatible; this may result in an unusable workspace, and should be used with extreme caution; defaults to <code>false</code>.</p>
-</li></ul>
-
-<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map of invocation options. Currently, the only supported option is <code>:environment</code> which is a map of environment variables to expose during invocation of the command.</p>
-
+<p>When executing an instance of <span class='object_link'><a href="" title="RubyTerraform::Commands::Untaint (class)">Untaint</a></span> via <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span>, the following
+options are supported:</p>
+<ul>
+<li><code>:name</code>: the name of the resource instance to untaint; required.</li>
+<li><code>:chdir</code>: the path of a working directory to switch to before executing
+the given subcommand.</li>
+<li><code>:allow_missing</code>: if <code>true</code>, the command will succeed (i.e., will not
+throw an <span class='object_link'><a href="../Errors/ExecutionError.html" title="RubyTerraform::Errors::ExecutionError (class)">Errors::ExecutionError</a></span>) even if the resource
+is missing; defaults to <code>false</code>.</li>
+<li><code>:backup</code>: the path to backup the existing state file before modifying;
+defaults to the <code>:state_out</code> path with <code>&quot;.backup&quot;</code> extension; set
+<code>:no_backup</code> to <code>true</code> to skip backups entirely.</li>
+<li><code>:lock</code>: when <code>true</code>, locks the state file when locking is supported;
+when <code>false</code>, does not lock the state file; defaults to <code>true</code>.</li>
+<li><code>:lock_timeout</code>: the duration to retry a state lock; defaults to <code>&quot;0s&quot;</code>.</li>
+<li><code>:no_backup</code>: when <code>true</code>, no backup file will be written; defaults to
+<code>false</code>.</li>
+<li><code>:no_color</code>: whether or not the output from the command should be in
+color; defaults to <code>false</code>.</li>
+<li><code>:state</code>: the path to the state file from which to read state and in
+which to store state (unless <code>:state_out</code> is specified); defaults to
+<code>&quot;terraform.tfstate&quot;</code>.</li>
+<li><code>:state_out</code>: the path to write state to that is different than
+<code>:state</code>; this can be used to preserve the old state.</li>
+<li><code>:ignore_remote_version</code>: whether or not to continue even if remote and
+local Terraform versions are incompatible; this may result in an
+unusable workspace, and should be used with extreme caution; defaults to
+<code>false</code>.</li>
+</ul>
+<p>The <span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">Base#execute</a></span> method accepts an optional second parameter which is a map
+of invocation options. Currently, the only supported option is
+<code>:environment</code> which is a map of environment variables to expose during
+invocation of the command.</p>
 
   </div>
 </div>
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'>
-<p>Basic Invocation</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Basic Invocation</p></div></h5>
       
       <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../RubyTerraform.html" title="RubyTerraform (module)">RubyTerraform</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Commands.html" title="RubyTerraform::Commands (module)">Commands</a></span></span><span class='op'>::</span><span class='const'>Untaint</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Base.html#initialize-instance_method" title="RubyTerraform::Commands::Base#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_execute'><span class='object_link'><a href="Base.html#execute-instance_method" title="RubyTerraform::Commands::Base#execute (method)">execute</a></span></span><span class='lparen'>(</span>
   <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>aws_security_group.allow_all</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span></code></pre>
@@ -187,9 +194,9 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 17 17:33:20 2024 by
+  Generated on Fri May 15 13:38:42 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.1).
+  0.9.43 (ruby-3.2.11).
 </div>
 
     </div>
