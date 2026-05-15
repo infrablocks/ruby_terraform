@@ -34,6 +34,7 @@ describe RubyTerraform do
     state_rm: RubyTerraform::Commands::StateRemove,
     state_show: RubyTerraform::Commands::StateShow,
     taint: RubyTerraform::Commands::Taint,
+    test: RubyTerraform::Commands::Test,
     untaint: RubyTerraform::Commands::Untaint,
     validate: RubyTerraform::Commands::Validate,
     workspace_delete: RubyTerraform::Commands::WorkspaceDelete,
