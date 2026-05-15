@@ -1,5 +1,12 @@
 ## Unreleased
 
+## 1.9.0 (May 15th 2026)
+
+IMPROVEMENTS:
+
+* Add support for the `terraform test` command via
+  `RubyTerraform::Commands::Test`.
+
 ## 1.8.0 (July 17th 2024)
 
 IMPROVEMENTS:
