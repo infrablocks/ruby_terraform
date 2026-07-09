@@ -1,0 +1,144 @@
+name: Main
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+# Every run publishes to RubyGems; serialise so close-together merges cannot
+# race on version numbers.
+concurrency:
+  group: main
+  cancel-in-progress: false
+
+jobs:
+  skip-ci-check:
+    runs-on: ubuntu-latest
+    outputs:
+      should_skip_ci: ${{ steps.skip_ci_check.outputs.should_skip_ci }}
+    steps:
+      - id: skip_ci_check
+        env:
+          HEAD_COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+        run: |
+          if [[ "$HEAD_COMMIT_MESSAGE" == *"[no ci]"* ]] \
+            || [[ "$HEAD_COMMIT_MESSAGE" == *"[skip ci]"* ]] \
+            || [[ "$HEAD_COMMIT_MESSAGE" == *"[ci skip]"* ]]; then
+            echo "should_skip_ci=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "should_skip_ci=false" >> "$GITHUB_OUTPUT"
+          fi
+
+  check:
+    needs: [skip-ci-check]
+    if: needs.skip-ci-check.outputs.should_skip_ci != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Check
+        run: ./go library:check
+      - name: Notify Slack
+        if: always()
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  test:
+    needs: [skip-ci-check]
+    if: needs.skip-ci-check.outputs.should_skip_ci != 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Test
+        run: ./go test:unit
+      - name: Notify Slack
+        if: always()
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  prerelease:
+    needs: [check, test]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pull latest main
+        run: git pull
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Install secrets tools
+        run: sudo apt-get update && sudo apt-get install -y git-crypt gnupg
+      - name: Unlock git-crypt
+        run: ./go git_crypt:unlock_with_encrypted_gpg_key
+        env:
+          ENCRYPTION_PASSPHRASE: ${{ secrets.ENCRYPTION_PASSPHRASE }}
+      - name: Configure RubyGems credentials
+        run: |
+          mkdir -p ~/.gem
+          cp config/secrets/rubygems/credentials ~/.gem/credentials
+          chmod 0600 ~/.gem/credentials
+      - name: Set CI git author
+        run: ./go repository:set_ci_author
+      - name: Prerelease
+        run: ./go "version:bump[pre]" && ./go release
+      - name: Push release commit
+        run: git push && git push --tags
+      - name: Notify Slack of release hold
+        continue-on-error: true
+        run: ./go "slack:notify[success,on_hold]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      - name: Notify Slack
+        if: always()
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  release:
+    needs: [prerelease]
+    runs-on: ubuntu-latest
+    environment: release
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Pull latest main
+        run: git pull
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Install secrets tools
+        run: sudo apt-get update && sudo apt-get install -y git-crypt gnupg
+      - name: Unlock git-crypt
+        run: ./go git_crypt:unlock_with_encrypted_gpg_key
+        env:
+          ENCRYPTION_PASSPHRASE: ${{ secrets.ENCRYPTION_PASSPHRASE }}
+      - name: Configure RubyGems credentials
+        run: |
+          mkdir -p ~/.gem
+          cp config/secrets/rubygems/credentials ~/.gem/credentials
+          chmod 0600 ~/.gem/credentials
+      - name: Set CI git author
+        run: ./go repository:set_ci_author
+      - name: Release
+        run: ./go "version:bump[patch]" && ./go documentation:update && ./go release
+      - name: Push release commit
+        run: git push && git push --tags
+      - name: Notify Slack
+        if: always()
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
