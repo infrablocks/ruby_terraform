@@ -6,8 +6,8 @@ require_relative 'types/flag'
 module RubyTerraform
   module Options
     module Types
-      def self.standard(name, value, **opts)
-        Standard.new(name, value, **opts)
+      def self.standard(name, value, **)
+        Standard.new(name, value, **)
       end
 
       def self.flag(name, value)
