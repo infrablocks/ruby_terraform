@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-require 'rake_circle_ci'
 require 'rake_git'
 require 'rake_git_crypt'
 require 'rake_github'
 require 'rake_gpg'
-require 'rake_ssh'
+require 'rake_slack'
 require 'rspec/core/rake_task'
 require 'rubocop/rake_task'
 require 'securerandom'
@@ -60,13 +59,6 @@ namespace :encryption do
 end
 
 namespace :keys do
-  namespace :deploy do
-    RakeSSH.define_key_tasks(
-      path: 'config/secrets/ci/',
-      comment: 'maintainers@infrablocks.io'
-    )
-  end
-
   namespace :gpg do
     RakeGPG.define_generate_key_task(
       output_directory: 'config/secrets/ci',
@@ -92,7 +84,6 @@ namespace :secrets do
   desc 'Generate all generatable secrets.'
   task generate: %w[
     encryption:passphrase:generate
-    keys:deploy:generate
     keys:gpg:generate
   ]
 
@@ -121,6 +112,11 @@ namespace :library do
 
   desc 'Attempt to automatically fix issues with the library'
   task fix: [:'rubocop:autocorrect_all']
+
+  desc 'Build the library'
+  task :build do
+    sh 'gem build ruby_terraform.gemspec'
+  end
 end
 
 namespace :documentation do
@@ -146,51 +142,69 @@ namespace :test do
   RSpec::Core::RakeTask.new(:unit)
 end
 
-RakeCircleCI.define_project_tasks(
-  namespace: :circle_ci,
-  project_slug: 'github/infrablocks/ruby_terraform'
-) do |t|
-  circle_ci_config =
-    YAML.load_file('config/secrets/circle_ci/config.yaml')
-
-  t.api_token = circle_ci_config['circle_ci_api_token']
-  t.environment_variables = {
-    ENCRYPTION_PASSPHRASE:
-        File.read('config/secrets/ci/encryption.passphrase')
-        .chomp
-  }
-  t.checkout_keys = []
-  t.ssh_keys = [
-    {
-      hostname: 'github.com',
-      private_key: File.read('config/secrets/ci/ssh.private')
-    }
-  ]
-end
-
 RakeGithub.define_repository_tasks(
   namespace: :github,
   repository: 'infrablocks/ruby_terraform'
 ) do |t|
-  github_config =
-    YAML.load_file('config/secrets/github/config.yaml')
+  # Operator's ambient auth — the stored PAT is gone (see the cutover PR's
+  # deliberate-decisions list). Resolve once and fail fast: a missing,
+  # unauthenticated, or absent gh yields an empty string, which would
+  # otherwise surface later as an opaque Octokit 401.
+  github_token = ENV.fetch('GITHUB_TOKEN') do
+    `gh auth token`.strip
+  rescue Errno::ENOENT
+    ''
+  end
+  if github_token.empty?
+    raise 'No GitHub token available: set GITHUB_TOKEN or run `gh auth login`'
+  end
 
-  t.access_token = github_config['github_personal_access_token']
-  t.deploy_keys = [
-    {
-      title: 'CircleCI',
-      public_key: File.read('config/secrets/ci/ssh.public')
-    }
+  t.access_token = github_token
+  # Actions store only: nothing in pr.yaml unlocks git-crypt, so dependabot
+  # runs never need the passphrase.
+  t.secrets = [
+    { name: 'ENCRYPTION_PASSPHRASE',
+      value: File.read('config/secrets/ci/encryption.passphrase').chomp }
+  ]
+  t.environments = [
+    { name: 'release',
+      reviewers: [{ team: 'maintainers' }] }
   ]
 end
 
+namespace :slack do
+  RakeSlack.define_notification_tasks do |t|
+    t.bot_token = ENV.fetch('SLACK_BOT_TOKEN', nil)
+    t.routing_rules = [
+      { when: { type: 'on_hold' },
+        channel: 'C038EDCRSQJ', format: :on_hold },  # release
+      { when: { actor: 'dependabot[bot]', outcome: 'success' },
+        channel: 'C03N711HVDG', format: :success },  # builds-dependabot
+      { when: { actor: 'dependabot[bot]' },
+        channel: 'C03N711HVDG', format: :failure },  # builds-dependabot
+      { when: { outcome: 'success' },
+        channel: 'C023XUE76GH', format: :success },  # builds
+      # Failures go to builds, not team-dev (org default), to keep noise
+      # out of a popular channel while this pipeline beds in.
+      { when: {},
+        channel: 'C023XUE76GH', format: :failure } # builds
+    ]
+  end
+end
+
+namespace :repository do
+  desc 'Set the git author for CI'
+  task :set_ci_author do
+    sh 'git config --global user.name "InfraBlocks CI"'
+    sh 'git config --global user.email "ci@infrablocks.io"'
+  end
+end
+
 namespace :pipeline do
-  desc 'Prepare CircleCI Pipeline'
+  desc 'Prepare GitHub Actions pipeline'
   task prepare: %i[
-    circle_ci:env_vars:ensure
-    circle_ci:checkout_keys:ensure
-    circle_ci:ssh_keys:ensure
-    github:deploy_keys:ensure
+    github:secrets:ensure
+    github:environments:ensure
   ]
 end
 
