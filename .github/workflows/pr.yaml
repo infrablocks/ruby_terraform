@@ -1,0 +1,115 @@
+name: Pull Request
+on:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Check
+        run: ./go library:check
+      - name: Notify Slack
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Test
+        run: ./go test:unit
+      - name: Notify Slack
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Build
+        run: ./go library:build
+      - name: Notify Slack
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  prerelease:
+    needs: [check, test, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    # Same-repo human PRs only: fork and Dependabot PRs carry no secrets, so
+    # git-crypt unlock / the RubyGems publish would fail. user.login is the
+    # immutable PR author, not github.actor.
+    if: >-
+      github.event.pull_request.head.repo.full_name == github.repository &&
+      github.event.pull_request.user.login != 'dependabot[bot]'
+    # Queue per PR rather than cancel a mid-flight publish
+    concurrency:
+      group: pr-prerelease-${{ github.event.pull_request.number }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        uses: infrablocks/github-actions/asdf_install@v1
+      - name: Install secrets tools
+        run: ./scripts/ci/common/install-git-crypt.sh
+      - name: Unlock git-crypt
+        run: ./go git_crypt:unlock_with_encrypted_gpg_key
+        env:
+          ENCRYPTION_PASSPHRASE: ${{ secrets.ENCRYPTION_PASSPHRASE }}
+      - name: Configure RubyGems credentials
+        run: ./scripts/ci/common/configure-rubygems.sh
+      - name: Publish prerelease
+        # Facts via env, never interpolated
+        run: ./go "prerelease:publish[$PR_NUMBER,$RUN_NUMBER,$RUN_ATTEMPT]"
+        env:
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          RUN_NUMBER: ${{ github.run_number }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+      - name: Notify Slack
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: ./go "slack:notify[${{ job.status }}]"
+        env:
+          SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+
+  merge-pull-request:
+    needs: [check, test, build]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Merge pull request
+        # --match-head-commit fails the merge if a commit landed after checks passed
+        # [skip ci] stops the merge commit triggering a release build
+        # PR title via env, never interpolated
+        run: gh pr merge --merge --match-head-commit "$HEAD_SHA" "$PR_URL" --subject "$PR_TITLE [skip ci]"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          PR_TITLE: ${{ github.event.pull_request.title }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

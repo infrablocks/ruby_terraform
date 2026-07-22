@@ -9,8 +9,6 @@ PROJECT_DIR="$( cd "$SCRIPT_DIR/../../.." && pwd )"
 
 cd "$PROJECT_DIR"
 
-git crypt unlock
-
 mkdir -p ~/.gem
 cp config/secrets/rubygems/credentials ~/.gem/credentials
 chmod 0600 ~/.gem/credentials
