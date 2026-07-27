@@ -192,7 +192,7 @@ GEM
       faraday (>= 0.17.3, < 3)
     securerandom (0.4.1)
     shellany (0.0.1)
-    simplecov (1.0.2)
+    simplecov (1.0.3)
     sshkey (2.0.0)
     thor (1.5.0)
     tzinfo (2.0.6)
