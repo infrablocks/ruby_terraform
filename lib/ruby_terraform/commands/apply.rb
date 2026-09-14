@@ -47,6 +47,10 @@ module RubyTerraform
     # * +:refresh+: when +true+, updates state prior to checking for
     #   differences; when +false+ uses locally available state; defaults to
     #   +true+; this has no effect when +:plan+ is provided.
+    # * +:refresh_only+: when +true+, checks  whether remote objects still
+    #   match the outcome of the  most recent Terraform apply but does not
+    #   propose any actions to undo any changes made outside of Terraform; this
+    #   has no effect when +:plan+ is provided
     # * +:replace+: force replacement of a particular resource instance using
     #   its resource address. If the apply would've normally produced an update
     #   or no-op action for this instance, Terraform will replace it instead.
@@ -105,6 +109,7 @@ module RubyTerraform
           -no-color
           -parallelism
           -refresh
+          -refresh-only
           -replace
           -state
           -state-out
