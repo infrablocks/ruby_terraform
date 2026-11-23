@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative '../value_equality'
+require 'forwardable'
 
 module RubyTerraform
   module Models
