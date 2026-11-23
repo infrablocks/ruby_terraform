@@ -91,6 +91,11 @@ describe RubyTerraform::Commands::Apply do
   )
 
   it_behaves_like(
+    'a command with a boolean option',
+    described_class, 'apply', :refresh_only
+  )
+
+  it_behaves_like(
     'a command with an option',
     described_class, 'apply', :state
   )

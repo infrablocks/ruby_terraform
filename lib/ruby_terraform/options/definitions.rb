@@ -39,6 +39,7 @@ module RubyTerraform
           -list
           -lock
           -refresh
+          -refresh-only
           -upgrade
           -verify-plugins
           -write
